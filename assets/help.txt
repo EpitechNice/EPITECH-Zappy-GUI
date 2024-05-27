@@ -1,0 +1,6 @@
+USAGE
+    ./zappy_gui -p port -h machine
+
+DESCRIPTION
+    p    port number
+    h    name of the machine
