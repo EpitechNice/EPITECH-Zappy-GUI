@@ -9,6 +9,7 @@
 SRC		=   src/Main.cpp														\
 			src/Components/Background2D/ComponentBackground2D.cpp				\
 			src/Components/Button/ComponentButton.cpp							\
+			src/Components/SliderVolume/SliderVolume.cpp							\
 			src/Components/Circle/ComponentCircle.cpp							\
 			src/Components/Image/ComponentImage.cpp								\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
@@ -61,6 +62,7 @@ INCLUDES	=	-I./libs/includes							\
 				-I./src										\
 				-I./src/Components/Background2D				\
 				-I./src/Components/Button					\
+				-I./src/Components/SliderVolume				\
 				-I./src/Components/Circle					\
 				-I./src/Components/Image					\
 				-I./src/Components/RoundedRectangle			\

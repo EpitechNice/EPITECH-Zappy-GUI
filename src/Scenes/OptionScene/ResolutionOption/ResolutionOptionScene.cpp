@@ -15,7 +15,7 @@ namespace Zappy {
                 _render = render;
                 _resolution = Resolution_1920x1080;
                 _fps = FPS_60;
-                _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_classic_scenery.png");
+                _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_forest_scenery.png");
                 _backButton = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), "<- BACK", 20, GREEN);
                 std::vector<std::pair<std::string, std::string>> buttons_resolution = {
                     {"2960x1440", "Resolution_2960x1440"},
@@ -39,7 +39,7 @@ namespace Zappy {
                 int buttonY = 0;
                 for (size_t i = 0; i < text.size(); ++i) {
                     y = (height / (text.size() + 1)) * (i + 1) - 30;
-                    _text.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(GetScreenWidth() / 5, y), text[i], 30, WHITE), text[i]));
+                    _text.push_back(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(GetScreenWidth() / 5, y), text[i], 30, WHITE));
                     buttonX = GetScreenWidth() / 2.5;
                     buttonY = y - buttonHeight / 2;
                     if (text[i] == "Resolution :") {
@@ -65,7 +65,7 @@ namespace Zappy {
             void ResolutionOption::destroy()
             {
                 for (auto &text : _text)
-                    text.first->destroy();
+                    text->destroy();
                 for (auto &button : _resolutionButtons)
                     button.first->destroy();
                 _resolutionButtons.clear();
@@ -94,12 +94,13 @@ namespace Zappy {
                 _background->draw();
                 _backButton->draw();
                 for (auto &text : _text)
-                    text.first->draw();
+                    text->draw();
                 for (auto &button : _resolutionButtons)
                     button.first->draw();
                 for (auto &button : _fpsButtons)
                     button.first->draw();
             }
+
 
             std::string ResolutionOption::nextScene()
             {

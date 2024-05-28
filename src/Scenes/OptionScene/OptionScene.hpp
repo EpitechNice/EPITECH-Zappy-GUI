@@ -45,7 +45,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::Button> _backButton;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _generalButtons;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _langueButtons;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
+                    std::vector<std::unique_ptr<Zappy::GUI::Component::Text>> _text;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
             };
         }

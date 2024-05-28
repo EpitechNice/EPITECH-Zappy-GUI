@@ -38,7 +38,7 @@ namespace Zappy {
                     x_generalButton += button_width / 2;
                     i_generalButton++;
                 }
-                _text.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(x_generalButton * 0.9 , y_generalButton * 1.5), "LANGUE :", 30, WHITE), "LANGUE"));
+                _text.push_back(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(x_generalButton * 0.9 , y_generalButton * 1.5), "LANGUE :", 30, WHITE));
                 int x_langueButton = x_generalButton / 2;
                 int y_langueButton = y_generalButton * 1.5 + 50;
                 int i_langueButton = 20;
@@ -57,7 +57,7 @@ namespace Zappy {
             void Option::destroy()
             {
                 for (auto &text : _text)
-                    text.first->destroy();
+                    text->destroy();
                 for (auto &button : _generalButtons)
                     button.first->destroy();
                 for (auto &button : _langueButtons)
@@ -88,7 +88,7 @@ namespace Zappy {
                 for (auto &button : _langueButtons)
                     button.first->draw();
                 for (auto &text : _text)
-                    text.first->draw();
+                    text->draw();
             }
 
             std::string Option::nextScene()

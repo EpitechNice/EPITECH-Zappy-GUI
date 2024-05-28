@@ -14,6 +14,7 @@
     #include "ComponentBackground2D.hpp"
     #include "ComponentButton.hpp"
     #include "ComponentText.hpp"
+    #include "SliderVolume.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -33,10 +34,14 @@ namespace Zappy {
 
                 protected:
                 private:
+                    float _volumeMusique;
+                    float _volumeEffetSonore;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::unique_ptr<Zappy::GUI::Component::Button> _backButton;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _buttons;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
+                    std::vector<std::unique_ptr<Zappy::GUI::Component::Text>> _text;
+                    std::vector<std::unique_ptr<Zappy::GUI::Component::SliderVolume>> _volumeSlider;
+                    Zappy::GUI::Component::SliderVolume* _activeSlider;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
             };
         }

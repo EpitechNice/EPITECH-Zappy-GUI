@@ -38,7 +38,6 @@ namespace Zappy {
             _isDestroyed = true;
         }
 
-
         void SceneManager::run()
         {
             while (_currentScene != "end") {
