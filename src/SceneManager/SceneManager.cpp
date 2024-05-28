@@ -17,6 +17,8 @@ namespace Zappy {
             _scenes["game"] = std::make_shared<Zappy::GUI::Scene::Game>(_render);
             _scenes["menu"] = std::make_shared<Zappy::GUI::Scene::Menu>(_render);
             _scenes["option"] = std::make_shared<Zappy::GUI::Scene::Option>(_render);
+            _scenes["soundSetting"] = std::make_shared<Zappy::GUI::Scene::SoundOption>(_render);
+            _scenes["resolutionSetting"] = std::make_shared<Zappy::GUI::Scene::ResolutionOption>(_render);
             _currentScene = "menu";
             _nextScene = "menu";
         }

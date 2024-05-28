@@ -2,33 +2,26 @@
 ** EPITECH PROJECT, 2024
 ** gui
 ** File description:
-** Option
+** SoundOption
 */
 
-#ifndef SCENE_OPTION_HPP_
-    #define SCENE_OPTION_HPP_
+#ifndef SCENE_SOUNDOPTION_HPP_
+    #define SCENE_SOUNDOPTION_HPP_
 
     #include <memory>
-    #include <chrono>
 
     #include "AScene.hpp"
     #include "ComponentBackground2D.hpp"
     #include "ComponentButton.hpp"
+    #include "ComponentText.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Scene {
-            class Option : public AScene {
+            class SoundOption : public AScene {
                 public:
-                    typedef enum {
-                        FRANCAIS,
-                        ANGLAIS,
-                        ESPAGNOL,
-                        MANDARIN,
-                    } Langue;
-
-                    Option(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
-                    ~Option() = default;
+                    SoundOption(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
+                    ~SoundOption() = default;
 
                     void start() override;
                     void destroy() override;
@@ -40,11 +33,9 @@ namespace Zappy {
 
                 protected:
                 private:
-                    Langue _langue;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::unique_ptr<Zappy::GUI::Component::Button> _backButton;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _generalButtons;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _langueButtons;
+                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _buttons;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
             };
@@ -52,4 +43,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !SCENE_OPTION_HPP_ */
+#endif /* !SCENE_SOUNDOPTION_HPP_ */

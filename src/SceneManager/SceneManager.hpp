@@ -18,6 +18,8 @@
     #include "GameScene.hpp"
     #include "MenuScene.hpp"
     #include "OptionScene.hpp"
+    #include "SoundOption/SoundOptionScene.hpp"
+    #include "ResolutionOption/ResolutionOptionScene.hpp"
 
 namespace Zappy {
     namespace GUI {

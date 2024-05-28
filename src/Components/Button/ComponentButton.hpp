@@ -39,6 +39,7 @@ namespace Zappy {
 
                     std::pair<float, float> getSize() const;
                     bool isClicked() const;
+                    void changeColor(Color color);
 
                 protected:
                 private:

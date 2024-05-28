@@ -90,6 +90,17 @@ namespace Zappy {
                     _state = DEFAULT;
             }
 
+            void Button::changeColor(Color color)
+            {
+                _color = color;
+                _blackStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 50));
+                _upEffect->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 20));
+                _background->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 10));
+                _topButton->setColor(_color);
+                _reflexioneffect->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 5));
+                _circle->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 50));
+            }
+
             void Button::_modState(State oldState)
             {
                 if (oldState == _state)
