@@ -9,7 +9,7 @@
 SRC		=   src/Main.cpp														\
 			src/Components/Background2D/ComponentBackground2D.cpp				\
 			src/Components/Button/ComponentButton.cpp							\
-			src/Components/SliderVolume/SliderVolume.cpp							\
+			src/Components/SliderVolume/SliderVolume.cpp						\
 			src/Components/Circle/ComponentCircle.cpp							\
 			src/Components/Image/ComponentImage.cpp								\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
@@ -23,6 +23,8 @@ SRC		=   src/Main.cpp														\
 			src/Raylib/View/View.cpp											\
 			src/SceneManager/SceneManager.cpp									\
 			src/Scenes/AScene/AScene.cpp										\
+			src/Scenes/CreditScene/CreditScene.cpp								\
+			src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp	\
 			src/Scenes/GameScene/GameScene.cpp									\
 			src/Scenes/MenuScene/MenuScene.cpp									\
 			src/Scenes/OptionScene/OptionScene.cpp								\
@@ -57,30 +59,32 @@ FLAGS	=	-Wall 				\
 			-std=c++20			\
 			-O2
 
-INCLUDES	=	-I./libs/includes							\
-				-I./includes								\
-				-I./src										\
-				-I./src/Components/Background2D				\
-				-I./src/Components/Button					\
-				-I./src/Components/SliderVolume				\
-				-I./src/Components/Circle					\
-				-I./src/Components/Image					\
-				-I./src/Components/RoundedRectangle			\
-				-I./src/Components/Skybox					\
-				-I./src/Components/Text						\
-				-I./src/Parsing								\
-				-I./src/Raylib/ColorManager					\
-				-I./src/Raylib/Render						\
-				-I./src/Raylib/View							\
-				-I./src/SceneManager						\
-				-I./src/Scenes/IScene						\
-				-I./src/Scenes/AScene						\
-				-I./src/Scenes/GameScene					\
-				-I./src/Scenes/MenuScene					\
-				-I./src/Scenes/OptionScene					\
-				-I./src/Scenes/OptionScene/SoundOption      \
-				-I./src/Scenes/OptionScene/ResolutionOption \
-				-I./src/Utils								\
+INCLUDES	=	-I./libs/includes								\
+				-I./includes									\
+				-I./src											\
+				-I./src/Components/Background2D					\
+				-I./src/Components/Button						\
+				-I./src/Components/SliderVolume					\
+				-I./src/Components/Circle						\
+				-I./src/Components/Image						\
+				-I./src/Components/RoundedRectangle				\
+				-I./src/Components/Skybox						\
+				-I./src/Components/Text							\
+				-I./src/Parsing									\
+				-I./src/Raylib/ColorManager						\
+				-I./src/Raylib/Render							\
+				-I./src/Raylib/View								\
+				-I./src/SceneManager							\
+				-I./src/Scenes/IScene							\
+				-I./src/Scenes/AScene							\
+				-I./src/Scenes/CreditScene						\
+				-I./src/Scenes/CreditScene/DisplayCreditScene   \
+				-I./src/Scenes/GameScene						\
+				-I./src/Scenes/MenuScene						\
+				-I./src/Scenes/OptionScene						\
+				-I./src/Scenes/OptionScene/SoundOption      	\
+				-I./src/Scenes/OptionScene/ResolutionOption 	\
+				-I./src/Utils									\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\

@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2024
 ** gui
 ** File description:
-** Option
+** DisplayCreditScene
 */
 
-#ifndef SCENE_OPTION_HPP_
-    #define SCENE_OPTION_HPP_
+#ifndef SCENE_CREDIT3SCENE_HPP_
+    #define SCENE_CREDIT3SCENE_HPP_
 
     #include <memory>
     #include <chrono>
@@ -18,10 +18,10 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
-            class Option : public AScene {
+            class CreditScene : public AScene {
                 public:
-                    Option(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
-                    ~Option() = default;
+                    CreditScene(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::string text, int sceneNbr);
+                    CreditScene() = default;
 
                     void start() override;
                     void destroy() override;
@@ -33,16 +33,14 @@ namespace Zappy {
 
                 protected:
                 private:
-                    Langue _langue;
+                    int _sceneNbr;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::unique_ptr<Zappy::GUI::Component::Button> _backButton;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _generalButtons;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _langueButtons;
-                    std::vector<std::unique_ptr<Zappy::GUI::Component::Text>> _text;
+                    std::unique_ptr<Zappy::GUI::Component::Text> _text;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
             };
         }
     }
 }
 
-#endif /* !SCENE_OPTION_HPP_ */
+#endif /* !SCENE_CREDIT3SCENE_HPP_ */

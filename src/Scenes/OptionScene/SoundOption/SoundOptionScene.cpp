@@ -29,13 +29,13 @@ namespace Zappy {
                 };
                 int buttonHeight = 30;
                 int y = 0;
-                int height = GetScreenHeight();
+                int height = _render->getHeight();
                 int buttonSpacing = 60;
                 int buttonWidth = 60;
                 for (size_t i = 0; i < text.size(); ++i) {
                     y = (height / (text.size() + 1)) * (i + 1) - 30;
-                    _text.push_back(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(GetScreenWidth() / 4, y), text[i].first, 30, WHITE));
-                    int buttonX = GetScreenWidth() / 2 + buttonSpacing;
+                    _text.push_back(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(_render->getWidth() / 4, y), text[i].first, 30, WHITE));
+                    int buttonX = _render->getWidth() / 2 + buttonSpacing;
                     int buttonY = y - buttonHeight / 2;
                     if (text[i].first != "Volume :"){
                         for (const auto& button : buttons) {
@@ -46,7 +46,7 @@ namespace Zappy {
                             buttonX += buttonWidth + buttonSpacing;
                         }
                     } else {
-                        _volumeSlider.emplace_back(std::make_unique<Zappy::GUI::Component::SliderVolume>(std::make_pair(GetScreenWidth() / 1.92, y * 1.025), 300, 20, text[i].second));
+                        _volumeSlider.emplace_back(std::make_unique<Zappy::GUI::Component::SliderVolume>(std::make_pair(_render->getWidth() / 1.92, y * 1.025), 300, 20, text[i].second));
                     }
                 }
             }

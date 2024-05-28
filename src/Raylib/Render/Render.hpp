@@ -16,6 +16,12 @@
 
 namespace Zappy {
     namespace GUI {
+        typedef enum {
+            FRANCAIS,
+            ANGLAIS,
+            ESPAGNOL,
+            MANDARIN,
+        } Langue;
         namespace Raylib {
             class Render {
                 public:
@@ -39,6 +45,9 @@ namespace Zappy {
                     int _height;
                     int _width;
                     int _fps;
+                    float _volumeMusique;
+                    float _volumeEffetSonore;
+                    Langue _langue;
                     bool _isDestroyed;
                     Image _icon;
                     std::shared_ptr<View> _view;

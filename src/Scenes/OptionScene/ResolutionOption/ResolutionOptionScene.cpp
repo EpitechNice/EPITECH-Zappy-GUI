@@ -33,14 +33,14 @@ namespace Zappy {
                 };
                 int buttonHeight = 30;
                 int y = 0;
-                int height = GetScreenHeight();
+                int height = _render->getHeight();
                 int buttonSpacing = 20;
                 int buttonX = 0;
                 int buttonY = 0;
                 for (size_t i = 0; i < text.size(); ++i) {
                     y = (height / (text.size() + 1)) * (i + 1) - 30;
-                    _text.push_back(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(GetScreenWidth() / 5, y), text[i], 30, WHITE));
-                    buttonX = GetScreenWidth() / 2.5;
+                    _text.push_back(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(_render->getWidth() / 5, y), text[i], 30, WHITE));
+                    buttonX = _render->getWidth() / 2.5;
                     buttonY = y - buttonHeight / 2;
                     if (text[i] == "Resolution :") {
                         for (const auto& button : buttons_resolution) {

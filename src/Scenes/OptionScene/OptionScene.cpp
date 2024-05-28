@@ -16,10 +16,10 @@ namespace Zappy {
                 _langue = FRANCAIS;
                 _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_forest_scenery.png");
                 _backButton = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), "<- BACK", 20, GREEN);
-                int x_generalButton = GetScreenWidth() / 2;
+                int x_generalButton = _render->getWidth() / 2;
                 int y_generalButton = 0;
                 int i_generalButton = 0;
-                int height = GetScreenHeight() / 1.5;
+                int height = _render->getHeight() / 1.5;
                 std::vector<std::pair<std::string, std::string>> buttons = {
                     {"SOUND", "soundSetting"},
                     {"RESOLUTION", "resolutionSetting"},
