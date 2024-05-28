@@ -51,6 +51,8 @@ namespace Zappy {
 
             void Text::draw()
             {
+                if (_isDestroyed)
+                    return;
                 DrawTextEx(_font, _text.c_str(), Vector2{_pos.first, _pos.second}, _fontSize, 1, _color);
             }
         }

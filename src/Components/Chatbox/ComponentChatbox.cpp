@@ -28,6 +28,9 @@ namespace Zappy {
                 _openButton->disableBubble();
                 std::pair<float, float> buttonSize = _openButton->getSize();
                 _openButton->setPos(std::make_pair(8, height / 2 - buttonSize.second / 2));
+                _open = false;
+
+                _textMessage = std::make_unique<TextMessage>(std::make_pair(-_width  + 10, heightPart + 10), _width - 20, "Lorem Ipsum", "sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 5, (Color){207, 205, 164, 255});
             }
 
             Chatbox::~Chatbox()
@@ -40,6 +43,7 @@ namespace Zappy {
             void Chatbox::destroy()
             {
                 _openButton->destroy();
+                _textMessage->destroy();
             }
 
 
@@ -49,6 +53,7 @@ namespace Zappy {
                 _rectTop->draw();
                 _rectBot->draw();
                 _openButton->draw();
+                _textMessage->draw();
             }
 
             void Chatbox::update()
@@ -65,6 +70,8 @@ namespace Zappy {
                 _rectBot->setPosX(0);
                 _openButton->setPosX(_width + 8);
                 _openButton->setText("<");
+
+                _textMessage->setPosX(10);
                 _open = true;
             }
 
@@ -75,6 +82,8 @@ namespace Zappy {
                 _rectBot->setPosX(-_width);
                 _openButton->setPosX(8);
                 _openButton->setText(">");
+
+                _textMessage->setPosX(-_width + 10);
                 _open = false;
             }
         }
