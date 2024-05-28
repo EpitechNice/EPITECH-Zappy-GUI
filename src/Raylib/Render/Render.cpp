@@ -11,18 +11,28 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             Render::Render(int height, int width, int fps)
-                : _height(height), _width(width), _fps(fps)
+                : _height(height), _width(width), _fps(fps), _isDestroyed(false)
             {
                 InitWindow(width, height, "Zappy");
                 SetTargetFPS(fps);
+                _icon = LoadImage("assets/img/clash_of_tek_logo.png");
+                SetWindowIcon(_icon);
                 _view = std::make_shared<View>();
             }
 
             Render::~Render()
             {
-                CloseWindow();
+                destroy();
             }
 
+            void Render::destroy()
+            {
+                if (!_isDestroyed) {
+                    UnloadImage(_icon);
+                    CloseWindow();
+                    _isDestroyed = true;
+                }
+            }
 
 
             std::shared_ptr<View> Render::view() const

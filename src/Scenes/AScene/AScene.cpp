@@ -13,6 +13,14 @@ namespace Zappy {
         {
         }
 
+        void AScene::destroy()
+        {
+        }
+
+        void AScene::update()
+        {
+        }
+
         void AScene::event()
         {
         }

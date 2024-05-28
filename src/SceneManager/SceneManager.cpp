@@ -10,19 +10,32 @@
 namespace Zappy {
     namespace GUI {
         SceneManager::SceneManager()
+            : _isDestroyed(false)
         {
-            _scenes["game"] = std::make_shared<Zappy::GUI::Scene::Game>();
-            _scenes["menu"] = std::make_shared<Zappy::GUI::Scene::Menu>();
-            _scenes["option"] = std::make_shared<Zappy::GUI::Scene::Option>();
+            _render = std::make_shared<Zappy::GUI::Raylib::Render>(600, 1200, 60);
+
+            _scenes["game"] = std::make_shared<Zappy::GUI::Scene::Game>(_render);
+            _scenes["menu"] = std::make_shared<Zappy::GUI::Scene::Menu>(_render);
+            _scenes["option"] = std::make_shared<Zappy::GUI::Scene::Option>(_render);
             _currentScene = "menu";
             _nextScene = "menu";
-
-            _render = std::make_shared<Zappy::GUI::Raylib::Render>(600, 800, 60);
         }
 
         SceneManager::~SceneManager()
         {
+            destroy();
         }
+
+        void SceneManager::destroy()
+        {
+            if (_isDestroyed)
+                return;
+            for (auto &scene : _scenes)
+                scene.second->destroy();
+            _render->destroy();
+            _isDestroyed = true;
+        }
+
 
         void SceneManager::run()
         {
@@ -30,6 +43,7 @@ namespace Zappy {
                 _scenes[_currentScene]->start();
                 while (!WindowShouldClose() && _currentScene != "end") {
                     _scenes[_currentScene]->event();
+                    _scenes[_currentScene]->update();
                     _render->view()->update();
 
                     BeginDrawing();
@@ -43,10 +57,16 @@ namespace Zappy {
                     if (_currentScene != _nextScene)
                         break;
                 }
-                if (_currentScene == _nextScene)
+                if (_currentScene == _nextScene || _nextScene == "end")
                     _currentScene = "end";
-                else
-                    _currentScene = _nextScene;
+                else {
+                    if (_scenes.find(_nextScene) != _scenes.end())
+                        _currentScene = _nextScene;
+                    else {
+                        std::cerr << "Scene " << _nextScene << " not found" << std::endl;
+                        _nextScene = _currentScene;
+                    }
+                }
             }
         }
     }

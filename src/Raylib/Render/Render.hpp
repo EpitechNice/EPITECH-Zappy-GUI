@@ -22,6 +22,8 @@ namespace Zappy {
                     Render(int height = 600, int width = 800, int fps = 60);
                     ~Render();
 
+                    void destroy();
+
                     std::shared_ptr<View> view() const;
                     int getHeight() const;
                     int getWidth() const;
@@ -37,6 +39,8 @@ namespace Zappy {
                     int _height;
                     int _width;
                     int _fps;
+                    bool _isDestroyed;
+                    Image _icon;
                     std::shared_ptr<View> _view;
             };
         }

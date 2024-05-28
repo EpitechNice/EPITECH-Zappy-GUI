@@ -8,17 +8,26 @@
 #ifndef SCENE_MENU_HPP_
     #define SCENE_MENU_HPP_
 
+    #include <memory>
+    #include <vector>
+    #include <string>
+
     #include "AScene.hpp"
+    #include "ComponentButton.hpp"
+    #include "ComponentBackground2D.hpp"
+    #include "ComponentImage.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Scene {
             class Menu : public AScene {
                 public:
-                    Menu() = default;
+                    Menu(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~Menu() = default;
 
                     void start() override;
+                    void destroy() override;
+                    void update() override;
                     void event() override;
                     void draw3D() override;
                     void draw2D() override;
@@ -27,6 +36,10 @@ namespace Zappy {
 
                 protected:
                 private:
+                    std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
+                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _buttons;
+                    std::unique_ptr<Zappy::GUI::Component::Image> _logo;
+                    std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
             };
         }
     }

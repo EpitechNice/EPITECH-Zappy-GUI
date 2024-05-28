@@ -6,44 +6,40 @@
 ##
 
 
-SRC		=   $(wildcard src/*.cpp)						\
-			$(wildcard src/Parsing/*.cpp)				\
-			$(wildcard src/Raylib/Render/*.cpp)			\
-			$(wildcard src/Raylib/View/*.cpp)			\
-			$(wildcard src/SceneManager/*.cpp)			\
-			$(wildcard src/Scenes/AScene/*.cpp)			\
-			$(wildcard src/Scenes/GameScene/*.cpp)		\
-			$(wildcard src/Scenes/MenuScene/*.cpp)		\
-			$(wildcard src/Scenes/OptionScene/*.cpp)	\
-			$(wildcard src/Utils/*.cpp)					\
+SRC		=   src/Main.cpp													\
+			src/Components/Background2D/ComponentBackground2D.cpp			\
+			src/Components/Button/ComponentButton.cpp						\
+			src/Components/Circle/ComponentCircle.cpp						\
+			src/Components/Image/ComponentImage.cpp							\
+			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp	\
+			src/Components/Skybox/ComponentSkybox.cpp						\
+			src/Components/Text/ComponentText.cpp							\
+			src/Parsing/Parsing.cpp											\
+			src/Parsing/ParsingError.cpp									\
+			src/Parsing/ParsingHelp.cpp										\
+			src/Raylib/ColorManager/ColorManager.cpp						\
+			src/Raylib/Render/Render.cpp									\
+			src/Raylib/View/View.cpp										\
+			src/SceneManager/SceneManager.cpp								\
+			src/Scenes/AScene/AScene.cpp									\
+			src/Scenes/GameScene/GameScene.cpp								\
+			src/Scenes/MenuScene/MenuScene.cpp								\
+			src/Scenes/OptionScene/OptionScene.cpp							\
+			src/Utils/Utils.cpp												\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
 
-ifeq ($(COLOR), yes)
-	RESET		= "\033[0m"
-	BLUE		= "\033[34m"
-	BOLD		= "\033[1m"
-	FBLUE		= "\033[94m"
-	FGREEN		= "\033[92m"
-	FRED		= "\033[91m"
-	FYELLOW		= "\033[93m"
-	GREEN		= "\033[32m"
-	PURPLE		= "\033[35m"
-	RED			= "\033[31m"
-	YELLOW		= "\033[33m"
-else
-	RESET		= ""
-	BLUE		= ""
-	BOLD		= ""
-	FBLUE		= ""
-	FGREEN		= ""
-	FRED		= ""
-	FYELLOW		= ""
-	GREEN		= ""
-	PURPLE		= ""
-	RED			= ""
-	YELLOW		= ""
-endif
+RESET		= "\033[0m"
+BLUE		= "\033[34m"
+BOLD		= "\033[1m"
+FBLUE		= "\033[94m"
+FGREEN		= "\033[92m"
+FRED		= "\033[91m"
+FYELLOW		= "\033[93m"
+GREEN		= "\033[32m"
+PURPLE		= "\033[35m"
+RED			= "\033[31m"
+YELLOW		= "\033[33m"
 
 BIN	=	"zappy_gui"
 
@@ -58,19 +54,27 @@ FLAGS	=	-Wall 				\
 			-std=c++20			\
 			-O2
 
-INCLUDES	=	-I./libs/includes			\
-				-I./includes				\
-				-I./src						\
-				-I./src/Parsing				\
-				-I./src/Raylib/Render		\
-				-I./src/Raylib/View			\
-				-I./src/SceneManager		\
-				-I./src/Scenes/IScene		\
-				-I./src/Scenes/AScene		\
-				-I./src/Scenes/GameScene	\
-				-I./src/Scenes/MenuScene	\
-				-I./src/Scenes/OptionScene	\
-				-I./src/Utils				\
+INCLUDES	=	-I./libs/includes					\
+				-I./includes						\
+				-I./src								\
+				-I./src/Components/Background2D		\
+				-I./src/Components/Button			\
+				-I./src/Components/Circle			\
+				-I./src/Components/Image			\
+				-I./src/Components/RoundedRectangle	\
+				-I./src/Components/Skybox			\
+				-I./src/Components/Text				\
+				-I./src/Parsing						\
+				-I./src/Raylib/ColorManager			\
+				-I./src/Raylib/Render				\
+				-I./src/Raylib/View					\
+				-I./src/SceneManager				\
+				-I./src/Scenes/IScene				\
+				-I./src/Scenes/AScene				\
+				-I./src/Scenes/GameScene			\
+				-I./src/Scenes/MenuScene			\
+				-I./src/Scenes/OptionScene			\
+				-I./src/Utils						\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\

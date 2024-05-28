@@ -120,6 +120,10 @@ namespace Zappy {
             void View::update()
             {
                 UpdateCamera(&_camera, _mode);
+                _position = _camera.position;
+                _target = _camera.target;
+                _up = _camera.up;
+                _fovy = _camera.fovy;
             }
         }
     }

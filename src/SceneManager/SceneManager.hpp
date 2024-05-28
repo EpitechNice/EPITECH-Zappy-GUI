@@ -5,8 +5,8 @@
 ** SceneManager
 */
 
-#ifndef SCENEMANAGER_HPP_
-    #define SCENEMANAGER_HPP_
+#ifndef SCENE_MANAGER_HPP_
+    #define SCENE_MANAGER_HPP_
 
     #include <unordered_map>
     #include <string>
@@ -26,10 +26,13 @@ namespace Zappy {
                 SceneManager();
                 ~SceneManager();
 
+                void destroy();
+
                 void run();
 
             protected:
             private:
+                bool _isDestroyed;
                 std::unordered_map<std::string, std::shared_ptr<Zappy::GUI::IScene>> _scenes;
                 std::string _currentScene;
                 std::string _nextScene;
@@ -39,4 +42,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !SCENEMANAGER_HPP_ */
+#endif /* !SCENE_MANAGER_HPP_ */

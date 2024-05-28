@@ -10,7 +10,25 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
+            Option::Option(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
+            {
+                _render = render;
+                _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_forest_scenery.png");
+                _backButton = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), "<- BACK", 20, GREEN);
+            }
+
+            void Option::destroy()
+            {
+                _backButton->destroy();
+                _background->destroy();
+            }
+
+
             void Option::start()
+            {
+            }
+
+            void Option::update()
             {
             }
 
@@ -24,18 +42,14 @@ namespace Zappy {
 
             void Option::draw2D()
             {
-                DrawText("Option", 10, 10, 20, GREEN);
-
-                DrawText("1. Menu", 10, 30, 20, GREEN);
-                DrawText("2. Game", 10, 50, 20, GREEN);
+                _background->draw();
+                _backButton->draw();
             }
 
             std::string Option::nextScene()
             {
-                if (IsKeyReleased(KEY_ONE))
+                if (_backButton->isClicked())
                     return "menu";
-                if (IsKeyReleased(KEY_TWO))
-                    return "game";
                 return "option";
             }
         }
