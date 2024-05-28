@@ -37,6 +37,7 @@ namespace Zappy {
 
             void Menu::start()
             {
+                EnableCursor();
             }
 
             void Menu::destroy()

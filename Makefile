@@ -9,8 +9,10 @@
 SRC		=   src/Main.cpp													\
 			src/Components/Background2D/ComponentBackground2D.cpp			\
 			src/Components/Button/ComponentButton.cpp						\
+			src/Components/Chatbox/ComponentChatbox.cpp						\
 			src/Components/Circle/ComponentCircle.cpp						\
 			src/Components/Image/ComponentImage.cpp							\
+			src/Components/Rectangle/ComponentRectangle.cpp					\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp	\
 			src/Components/Skybox/ComponentSkybox.cpp						\
 			src/Components/Text/ComponentText.cpp							\
@@ -59,8 +61,10 @@ INCLUDES	=	-I./libs/includes					\
 				-I./src								\
 				-I./src/Components/Background2D		\
 				-I./src/Components/Button			\
+				-I./src/Components/Chatbox			\
 				-I./src/Components/Circle			\
 				-I./src/Components/Image			\
+				-I./src/Components/Rectangle		\
 				-I./src/Components/RoundedRectangle	\
 				-I./src/Components/Skybox			\
 				-I./src/Components/Text				\

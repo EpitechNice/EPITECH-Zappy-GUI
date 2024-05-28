@@ -15,20 +15,37 @@ namespace Zappy {
                 _render = render;
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
                 _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100);
+                _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
             }
 
             void Game::destroy()
             {
                 _skybox->destroy();
+                _borderbox->destroy();
+                _chatbox->destroy();
             }
 
             void Game::start()
             {
+                EnableCursor();
+                _cursor = true;
             }
 
             void Game::update()
             {
+                _skybox->update(_render);
                 _borderbox->update(_render);
+                _chatbox->update();
+
+                if (IsKeyReleased(KEY_C)) {
+                    if (_cursor) {
+                        DisableCursor();
+                        _cursor = false;
+                    } else {
+                        EnableCursor();
+                        _cursor = true;
+                    }
+                }
             }
 
             void Game::event()
@@ -54,20 +71,7 @@ namespace Zappy {
 
             void Game::draw2D()
             {
-                DrawText("Press tab to go to Menu", 10, 10, 10, RED);
-
-                Vector3 pos = _render->view()->getPosition();
-
-                DrawText("Camera:", 10, 30, 10, RED);
-                DrawText(("X: " + std::to_string(pos.x)).c_str(), 10, 50, 10, RED);
-                DrawText(("Y: " + std::to_string(pos.y)).c_str(), 10, 70, 10, RED);
-                DrawText(("Z: " + std::to_string(pos.z)).c_str(), 10, 90, 10, RED);
-
-                Vector3 target = _render->view()->getTarget();
-                DrawText("Target:", 10, 110, 10, RED);
-                DrawText(("X: " + std::to_string(target.x)).c_str(), 10, 130, 10, RED);
-                DrawText(("Y: " + std::to_string(target.y)).c_str(), 10, 150, 10, RED);
-                DrawText(("Z: " + std::to_string(target.z)).c_str(), 10, 170, 10, RED);
+                _chatbox->draw();
             }
 
             std::string Game::nextScene()

@@ -36,6 +36,11 @@ namespace Zappy {
                 _pos = pos;
             }
 
+            void Text::setText(std::string text)
+            {
+                _text = text;
+            }
+
 
             std::pair<float, float> Text::getSize() const
             {
