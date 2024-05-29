@@ -34,11 +34,18 @@ namespace Zappy {
                     int getHeight() const;
                     int getWidth() const;
                     int getFps() const;
+                    float getVolumeMusique() const;
+                    float getEffetSonore() const;
+                    Langue getLangue() const;
+
 
                     void setHeight(int height);
                     void setWidth(int width);
                     void setDimensions(int height, int width);
                     void setFps(int fps);
+                    void setVolumeMusique(float volumeMusique);
+                    void setEffetSonore(float effetSonore);
+                    void setLangue(Langue langue);
 
                 protected:
                 private:

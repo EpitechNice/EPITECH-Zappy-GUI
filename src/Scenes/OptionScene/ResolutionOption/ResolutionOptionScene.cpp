@@ -124,11 +124,11 @@ namespace Zappy {
                 for (auto &button : _fpsButtons) {
                     if (button.first->isClicked()){
                         if (button.second == "FPS_30"){
-                            _fps = FPS_30;
+                            _render->setFps(30);
                         } else if (button.second == "FPS_60")
-                            _fps = FPS_60;
+                            _render->setFps(60);
                         else if (button.second == "FPS_120")
-                            _fps = FPS_120;
+                            _render->setFps(120);
                         for (auto &otherButton : _fpsButtons) {
                             if (otherButton.first != button.first)
                                 otherButton.first->changeColor(GREEN);

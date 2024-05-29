@@ -55,7 +55,17 @@ namespace Zappy {
                 return _fps;
             }
 
+            float Render::getVolumeMusique() const{
+                return _volumeMusique;
+            }
 
+            float Render::getEffetSonore() const{
+                return _volumeEffetSonore;
+            }
+
+            Langue Render::getLangue() const{
+                return _langue;
+            }
 
             void Render::setHeight(int height)
             {
@@ -83,6 +93,18 @@ namespace Zappy {
             {
                 _fps = fps;
                 SetTargetFPS(_fps);
+            }
+
+            void Render::setVolumeMusique(float volumeMusique){
+                _volumeMusique = volumeMusique;
+            }
+
+            void Render::setEffetSonore(float effetSonore){
+                _volumeEffetSonore = effetSonore;
+            }
+
+            void Render::setLangue(Langue langue){
+                _langue = langue;
             }
         }
     }

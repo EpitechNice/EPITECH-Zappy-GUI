@@ -33,7 +33,6 @@ namespace Zappy {
 
                 protected:
                 private:
-                    Langue _langue;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::unique_ptr<Zappy::GUI::Component::Button> _backButton;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _generalButtons;

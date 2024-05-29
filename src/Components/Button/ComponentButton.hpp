@@ -34,12 +34,22 @@ namespace Zappy {
                     ~Button();
 
                     void destroy();
-
                     void draw();
+                    bool isClicked();
+
+                    void setSize(const std::pair<float, float>& size);
+                    void setPos(const std::pair<float, float>& Pos);
 
                     std::pair<float, float> getSize() const;
-                    bool isClicked() const;
+                    std::pair<float, float> getPos() const;
+                    std::string getText() const;
+
                     void changeColor(Color color);
+                    void changePos(const std::pair<float, float>& newPos);
+                    void changeSize(const std::pair<float, float>& newSize);
+
+                    void _updateState();
+                    void _modState(State oldState);
 
                 protected:
                 private:
@@ -61,8 +71,6 @@ namespace Zappy {
                     std::unique_ptr<Text> _text;
                     std::unique_ptr<Text> _textStroke;
 
-                    void _updateState();
-                    void _modState(State oldState);
             };
         }
     }

@@ -43,6 +43,10 @@ namespace Zappy {
                 return std::make_pair(size.x, size.y);
             }
 
+            std::string Text::getText() const{
+                return _text;
+            }
+
 
             void Text::draw()
             {

@@ -13,7 +13,6 @@ namespace Zappy {
             Option::Option(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
             {
                 _render = render;
-                _langue = FRANCAIS;
                 _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_forest_scenery.png");
                 _backButton = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), "<- BACK", 20, GREEN);
                 int x_generalButton = _render->getWidth() / 2;
@@ -102,13 +101,13 @@ namespace Zappy {
                 for (auto &button : _langueButtons) {
                     if (button.first->isClicked()) {
                         if (button.second == "FRANCAIS")
-                            _langue = FRANCAIS;
+                            _render->setLangue(FRANCAIS);
                         else if (button.second == "ANGLAIS")
-                            _langue = ANGLAIS;
+                            _render->setLangue(ANGLAIS);
                         else if (button.second == "ESPAGNOL")
-                            _langue = ESPAGNOL;
+                            _render->setLangue(ESPAGNOL);
                         else if (button.second == "MANDARIN")
-                            _langue = MANDARIN;
+                            _render->setLangue(MANDARIN);
                         for (auto &otherButton : _langueButtons) {
                             if (otherButton.first != button.first)
                                 otherButton.first->changeColor(GREEN);

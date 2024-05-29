@@ -30,7 +30,6 @@ namespace Zappy {
                     Color getColor() const;
 
                     void draw();
-
                 protected:
                 private:
                     std::pair<float, float> _pos;
