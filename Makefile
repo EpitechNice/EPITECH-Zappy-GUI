@@ -9,6 +9,7 @@
 SRC		=   src/Main.cpp														\
 			src/Components/Background2D/ComponentBackground2D.cpp				\
 			src/Components/Button/ComponentButton.cpp							\
+			src/Components/ButtonClassic/ComponentButtonClassic.cpp				\
 			src/Components/Chatbox/ComponentChatbox.cpp							\
 			src/Components/Circle/ComponentCircle.cpp							\
 			src/Components/Image/ComponentImage.cpp								\
@@ -65,6 +66,7 @@ INCLUDES	=	-I./libs/includes						\
 				-I./src									\
 				-I./src/Components/Background2D			\
 				-I./src/Components/Button				\
+				-I./src/Components/ButtonClassic		\
 				-I./src/Components/Chatbox				\
 				-I./src/Components/Circle				\
 				-I./src/Components/Image				\

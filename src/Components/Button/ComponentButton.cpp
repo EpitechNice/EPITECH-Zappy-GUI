@@ -77,6 +77,11 @@ namespace Zappy {
                 return _size;
             }
 
+            std::pair<float, float> Button::getPos() const
+            {
+                return _pos;
+            }
+
             bool Button::isClicked() const
             {
                 return _state == CLICKED;
@@ -99,7 +104,6 @@ namespace Zappy {
 
             void Button::setPos(std::pair<float, float> pos)
             {
-                // _pos = pos;
                 std::pair<float, float> tmp = _pos;
                 tmp.first -= pos.first;
                 tmp.second -= pos.second;

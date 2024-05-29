@@ -41,6 +41,11 @@ namespace Zappy {
                 _text = text;
             }
 
+            void Text::setColor(Color color)
+            {
+                _color = color;
+            }
+
 
             std::pair<float, float> Text::getSize() const
             {
