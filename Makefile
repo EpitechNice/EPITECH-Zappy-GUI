@@ -17,6 +17,7 @@ SRC		=   src/Main.cpp													\
 			src/Components/Skybox/ComponentSkybox.cpp						\
 			src/Components/Text/ComponentText.cpp							\
 			src/Components/TextBox/ComponentTextBox.cpp						\
+			src/Components/TextGroup/ComponentTextGroup.cpp					\
 			src/Components/TextMessage/ComponentTextMessage.cpp				\
 			src/Parsing/Parsing.cpp											\
 			src/Parsing/ParsingError.cpp									\
@@ -71,6 +72,7 @@ INCLUDES	=	-I./libs/includes					\
 				-I./src/Components/Skybox			\
 				-I./src/Components/Text				\
 				-I./src/Components/TextBox			\
+				-I./src/Components/TextGroup		\
 				-I./src/Components/TextMessage		\
 				-I./src/Parsing						\
 				-I./src/Raylib/ColorManager			\

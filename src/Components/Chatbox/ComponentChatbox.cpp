@@ -30,7 +30,7 @@ namespace Zappy {
                 _openButton->setPos(std::make_pair(8, height / 2 - buttonSize.second / 2));
                 _open = false;
 
-                _textMessage = std::make_unique<TextMessage>(std::make_pair(-_width  + 10, heightPart + 10), _width - 20, "Lorem Ipsum", "sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 5, (Color){207, 205, 164, 255});
+                _textGroup = std::make_unique<TextGroup>(std::make_pair(-_width + 10, heightPart + 10), _width - 20, 20);
             }
 
             Chatbox::~Chatbox()
@@ -43,23 +43,44 @@ namespace Zappy {
             void Chatbox::destroy()
             {
                 _openButton->destroy();
-                _textMessage->destroy();
+                _textGroup->destroy();
             }
 
 
             void Chatbox::draw()
             {
                 _rectMid->draw();
+                _textGroup->draw();
                 _rectTop->draw();
                 _rectBot->draw();
                 _openButton->draw();
-                _textMessage->draw();
             }
 
             void Chatbox::update()
             {
                 if (_openButton->isClicked())
                     (_open) ? _setChatboxClose() : _setChatboxOpen();
+
+                if (IsKeyReleased(KEY_ENTER)) {
+                    std::vector<std::string> names = {
+                        "Aelion",
+                        "Arnaud",
+                        "Dan13615",
+                        "Dragusheen",
+                        "H4rdeol",
+                        "Tech0ne",
+                    };
+                    std::vector<std::string> messages = {
+                        "Hello everyone! How are you doing?",
+                        "I think we should go to the north, or maybe the east ?... No ! The west ! AHH I don't know !",
+                        "I'm going to the south, I need some wood !",
+                        "Can someone give me some food ? I'm starving !",
+                        "UwU",
+                    };
+                    int randomName = rand() % names.size();
+                    int randomMessage = rand() % messages.size();
+                    _textGroup->addText(names[randomName], messages[randomMessage], 5, (Color){207, 205, 164, 255});
+                }
             }
 
 
@@ -71,7 +92,7 @@ namespace Zappy {
                 _openButton->setPosX(_width + 8);
                 _openButton->setText("<");
 
-                _textMessage->setPosX(10);
+                _textGroup->setPosX(10);
                 _open = true;
             }
 
@@ -83,7 +104,7 @@ namespace Zappy {
                 _openButton->setPosX(8);
                 _openButton->setText(">");
 
-                _textMessage->setPosX(-_width + 10);
+                _textGroup->setPosX(-_width + 10);
                 _open = false;
             }
         }
