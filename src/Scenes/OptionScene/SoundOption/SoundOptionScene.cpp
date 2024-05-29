@@ -37,14 +37,14 @@ namespace Zappy {
                     int buttonY = y - buttonHeight / 2;
                     if (text[i].first != "Volume :"){
                         if (text[i].second == "Effet sonor"){
-                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY), BIG_BUTTON_SIZE, "on", buttonHeight, GREEN), "cluster1"));
+                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY), BIG_BUTTON_SIZE, "on", buttonHeight, GREEN), "slider1"));
                             buttonX += buttonWidth + buttonSpacing;
-                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY * 1.07), SMALL_BUTTON_SIZE, "off", buttonHeight, RED), "cluster1"));
+                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY * 1.07), SMALL_BUTTON_SIZE, "off", buttonHeight, RED), "slider1"));
                         }
                         if (text[i].second == "Musique"){
-                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY), BIG_BUTTON_SIZE, "on", buttonHeight, GREEN), "cluster2"));
+                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY), BIG_BUTTON_SIZE, "on", buttonHeight, GREEN), "slider2"));
                             buttonX += buttonWidth + buttonSpacing;
-                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY * 1.015), SMALL_BUTTON_SIZE, "off", buttonHeight, RED), "cluster2"));
+                            _buttons.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(buttonX, buttonY * 1.015), SMALL_BUTTON_SIZE, "off", buttonHeight, RED), "slider2"));
                         }
                     } else {
                         _volumeSlider.emplace_back(std::make_unique<Zappy::GUI::Component::SliderVolume>(std::make_pair(_render->getWidth() / 1.92, y * 1.025), 300, 20, text[i].second));
@@ -82,11 +82,13 @@ namespace Zappy {
                     };
                     if (CheckCollisionPointRec(GetMousePosition(), cursorRect)) {
                         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-                            slider->updateValue();
-                            if (slider->getName() == "slider1")
+                            if (slider->getName() == "slider1" && _music){
+                                slider->updateValue();
                                 _render->setVolumeMusique(slider->getValue());
-                            else if (slider->getName() == "slider2")
+                            } else if (slider->getName() == "slider2" && _effetSonore){
+                                slider->updateValue();
                                 _render->setEffetSonore(slider->getValue());
+                            }
                         }
                     }
                 }
@@ -116,9 +118,9 @@ namespace Zappy {
                 for (auto &button : _buttons) {
                     if (button.first->isClicked()){
                         std::string buttonText = button.first->getText();
-                        if (button.second == "cluster1" || button.second == "cluster2") {
+                        if (button.second == "slider1" || button.second == "slider2") {
                             bool musicState = (buttonText == "on");
-                            if (button.second == "cluster1"){
+                            if (button.second == "slider1"){
                                 _music = musicState;
                             } else{
                                 _effetSonore = musicState;
@@ -126,8 +128,13 @@ namespace Zappy {
                             for (auto &otherButton : _buttons) {
                                 if (otherButton.second == button.second && otherButton.first->getText() != button.first->getText()){
                                     std::pair<float, float> newPosSmallButton;
-                                    float yPos = (button.second == "cluster1") ? (_render->getHeight() / 5.9 - 30 / 2) : (_render->getHeight() / 1.8 - 30 / 2);
+                                    float yPos = (button.second == "slider1") ? (_render->getHeight() / 5.9 - 30 / 2) : (_render->getHeight() / 1.8 - 30 / 2);
                                     float xPos = (button.first->getText() == "on") ? (_render->getWidth() / 2 + 180) : (_render->getWidth() / 2 + 60);
+                                    bool whatButton = (button.first->getText() == "on") ? (true) : (false);
+                                    for (auto& slider : _volumeSlider){
+                                        if (button.second == slider->getName())
+                                            slider->setStatut(whatButton);
+                                    }
                                     newPosSmallButton = std::make_pair(xPos, yPos);
                                     otherButton.first->changePos(newPosSmallButton);
                                     otherButton.first->changeSize(SMALL_BUTTON_SIZE);

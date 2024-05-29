@@ -34,6 +34,12 @@ namespace Zappy {
                     void event();
                     void updateValue();
 
+                    void setStatut(bool statut) { _statut = statut; }
+                    void setValue(float value) { _value = value; }
+                    void setWidth(float width) { _width = width; }
+                    void setHeight(float height) { _height = height; }
+
+                    bool getStatut() const { return _statut; };
                     float getValue() const { return _value; }
                     float getWidth() const { return _width; }
                     float getHeight() const { return _height; }
@@ -47,6 +53,7 @@ namespace Zappy {
                     float _value;
                     bool _isDragging;
                     bool _isDestroyed;
+                    bool _statut;
                     std::string _name;
             };
         }

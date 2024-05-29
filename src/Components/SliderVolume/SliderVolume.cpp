@@ -29,11 +29,21 @@ namespace Zappy {
 
             void SliderVolume::draw()
             {
-                DrawRectangle(_pos.first, _pos.second, _width, _height, GRAY);
-                float cursorX = _pos.first + _value * (_width - 20);
-                DrawRectangle(cursorX, _pos.second, 20, _height, GREEN);
-                DrawRectangle(_pos.first, _pos.second, cursorX - _pos.first, _height, GREEN);
+                if (_statut) {
+                    DrawRectangle(_pos.first, _pos.second, _width, _height, GRAY);
+                    float cursorX = _pos.first + _value * (_width - 20);
+                    DrawRectangle(cursorX, _pos.second, 20, _height, GREEN);
+                    DrawRectangle(_pos.first, _pos.second, cursorX - _pos.first, _height, GREEN);
+                } else {
+                    Color fadedGray = Fade(GRAY, 0.3f);
+                    Color fadedGreen = Fade(GREEN, 0.3f);
+                    DrawRectangle(_pos.first, _pos.second, _width, _height, fadedGray);
+                    float cursorX = _pos.first + _value * (_width - 20);
+                    DrawRectangle(cursorX, _pos.second, 20, _height, fadedGreen);
+                    DrawRectangle(_pos.first, _pos.second, cursorX - _pos.first, _height, fadedGreen);
+                }
             }
+
 
             bool SliderVolume::isClicked()
             {
