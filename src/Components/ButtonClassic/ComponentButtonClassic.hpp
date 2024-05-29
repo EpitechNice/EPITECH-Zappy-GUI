@@ -5,8 +5,8 @@
 ** ComponentButton
 */
 
-#ifndef COMPONENT_BUTTON_HPP_
-    #define COMPONENT_BUTTON_HPP_
+#ifndef COMPONENT_BUTTON_CLASSIC_HPP_
+    #define COMPONENT_BUTTON_CLASSIC_HPP_
 
     #include <raylib.h>
     #include <raymath.h>
@@ -22,7 +22,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Button {
+            class ButtonClassic {
                 public:
                     typedef enum {
                         NONE = -1,
@@ -31,24 +31,27 @@ namespace Zappy {
                         CLICKED
                     } State;
 
-                    Button(std::pair<float, float> pos, std::pair<float, float> size, std::string text, int textSize, Color color);
-                    ~Button();
+                    ButtonClassic(std::pair<float, float> pos, std::pair<float, float> size, std::string text, int textSize, Color color);
+                    ~ButtonClassic();
 
                     void destroy();
 
                     void draw();
 
                     std::pair<float, float> getSize() const;
-                    std::pair<float, float> getPos() const;
                     bool isClicked() const;
 
-                    void enableBubble();
-                    void disableBubble();
-
+                    void modPosX(float x);
                     void setPosX(float x);
                     void setPos(std::pair<float, float> pos);
 
-                    void setText(std::string text);
+                    void enableTextStroke();
+                    void disableTextStroke();
+
+                    void enableState();
+                    void disableState();
+
+                    void setColor(Color color);
 
                 protected:
                 private:
@@ -57,18 +60,12 @@ namespace Zappy {
                     std::pair<float, float> _textPos;
                     Color _color;
                     State _state;
-                    int _pressEffect = 6;
-                    int _hoverEffect = 2;
+                    bool _textStrokeVisible;
+                    bool _stateEnabled;
                     bool _isDestroyed;
-                    bool _bubble;
                     time_t _lastClick;
 
-                    std::unique_ptr<RoundedRectangle> _blackStroke;
-                    std::unique_ptr<RoundedRectangle> _upEffect;
-                    std::unique_ptr<RoundedRectangle> _background;
-                    std::unique_ptr<RoundedRectangle> _topButton;
-                    std::unique_ptr<RoundedRectangle> _reflexioneffect;
-                    std::unique_ptr<Circle> _circle;
+                    std::unique_ptr<RoundedRectangle> _button;
                     std::unique_ptr<Text> _text;
                     std::unique_ptr<Text> _textStroke;
 
@@ -79,4 +76,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !COMPONENT_BUTTON_HPP_ */
+#endif /* !COMPONENT_BUTTON_CLASSIC_HPP_ */

@@ -21,6 +21,7 @@ namespace Zappy {
 
                     void draw();
 
+                    void modPosX(float x);
                     void setPos(std::pair<float, float> pos);
                     void setRadius(float radius);
                     void setColor(Color color);
