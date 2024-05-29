@@ -46,6 +46,26 @@ namespace Zappy {
                 for (auto &text : _texts)
                     text->setPosX(x);
             }
+
+            void TextGroup::setPosY(int y)
+            {
+                _pos.second = y;
+                int tmp = 0;
+                for (auto &text : _texts) {
+                    text->setPosY(y + tmp);
+                    tmp += text->getSize().second + _gap;
+                }
+            }
+
+            std::pair<int, int> TextGroup::getPos()
+            {
+                return _pos;
+            }
+
+            std::pair<int, int> TextGroup::getSize()
+            {
+                return std::make_pair(_width, _height);
+            }
         }
     }
 }

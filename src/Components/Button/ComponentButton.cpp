@@ -119,7 +119,7 @@ namespace Zappy {
             void Button::_updateState()
             {
                 if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_pos.first, _pos.second, _size.first, _size.second})) {
-                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && time(nullptr) > _lastClick + 0.5) {
+                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && time(nullptr) > _lastClick + 0.5) {
                         _state = CLICKED;
                         _lastClick = time(nullptr);
                     } else

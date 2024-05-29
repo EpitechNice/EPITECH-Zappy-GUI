@@ -15,7 +15,7 @@
 
     #include "ComponentRectangle.hpp"
     #include "ComponentButton.hpp"
-    #include "ComponentTextGroup.hpp"
+    #include "ComponentTextGroupDraggable.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -42,7 +42,7 @@ namespace Zappy {
                     std::unique_ptr<Rectangle> _rectBot;
                     std::unique_ptr<Button> _openButton;
 
-                    std::unique_ptr<TextGroup> _textGroup;
+                    std::unique_ptr<TextGroupDraggable> _chatMessages;
 
                     void _setChatboxOpen();
                     void _setChatboxClose();

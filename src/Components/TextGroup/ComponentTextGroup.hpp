@@ -31,6 +31,10 @@ namespace Zappy {
                     void addText(std::string name, std::string text, int gap, Color color);
 
                     void setPosX(int x);
+                    void setPosY(int y);
+
+                    std::pair<int, int> getPos();
+                    std::pair<int, int> getSize();
 
                 protected:
                 private:

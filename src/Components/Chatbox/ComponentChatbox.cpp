@@ -30,7 +30,7 @@ namespace Zappy {
                 _openButton->setPos(std::make_pair(8, height / 2 - buttonSize.second / 2));
                 _open = false;
 
-                _textGroup = std::make_unique<TextGroup>(std::make_pair(-_width + 10, heightPart + 10), _width - 20, 20);
+                _chatMessages = std::make_unique<TextGroupDraggable>(std::make_pair(-_width + 10, heightPart + 10), std::make_pair(_width - 20, height - heightPart * 2), 20);
             }
 
             Chatbox::~Chatbox()
@@ -43,14 +43,14 @@ namespace Zappy {
             void Chatbox::destroy()
             {
                 _openButton->destroy();
-                _textGroup->destroy();
+                _chatMessages->destroy();
             }
 
 
             void Chatbox::draw()
             {
                 _rectMid->draw();
-                _textGroup->draw();
+                _chatMessages->draw();
                 _rectTop->draw();
                 _rectBot->draw();
                 _openButton->draw();
@@ -58,6 +58,7 @@ namespace Zappy {
 
             void Chatbox::update()
             {
+                _chatMessages->update();
                 if (_openButton->isClicked())
                     (_open) ? _setChatboxClose() : _setChatboxOpen();
 
@@ -79,7 +80,7 @@ namespace Zappy {
                     };
                     int randomName = rand() % names.size();
                     int randomMessage = rand() % messages.size();
-                    _textGroup->addText(names[randomName], messages[randomMessage], 5, (Color){207, 205, 164, 255});
+                    _chatMessages->addText(names[randomName], messages[randomMessage], 5, (Color){207, 205, 164, 255});
                 }
             }
 
@@ -92,7 +93,7 @@ namespace Zappy {
                 _openButton->setPosX(_width + 8);
                 _openButton->setText("<");
 
-                _textGroup->setPosX(10);
+                _chatMessages->setPosX(10);
                 _open = true;
             }
 
@@ -104,7 +105,7 @@ namespace Zappy {
                 _openButton->setPosX(8);
                 _openButton->setText(">");
 
-                _textGroup->setPosX(-_width + 10);
+                _chatMessages->setPosX(-_width + 10);
                 _open = false;
             }
         }
