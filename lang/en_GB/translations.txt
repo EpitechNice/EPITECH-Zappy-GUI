@@ -1,5 +1,5 @@
 [menu.start_title]="PLAY"
-[menu.settings_title] = "SETTINGS";
-[menu.help_title] = "HELP";
-[menu.credits_title] = "CREDITS";
-[menu.quit_title] = "QUIT";
+[menu.settings_title] = "SETTINGS"
+[menu.help_title] = "HELP"
+[menu.credits_title] = "CREDITS"
+[menu.quit_title] = "QUIT"

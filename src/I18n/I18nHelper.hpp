@@ -59,7 +59,7 @@ namespace Zappy
 
                 //Load translation file of current locale into a map attribute
                 //Called at begin & when we change current locale
-                //translation.txt must be formatted like this (on one line -> to improve ?): key=value
+                //translation.txt must be formatted like this (on one line -> to improve ?): [key] = "value"
                     void loadTranslations();
 
                     SupportedLocale getCurrentLocale();
