@@ -1,0 +1,5 @@
+[menu.start_title]=JOUER
+[menu.settings_title]=RÉGLAGES
+[menu.help_title]=AIDE
+[menu.credits_title]=CRÉDITS
+[menu.quit_title]=QUITTER
