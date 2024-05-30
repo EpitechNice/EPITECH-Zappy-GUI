@@ -103,15 +103,11 @@ namespace Zappy
 
             std::string I18nHelper::getLocaleValue(SupportedLocale locale)
             {
-                try {
-                    for (auto const& supportedLocale : this->_supportedLocaleMap) {
-                        if (locale == supportedLocale.first)
-                            return supportedLocale.second;
-                    }
-                } catch (const std::exception &e) {
-                    throw Exceptions::UnknownLocale("Error when getting value from SupportedLocale: " + std::string(e.what()), EXCEPTION_INFOS);
+                for (auto const& supportedLocale : this->_supportedLocaleMap) {
+                    if (locale == supportedLocale.first)
+                        return supportedLocale.second;
                 }
-                return "";
+                throw Exceptions::UnknownLocale("Error when getting value from SupportedLocale: Locale non supported.", EXCEPTION_INFOS);
             }
 
 //TODO : Verify if we want to throw an exception when translation key not found or any other way
