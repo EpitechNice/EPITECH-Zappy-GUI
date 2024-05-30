@@ -117,16 +117,12 @@ namespace Zappy
 //TODO : Verify if we want to throw an exception when translation key not found or any other way
             std::string I18nHelper::getTranslation(std::string key)
             {
-                try {
-                    for (auto const& translation : this->_translations) {
-                        if (key == translation.first) {
-                            return translation.second;
-                        }
+                for (auto const& translation : this->_translations) {
+                    if (key == translation.first) {
+                        return translation.second;
                     }
-                } catch (const std::exception &e) {
-                    throw Exceptions::UnknownTranslationKey("Error when getting value from translation key: " + std::string(e.what()), EXCEPTION_INFOS);
                 }
-                return "";
+                return key;
             }
 
             void I18nHelper::setCurrentLocale(SupportedLocale locale)

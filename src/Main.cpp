@@ -50,6 +50,8 @@ int main() {
         std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
 
         i18nHelper->setCurrentLocale(Zappy::GUI::I18n::SupportedLocale::jp_JP);
+        translation = i18nHelper->getTranslation("Ceci n'est pas une clé de traduction.");
+        std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for \"Ceci n'est pas une clé de traduction.\" : '" << translation << "'" << std::endl;
         translation = i18nHelper->getTranslation("[UwU]");
         std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [UwU] : '" << translation << "'" << std::endl;
 
