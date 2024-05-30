@@ -11,13 +11,15 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             Render::Render(int height, int width, int fps)
-                : _height(height), _width(width), _fps(fps), _isDestroyed(false), _volumeEffetSonore(0.5f), _volumeMusique(0.5f), _langue(FRANCAIS)
+                : _height(height), _width(width), _fps(fps), _isDestroyed(false), _langue(FRANCAIS), _pathMusiquePrincipal("assets/Musique/ClashRoyaleSoundtrack1.wav")
             {
                 InitWindow(width, height, "Zappy");
                 SetTargetFPS(fps);
                 _icon = LoadImage("assets/img/clash_of_tek_logo.png");
                 SetWindowIcon(_icon);
                 _view = std::make_shared<View>();
+                Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);
+                Sfml::SoundManager::getInstance().playgeneralSound();
             }
 
             Render::~Render()
@@ -28,6 +30,7 @@ namespace Zappy {
             void Render::destroy()
             {
                 if (!_isDestroyed) {
+                    _musiquePrincipal.stop();
                     UnloadImage(_icon);
                     CloseWindow();
                     _isDestroyed = true;
@@ -53,14 +56,6 @@ namespace Zappy {
             int Render::getFps() const
             {
                 return _fps;
-            }
-
-            float Render::getVolumeMusique() const{
-                return _volumeMusique;
-            }
-
-            float Render::getEffetSonore() const{
-                return _volumeEffetSonore;
             }
 
             Langue Render::getLangue() const{
@@ -93,14 +88,6 @@ namespace Zappy {
             {
                 _fps = fps;
                 SetTargetFPS(_fps);
-            }
-
-            void Render::setVolumeMusique(float volumeMusique){
-                _volumeMusique = volumeMusique;
-            }
-
-            void Render::setEffetSonore(float effetSonore){
-                _volumeEffetSonore = effetSonore;
             }
 
             void Render::setLangue(Langue langue){

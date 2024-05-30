@@ -13,7 +13,8 @@
     #include <memory>
 
     #include "View.hpp"
-
+    #include <iostream>
+    #include "../Sfml/SoundManager/SoundManager.hpp"
 namespace Zappy {
     namespace GUI {
         typedef enum {
@@ -52,8 +53,10 @@ namespace Zappy {
                     int _height;
                     int _width;
                     int _fps;
-                    float _volumeMusique;
-                    float _volumeEffetSonore;
+
+                    std::string _pathMusiquePrincipal;
+                    sf::Music _musiquePrincipal;
+
                     Langue _langue;
                     bool _isDestroyed;
                     Image _icon;

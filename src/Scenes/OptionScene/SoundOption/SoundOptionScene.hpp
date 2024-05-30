@@ -16,6 +16,7 @@
     #include "ComponentText.hpp"
     #include "SliderVolume.hpp"
     #include "Render.hpp"
+    #include "../Sfml/SoundManager/SoundManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -32,6 +33,14 @@ namespace Zappy {
                     void draw2D() override;
 
                     std::string nextScene() override;
+
+                    static constexpr std::pair<float, float> SMALL_BUTTON_SIZE = std::make_pair(-20.0f, -10.0f);
+                    static constexpr std::pair<float, float> BIG_BUTTON_SIZE = std::make_pair(-30.0f, -15.0f);
+
+                    bool handleButtonClicked(const std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> &button);
+                    void adjustButtonPositions(const std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> &clickedButton);
+                    void adjustSliderVolume(std::unique_ptr<Zappy::GUI::Component::SliderVolume> &slider, bool isButtonOn);
+                    void adjustSoundVolume(const std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> &button, bool isButtonOn);
 
                 protected:
                 private:

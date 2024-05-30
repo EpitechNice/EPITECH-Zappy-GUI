@@ -27,6 +27,12 @@ namespace Zappy {
                 }
             }
 
+            float SliderVolume::getValue() const{
+                float tmp = _value;
+                tmp = tmp * 100;
+                return tmp;
+            }
+
             void SliderVolume::draw()
             {
                 if (_statut) {

@@ -18,6 +18,7 @@
     #include "ComponentCircle.hpp"
     #include "ComponentRoundedRectangle.hpp"
     #include "ComponentText.hpp"
+    #include "../Sfml/SoundManager/SoundManager.hpp"
 
 namespace Zappy {
     namespace GUI {

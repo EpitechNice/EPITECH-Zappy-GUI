@@ -19,6 +19,7 @@ SRC		=   src/Main.cpp														\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
 			src/Raylib/ColorManager/ColorManager.cpp							\
+			src/Sfml/SoundManager/SoundManager.cpp								\
 			src/Raylib/Render/Render.cpp										\
 			src/Raylib/View/View.cpp											\
 			src/SceneManager/SceneManager.cpp									\
@@ -72,6 +73,7 @@ INCLUDES	=	-I./libs/includes								\
 				-I./src/Components/Text							\
 				-I./src/Parsing									\
 				-I./src/Raylib/ColorManager						\
+				-I./src/Raylib/SoundManager						\
 				-I./src/Raylib/Render							\
 				-I./src/Raylib/View								\
 				-I./src/SceneManager							\
@@ -93,7 +95,9 @@ LIBS	=	-L./libs	\
 			-lpthread	\
 			-ldl		\
 			-lrt		\
-			-lX11
+			-lX11		\
+			-lsfml-audio\
+			-lsfml-graphics
 
 COMP	=	g++
 

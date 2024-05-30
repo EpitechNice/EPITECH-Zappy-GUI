@@ -40,7 +40,7 @@ namespace Zappy {
                     void setHeight(float height) { _height = height; }
 
                     bool getStatut() const { return _statut; };
-                    float getValue() const { return _value; }
+                    float getValue() const;
                     float getWidth() const { return _width; }
                     float getHeight() const { return _height; }
                     std::string getName() const { return _name; }
