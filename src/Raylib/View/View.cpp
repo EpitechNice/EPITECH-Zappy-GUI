@@ -17,7 +17,7 @@ namespace Zappy {
                 float fovy,
                 CameraMode mode
             )
-                : _position(position), _target(target), _up(up), _fovy(fovy), _mode(mode)
+                : _position(position), _target(target), _up(up), _fovy(fovy), _mouseFollowing(true)
             {
                 _camera = (Camera){
                     .position = position,
@@ -55,9 +55,9 @@ namespace Zappy {
                 return _fovy;
             }
 
-            int View::getMode() const
+            bool View::isMouseFollowing() const
             {
-                return _mode;
+                return _mouseFollowing;
             }
 
 
@@ -110,32 +110,32 @@ namespace Zappy {
                 _camera.fovy = _fovy;
             }
 
-            void View::setMode(CameraMode mode)
+            void View::setMouseFollowing(bool mouseFollowing)
             {
-                _mode = mode;
+                _mouseFollowing = mouseFollowing;
             }
 
             void View::update()
             {
-                if (_mode == CAMERA_CUSTOM) {
-                    if (IsKeyDown(KEY_W)) _moveFront(0.09f);
-                    if (IsKeyDown(KEY_A)) _moveSide(-0.09f);
-                    if (IsKeyDown(KEY_S)) _moveFront(-0.09f);
-                    if (IsKeyDown(KEY_D)) _moveSide(0.09f);
+                int dash = (IsKeyDown(KEY_LEFT_SHIFT)) ? _dash : 1;
+                if (IsKeyDown(KEY_W)) _moveFront(_speed * dash);
+                if (IsKeyDown(KEY_A)) _moveSide(-_speed * dash);
+                if (IsKeyDown(KEY_S)) _moveFront(-_speed * dash);
+                if (IsKeyDown(KEY_D)) _moveSide(_speed * dash);
 
-                    if (IsKeyDown(KEY_SPACE)) _moveUp(0.09f);
-                    if (IsKeyDown(KEY_LEFT_CONTROL)) _moveUp(-0.09f);
+                if (IsKeyDown(KEY_SPACE)) _moveUp(_speed * dash);
+                if (IsKeyDown(KEY_LEFT_CONTROL)) _moveUp(-_speed * dash);
 
-                    if (IsKeyDown(KEY_DOWN)) _lookUp(-0.03f);
-                    if (IsKeyDown(KEY_UP)) _lookUp(0.03f);
-                    if (IsKeyDown(KEY_RIGHT)) _lookSide(-0.03f);
-                    if (IsKeyDown(KEY_LEFT)) _lookSide(0.03f);
-                } else
-                    UpdateCamera(&_camera, _mode);
-                _position = _camera.position;
-                _target = _camera.target;
-                _up = _camera.up;
-                _fovy = _camera.fovy;
+                if (IsKeyDown(KEY_DOWN)) _lookUp(-_angle);
+                if (IsKeyDown(KEY_UP)) _lookUp(_angle);
+                if (IsKeyDown(KEY_RIGHT)) _lookSide(-_angle);
+                if (IsKeyDown(KEY_LEFT)) _lookSide(_angle);
+
+                if (_mouseFollowing) {
+                    Vector2 mouse = GetMouseDelta();
+                    _lookSide(-mouse.x * _sensitivity);
+                    _lookUp(-mouse.y * _sensitivity);
+                }
             }
 
 

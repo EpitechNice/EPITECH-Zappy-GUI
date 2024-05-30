@@ -28,7 +28,7 @@ namespace Zappy {
             void Game::start()
             {
                 DisableCursor();
-                _render->view()->setMode(CAMERA_FREE);
+                _render->view()->setMouseFollowing(true);
                 _cursor = false;
             }
 
@@ -41,11 +41,11 @@ namespace Zappy {
                 if (IsKeyReleased(KEY_C)) {
                     if (_cursor) {
                         DisableCursor();
-                        _render->view()->setMode(CAMERA_FREE);
+                        _render->view()->setMouseFollowing(true);
                         _cursor = false;
                     } else {
                         EnableCursor();
-                        _render->view()->setMode(CAMERA_CUSTOM);
+                        _render->view()->setMouseFollowing(false);
                         _cursor = true;
                     }
                 }
