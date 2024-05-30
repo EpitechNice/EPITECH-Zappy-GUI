@@ -43,11 +43,11 @@ int main() {
     try {
         i18nHelper->setCurrentLocale(Zappy::GUI::I18n::SupportedLocale::fr_FR);
         std::string translation = i18nHelper->getTranslation("[menu.start_title]");
-        std::cout << "Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
+        std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
 
         i18nHelper->setCurrentLocale(Zappy::GUI::I18n::SupportedLocale::en_GB);
         translation = i18nHelper->getTranslation("[menu.start_title]");
-        std::cout << "Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
+        std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
 
     } catch (const std::exception& e) {
         std::cerr << "An error occurred: " << e.what() << std::endl;

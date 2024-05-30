@@ -25,35 +25,75 @@ namespace Zappy
                 }
             }
 
+//TODO (1): First draft of simple parser when in .txt it was like key=value (too simple I think)
+//             void I18nHelper::loadTranslations()
+//             {
+//                 std::string filepath;
+//                 std::ifstream translationFile;
+//                 std::string line;
+//                 size_t separatorPos;
+
+//                 try {
+//                     filepath = "lang/" + getLocaleValue(this->_currentLocale) + "/translations.txt";
+//                 } catch (const std::exception &e) {
+//                     throw Exceptions::TranslationFileNotFound("Error when try find translation file: " + std::string(e.what()), EXCEPTION_INFOS);
+//                 }
+
+//                 translationFile.open(filepath);
+//                 if (!translationFile.is_open())
+//                     throw Exceptions::TranslationFileNotFound("Error when open translation file: " + filepath);
+
+//                 if (!this->_translations.empty())
+//                     this->_translations.clear();
+//
+//                 while (getline(translationFile, line)) {
+//                     separatorPos = line.find('=');
+//                     if (separatorPos!= std::string::npos) {
+//                         std::string key = line.substr(0, separatorPos);
+//                         std::string value = line.substr(separatorPos + 1);
+//                         this->_translations[key] = value;
+//                     }
+//                 }
+//                 translationFile.close();
+//             }
+
+//TODO (2): So I made this parser based on regex pattern, .txt can be like [key] = "value";
+// And I think that regex could be more flexible
             void I18nHelper::loadTranslations()
             {
                 std::string filepath;
                 std::ifstream translationFile;
                 std::string line;
-                size_t separatorPos;
+                std::regex pattern(R"((\[.*?\])\s*=\s*\"(.*?)\")");
 
                 try {
-                    filepath = "lang/" + getLocaleValue(this->_currentLocale) + "/translations.txt";
+                    filepath = "lang/" + this->getLocaleValue(_currentLocale) + "/translations.txt";
                 } catch (const std::exception &e) {
-                    throw Exceptions::TranslationFileNotFound("Error when try find translation file: " + std::string(e.what()), EXCEPTION_INFOS);
+                    throw Exceptions::TranslationFileNotFound("Error when trying to find translation file: " + std::string(e.what()), EXCEPTION_INFOS);
                 }
 
                 translationFile.open(filepath);
-                if (!translationFile.is_open())
-                    throw Exceptions::TranslationFileNotFound("Error when open translation file: " + filepath);
+                if (!translationFile.is_open()) {
+                    throw Exceptions::TranslationFileNotFound("Error when opening translation file: " + filepath);
+                }
 
-                if (!this->_translations.empty())
+                if (!this->_translations.empty()) {
                     this->_translations.clear();
-//TODO : To review, parser should be more complete
+                }
+
                 while (getline(translationFile, line)) {
-                    separatorPos = line.find('=');
-                    if (separatorPos!= std::string::npos) {
-                        std::string key = line.substr(0, separatorPos);
-                        std::string value = line.substr(separatorPos + 1);
+                    std::smatch matches;
+                    if (std::regex_search(line, matches, pattern)) {
+                        std::string key = matches[1].str();
+                        std::string value = matches[2].str();
                         this->_translations[key] = value;
                     }
                 }
                 translationFile.close();
+//TODO : Debug (to delete)
+                for (const auto& translation : this->_translations) {
+                    std::cout << "DEBUG | " << translation.first << " = '" << translation.second << "'" << std::endl;
+                }
             }
 
             SupportedLocale I18nHelper::getCurrentLocale()
@@ -74,7 +114,7 @@ namespace Zappy
                 return "";
             }
 
-//TODO : Verify that we throw an exception when translation key not found or any other way
+//TODO : Verify if we want to throw an exception when translation key not found or any other way
             std::string I18nHelper::getTranslation(std::string key)
             {
                 try {

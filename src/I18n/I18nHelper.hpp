@@ -13,6 +13,7 @@
     #include <map>
     #include <iostream>
     #include <fstream>
+    #include <regex>
     #include "Exceptions.hpp"
 
 namespace Zappy
