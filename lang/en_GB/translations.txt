@@ -3,3 +3,4 @@
 [menu.help_title] = "HELP"
 [menu.credits_title] = "CREDITS"
 [menu.quit_title] = "QUIT"
+[UwU] = "(◕ᴗ◕✿)"

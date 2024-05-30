@@ -3,3 +3,4 @@
 [menu.help_title] = "AIDE"
 [menu.credits_title] = "CRÉDITS"
 [menu.quit_title] = "QUITTER"
+[UwU] = "(ಠ_ಠ)"
