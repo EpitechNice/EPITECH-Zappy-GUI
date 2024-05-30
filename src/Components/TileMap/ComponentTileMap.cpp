@@ -25,8 +25,30 @@ namespace Zappy {
                 }
             }
 
-            void TileMap::update()
+            void TileMap::update(std::shared_ptr<Raylib::Render> render)
             {
+                std::pair<int, int> highLight = { -1, -1 };
+                Vector2 point = GetMousePosition();
+                if (render->view()->isMouseFollowing())
+                    point = {(float)(GetScreenWidth() / 2), (float)(GetScreenHeight() / 2)};
+                Ray ray = GetMouseRay(point, render->view()->getCamera());
+
+                for (int x = 0; x < _size.first; x++) {
+                    for (int z = 0; z < _size.second; z++) {
+                        BoundingBox box = _tiles[x][z]->getTopBox();
+                        RayCollision tmp = GetRayCollisionBox(ray, box);
+                        if (tmp.hit) {
+                            highLight = { x, z };
+                        }
+                    }
+                }
+                if (highLight != _highLight) {
+                    if (_highLight.first != -1 && _highLight.second != -1)
+                        _tiles[_highLight.first][_highLight.second]->highlight(false);
+                    if (highLight.first != -1 && highLight.second != -1)
+                        _tiles[highLight.first][highLight.second]->highlight(true);
+                    _highLight = highLight;
+                }
             }
 
             void TileMap::draw()

@@ -17,6 +17,19 @@ namespace Zappy {
                 _dirt = std::make_unique<Cubic>((Vector3){pos.x, pos.y - 0.2f, pos.z}, (Vector3){1.0f, 0.6f, 1.0f}, BROWN);
             }
 
+            Vector3 Tile::getPos() const
+            {
+                return _pos;
+            }
+
+            BoundingBox Tile::getTopBox() const
+            {
+                return {
+                    .min = { _pos.x - 0.5f, _pos.y + 0.3f, _pos.z - 0.5f },
+                    .max = { _pos.x + 0.5f, _pos.y + 0.3f, _pos.z + 0.5f }
+                };
+            }
+
             void Tile::draw()
             {
                 _grass->draw();

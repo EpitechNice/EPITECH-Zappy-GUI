@@ -17,6 +17,11 @@ namespace Zappy {
                 _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
                 _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, std::make_pair(20, 40));
+
+                _crossPointer = std::make_pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>>(
+                    std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
+                    std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
+                );
             }
 
             void Game::destroy()
@@ -39,6 +44,7 @@ namespace Zappy {
                 _skybox->update(_render);
                 _borderbox->update(_render);
                 _chatbox->update();
+                _tileMap->update(_render);
 
                 if (IsKeyReleased(KEY_C)) {
                     if (_cursor) {
@@ -51,8 +57,6 @@ namespace Zappy {
                         _cursor = true;
                     }
                 }
-                if (_cursor)
-                    _tileMap->update();
             }
 
             void Game::event()
@@ -70,12 +74,10 @@ namespace Zappy {
             {
                 _chatbox->draw();
 
-                auto pos = _render->view()->getPosition();
-                auto target = _render->view()->getTarget();
-                std::string posStr = "Pos [" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "]";
-                std::string targetStr = "Target [" + std::to_string(target.x) + ", " + std::to_string(target.y) + ", " + std::to_string(target.z) + "]";
-                DrawText(posStr.c_str(), 15, 15, 15, WHITE);
-                DrawText(targetStr.c_str(), 15, 30, 15, WHITE);
+                if (!_cursor) {
+                    _crossPointer.first->draw();
+                    _crossPointer.second->draw();
+                }
             }
 
             std::string Game::nextScene()

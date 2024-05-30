@@ -22,6 +22,9 @@ namespace Zappy {
                     Tile(Vector3 pos, Color color);
                     ~Tile() = default;
 
+                    Vector3 getPos() const;
+                    BoundingBox getTopBox() const;
+
                     void draw();
 
                     void highlight(bool highlight);

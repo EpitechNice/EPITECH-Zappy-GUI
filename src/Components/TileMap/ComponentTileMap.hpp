@@ -12,6 +12,7 @@
     #include <vector>
 
     #include "ComponentTile.hpp"
+    #include "Render.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -21,7 +22,7 @@ namespace Zappy {
                     TileMap(Vector3 pos, std::pair<int, int> size);
                     ~TileMap() = default;
 
-                    void update();
+                    void update(std::shared_ptr<Raylib::Render> render);
 
                     void draw();
 
@@ -32,6 +33,7 @@ namespace Zappy {
                     Vector3 _pos;
                     std::pair<int, int> _size;
                     std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
+                    std::pair<int, int> _highLight;
             };
         }
     }

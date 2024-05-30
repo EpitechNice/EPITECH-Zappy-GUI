@@ -42,6 +42,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
                     std::unique_ptr<Zappy::GUI::Component::TileMap> _tileMap;
+                    std::pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>> _crossPointer;
                     bool _cursor;
             };
         }
