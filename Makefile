@@ -21,6 +21,8 @@ SRC		=   src/Main.cpp														\
 			src/Components/TextGroup/ComponentTextGroup.cpp						\
 			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp	\
 			src/Components/TextMessage/ComponentTextMessage.cpp					\
+			src/Exceptions/Exceptions.cpp										\
+			src/I18n/I18nHelper.cpp												\
 			src/Parsing/Parsing.cpp												\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
@@ -78,6 +80,8 @@ INCLUDES	=	-I./libs/includes						\
 				-I./src/Components/TextGroup			\
 				-I./src/Components/TextGroupDraggable	\
 				-I./src/Components/TextMessage			\
+				-I./src/Exceptions						\
+				-I./src/I18n							\
 				-I./src/Parsing							\
 				-I./src/Raylib/ColorManager				\
 				-I./src/Raylib/Render					\
