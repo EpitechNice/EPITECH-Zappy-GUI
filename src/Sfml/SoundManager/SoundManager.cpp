@@ -37,6 +37,7 @@ namespace Zappy {
 
             void SoundManager::playgeneralSound()
             {
+                _generalSound.setLoop(true);
                 _generalSound.play();
             }
 
