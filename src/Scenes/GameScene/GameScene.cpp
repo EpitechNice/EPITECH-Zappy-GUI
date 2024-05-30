@@ -16,16 +16,7 @@ namespace Zappy {
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
                 _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
-
-                _tiles.clear();
-                for (float x = 0; x < 20; x++) {
-                    for (float z = 0; z < 20; z++) {
-                        Color grassColor = { 112, 224, 0, 255 };
-                        if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
-                            grassColor = { 60, 186, 2, 255 };
-                        _tiles.push_back(std::make_unique<Component::Tile>((Vector3){ x, 0, z }, grassColor));
-                    }
-                }
+                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, std::make_pair(20, 40));
             }
 
             void Game::destroy()
@@ -40,6 +31,7 @@ namespace Zappy {
                 DisableCursor();
                 _render->view()->setMouseFollowing(true);
                 _cursor = false;
+                _render->view()->enableCamera();
             }
 
             void Game::update()
@@ -59,6 +51,8 @@ namespace Zappy {
                         _cursor = true;
                     }
                 }
+                if (_cursor)
+                    _tileMap->update();
             }
 
             void Game::event()
@@ -69,13 +63,19 @@ namespace Zappy {
             {
                 _skybox->draw();
                 _borderbox->draw();
-                for (auto &tile: _tiles)
-                    tile->draw();
+                _tileMap->draw();
             }
 
             void Game::draw2D()
             {
                 _chatbox->draw();
+
+                auto pos = _render->view()->getPosition();
+                auto target = _render->view()->getTarget();
+                std::string posStr = "Pos [" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "]";
+                std::string targetStr = "Target [" + std::to_string(target.x) + ", " + std::to_string(target.y) + ", " + std::to_string(target.z) + "]";
+                DrawText(posStr.c_str(), 15, 15, 15, WHITE);
+                DrawText(targetStr.c_str(), 15, 30, 15, WHITE);
             }
 
             std::string Game::nextScene()

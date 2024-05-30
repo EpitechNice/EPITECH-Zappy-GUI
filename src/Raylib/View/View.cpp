@@ -20,6 +20,7 @@ namespace Zappy {
                     .fovy = fovy,
                     .projection = CAMERA_PERSPECTIVE
                 };
+                _enable = true;
             }
 
 
@@ -109,8 +110,22 @@ namespace Zappy {
                 _mouseFollowing = mouseFollowing;
             }
 
+
+            void View::enableCamera()
+            {
+                _enable = true;
+            }
+
+            void View::disableCamera()
+            {
+                _enable = false;
+            }
+
+
             void View::update()
             {
+                if (!_enable) return;
+
                 int dash = (IsKeyDown(KEY_LEFT_SHIFT)) ? _dash : 1;
                 if (IsKeyDown(KEY_W)) _moveFront(_speed * dash);
                 if (IsKeyDown(KEY_A)) _moveSide(-_speed * dash);

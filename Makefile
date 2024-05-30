@@ -23,6 +23,7 @@ SRC		=   src/Main.cpp														\
 			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp	\
 			src/Components/TextMessage/ComponentTextMessage.cpp					\
 			src/Components/Tile/ComponentTile.cpp								\
+			src/Components/TileMap/ComponentTileMap.cpp							\
 			src/Parsing/Parsing.cpp												\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
@@ -82,6 +83,7 @@ INCLUDES	=	-I./libs/includes						\
 				-I./src/Components/TextGroupDraggable	\
 				-I./src/Components/TextMessage			\
 				-I./src/Components/Tile					\
+				-I./src/Components/TileMap				\
 				-I./src/Parsing							\
 				-I./src/Raylib/ColorManager				\
 				-I./src/Raylib/Render					\

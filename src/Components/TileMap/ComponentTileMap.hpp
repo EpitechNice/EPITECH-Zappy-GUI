@@ -1,0 +1,40 @@
+/*
+** EPITECH PROJECT, 2024
+** GUI
+** File description:
+** ComponentTileMap
+*/
+
+#ifndef COMPONENT_TILE_MAP_HPP_
+    #define COMPONENT_TILE_MAP_HPP_
+
+    #include <memory>
+    #include <vector>
+
+    #include "ComponentTile.hpp"
+
+namespace Zappy {
+    namespace GUI {
+        namespace Component {
+            class TileMap {
+                public:
+                    TileMap(Vector3 pos, std::pair<int, int> size);
+                    ~TileMap() = default;
+
+                    void update();
+
+                    void draw();
+
+                    std::vector<std::vector<std::shared_ptr<Tile>>> tiles();
+
+                protected:
+                private:
+                    Vector3 _pos;
+                    std::pair<int, int> _size;
+                    std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
+            };
+        }
+    }
+}
+
+#endif /* !COMPONENT_TILE_MAP_HPP_ */

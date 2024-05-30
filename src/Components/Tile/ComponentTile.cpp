@@ -14,7 +14,7 @@ namespace Zappy {
                 : _pos(pos), _color(color), _highlight(false)
             {
                 _grass = std::make_unique<Cubic>((Vector3){pos.x, pos.y + 0.3f, pos.z}, (Vector3){1.0f, 0.4f, 1.0f}, color);
-                _dirt = std::make_unique<Cubic>((Vector3){pos.x, -0.2f, pos.z}, (Vector3){1.0f, 0.6f, 1.0f}, BROWN);
+                _dirt = std::make_unique<Cubic>((Vector3){pos.x, pos.y - 0.2f, pos.z}, (Vector3){1.0f, 0.6f, 1.0f}, BROWN);
             }
 
             void Tile::draw()

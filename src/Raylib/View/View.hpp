@@ -18,8 +18,8 @@ namespace Zappy {
             class View {
                 public:
                     View(
-                        Vector3 position = (Vector3){ 0.0f, 0.0f, 5.0f },
-                        Vector3 target = (Vector3){0.0f, 0.0f, 0.0f},
+                        Vector3 position = (Vector3){ -8.5f, 12.8f, -9.6f },
+                        Vector3 target = (Vector3){-5.4f, 10.5f, -5.9f},
                         Vector3 up = (Vector3){0.0f, 1.0f, 0.0f},
                         float fovy = 45.0f
                     );
@@ -42,6 +42,9 @@ namespace Zappy {
                     void modFovy(float fovy);
                     void setMouseFollowing(bool mouseFollowing);
 
+                    void disableCamera();
+                    void enableCamera();
+
                     void update();
 
                 private:
@@ -51,6 +54,7 @@ namespace Zappy {
                     Vector3 _up;
                     float _fovy;
                     bool _mouseFollowing;
+                    bool _enable;
 
                     float _speed = 0.15f;
                     float _angle = 0.05f;
