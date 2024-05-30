@@ -52,6 +52,16 @@ namespace Zappy {
                     Vector3 _up;
                     float _fovy;
                     CameraMode _mode;
+
+
+                    Vector3 _getFront();
+                    Vector3 _getUp();
+                    Vector3 _getSide();
+                    void _moveFront(float speed);
+                    void _moveSide(float speed);
+                    void _moveUp(float speed);
+                    void _lookUp(float speed);
+                    void _lookSide(float speed);
             };
         }
     }
