@@ -17,7 +17,7 @@ namespace Zappy {
                 float fovy,
                 CameraMode mode
             )
-                : _position(position), _target(target), _up(up), _fovy(fovy), _mode(mode)
+                : _position(position), _target(target), _up(up), _fovy(fovy), _mouseFollowing(true)
             {
                 _camera = (Camera){
                     .position = position,
@@ -55,9 +55,9 @@ namespace Zappy {
                 return _fovy;
             }
 
-            int View::getMode() const
+            bool View::isMouseFollowing() const
             {
-                return _mode;
+                return _mouseFollowing;
             }
 
 
@@ -110,20 +110,82 @@ namespace Zappy {
                 _camera.fovy = _fovy;
             }
 
-            void View::setMode(CameraMode mode)
+            void View::setMouseFollowing(bool mouseFollowing)
             {
-                _mode = mode;
+                _mouseFollowing = mouseFollowing;
             }
-
-
 
             void View::update()
             {
-                UpdateCamera(&_camera, _mode);
-                _position = _camera.position;
-                _target = _camera.target;
-                _up = _camera.up;
-                _fovy = _camera.fovy;
+                int dash = (IsKeyDown(KEY_LEFT_SHIFT)) ? _dash : 1;
+                if (IsKeyDown(KEY_W)) _moveFront(_speed * dash);
+                if (IsKeyDown(KEY_A)) _moveSide(-_speed * dash);
+                if (IsKeyDown(KEY_S)) _moveFront(-_speed * dash);
+                if (IsKeyDown(KEY_D)) _moveSide(_speed * dash);
+
+                if (IsKeyDown(KEY_SPACE)) _moveUp(_speed * dash);
+                if (IsKeyDown(KEY_LEFT_CONTROL)) _moveUp(-_speed * dash);
+
+                if (IsKeyDown(KEY_DOWN)) _lookUp(-_angle);
+                if (IsKeyDown(KEY_UP)) _lookUp(_angle);
+                if (IsKeyDown(KEY_RIGHT)) _lookSide(-_angle);
+                if (IsKeyDown(KEY_LEFT)) _lookSide(_angle);
+
+                if (_mouseFollowing) {
+                    Vector2 mouse = GetMouseDelta();
+                    _lookSide(-mouse.x * _sensitivity);
+                    _lookUp(-mouse.y * _sensitivity);
+                }
+            }
+
+
+            Vector3 View::_getFront()
+            {
+                return Vector3Normalize(Vector3Subtract(_target, _position));
+            }
+
+            Vector3 View::_getUp()
+            {
+                return Vector3Normalize(_up);
+            }
+
+            Vector3 View::_getSide()
+            {
+                return Vector3Normalize(Vector3CrossProduct(_getFront(), _getUp()));
+            }
+
+            void View::_moveFront(float speed)
+            {
+                Vector3 front = Vector3Scale(_getFront(), speed);
+                setPosition(Vector3Add(_position, front));
+                setTarget(Vector3Add(_target, front));
+            }
+
+            void View::_moveUp(float speed)
+            {
+                Vector3 up = Vector3Scale(_getUp(), speed);
+                setPosition(Vector3Add(_position, up));
+                setTarget(Vector3Add(_target, up));
+            }
+
+            void View::_moveSide(float speed)
+            {
+                Vector3 side = Vector3Scale(_getSide(), speed);
+                setPosition(Vector3Add(_position, side));
+                setTarget(Vector3Add(_target, side));
+            }
+
+            void View::_lookUp(float speed)
+            {
+                Vector3 right = _getSide();
+                setTarget(Vector3Add(_position, Vector3RotateByAxisAngle(Vector3Subtract(_target, _position), right, speed)));
+            }
+
+            void View::_lookSide(float speed)
+            {
+                Vector3 targetPos = Vector3Subtract(_target, _position);
+                targetPos = Vector3RotateByAxisAngle(targetPos, _getUp(), speed);
+                setTarget(Vector3Add(_position, targetPos));
             }
         }
     }

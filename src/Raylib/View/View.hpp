@@ -31,7 +31,7 @@ namespace Zappy {
                     [[ nodiscard ]] Vector3 getTarget() const;
                     [[ nodiscard ]] Vector3 getUp() const;
                     [[ nodiscard ]] float getFovy() const;
-                    [[ nodiscard ]] int getMode() const;
+                    [[ nodiscard ]] bool isMouseFollowing() const;
 
                     void setPosition(Vector3 position);
                     void modPosition(Vector3 position);
@@ -41,7 +41,7 @@ namespace Zappy {
                     void modUp(Vector3 up);
                     void setFovy(float fovy);
                     void modFovy(float fovy);
-                    void setMode(CameraMode mode);
+                    void setMouseFollowing(bool mouseFollowing);
 
                     void update();
 
@@ -51,7 +51,22 @@ namespace Zappy {
                     Vector3 _target;
                     Vector3 _up;
                     float _fovy;
-                    CameraMode _mode;
+                    bool _mouseFollowing;
+
+                    float _speed = 0.15f;
+                    float _angle = 0.05f;
+                    float _dash = 4.0f;
+                    float _sensitivity = 0.003f;
+
+
+                    Vector3 _getFront();
+                    Vector3 _getUp();
+                    Vector3 _getSide();
+                    void _moveFront(float speed);
+                    void _moveSide(float speed);
+                    void _moveUp(float speed);
+                    void _lookUp(float speed);
+                    void _lookSide(float speed);
             };
         }
     }

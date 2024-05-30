@@ -27,8 +27,9 @@ namespace Zappy {
 
             void Game::start()
             {
-                EnableCursor();
-                _cursor = true;
+                DisableCursor();
+                _render->view()->setMouseFollowing(true);
+                _cursor = false;
             }
 
             void Game::update()
@@ -40,9 +41,11 @@ namespace Zappy {
                 if (IsKeyReleased(KEY_C)) {
                     if (_cursor) {
                         DisableCursor();
+                        _render->view()->setMouseFollowing(true);
                         _cursor = false;
                     } else {
                         EnableCursor();
+                        _render->view()->setMouseFollowing(false);
                         _cursor = true;
                     }
                 }
