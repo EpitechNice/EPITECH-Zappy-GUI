@@ -16,6 +16,16 @@ namespace Zappy {
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
                 _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
+
+                _tiles.clear();
+                for (float x = 0; x < 20; x++) {
+                    for (float z = 0; z < 20; z++) {
+                        Color grassColor = { 112, 224, 0, 255 };
+                        if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
+                            grassColor = { 60, 186, 2, 255 };
+                        _tiles.push_back(std::make_unique<Component::Tile>((Vector3){ x, 0, z }, grassColor));
+                    }
+                }
             }
 
             void Game::destroy()
@@ -59,17 +69,8 @@ namespace Zappy {
             {
                 _skybox->draw();
                 _borderbox->draw();
-                for (float x = 0; x < 20; x++) {
-                    for (float z = 0; z < 20; z++) {
-                        Vector3 grass = { x, 0, z };
-                        Vector3 dirt = { x, -0.5f, z };
-                        Color grassColor = { 112, 224, 0, 255 };
-                        if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
-                            grassColor = { 60, 186, 2, 255 };
-                        DrawCube(grass, 1.0f, 0.4f, 1.0f, grassColor);
-                        DrawCube(dirt, 1.0f, 0.6f, 1.0f, BROWN);
-                    }
-                }
+                for (auto &tile: _tiles)
+                    tile->draw();
             }
 
             void Game::draw2D()

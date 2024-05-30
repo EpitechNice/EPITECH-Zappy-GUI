@@ -16,6 +16,7 @@
     #include "AScene.hpp"
     #include "ComponentSkybox.hpp"
     #include "ComponentChatbox.hpp"
+    #include "ComponentTile.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -40,6 +41,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
+                    std::vector<std::unique_ptr<Zappy::GUI::Component::Tile>> _tiles;
                     bool _cursor;
             };
         }

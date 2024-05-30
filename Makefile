@@ -12,6 +12,7 @@ SRC		=   src/Main.cpp														\
 			src/Components/ButtonClassic/ComponentButtonClassic.cpp				\
 			src/Components/Chatbox/ComponentChatbox.cpp							\
 			src/Components/Circle/ComponentCircle.cpp							\
+			src/Components/Cubic/ComponentCubic.cpp								\
 			src/Components/Image/ComponentImage.cpp								\
 			src/Components/Rectangle/ComponentRectangle.cpp						\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
@@ -21,6 +22,7 @@ SRC		=   src/Main.cpp														\
 			src/Components/TextGroup/ComponentTextGroup.cpp						\
 			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp	\
 			src/Components/TextMessage/ComponentTextMessage.cpp					\
+			src/Components/Tile/ComponentTile.cpp								\
 			src/Parsing/Parsing.cpp												\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
@@ -69,6 +71,7 @@ INCLUDES	=	-I./libs/includes						\
 				-I./src/Components/ButtonClassic		\
 				-I./src/Components/Chatbox				\
 				-I./src/Components/Circle				\
+				-I./src/Components/Cubic				\
 				-I./src/Components/Image				\
 				-I./src/Components/Rectangle			\
 				-I./src/Components/RoundedRectangle		\
@@ -78,6 +81,7 @@ INCLUDES	=	-I./libs/includes						\
 				-I./src/Components/TextGroup			\
 				-I./src/Components/TextGroupDraggable	\
 				-I./src/Components/TextMessage			\
+				-I./src/Components/Tile					\
 				-I./src/Parsing							\
 				-I./src/Raylib/ColorManager				\
 				-I./src/Raylib/Render					\

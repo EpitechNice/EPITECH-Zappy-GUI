@@ -10,13 +10,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Raylib {
-            View::View(
-                Vector3 position,
-                Vector3 target,
-                Vector3 up,
-                float fovy,
-                CameraMode mode
-            )
+            View::View(Vector3 position, Vector3 target, Vector3 up, float fovy)
                 : _position(position), _target(target), _up(up), _fovy(fovy), _mouseFollowing(true)
             {
                 _camera = (Camera){
