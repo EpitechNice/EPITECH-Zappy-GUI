@@ -100,6 +100,13 @@ namespace Zappy {
                 return false;
             }
 
+            bool Button::isClickedWihoutSong()
+            {
+                if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+                    return true;
+                return false;
+            }
+
             void Button::_updateState()
             {
                 if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_pos.first, _pos.second, _size.first, _size.second})) {

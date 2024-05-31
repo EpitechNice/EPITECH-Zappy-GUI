@@ -37,6 +37,7 @@ namespace Zappy {
                     void destroy();
                     void draw();
                     bool isClicked();
+                    bool isClickedWihoutSong();
 
                     void setSize(const std::pair<float, float>& size);
                     void setPos(const std::pair<float, float>& Pos);
