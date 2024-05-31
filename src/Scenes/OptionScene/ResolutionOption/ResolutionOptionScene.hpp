@@ -14,6 +14,7 @@
     #include "ComponentBackground2D.hpp"
     #include "ComponentButton.hpp"
     #include "ComponentText.hpp"
+    #include "SceneManager.hpp"
 
 namespace Zappy {
     namespace GUI {

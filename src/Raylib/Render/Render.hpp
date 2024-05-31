@@ -53,11 +53,11 @@ namespace Zappy {
                     int _height;
                     int _width;
                     int _fps;
+                    Langue _langue;
 
                     std::string _pathMusiquePrincipal;
                     sf::Music _musiquePrincipal;
 
-                    Langue _langue;
                     bool _isDestroyed;
                     Image _icon;
                     std::shared_ptr<View> _view;

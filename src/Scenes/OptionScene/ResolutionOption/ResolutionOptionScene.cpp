@@ -109,11 +109,11 @@ namespace Zappy {
                 for (auto &button : _resolutionButtons) {
                     if (button.first->isClicked()){
                         if (button.second == "Resolution_2960x1440")
-                            _resolution = Resolution_2960x1440;
+                            _render->setDimensions(620, 1480);
                         else if (button.second == "Resolution_1920x1080")
-                            _resolution = Resolution_1920x1080;
+                            _render->setDimensions(540, 810);
                         else if (button.second == "Resolution_1334x750")
-                            _resolution = Resolution_1334x750;
+                            _render->setDimensions(700, 1250);
                         for (auto &otherButton : _resolutionButtons) {
                             if (otherButton.first != button.first)
                                 otherButton.first->changeColor(GREEN);

@@ -92,7 +92,12 @@ namespace Zappy {
 
             bool Button::isClicked()
             {
-                return _state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON);
+                if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
+                    Sfml::SoundManager::getInstance().playButtonClickSound();
+                    return true;
+                }
+                return false;
             }
 
             void Button::_updateState()
@@ -161,8 +166,6 @@ namespace Zappy {
                     _text->setPos(std::make_pair(_textPos.first, _textPos.second + _hoverEffect));
                     _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _hoverEffect));
                 } else if (_state == CLICKED) {
-                    Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
-                    Sfml::SoundManager::getInstance().playButtonClickSound();
                     _blackStroke->setSize(std::make_pair(_size.first + 2, _size.second + 2 - _pressEffect));
                     _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1 + _pressEffect));
                     _upEffect->setSize(std::make_pair(_size.first, _size.second - _pressEffect));

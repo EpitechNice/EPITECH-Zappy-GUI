@@ -108,23 +108,6 @@ namespace Zappy {
                     button.first->draw();
             }
 
-            std::string SoundOption::nextScene()
-            {
-                for (auto &button : _buttons) {
-                    if (button.first->isClicked()) {
-                        if (handleButtonClicked(button)) {
-                            return "soundSetting";
-                        }
-                    }
-                }
-
-                if (_backButton->isClicked()) {
-                    return "option";
-                }
-
-                return "soundSetting";
-            }
-
             bool SoundOption::handleButtonClicked(const std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> &button)
             {
                 std::string buttonText = button.first->getText();
@@ -146,9 +129,8 @@ namespace Zappy {
                         float yPos = (clickedButton.second == "slider1") ? (_render->getHeight() / 5.9 - 30 / 2) : (_render->getHeight() / 1.8 - 30 / 2);
                         float xPos = (clickedButton.first->getText() == "on") ? (_render->getWidth() / 2 + 180) : (_render->getWidth() / 2 + 60);
                         for (auto &slider : _volumeSlider) {
-                            if (clickedButton.second == slider->getName()) {
+                            if (clickedButton.second == slider->getName())
                                 adjustSliderVolume(slider, clickedButton.first->getText() == "on");
-                            }
                         }
                         newPosSmallButton = std::make_pair(xPos, yPos);
                         otherButton.first->changePos(newPosSmallButton);
@@ -162,18 +144,16 @@ namespace Zappy {
             void SoundOption::adjustSliderVolume(std::unique_ptr<Zappy::GUI::Component::SliderVolume> &slider, bool isButtonOn)
             {
                 if (isButtonOn) {
-                    if (slider->getName() == "slider1") {
+                    if (slider->getName() == "slider1")
                         Sfml::SoundManager::getInstance().setVolumeGeneralMusique(slider->getValue());
-                    } else {
+                    else
                         Sfml::SoundManager::getInstance().setVolumeEffetSonore(slider->getValue());
-                    }
                     slider->setStatut(slider->getValue());
                 } else {
-                    if (slider->getName() == "slider1") {
+                    if (slider->getName() == "slider1")
                         Sfml::SoundManager::getInstance().setVolumeGeneralMusique(0.0f);
-                    } else {
+                    else
                         Sfml::SoundManager::getInstance().setVolumeEffetSonore(0.0f);
-                    }
                     slider->setStatut(0.0f);
                 }
             }
@@ -181,10 +161,22 @@ namespace Zappy {
             void SoundOption::adjustSoundVolume(const std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> &button, bool isButtonOn)
             {
                 for (auto &slider : _volumeSlider) {
-                    if (button.second == slider->getName()) {
+                    if (button.second == slider->getName())
                         adjustSliderVolume(slider, isButtonOn);
+                }
+            }
+
+            std::string SoundOption::nextScene()
+            {
+                for (auto &button : _buttons) {
+                    if (button.first->isClicked()) {
+                        if (handleButtonClicked(button))
+                            return "soundSetting";
                     }
                 }
+                if (_backButton->isClicked())
+                    return "option";
+                return "soundSetting";
             }
         }
     }
