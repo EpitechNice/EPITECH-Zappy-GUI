@@ -5,8 +5,8 @@
 ** DisplayCreditScene
 */
 
-#ifndef SCENE_CREDIT3SCENE_HPP_
-    #define SCENE_CREDIT3SCENE_HPP_
+#ifndef SCENE_DISPLAYCREDITSCENE_HPP_
+    #define SCENE_DISPLAYCREDITSCENE_HPP_
 
     #include <memory>
     #include <chrono>
@@ -43,4 +43,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !SCENE_CREDIT3SCENE_HPP_ */
+#endif /* !SCENE_DISPLAYCREDITSCENE_HPP_ */

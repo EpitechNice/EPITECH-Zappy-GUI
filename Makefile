@@ -24,6 +24,7 @@ SRC		=   src/Main.cpp														\
 			src/Raylib/View/View.cpp											\
 			src/SceneManager/SceneManager.cpp									\
 			src/Scenes/AScene/AScene.cpp										\
+			src/Scenes/HelperScene/HelperScene.cpp								\
 			src/Scenes/CreditScene/CreditScene.cpp								\
 			src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp	\
 			src/Scenes/GameScene/GameScene.cpp									\
@@ -80,6 +81,7 @@ INCLUDES	=	-I./libs/includes								\
 				-I./src/Scenes/IScene							\
 				-I./src/Scenes/AScene							\
 				-I./src/Scenes/CreditScene						\
+				-I./src/Scenes/HelperScene						\
 				-I./src/Scenes/CreditScene/DisplayCreditScene   \
 				-I./src/Scenes/GameScene						\
 				-I./src/Scenes/MenuScene						\

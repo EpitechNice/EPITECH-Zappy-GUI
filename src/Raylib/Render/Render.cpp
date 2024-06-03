@@ -11,7 +11,7 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             Render::Render(int height, int width, int fps)
-                : _height(height), _width(width), _fps(fps), _langue(FRANCAIS), _pathMusiquePrincipal("assets/Musique/loopPrincipalMusique.wav"), _isDestroyed(false)
+                : _height(height), _width(width), _fps(fps), _langue(FRANCAIS), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
                 InitWindow(width, height, "Zappy");
                 SetTargetFPS(fps);

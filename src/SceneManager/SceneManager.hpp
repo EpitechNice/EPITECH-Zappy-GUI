@@ -19,6 +19,7 @@
     #include "MenuScene.hpp"
     #include "OptionScene.hpp"
     #include "CreditScene.hpp"
+    #include "HelperScene.hpp"
     #include "DisplayCreditScene/DisplayCreditScene.hpp"
     #include "SoundOption/SoundOptionScene.hpp"
     #include "ResolutionOption/ResolutionOptionScene.hpp"

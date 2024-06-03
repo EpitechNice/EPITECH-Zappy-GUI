@@ -171,10 +171,10 @@ namespace Zappy {
                     handleButtonClicked(button);
             }
             for (auto &button : _buttons) {
-                if (button.first->isClicked())
+                if (button.first->isClicked(button.first->getText()))
                     handleButtonClicked(button);
             }
-            if (_backButton->isClicked())
+            if (_backButton->isClicked(_backButton->getText()))
                 return "option";
             return "soundSetting";
         }

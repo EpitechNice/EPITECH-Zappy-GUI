@@ -66,9 +66,9 @@ namespace Zappy {
             std::string Credit::nextScene()
             {
                 for (auto &button : _generalButtons) {
-                    if (button.first->isClicked())
+                    if (button.first->isClicked(button.first->getText()))
                         return button.second;
-                    if (_backButton->isClicked())
+                    if (_backButton->isClicked(_backButton->getText()))
                         return "menu";
                 }
                 return "credits";

@@ -20,6 +20,7 @@ namespace Zappy {
             _scenes["credit1"] = std::make_shared<Zappy::GUI::Scene::CreditScene>(_render, "texte 1\n exemple de crédit blablaBlaBleabelz\n yjjdssk,x,dcdsdqsxdscdcf\nouzhpuxhaocxysidjcqad\n", 1);
             _scenes["credit2"] = std::make_shared<Zappy::GUI::Scene::CreditScene>(_render, "texte 2\n exemple de crédit blablaBlaBleabelz\n yjjdssk,x,dcdsdqsxdscdcf\nouzhpuxhaocxysidjcqad\n", 2);
             _scenes["credit3"] = std::make_shared<Zappy::GUI::Scene::CreditScene>(_render, "texte 3\n exemple de crédit blablaBlaBleabelz\n yjjdssk,x,dcdsdqsxdscdcf\nouzhpuxhaocxysidjcqad\n", 3);
+            _scenes["help"] = std::make_shared<Zappy::GUI::Scene::HelperScene>(_render, "Helper:\n exemple de helper \n blablaBlaBleabelz\n yjjdssk,x,dcdsdqsxdscdcf\nouzhpuxhaocxysidjcqad\n");
             _scenes["option"] = std::make_shared<Zappy::GUI::Scene::Option>(_render);
             _scenes["soundSetting"] = std::make_shared<Zappy::GUI::Scene::SoundOption>(_render);
             _scenes["resolutionSetting"] = std::make_shared<Zappy::GUI::Scene::ResolutionOption>(_render);

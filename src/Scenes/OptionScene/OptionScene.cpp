@@ -93,13 +93,13 @@ namespace Zappy {
             std::string Option::nextScene()
             {
                 for (auto &button : _generalButtons) {
-                    if (button.first->isClicked())
+                    if (button.first->isClicked(button.first->getText()))
                         return button.second;
-                    if (_backButton->isClicked())
+                    if (_backButton->isClicked(_backButton->getText()))
                         return "menu";
                 }
                 for (auto &button : _langueButtons) {
-                    if (button.first->isClicked()) {
+                    if (button.first->isClicked(button.first->getText())) {
                         if (button.second == "FRANCAIS")
                             _render->setLangue(FRANCAIS);
                         else if (button.second == "ANGLAIS")

@@ -46,7 +46,7 @@ namespace Zappy {
 
             std::string CreditScene::nextScene()
             {
-                if (_backButton->isClicked())
+                if (_backButton->isClicked(_backButton->getText()))
                     return "credits";
                 std::string txt = "credit" + std::to_string(_sceneNbr);
                 return txt;

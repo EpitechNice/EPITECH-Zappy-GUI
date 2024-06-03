@@ -95,10 +95,10 @@ namespace Zappy {
         }
         std::string Scene::ResolutionOption::nextScene()
         {
-            if (_backButton->isClicked())
+            if (_backButton->isClicked(_backButton->getText()))
                 return "option";
             for (auto &button : _resolutionButtons) {
-                if (button.first->isClicked()){
+                if (button.first->isClicked(button.first->getText())){
                     if (button.second == "Resolution_2960x1440")
                         _render->setDimensions(620, 1480);
                     else if (button.second == "Resolution_1920x1080")
@@ -113,7 +113,7 @@ namespace Zappy {
                 }
             }
             for (auto &button : _fpsButtons) {
-                if (button.first->isClicked()){
+                if (button.first->isClicked(button.first->getText())){
                     if (button.second == "FPS_30"){
                         _render->setFps(30);
                     } else if (button.second == "FPS_60")

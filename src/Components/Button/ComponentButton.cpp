@@ -90,11 +90,16 @@ namespace Zappy {
                 _pos = pos;
             }
 
-            bool Button::isClicked()
+            bool Button::isClicked(std::string textButton)
             {
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-                    Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
-                    Sfml::SoundManager::getInstance().playButtonClickSound();
+                    if (textButton == "<- BACK"){
+                        Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButtonBack.wav");
+                        Sfml::SoundManager::getInstance().playButtonClickSound();
+                    } else {
+                        Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
+                        Sfml::SoundManager::getInstance().playButtonClickSound();
+                    }
                     return true;
                 }
                 return false;
