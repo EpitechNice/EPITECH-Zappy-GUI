@@ -83,24 +83,19 @@ namespace Zappy {
                 return _size;
             }
 
-            std::pair<float, float> Button::getPos() const
-            {
-                return _pos;
-            }
-
             std::string Button::getText() const
             {
                 return _text->getText();
             }
 
-
-            void Button::setPos(const std::pair<float, float>& pos)
+            std::pair<float, float> Button::getPos() const
             {
-                _pos = pos;
+                return _pos;
             }
 
             bool Button::isClicked(std::string textButton)
             {
+                _updateState();
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                     if (textButton == "<- BACK"){
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButtonBack.wav");
@@ -109,13 +104,16 @@ namespace Zappy {
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     }
+                    printf("ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\n");
                     return true;
                 }
+                printf("nppooooooooooooooooooooooooooooooooooooooooooooooooooooo\n");
                 return false;
             }
 
             bool Button::isClickedWihoutSong()
             {
+                _state == CLICKED;
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
                     return true;
                 return false;

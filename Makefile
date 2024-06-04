@@ -9,12 +9,19 @@
 SRC		=   src/Main.cpp														\
 			src/Components/Background2D/ComponentBackground2D.cpp				\
 			src/Components/Button/ComponentButton.cpp							\
+			src/Components/ButtonClassic/ComponentButtonClassic.cpp				\
 			src/Components/SliderVolume/SliderVolume.cpp						\
 			src/Components/Circle/ComponentCircle.cpp							\
 			src/Components/Image/ComponentImage.cpp								\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
 			src/Components/Skybox/ComponentSkybox.cpp							\
 			src/Components/Text/ComponentText.cpp								\
+			src/Components/Chatbox/ComponentChatbox.cpp							\
+			src/Components/Rectangle/ComponentRectangle.cpp						\
+			src/Components/TextGroup/ComponentTextGroup.cpp						\
+			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp   \
+			src/Components/TextMessage/ComponentTextMessage.cpp 			 	\
+			src/Components/TextBox/ComponentTextBox.cpp 			 			\
 			src/Parsing/Parsing.cpp												\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
@@ -66,12 +73,19 @@ INCLUDES	=	-I./libs/includes								\
 				-I./src											\
 				-I./src/Components/Background2D					\
 				-I./src/Components/Button						\
+				-I./src/Components/ButtonClassic                 \
 				-I./src/Components/SliderVolume					\
 				-I./src/Components/Circle						\
 				-I./src/Components/Image						\
 				-I./src/Components/RoundedRectangle				\
 				-I./src/Components/Skybox						\
 				-I./src/Components/Text							\
+				-I./src/Components/Chatbox						\
+				-I./src/Components/Rectangle					\
+				-I./src/Components/TextGroup					\
+				-I./src/Components/TextGroupDraggable			\
+				-I./src/Components/TextMessage					\
+				-I./src/Components/TextBox						\
 				-I./src/Parsing									\
 				-I./src/Raylib/ColorManager						\
 				-I./src/Raylib/SoundManager						\

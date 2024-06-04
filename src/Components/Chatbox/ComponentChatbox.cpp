@@ -97,7 +97,7 @@ namespace Zappy {
             {
                 _updateChatbox();
                 std::get<TEXT_GROUP>(_chats[_chatIndex])->update();
-                if (_openButton->isClicked())
+                if (_openButton->isClicked(_openButton->getText()))
                     (_open) ? _setChatboxClose() : _setChatboxOpen();
 
                 if (IsKeyReleased(KEY_ENTER)) {
