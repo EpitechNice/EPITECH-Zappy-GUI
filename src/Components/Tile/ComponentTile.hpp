@@ -15,13 +15,14 @@
     #include "ComponentCubic.hpp"
     #include "ColorManager.hpp"
     #include "ComponentModel3D.hpp"
+    #include "ComponentRessources.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
             class Tile {
                 public:
-                    Tile(Vector3 pos, Vector3 size, Color color);
+                    Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressources);
                     ~Tile();
 
                     void destroy();
@@ -39,6 +40,7 @@ namespace Zappy {
                     Vector3 _pos;
                     Vector3 _size;
                     Color _color;
+                    std::shared_ptr<Ressources> _ressources;
                     bool _highlight;
                     bool _select;
                     bool _isDestroyed;
@@ -51,14 +53,6 @@ namespace Zappy {
                     std::unique_ptr<Cubic> _dirt;
                     std::unique_ptr<Cubic> _wire;
 
-                    std::unique_ptr<Model3D> _food;
-                    std::unique_ptr<Model3D> _egg;
-                    std::unique_ptr<Model3D> _linemate;
-                    std::unique_ptr<Model3D> _deraumere;
-                    std::unique_ptr<Model3D> _sibur;
-                    std::unique_ptr<Model3D> _mendiane;
-                    std::unique_ptr<Model3D> _phiras;
-                    std::unique_ptr<Model3D> _thystame;
             };
         }
     }

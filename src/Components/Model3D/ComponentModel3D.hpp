@@ -25,6 +25,7 @@ namespace Zappy {
                     void draw();
 
                     void setOnPosY(float y);
+                    void setPos(Vector3 pos);
                 protected:
                 private:
                     Model _model;

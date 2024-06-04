@@ -43,6 +43,11 @@ namespace Zappy {
                 float modelHeight = box.max.y - box.min.y;
                 _pos.y = y + modelHeight / 2 * _scale;
             }
+
+            void Model3D::setPos(Vector3 pos)
+            {
+                _pos = pos;
+            }
         }
     }
 }

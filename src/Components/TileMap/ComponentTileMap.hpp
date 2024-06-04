@@ -13,13 +13,14 @@
 
     #include "ComponentTile.hpp"
     #include "Render.hpp"
+    #include "ComponentRessources.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
             class TileMap {
                 public:
-                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize);
+                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources);
                     ~TileMap();
 
                     void destroy();

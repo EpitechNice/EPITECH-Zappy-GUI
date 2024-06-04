@@ -10,8 +10,8 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            Tile::Tile(Vector3 pos, Vector3 size, Color color)
-                : _pos(pos), _size(size), _color(color), _highlight(false), _select(false), _isDestroyed(false)
+            Tile::Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressources)
+                : _pos(pos), _size(size), _color(color), _ressources(ressources), _highlight(false), _select(false), _isDestroyed(false)
             {
                 std::cout << "Tile size: " << size.x << " " << size.y << " " << size.z << std::endl;
                 _grassSize = {size.x, size.y / 2, size.z};
@@ -22,23 +22,6 @@ namespace Zappy {
                 _dirt = std::make_unique<Cubic>(_dirtPos, _dirtSize, BROWN);
                 _wire = std::make_unique<Cubic>(_pos, _size, BLACK);
                 _wire->setMode(Cubic::WIRES);
-
-                float tileXPart = size.x / 8;
-                float tileYPart = size.y / 4;
-                float startX = pos.x - size.x / 2;
-                float startY = pos.y - size.y / 2;
-                float scale = 0.2;
-
-                _linemate = std::make_unique<Model3D>("Rocks/rock_1/rock", (Vector3){startX + tileXPart * 2, pos.y + size.y / 2, startY + tileYPart * 1}, scale);
-                _deraumere = std::make_unique<Model3D>("Rocks/rock_2/rock", (Vector3){startX + tileXPart * 6, pos.y + size.y / 2, startY + tileYPart * 1}, scale);
-                _sibur = std::make_unique<Model3D>("Rocks/rock_3/rock", (Vector3){startX + tileXPart * 7, pos.y + size.y / 2, startY + tileYPart * 2}, scale);
-                _mendiane = std::make_unique<Model3D>("Rocks/rock_4/rock", (Vector3){startX + tileXPart * 6, pos.y + size.y / 2, startY + tileYPart * 3}, scale);
-                _phiras = std::make_unique<Model3D>("Rocks/rock_5/rock", (Vector3){startX + tileXPart * 2, pos.y + size.y / 2, startY + tileYPart * 3}, scale);
-                _thystame = std::make_unique<Model3D>("Rocks/rock_6/rock", (Vector3){startX + tileXPart * 1, pos.y + size.y / 2, startY + tileYPart * 2}, scale);
-                _food = std::make_unique<Model3D>("Food/scene", (Vector3){startX + tileXPart * 3, pos.y + size.y / 2, startY + tileYPart * 2}, 1, (Vector3){1, 0, 0}, -20);
-                _egg = std::make_unique<Model3D>("Egg/scene", (Vector3){startX + tileXPart * 5, pos.y + size.y / 2, startY + tileYPart * 2}, 0.3);
-                _food->setOnPosY(pos.y + size.y / 2 - 0.2);
-                _egg->setOnPosY(pos.y + size.y / 2);
             }
 
             Tile::~Tile()
@@ -50,14 +33,6 @@ namespace Zappy {
             {
                 if (_isDestroyed)
                     return;
-                _linemate->destroy();
-                _deraumere->destroy();
-                _sibur->destroy();
-                _mendiane->destroy();
-                _phiras->destroy();
-                _thystame->destroy();
-                _food->destroy();
-                _egg->destroy();
                 _isDestroyed = true;
             }
 
@@ -80,14 +55,18 @@ namespace Zappy {
                 _dirt->draw();
                 if (_select)
                     _wire->draw();
-                _linemate->draw();
-                _deraumere->draw();
-                _sibur->draw();
-                _mendiane->draw();
-                _phiras->draw();
-                _thystame->draw();
-                _food->draw();
-                _egg->draw();
+
+                Vector3 pos = _pos;
+                pos.y += _select ? _size.y / 2 : 0;
+                _ressources->setPos(pos);
+                _ressources->drawLinemate();
+                _ressources->drawDeraumere();
+                _ressources->drawMendiane();
+                _ressources->drawPhiras();
+                _ressources->drawSibur();
+                _ressources->drawThystame();
+                _ressources->drawFood();
+                _ressources->drawEgg();
             }
 
             void Tile::highlight(bool highlight)

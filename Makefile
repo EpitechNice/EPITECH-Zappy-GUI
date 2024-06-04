@@ -16,6 +16,7 @@ SRC		=   src/Main.cpp														\
 			src/Components/Image/ComponentImage.cpp								\
 			src/Components/Model3D/ComponentModel3D.cpp							\
 			src/Components/Rectangle/ComponentRectangle.cpp						\
+			src/Components/Ressources/ComponentRessources.cpp					\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
 			src/Components/Skybox/ComponentSkybox.cpp							\
 			src/Components/Text/ComponentText.cpp								\
@@ -77,6 +78,7 @@ INCLUDES	=	-I./libs/includes						\
 				-I./src/Components/Image				\
 				-I./src/Components/Model3D				\
 				-I./src/Components/Rectangle			\
+				-I./src/Components/Ressources			\
 				-I./src/Components/RoundedRectangle		\
 				-I./src/Components/Skybox				\
 				-I./src/Components/Text					\

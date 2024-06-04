@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize)
+            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources)
                 : _pos(pos), _size(size), _tileSize(tileSize), _isDestroyed(false)
             {
                 for (int x = 0; x < size.first; x++) {
@@ -19,7 +19,7 @@ namespace Zappy {
                         Color grassColor = { 112, 224, 0, 255 };
                         if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
                             grassColor = { 60, 186, 2, 255 };
-                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor));
+                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources));
                     }
                     _tiles.push_back(line);
                 }
