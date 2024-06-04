@@ -68,6 +68,7 @@ namespace Zappy {
 
             void Option::start()
             {
+                EnableCursor();
             }
 
             void Option::event()

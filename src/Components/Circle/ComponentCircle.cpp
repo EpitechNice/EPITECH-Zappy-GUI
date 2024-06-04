@@ -20,6 +20,11 @@ namespace Zappy {
                 DrawCircle(_pos.first, _pos.second, _radius, _color);
             }
 
+            void Circle::modPosX(float x)
+            {
+                _pos.first += x;
+            }
+
             void Circle::setPos(std::pair<float, float> pos)
             {
                 _pos = pos;

@@ -26,6 +26,7 @@ namespace Zappy {
             class Button {
                 public:
                     typedef enum {
+                        NONE = -1,
                         DEFAULT,
                         HOVER,
                         CLICKED
@@ -53,6 +54,14 @@ namespace Zappy {
                     void _updateState();
                     void _modState(State oldState);
 
+                    void enableBubble();
+                    void disableBubble();
+
+                    void setPosX(float x);
+                    void setPos(std::pair<float, float> pos);
+
+                    void setText(std::string text);
+
                 protected:
                 private:
                     std::pair<float, float> _pos;
@@ -63,6 +72,8 @@ namespace Zappy {
                     int _pressEffect = 6;
                     int _hoverEffect = 2;
                     bool _isDestroyed;
+                    bool _bubble;
+                    time_t _lastClick;
 
                     std::unique_ptr<RoundedRectangle> _blackStroke;
                     std::unique_ptr<RoundedRectangle> _upEffect;

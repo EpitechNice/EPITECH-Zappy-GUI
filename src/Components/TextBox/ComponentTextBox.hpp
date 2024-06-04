@@ -1,40 +1,40 @@
 /*
 ** EPITECH PROJECT, 2024
-** gui
+** zappy
 ** File description:
-** ComponentText
+** ComponentTextBox
 */
 
-#ifndef COMPONENT_TEXT_HPP_
-    #define COMPONENT_TEXT_HPP_
+#ifndef COMPONENT_TEXT_BOX_HPP_
+    #define COMPONENT_TEXT_BOX_HPP_
 
     #include <raylib.h>
-    #include <raymath.h>
     #include <string>
-    #include <iostream>
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Text {
+            class TextBox {
                 public:
-                    Text(std::pair<float, float> pos, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
-                    ~Text();
+                    TextBox(std::pair<int, int> pos, int size, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
+                    ~TextBox();
 
                     void destroy();
 
-                    void setPos(std::pair<float, float> pos);
+                    void setPosX(int x);
+                    void setPosY(int y);
+                    void setPos(std::pair<int, int> pos);
+
                     void setText(std::string text);
-                    void setColor(Color color);
 
                     std::pair<float, float> getSize() const;
-                    std::string getText() const;
 
                     void draw();
 
                 protected:
                 private:
-                    std::pair<float, float> _pos;
+                    std::pair<int, int> _pos;
+                    int _size;
                     std::string _text;
                     int _fontSize;
                     Color _color;
@@ -45,4 +45,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !COMPONENT_TEXT_HPP_ */
+#endif /* !COMPONENT_TEXT_BOX_HPP_ */

@@ -35,6 +35,9 @@ namespace Zappy {
                 _textStroke = std::make_unique<Text>(std::make_pair(textPosition.first, textPosition.second + 2), text, textSize, Zappy::GUI::Raylib::ColorManager::Darker(color, 50));
                 _size = buttonSize;
                 _textPos = textPosition;
+
+                _bubble = true;
+                _lastClick = -1;
             }
 
             Button::~Button()
@@ -63,7 +66,8 @@ namespace Zappy {
                 _background->draw();
                 _topButton->draw();
                 _reflexioneffect->draw();
-                _circle->draw();
+                if (_bubble)
+                    _circle->draw();
                 _textStroke->draw();
                 _text->draw();
             }
@@ -77,6 +81,11 @@ namespace Zappy {
             std::pair<float, float> Button::getSize() const
             {
                 return _size;
+            }
+
+            std::pair<float, float> Button::getPos() const
+            {
+                return _pos;
             }
 
             std::string Button::getText() const
@@ -111,13 +120,46 @@ namespace Zappy {
                     return true;
                 return false;
             }
+            void Button::enableBubble()
+            {
+                _bubble = true;
+            }
+
+            void Button::disableBubble()
+            {
+                _bubble = false;
+            }
+
+            void Button::setPosX(float x)
+            {
+                setPos(std::make_pair(x, _pos.second));
+            }
+
+            void Button::setPos(std::pair<float, float> pos)
+            {
+                std::pair<float, float> tmp = _pos;
+                tmp.first -= pos.first;
+                tmp.second -= pos.second;
+                _pos = pos;
+                _textPos.first -= tmp.first;
+                _textPos.second -= tmp.second;
+                _modState(NONE);
+            }
+
+            void Button::setText(std::string text)
+            {
+                _text->setText(text);
+                _textStroke->setText(text);
+            }
+
 
             void Button::_updateState()
             {
                 if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_pos.first, _pos.second, _size.first, _size.second})) {
-                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && time(nullptr) > _lastClick + 0.5) {
                         _state = CLICKED;
-                    else
+                        _lastClick = time(nullptr);
+                    } else
                         _state = HOVER;
                 } else
                     _state = DEFAULT;

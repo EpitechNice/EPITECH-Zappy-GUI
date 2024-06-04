@@ -13,6 +13,7 @@
 int main(int argc, char **argv)
 {
     try {
+        srand(time(NULL));
         Zappy::GUI::Parsing parsing(argc, argv);
         std::cout << "Port: " << parsing.getPort() << std::endl;
         std::cout << "Machine: " << parsing.getMachine() << std::endl;
