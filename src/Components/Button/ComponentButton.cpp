@@ -95,7 +95,6 @@ namespace Zappy {
 
             bool Button::isClicked(std::string textButton)
             {
-                _updateState();
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                     if (textButton == "<- BACK"){
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButtonBack.wav");
@@ -104,20 +103,18 @@ namespace Zappy {
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     }
-                    printf("ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\n");
                     return true;
                 }
-                printf("nppooooooooooooooooooooooooooooooooooooooooooooooooooooo\n");
                 return false;
             }
 
             bool Button::isClickedWihoutSong()
             {
-                _state == CLICKED;
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
                     return true;
                 return false;
             }
+
             void Button::enableBubble()
             {
                 _bubble = true;
@@ -154,16 +151,15 @@ namespace Zappy {
             void Button::_updateState()
             {
                 if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_pos.first, _pos.second, _size.first, _size.second})) {
-                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && time(nullptr) > _lastClick + 0.5) {
+                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                         _state = CLICKED;
-                        _lastClick = time(nullptr);
-                    } else
+                    else
                         _state = HOVER;
                 } else
                     _state = DEFAULT;
             }
 
-            void Button::changeSize(const std::pair<float, float>& newSize)
+             void Button::changeSize(const std::pair<float, float>& newSize)
             {
                 std::pair<float, float> buttonSize = newSize;
                 std::pair<float, float> textSizes = _text->getSize();
