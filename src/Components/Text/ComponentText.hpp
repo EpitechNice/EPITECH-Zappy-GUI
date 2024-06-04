@@ -28,6 +28,7 @@ namespace Zappy {
                     void setColor(Color color);
 
                     std::pair<float, float> getSize() const;
+                    std::string getText() const;
 
                     void draw();
 

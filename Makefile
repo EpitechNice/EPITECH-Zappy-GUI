@@ -9,31 +9,31 @@
 SRC		=   src/Main.cpp														\
 			src/Components/Background2D/ComponentBackground2D.cpp				\
 			src/Components/Button/ComponentButton.cpp							\
-			src/Components/ButtonClassic/ComponentButtonClassic.cpp				\
-			src/Components/Chatbox/ComponentChatbox.cpp							\
+			src/Components/SliderVolume/SliderVolume.cpp						\
 			src/Components/Circle/ComponentCircle.cpp							\
 			src/Components/Image/ComponentImage.cpp								\
-			src/Components/Rectangle/ComponentRectangle.cpp						\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
 			src/Components/Skybox/ComponentSkybox.cpp							\
 			src/Components/Text/ComponentText.cpp								\
-			src/Components/TextBox/ComponentTextBox.cpp							\
-			src/Components/TextGroup/ComponentTextGroup.cpp						\
-			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp	\
-			src/Components/TextMessage/ComponentTextMessage.cpp					\
 			src/Exceptions/Exceptions.cpp										\
 			src/I18n/I18nHelper.cpp												\
 			src/Parsing/Parsing.cpp												\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
 			src/Raylib/ColorManager/ColorManager.cpp							\
+			src/Sfml/SoundManager/SoundManager.cpp								\
 			src/Raylib/Render/Render.cpp										\
 			src/Raylib/View/View.cpp											\
 			src/SceneManager/SceneManager.cpp									\
 			src/Scenes/AScene/AScene.cpp										\
+			src/Scenes/HelperScene/HelperScene.cpp								\
+			src/Scenes/CreditScene/CreditScene.cpp								\
+			src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp	\
 			src/Scenes/GameScene/GameScene.cpp									\
 			src/Scenes/MenuScene/MenuScene.cpp									\
 			src/Scenes/OptionScene/OptionScene.cpp								\
+			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp				\
+			src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp	\
 			src/Utils/Utils.cpp													\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
@@ -63,36 +63,36 @@ FLAGS	=	-Wall 				\
 			-std=c++20			\
 			-O2
 
-INCLUDES	=	-I./libs/includes						\
-				-I./includes							\
-				-I./src									\
-				-I./src/Components/Background2D			\
-				-I./src/Components/Button				\
-				-I./src/Components/ButtonClassic		\
-				-I./src/Components/Chatbox				\
-				-I./src/Components/Circle				\
-				-I./src/Components/Image				\
-				-I./src/Components/Rectangle			\
-				-I./src/Components/RoundedRectangle		\
-				-I./src/Components/Skybox				\
-				-I./src/Components/Text					\
-				-I./src/Components/TextBox				\
-				-I./src/Components/TextGroup			\
-				-I./src/Components/TextGroupDraggable	\
-				-I./src/Components/TextMessage			\
+INCLUDES	=	-I./libs/includes								\
+				-I./includes									\
+				-I./src											\
+				-I./src/Components/Background2D					\
+				-I./src/Components/Button						\
+				-I./src/Components/SliderVolume					\
+				-I./src/Components/Circle						\
+				-I./src/Components/Image						\
+				-I./src/Components/RoundedRectangle				\
+				-I./src/Components/Skybox						\
+				-I./src/Components/Text							\
+				-I./src/Parsing									\
+				-I./src/Raylib/ColorManager						\
+				-I./src/Raylib/SoundManager						\
+				-I./src/Raylib/Render							\
 				-I./src/Exceptions						\
 				-I./src/I18n							\
-				-I./src/Parsing							\
-				-I./src/Raylib/ColorManager				\
-				-I./src/Raylib/Render					\
-				-I./src/Raylib/View						\
-				-I./src/SceneManager					\
-				-I./src/Scenes/IScene					\
-				-I./src/Scenes/AScene					\
-				-I./src/Scenes/GameScene				\
-				-I./src/Scenes/MenuScene				\
-				-I./src/Scenes/OptionScene				\
-				-I./src/Utils							\
+				-I./src/Raylib/View								\
+				-I./src/SceneManager							\
+				-I./src/Scenes/IScene							\
+				-I./src/Scenes/AScene							\
+				-I./src/Scenes/CreditScene						\
+				-I./src/Scenes/HelperScene						\
+				-I./src/Scenes/CreditScene/DisplayCreditScene   \
+				-I./src/Scenes/GameScene						\
+				-I./src/Scenes/MenuScene						\
+				-I./src/Scenes/OptionScene						\
+				-I./src/Scenes/OptionScene/SoundOption      	\
+				-I./src/Scenes/OptionScene/ResolutionOption 	\
+				-I./src/Utils									\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\
@@ -101,7 +101,9 @@ LIBS	=	-L./libs	\
 			-lpthread	\
 			-ldl		\
 			-lrt		\
-			-lX11
+			-lX11		\
+			-lsfml-audio\
+			-lsfml-graphics
 
 COMP	=	g++
 

@@ -11,13 +11,15 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             Render::Render(int height, int width, int fps)
-                : _height(height), _width(width), _fps(fps), _isDestroyed(false)
+                : _height(height), _width(width), _fps(fps), _langue(FRANCAIS), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
                 InitWindow(width, height, "Zappy");
                 SetTargetFPS(fps);
                 _icon = LoadImage("assets/img/clash_of_tek_logo.png");
                 SetWindowIcon(_icon);
                 _view = std::make_shared<View>();
+                Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);
+                Sfml::SoundManager::getInstance().playgeneralSound();
             }
 
             Render::~Render()
@@ -28,12 +30,12 @@ namespace Zappy {
             void Render::destroy()
             {
                 if (!_isDestroyed) {
+                    _musiquePrincipal.stop();
                     UnloadImage(_icon);
                     CloseWindow();
                     _isDestroyed = true;
                 }
             }
-
 
             std::shared_ptr<View> Render::view() const
             {
@@ -55,34 +57,41 @@ namespace Zappy {
                 return _fps;
             }
 
-
+            Langue Render::getLangue() const{
+                return _langue;
+            }
 
             void Render::setHeight(int height)
             {
                 _height = height;
-                CloseWindow();
-                InitWindow(_width, _height, "Zappy");
+                SetWindowSize(_width, _height);
             }
 
             void Render::setWidth(int width)
             {
                 _width = width;
-                CloseWindow();
-                InitWindow(_width, _height, "Zappy");
+                SetWindowSize(_width, _height);
             }
 
             void Render::setDimensions(int height, int width)
             {
                 _height = height;
                 _width = width;
-                CloseWindow();
-                InitWindow(_width, _height, "Zappy");
+                SetWindowSize(_width, _height);
+                _icon = LoadImage("assets/img/clash_of_tek_logo.png");
+                SetWindowIcon(_icon);
+                _view = std::make_shared<View>();
             }
+
 
             void Render::setFps(int fps)
             {
                 _fps = fps;
                 SetTargetFPS(_fps);
+            }
+
+            void Render::setLangue(Langue langue){
+                _langue = langue;
             }
         }
     }

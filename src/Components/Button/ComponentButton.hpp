@@ -18,6 +18,7 @@
     #include "ComponentCircle.hpp"
     #include "ComponentRoundedRectangle.hpp"
     #include "ComponentText.hpp"
+    #include "../Sfml/SoundManager/SoundManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -35,12 +36,23 @@ namespace Zappy {
                     ~Button();
 
                     void destroy();
-
                     void draw();
+                    bool isClicked(std::string textButton);
+                    bool isClickedWihoutSong();
+
+                    void setSize(const std::pair<float, float>& size);
+                    void setPos(const std::pair<float, float>& Pos);
 
                     std::pair<float, float> getSize() const;
                     std::pair<float, float> getPos() const;
-                    bool isClicked() const;
+                    std::string getText() const;
+
+                    void changeColor(Color color);
+                    void changePos(const std::pair<float, float>& newPos);
+                    void changeSize(const std::pair<float, float>& newSize);
+
+                    void _updateState();
+                    void _modState(State oldState);
 
                     void enableBubble();
                     void disableBubble();
@@ -72,8 +84,6 @@ namespace Zappy {
                     std::unique_ptr<Text> _text;
                     std::unique_ptr<Text> _textStroke;
 
-                    void _updateState();
-                    void _modState(State oldState);
             };
         }
     }
