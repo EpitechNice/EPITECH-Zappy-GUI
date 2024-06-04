@@ -41,7 +41,6 @@ namespace Zappy {
                     bool isClickedWihoutSong();
 
                     void setSize(const std::pair<float, float>& size);
-                    void setPos(const std::pair<float, float>& Pos);
 
                     std::pair<float, float> getSize() const;
                     std::pair<float, float> getPos() const;
@@ -58,7 +57,8 @@ namespace Zappy {
                     void disableBubble();
 
                     void setPosX(float x);
-                    void setPos(std::pair<float, float> pos);
+                    // void setPos(std::pair<float, float> pos);
+                    void setPos(const std::pair<float, float> pos);
 
                     void setText(std::string text);
 
