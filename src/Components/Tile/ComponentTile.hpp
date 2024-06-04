@@ -19,7 +19,7 @@ namespace Zappy {
         namespace Component {
             class Tile {
                 public:
-                    Tile(Vector3 pos, Color color);
+                    Tile(Vector3 pos, Vector3 size, Color color);
                     ~Tile() = default;
 
                     Vector3 getPos() const;
@@ -28,12 +28,19 @@ namespace Zappy {
                     void draw();
 
                     void highlight(bool highlight);
+                    void select(bool select);
 
                 protected:
                 private:
                     Vector3 _pos;
+                    Vector3 _size;
                     Color _color;
                     bool _highlight;
+                    bool _select;
+                    Vector3 _grassPos;
+                    Vector3 _grassSize;
+                    Vector3 _dirtPos;
+                    Vector3 _dirtSize;
 
                     std::unique_ptr<Cubic> _grass;
                     std::unique_ptr<Cubic> _dirt;

@@ -136,6 +136,14 @@ namespace Zappy {
                 }
             }
 
+            bool Chatbox::mouseIsOn() const
+            {
+                bool isOn = _openButton->isHover() || _openButton->isClicked();
+                if (_open)
+                    isOn = GetMouseX() < _width ? true : isOn;
+                return isOn;
+            }
+
 
             void Chatbox::_setChatboxOpen()
             {

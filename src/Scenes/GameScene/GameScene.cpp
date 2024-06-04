@@ -44,7 +44,10 @@ namespace Zappy {
                 _skybox->update(_render);
                 _borderbox->update(_render);
                 _chatbox->update();
-                _tileMap->update(_render);
+                if (!_chatbox->mouseIsOn())
+                    _tileMap->update(_render);
+                else
+                    _tileMap->unhighlight();
 
                 if (IsKeyReleased(KEY_C)) {
                     if (_cursor) {

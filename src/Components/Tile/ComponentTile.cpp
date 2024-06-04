@@ -10,11 +10,17 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            Tile::Tile(Vector3 pos, Color color)
-                : _pos(pos), _color(color), _highlight(false)
+            Tile::Tile(Vector3 pos, Vector3 size, Color color)
+                : _pos(pos), _size(size), _color(color), _highlight(false), _select(false)
             {
-                _grass = std::make_unique<Cubic>((Vector3){pos.x, pos.y + 0.3f, pos.z}, (Vector3){1.0f, 0.4f, 1.0f}, color);
-                _dirt = std::make_unique<Cubic>((Vector3){pos.x, pos.y - 0.2f, pos.z}, (Vector3){1.0f, 0.6f, 1.0f}, BROWN);
+                _grassSize = {size.x, size.y / 2, size.z};
+                _grassPos = {pos.x, pos.y + size.y / 4, pos.z};
+                _dirtSize = {size.x, size.y / 2, size.z};
+                _dirtPos = {pos.x, pos.y - size.y / 4, pos.z};
+                _grass = std::make_unique<Cubic>(_grassPos, _grassSize, color);
+                _dirt = std::make_unique<Cubic>(_dirtPos, _dirtSize, BROWN);
+                _wire = std::make_unique<Cubic>(_pos, _size, BLACK);
+                _wire->setMode(Cubic::WIRES);
             }
 
             Vector3 Tile::getPos() const
@@ -25,8 +31,8 @@ namespace Zappy {
             BoundingBox Tile::getTopBox() const
             {
                 return {
-                    .min = { _pos.x - 0.5f, _pos.y + 0.3f, _pos.z - 0.5f },
-                    .max = { _pos.x + 0.5f, _pos.y + 0.3f, _pos.z + 0.5f }
+                    .min = { _pos.x - _size.x / 2, (float)(_pos.y + _size.y / 2 - 0.1), _pos.z - _size.z / 2 },
+                    .max = { _pos.x + _size.x / 2, (float)(_pos.y + _size.y / 2 + 0.1), _pos.z + _size.z / 2 },
                 };
             }
 
@@ -34,18 +40,36 @@ namespace Zappy {
             {
                 _grass->draw();
                 _dirt->draw();
+                if (_select)
+                    _wire->draw();
             }
 
             void Tile::highlight(bool highlight)
             {
-                if (_highlight != highlight) {
+                if (_highlight != highlight && !_select) {
                     _highlight = highlight;
-                    if (_highlight == false) {
+                    if (!_highlight) {
                         _grass->setColor(_color);
                         _dirt->setColor(BROWN);
                     } else {
                         _grass->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 40));
                         _dirt->setColor(Zappy::GUI::Raylib::ColorManager::Darker(BROWN, 40));
+                    }
+                }
+            }
+
+            void Tile::select(bool select)
+            {
+                if (_select != select) {
+                    _select = select;
+                    if (!_select) {
+                        _grass->setPosY(_grassPos.y);
+                        _dirt->setPosY(_dirtPos.y);
+                        _wire->setPosY(_pos.y);
+                    } else {
+                        _grass->setPosY(_grassPos.y + _size.y / 2);
+                        _dirt->setPosY(_dirtPos.y + _size.y / 2);
+                        _wire->setPosY(_pos.y + _size.y / 2);
                     }
                 }
             }

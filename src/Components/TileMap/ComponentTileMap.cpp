@@ -11,7 +11,7 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             TileMap::TileMap(Vector3 pos, std::pair<int, int> size)
-                : _pos(pos), _size(size)
+                : _pos(pos), _size(size), _tileSize(1)
             {
                 for (int x = 0; x < size.first; x++) {
                     std::vector<std::shared_ptr<Tile>> line;
@@ -19,10 +19,12 @@ namespace Zappy {
                         Color grassColor = { 112, 224, 0, 255 };
                         if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
                             grassColor = { 60, 186, 2, 255 };
-                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x), (float)pos.y, (float)(pos.z + z)}, grassColor));
+                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor));
                     }
                     _tiles.push_back(line);
                 }
+                _highLight = std::make_pair(-1, -1);
+                _select = std::make_pair(-1, -1);
             }
 
             void TileMap::update(std::shared_ptr<Raylib::Render> render)
@@ -49,6 +51,15 @@ namespace Zappy {
                         _tiles[highLight.first][highLight.second]->highlight(true);
                     _highLight = highLight;
                 }
+                if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+                    if (_select.first != -1 && _select.second != -1)
+                        _tiles[_select.first][_select.second]->select(false);
+                    if (highLight.first != -1 && highLight.second != -1) {
+                        _tiles[highLight.first][highLight.second]->highlight(false);
+                        _tiles[highLight.first][highLight.second]->select(true);
+                    }
+                    _select = highLight;
+                }
             }
 
             void TileMap::draw()
@@ -61,6 +72,14 @@ namespace Zappy {
             std::vector<std::vector<std::shared_ptr<Tile>>> TileMap::tiles()
             {
                 return _tiles;
+            }
+
+            void TileMap::unhighlight()
+            {
+                if (_highLight.first != -1 && _highLight.second != -1) {
+                    _tiles[_highLight.first][_highLight.second]->highlight(false);
+                    _highLight = std::make_pair(-1, -1);
+                }
             }
         }
     }

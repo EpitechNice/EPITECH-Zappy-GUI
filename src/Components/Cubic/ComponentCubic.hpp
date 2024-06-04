@@ -15,6 +15,11 @@ namespace Zappy {
         namespace Component {
             class Cubic {
                 public:
+                    typedef enum {
+                        CUBE,
+                        WIRES,
+                        CUBE_WIRES
+                    } Mode;
                     Cubic(Vector3 pos, Vector3 size, Color color);
                     ~Cubic() = default;
 
@@ -22,11 +27,17 @@ namespace Zappy {
 
                     void setColor(Color color);
 
+                    void setPosY(float y);
+                    void setMode(Mode mode);
+                    void setColorWires(Color color);
+
                 protected:
                 private:
                     Vector3 _pos;
                     Vector3 _size;
                     Color _color;
+                    Mode _mode;
+                    Color _colorWires;
             };
         }
     }

@@ -41,6 +41,7 @@ namespace Zappy {
                     std::pair<float, float> getSize() const;
                     std::pair<float, float> getPos() const;
                     bool isClicked() const;
+                    bool isHover() const;
 
                     void enableBubble();
                     void disableBubble();

@@ -87,6 +87,11 @@ namespace Zappy {
                 return _state == CLICKED;
             }
 
+            bool Button::isHover() const
+            {
+                return _state == HOVER;
+            }
+
             void Button::enableBubble()
             {
                 _bubble = true;

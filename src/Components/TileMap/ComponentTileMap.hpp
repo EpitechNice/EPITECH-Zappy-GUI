@@ -28,12 +28,16 @@ namespace Zappy {
 
                     std::vector<std::vector<std::shared_ptr<Tile>>> tiles();
 
+                    void unhighlight();
+
                 protected:
                 private:
                     Vector3 _pos;
                     std::pair<int, int> _size;
+                    int _tileSize;
                     std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
                     std::pair<int, int> _highLight;
+                    std::pair<int, int> _select;
             };
         }
     }
