@@ -146,13 +146,13 @@ namespace Zappy {
                     Sfml::SoundManager::getInstance().setVolumeGeneralMusique(slider->getValue());
                 else
                     Sfml::SoundManager::getInstance().setVolumeEffetSonore(slider->getValue());
-                slider->setStatut(slider->getValue());
+                slider->setStatut(true);
             } else {
                 if (slider->getName() == "slider1")
                     Sfml::SoundManager::getInstance().setVolumeGeneralMusique(0.0f);
                 else
                     Sfml::SoundManager::getInstance().setVolumeEffetSonore(0.0f);
-                slider->setStatut(0.0f);
+                slider->setStatut(false);
             }
         }
 
