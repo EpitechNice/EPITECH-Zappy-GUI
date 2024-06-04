@@ -27,7 +27,7 @@ namespace Zappy {
                 float tileYPart = size.y / 4;
                 float startX = pos.x - size.x / 2;
                 float startY = pos.y - size.y / 2;
-                float scale = 0.1;
+                float scale = 0.2;
 
                 _linemate = std::make_unique<Model3D>("Rocks/rock_1/rock", (Vector3){startX + tileXPart * 2, pos.y + size.y / 2, startY + tileYPart * 1}, scale);
                 _deraumere = std::make_unique<Model3D>("Rocks/rock_2/rock", (Vector3){startX + tileXPart * 6, pos.y + size.y / 2, startY + tileYPart * 1}, scale);
