@@ -12,11 +12,14 @@ namespace Zappy {
         namespace Scene {
             Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
             {
+                std::pair<int, int> size = { 1, 1 };
+                int tileSize = 5;
+
                 _render = render;
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
-                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100);
+                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100 * tileSize * size.first / 2);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
-                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, std::make_pair(20, 40));
+                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, size, tileSize);
 
                 _crossPointer = std::make_pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>>(
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
@@ -26,9 +29,10 @@ namespace Zappy {
 
             void Game::destroy()
             {
-                _skybox->destroy();
-                _borderbox->destroy();
+                _tileMap->destroy();
                 _chatbox->destroy();
+                _borderbox->destroy();
+                _skybox->destroy();
             }
 
             void Game::start()

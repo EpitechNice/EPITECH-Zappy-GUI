@@ -19,8 +19,10 @@ namespace Zappy {
         namespace Component {
             class TileMap {
                 public:
-                    TileMap(Vector3 pos, std::pair<int, int> size);
-                    ~TileMap() = default;
+                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize);
+                    ~TileMap();
+
+                    void destroy();
 
                     void update(std::shared_ptr<Raylib::Render> render);
 
@@ -38,6 +40,7 @@ namespace Zappy {
                     std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
                     std::pair<int, int> _highLight;
                     std::pair<int, int> _select;
+                    bool _isDestroyed;
             };
         }
     }

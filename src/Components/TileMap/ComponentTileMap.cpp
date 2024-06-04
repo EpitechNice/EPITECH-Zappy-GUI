@@ -10,8 +10,8 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            TileMap::TileMap(Vector3 pos, std::pair<int, int> size)
-                : _pos(pos), _size(size), _tileSize(1)
+            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize)
+                : _pos(pos), _size(size), _tileSize(tileSize), _isDestroyed(false)
             {
                 for (int x = 0; x < size.first; x++) {
                     std::vector<std::shared_ptr<Tile>> line;
@@ -25,6 +25,22 @@ namespace Zappy {
                 }
                 _highLight = std::make_pair(-1, -1);
                 _select = std::make_pair(-1, -1);
+            }
+
+            TileMap::~TileMap()
+            {
+                destroy();
+            }
+
+            void TileMap::destroy()
+            {
+                if (_isDestroyed)
+                    return;
+                for (auto &line: _tiles)
+                    for (auto &tile : line)
+                        tile->destroy();
+                _tiles.clear();
+                _isDestroyed = true;
             }
 
             void TileMap::update(std::shared_ptr<Raylib::Render> render)
