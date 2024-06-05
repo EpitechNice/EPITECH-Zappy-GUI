@@ -1,6 +1,0 @@
-[menu.start_title] = "プレー"
-[menu.settings_title] = "設定"
-[menu.help_title] = "ヘルプ"
-[menu.credits_title] = "クレジット"
-[menu.quit_title] = "終了"
-[UwU] = "٩(๑> ₃ <)۶♥"
