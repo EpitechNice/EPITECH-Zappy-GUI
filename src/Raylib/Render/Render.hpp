@@ -15,14 +15,9 @@
     #include "View.hpp"
     #include <iostream>
     #include "../Sfml/SoundManager/SoundManager.hpp"
+    #include "I18nHelper.hpp"
 namespace Zappy {
     namespace GUI {
-        typedef enum {
-            FRANCAIS,
-            ANGLAIS,
-            ESPAGNOL,
-            MANDARIN,
-        } Langue;
         namespace Raylib {
             class Render {
                 public:
@@ -37,7 +32,6 @@ namespace Zappy {
                     int getFps() const;
                     float getVolumeMusique() const;
                     float getEffetSonore() const;
-                    Langue getLangue() const;
 
 
                     void setHeight(int height);
@@ -46,14 +40,12 @@ namespace Zappy {
                     void setFps(int fps);
                     void setVolumeMusique(float volumeMusique);
                     void setEffetSonore(float effetSonore);
-                    void setLangue(Langue langue);
 
                 protected:
                 private:
                     int _height;
                     int _width;
                     int _fps;
-                    Langue _langue;
 
                     std::string _pathMusiquePrincipal;
                     sf::Music _musiquePrincipal;

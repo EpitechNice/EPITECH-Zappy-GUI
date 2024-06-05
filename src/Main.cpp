@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** zappy_gui
+** Zappy GUI
 ** File description:
 ** Main
 */
@@ -32,3 +32,32 @@ int main(int argc, char **argv)
     }
     return 0;
 }
+
+
+////Test I18nHelper
+//   #include "I18nHelper.hpp"
+
+// int main() {
+//     Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
+
+//     try {
+//         i18nHelper->setCurrentLocale(Zappy::GUI::I18n::SupportedLocale::fr_FR);
+//         std::string translation = i18nHelper->getTranslation("[menu.start_title]");
+//         std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
+
+//         i18nHelper->setCurrentLocale(Zappy::GUI::I18n::SupportedLocale::en_GB);
+//         translation = i18nHelper->getTranslation("[menu.start_title]");
+//         std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [menu.start_title] : '" << translation << "'" << std::endl;
+
+//         i18nHelper->setCurrentLocale(Zappy::GUI::I18n::SupportedLocale::jp_JP);
+//         translation = i18nHelper->getTranslation("Ceci n'est pas une clé de traduction.");
+//         std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for \"Ceci n'est pas une clé de traduction.\" : '" << translation << "'" << std::endl;
+//         translation = i18nHelper->getTranslation("[UwU]");
+//         std::cout << ">>> Translation in " << i18nHelper->getLocaleValue(i18nHelper->getCurrentLocale()) << " for [UwU] : '" << translation << "'" << std::endl;
+
+//     } catch (const std::exception& e) {
+//         std::cerr << "An error occurred: " << e.what() << std::endl;
+//     }
+//     delete i18nHelper;
+//     return 0;
+// }

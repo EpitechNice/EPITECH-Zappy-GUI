@@ -28,6 +28,7 @@ namespace Zappy {
 
                     void start() override;
                     void destroy() override;
+                    void update() override;
                     void event() override;
                     void draw3D() override;
                     void draw2D() override;
@@ -48,12 +49,13 @@ namespace Zappy {
                     bool _effetSonore;
                     bool _SliderIsActif;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
-                    std::unique_ptr<Zappy::GUI::Component::Button> _backButton;
+                    std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> _backButton;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _buttons;
-                    std::vector<std::unique_ptr<Zappy::GUI::Component::Text>> _text;
+                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
                     std::vector<std::unique_ptr<Zappy::GUI::Component::SliderVolume>> _volumeSlider;
                     Zappy::GUI::Component::SliderVolume* _activeSlider;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
+                    Zappy::GUI::I18n::SupportedLocale _lang;
             };
         }
     }

@@ -1,0 +1,33 @@
+[menu.start_title]="PLAY"
+[menu.settings_title] = "SETTINGS"
+[menu.help_title] = "HELP"
+[menu.credits_title] = "CREDITS"
+[menu.quit_title] = "QUIT"
+
+[menu.back_button] = "< BACK"
+
+[menu.settings.lang_title] = "LANGUAGE :"
+[menu.settings.sound_button] = "SOUND"
+[menu.settings.resolution_button] = "RESOLUTION"
+
+[menu.settings.lang.en_GB_button] = "ENGLISH"
+[menu.settings.lang.fr_FR_button] = "FRENCH"
+
+[menu.settings.credits.1_button] = "Credit 1 in EN"
+[menu.settings.credits.2_button] = "Credit 2 in EN"
+[menu.settings.credits.3_button] = "Credit 3 in EN"
+
+[menu.settings.credits.1] = "Welcome to Credit 1"
+[menu.settings.credits.2] = "Welcome to Credit 2"
+[menu.settings.credits.3] = "Welcome to Credit 3"
+
+[menu.settings.help] = "Welcome to Help"
+
+[menu.settings.resolution.res_title] = "Resolution"
+[menu.settings.resolution.fps_title] = "FPS"
+
+[menu.settings.sound.sound_effect_title] = "Sound effects"
+[menu.settings.sound.music_title] = "Music"
+[menu.settings.sound.volume_title] = "Volume"
+
+[UwU] = "(◕ᴗ◕✿)"

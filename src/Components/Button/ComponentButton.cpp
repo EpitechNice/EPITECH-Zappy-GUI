@@ -96,7 +96,7 @@ namespace Zappy {
             bool Button::isClicked(std::string textButton)
             {
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-                    if (textButton == "<- BACK"){
+                    if (textButton == "[menu.back_button]"){
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButtonBack.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     } else {

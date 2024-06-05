@@ -19,6 +19,7 @@ namespace Zappy {
             )
                 : _position(position), _target(target), _up(up), _fovy(fovy), _mouseFollowing(true)
             {
+                (void)mode;
                 _camera = (Camera){
                     .position = position,
                     .target = target,

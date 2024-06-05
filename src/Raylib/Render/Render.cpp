@@ -11,7 +11,7 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             Render::Render(int height, int width, int fps)
-                : _height(height), _width(width), _fps(fps), _langue(FRANCAIS), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
+                : _height(height), _width(width), _fps(fps), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
                 InitWindow(width, height, "Zappy");
                 SetTargetFPS(fps);
@@ -57,9 +57,10 @@ namespace Zappy {
                 return _fps;
             }
 
-            Langue Render::getLangue() const{
-                return _langue;
-            }
+            // Zappy::GUI::I18n::SupportedLocale Render::getLangue() const
+            // {
+            //     return Zappy::GUI::I18n::I18nHelper::getInstance()->getCurrentLocale();
+            // }
 
             void Render::setHeight(int height)
             {
@@ -90,9 +91,9 @@ namespace Zappy {
                 SetTargetFPS(_fps);
             }
 
-            void Render::setLangue(Langue langue){
-                _langue = langue;
-            }
+            // void Render::setLangue(Zappy::GUI::I18n::SupportedLocale language){
+            //     _langue = Zappy::GUI::I18n::I18nHelper::getInstance()->setCurrentLocale(language);
+            // }
         }
     }
 }
