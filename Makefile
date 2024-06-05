@@ -116,8 +116,7 @@ LIBS	=	-L./libs	\
 			-ldl		\
 			-lrt		\
 			-lX11		\
-			-lsfml-audio\
-			-lsfml-graphics
+			-lsfml-audio
 
 COMP	=	g++
 
