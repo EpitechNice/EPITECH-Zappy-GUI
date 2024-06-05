@@ -17,4 +17,8 @@
 [menu.settings.credits.2_button] = "Credit 2 in EN"
 [menu.settings.credits.3_button] = "Credit 3 in EN"
 
+[menu.settings.credits.1] = "Welcome to Credit 1"
+[menu.settings.credits.2] = "Welcome to Credit 2"
+[menu.settings.credits.3] = "Welcome to Credit 3"
+
 [UwU] = "(◕ᴗ◕✿)"

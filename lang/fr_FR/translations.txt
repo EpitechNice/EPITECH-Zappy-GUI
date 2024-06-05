@@ -17,4 +17,8 @@
 [menu.settings.credits.2_button] = "Credit 2 en FR"
 [menu.settings.credits.3_button] = "Credit 3 en FR"
 
+[menu.settings.credits.1] = "Bienvenue dans Credit 1"
+[menu.settings.credits.2] = "Bienvenue dans Credit 2"
+[menu.settings.credits.3] = "Bienvenue dans Credit 3"
+
 [UwU] = "(ಠ_ಠ)"
