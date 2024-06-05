@@ -13,4 +13,8 @@
 [menu.settings.lang.en_GB_button] = "ANGLAIS"
 [menu.settings.lang.fr_FR_button] = "FRANCAIS"
 
+[menu.settings.credits.1_button] = "Credit 1 en FR"
+[menu.settings.credits.2_button] = "Credit 2 en FR"
+[menu.settings.credits.3_button] = "Credit 3 en FR"
+
 [UwU] = "(ಠ_ಠ)"
