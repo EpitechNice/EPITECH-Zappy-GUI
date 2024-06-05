@@ -23,4 +23,7 @@
 
 [menu.settings.help] = "Welcome to Help"
 
+[menu.settings.resolution.res_title] = "Resolution"
+[menu.settings.resolution.fps_title] = "FPS"
+
 [UwU] = "(◕ᴗ◕✿)"
