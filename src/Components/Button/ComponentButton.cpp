@@ -104,10 +104,8 @@ namespace Zappy {
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     }
-                    printf("ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\n");
                     return true;
                 }
-                printf("nppooooooooooooooooooooooooooooooooooooooooooooooooooooo\n");
                 return false;
             }
 
