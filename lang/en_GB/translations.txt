@@ -3,4 +3,14 @@
 [menu.help_title] = "HELP"
 [menu.credits_title] = "CREDITS"
 [menu.quit_title] = "QUIT"
+
+[menu.back_button] = "< BACK"
+
+[menu.settings.lang_title] = "LANGUAGE :"
+[menu.settings.sound_button] = "SOUND"
+[menu.settings.resolution_button] = "RESOLUTION"
+
+[menu.settings.lang.en_GB_button] = "ENGLISH"
+[menu.settings.lang.fr_FR_button] = "FRENCH"
+
 [UwU] = "(◕ᴗ◕✿)"

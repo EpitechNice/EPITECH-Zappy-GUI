@@ -25,8 +25,7 @@ namespace Zappy
             enum class SupportedLocale
             {
                 fr_FR,
-                en_GB,
-                jp_JP
+                en_GB
             };
 
             class I18nHelper
@@ -42,8 +41,7 @@ namespace Zappy
 
                     const std::map<SupportedLocale, std::string> _supportedLocaleMap = {
                         {SupportedLocale::fr_FR, "fr_FR"},
-                        {SupportedLocale::en_GB, "en_GB"},
-                        {SupportedLocale::jp_JP, "jp_JP"}
+                        {SupportedLocale::en_GB, "en_GB"}
                     };
 
                 protected:

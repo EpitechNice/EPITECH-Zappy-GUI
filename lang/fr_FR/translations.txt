@@ -1,6 +1,16 @@
 [menu.start_title] = "JOUER"
-[menu.settings_title] = "RÉGLAGES"
+[menu.settings_title] = "REGLAGES"
 [menu.help_title] = "AIDE"
-[menu.credits_title] = "CRÉDITS"
+[menu.credits_title] = "CREDITS"
 [menu.quit_title] = "QUITTER"
+
+[menu.back_button] = "< RETOUR"
+
+[menu.settings.lang_title] = "LANGUE :"
+[menu.settings.sound_button] = "SON"
+[menu.settings.resolution_button] = "RESOLUTION"
+
+[menu.settings.lang.en_GB_button] = "ANGLAIS"
+[menu.settings.lang.fr_FR_button] = "FRANÇAIS"
+
 [UwU] = "(ಠ_ಠ)"
