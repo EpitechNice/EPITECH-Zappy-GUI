@@ -26,4 +26,8 @@
 [menu.settings.resolution.res_title] = "Resolution"
 [menu.settings.resolution.fps_title] = "FPS"
 
+[menu.settings.sound.sound_effect_title] = "Effets sonores"
+[menu.settings.sound.music_title] = "Musique"
+[menu.settings.sound.volume_title] = "Volume"
+
 [UwU] = "(ಠ_ಠ)"
