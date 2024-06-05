@@ -21,4 +21,6 @@
 [menu.settings.credits.2] = "Bienvenue dans Credit 2"
 [menu.settings.credits.3] = "Bienvenue dans Credit 3"
 
+[menu.settings.help] = "Bienvenue dans Help"
+
 [UwU] = "(ಠ_ಠ)"
