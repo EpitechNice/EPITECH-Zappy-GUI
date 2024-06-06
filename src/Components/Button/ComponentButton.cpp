@@ -177,11 +177,24 @@ namespace Zappy {
                     buttonSize.first = (buttonSize.first * -1) * 2 + textSizes.first;
                 if (buttonSize.second < 0)
                     buttonSize.second = (buttonSize.second * -1) * 2 + textSizes.second;
-                std::pair<float, float> topButtonSize = std::make_pair(buttonSize.first - 2, buttonSize.second - 7 - 6);
+                std::pair<float, float> topButtonSize = std::make_pair(buttonSize.first - 6, buttonSize.second - 7 - 6);
                 std::pair<float, float> topButtonPos = std::make_pair(_pos.first + 3, _pos.second + 3);
                 std::pair<float, float> textPosition = std::make_pair(topButtonPos.first + (topButtonSize.first - textSizes.first) / 2, topButtonPos.second + (topButtonSize.second - textSizes.second) / 2);
+
                 _text->setPos(textPosition);
-                _topButton = std::make_unique<RoundedRectangle>(topButtonPos, topButtonSize, 0.3, _color);
+                _blackStroke->setSize(std::make_pair(buttonSize.first + 2, buttonSize.second + 2));
+                _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1));
+                _upEffect->setSize(buttonSize);
+                _upEffect->setPosition(_pos);
+                _background->setSize(std::make_pair(buttonSize.first, buttonSize.second - 7));
+                _background->setPosition(_pos);
+                _topButton->setSize(topButtonSize);
+                _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3));
+                _reflexioneffect->setSize(std::make_pair(buttonSize.first - 8, (buttonSize.second - 7 - 8) / 2));
+                _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4));
+                _circle->setPos(std::make_pair(_pos.first + buttonSize.first - 8, _pos.second + 8));
+                _text->setPos(textPosition);
+                _textStroke->setPos(std::make_pair(textPosition.first, textPosition.second + 2));
                 _size = buttonSize;
                 _textPos = textPosition;
             }
