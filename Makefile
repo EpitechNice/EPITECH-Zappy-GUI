@@ -14,6 +14,7 @@ SRC		=   src/Main.cpp														\
 			src/Components/Circle/ComponentCircle.cpp							\
 			src/Components/Cubic/ComponentCubic.cpp								\
 			src/Components/Image/ComponentImage.cpp								\
+			src/Components/Inspecter/ComponentInspecter.cpp						\
 			src/Components/Model3D/ComponentModel3D.cpp							\
 			src/Components/Rectangle/ComponentRectangle.cpp						\
 			src/Components/Ressources/ComponentRessources.cpp					\
@@ -88,6 +89,7 @@ INCLUDES	=	-I./includes									\
 				-I./src/Components/Circle						\
 				-I./src/Components/Cubic						\
 				-I./src/Components/Image						\
+				-I./src/Components/Inspecter					\
 				-I./src/Components/Model3D						\
 				-I./src/Components/Rectangle					\
 				-I./src/Components/Ressources					\
