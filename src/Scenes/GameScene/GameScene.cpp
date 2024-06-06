@@ -19,7 +19,7 @@ namespace Zappy {
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
                 _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100 * tileSize * size.first / 2);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
-                _inspecter = std::make_unique<Zappy::GUI::Component::Inspecter>();
+                _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){5, 5, 5});
 
                 _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, size, tileSize, _ressources);
@@ -69,7 +69,7 @@ namespace Zappy {
                 if (_chatbox->mouseIsOn() || _inspecter->mouseIsOn())
                     _tileMap->unhighlight();
                 else
-                    _tileMap->update(_render);
+                    _tileMap->update(_render, _inspecter);
 
                 if (IsKeyReleased(KEY_C)) {
                     if (_cursor) {
@@ -98,7 +98,8 @@ namespace Zappy {
             void Game::draw2D()
             {
                 _chatbox->draw();
-                _inspecter->draw();
+                if (_tileMap->hasSelected())
+                    _inspecter->draw();
 
                 if (!_cursor) {
                     _crossPointer.first->draw();

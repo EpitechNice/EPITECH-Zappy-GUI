@@ -35,6 +35,9 @@ namespace Zappy {
 
                     bool mouseIsOn() const;
 
+                    void open();
+                    void close();
+
                 protected:
                 private:
                     bool _isDestroyed;

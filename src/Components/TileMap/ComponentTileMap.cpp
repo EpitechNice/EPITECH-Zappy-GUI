@@ -57,7 +57,7 @@ namespace Zappy {
                 _isDestroyed = true;
             }
 
-            void TileMap::update(std::shared_ptr<Raylib::Render> render)
+            void TileMap::update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter)
             {
                 Zappy::GUI::Ressources::Ressources::get()->setPlayerOnMap();
                 std::pair<int, int> highLight = { -1, -1 };
@@ -90,6 +90,10 @@ namespace Zappy {
                         _tiles[highLight.first][highLight.second]->select(true);
                     }
                     _select = highLight;
+                    if (_select.first != -1 && _select.second != -1)
+                        inspecter->open();
+                    else
+                        inspecter->close();
                 }
             }
 
@@ -111,6 +115,11 @@ namespace Zappy {
                     _tiles[_highLight.first][_highLight.second]->highlight(false);
                     _highLight = std::make_pair(-1, -1);
                 }
+            }
+
+            bool TileMap::hasSelected() const
+            {
+                return _select.first != -1 && _select.second != -1;
             }
         }
     }

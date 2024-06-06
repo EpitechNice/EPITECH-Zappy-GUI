@@ -70,6 +70,18 @@ namespace Zappy {
                 return isOn;
             }
 
+            void Inspecter::open()
+            {
+                if (!_open)
+                    _setInspecterOpen();
+            }
+
+            void Inspecter::close()
+            {
+                if (_open)
+                    _setInspecterClose();
+            }
+
 
             void Inspecter::_setInspecterOpen()
             {
