@@ -12,7 +12,7 @@ namespace Zappy {
         namespace Scene {
             Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
             {
-                std::pair<int, int> size = { 2, 2 };
+                std::pair<int, int> size = { 10, 10 };
                 int tileSize = 5;
 
                 _render = render;
@@ -44,6 +44,7 @@ namespace Zappy {
                 _render->view()->setMouseFollowing(true);
                 _cursor = false;
                 _render->view()->enableCamera();
+                _tileMap->unhighlight();
             }
 
             void Game::update()
@@ -88,6 +89,15 @@ namespace Zappy {
                     _crossPointer.first->draw();
                     _crossPointer.second->draw();
                 }
+
+                DrawText("Camera Position", 10, 10, 10, BLACK);
+                DrawText(TextFormat("X: %.2f", _render->view()->getPosition().x), 10, 30, 10, BLACK);
+                DrawText(TextFormat("Y: %.2f", _render->view()->getPosition().y), 10, 50, 10, BLACK);
+                DrawText(TextFormat("Z: %.2f", _render->view()->getPosition().z), 10, 70, 10, BLACK);
+                DrawText("Camera Target", 10, 90, 10, BLACK);
+                DrawText(TextFormat("X: %.2f", _render->view()->getTarget().x), 10, 110, 10, BLACK);
+                DrawText(TextFormat("Y: %.2f", _render->view()->getTarget().y), 10, 130, 10, BLACK);
+                DrawText(TextFormat("Z: %.2f", _render->view()->getTarget().z), 10, 150, 10, BLACK);
             }
 
             std::string Game::nextScene()

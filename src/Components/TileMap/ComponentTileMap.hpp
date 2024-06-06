@@ -14,6 +14,7 @@
     #include "ComponentTile.hpp"
     #include "Render.hpp"
     #include "ComponentRessources.hpp"
+    #include "TileRessources.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -39,6 +40,7 @@ namespace Zappy {
                     std::pair<int, int> _size;
                     int _tileSize;
                     std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
+                    std::vector<std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>>> _ressources;
                     std::pair<int, int> _highLight;
                     std::pair<int, int> _select;
                     bool _isDestroyed;

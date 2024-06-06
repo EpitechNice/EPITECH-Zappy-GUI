@@ -18,8 +18,8 @@ namespace Zappy {
             class View {
                 public:
                     View(
-                        Vector3 position = (Vector3){ -8.5f, 12.8f, -9.6f },
-                        Vector3 target = (Vector3){-5.4f, 10.5f, -5.9f},
+                        Vector3 position = (Vector3){ -7.04f, 11.11f, -27.61f },
+                        Vector3 target = (Vector3){-7.03f, 10.26f, -22.33f},
                         Vector3 up = (Vector3){0.0f, 1.0f, 0.0f},
                         float fovy = 45.0f
                     );

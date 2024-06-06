@@ -35,6 +35,7 @@ SRC		=   src/Main.cpp														\
 			src/Raylib/ColorManager/ColorManager.cpp							\
 			src/Raylib/Render/Render.cpp										\
 			src/Raylib/View/View.cpp											\
+			src/Ressources/TileRessources/TileRessources.cpp					\
 			src/SceneManager/SceneManager.cpp									\
 			src/Scenes/AScene/AScene.cpp										\
 			src/Scenes/CreditScene/CreditScene.cpp								\
@@ -105,6 +106,7 @@ INCLUDES	=	-I./includes									\
 				-I./src/Raylib/Render							\
 				-I./src/Raylib/SoundManager						\
 				-I./src/Raylib/View								\
+				-I./src/Ressources/TileRessources				\
 				-I./src/SceneManager							\
 				-I./src/Scenes/AScene							\
 				-I./src/Scenes/CreditScene						\

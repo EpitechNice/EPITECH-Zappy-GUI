@@ -15,13 +15,27 @@ namespace Zappy {
             {
                 for (int x = 0; x < size.first; x++) {
                     std::vector<std::shared_ptr<Tile>> line;
+                    std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> ressourcesLine;
                     for (int z = 0; z < size.second; z++) {
                         Color grassColor = { 112, 224, 0, 255 };
                         if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
                             grassColor = { 60, 186, 2, 255 };
-                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources));
+                        ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>());
+                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
+
+
+                        // TODO: Delete this
+                        ressourcesLine.back()->setFood(rand() % 2);
+                        ressourcesLine.back()->setEgg(rand() % 2);
+                        ressourcesLine.back()->setLinemate(rand() % 2);
+                        ressourcesLine.back()->setDeraumere(rand() % 2);
+                        ressourcesLine.back()->setSibur(rand() % 2);
+                        ressourcesLine.back()->setMendiane(rand() % 2);
+                        ressourcesLine.back()->setPhiras(rand() % 2);
+                        ressourcesLine.back()->setThystame(rand() % 2);
                     }
                     _tiles.push_back(line);
+                    _ressources.push_back(ressourcesLine);
                 }
                 _highLight = std::make_pair(-1, -1);
                 _select = std::make_pair(-1, -1);
