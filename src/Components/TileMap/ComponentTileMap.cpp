@@ -35,24 +35,10 @@ namespace Zappy {
                         ressourcesLine.back()->setThystame(rand() % 3);
                     }
                     _tiles.push_back(line);
-                    _ressources.push_back(ressourcesLine);
+                    Zappy::GUI::Ressources::Ressources::get()->tileRessources.push_back(ressourcesLine);
                 }
                 _highLight = std::make_pair(-1, -1);
                 _select = std::make_pair(-1, -1);
-
-                // TODO: Delete this
-                std::vector<std::shared_ptr<Zappy::GUI::Ressources::Players>> players;
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(1, 0, 0, BLUE));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(2, 0, 0, RED));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(3, 1, 0, GREEN));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(4, 0, 1, YELLOW));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(5, 1, 1, PURPLE));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(6, 1, 1, ORANGE));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(7, 1, 1, PINK));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(8, 4, 3, BROWN));
-                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(9, 1, 0, BEIGE));
-                for (auto &player : players)
-                    _ressources[player->getX()][player->getY()]->addPlayer(player);
             }
 
             TileMap::~TileMap()
@@ -73,6 +59,7 @@ namespace Zappy {
 
             void TileMap::update(std::shared_ptr<Raylib::Render> render)
             {
+                Zappy::GUI::Ressources::Ressources::get()->setPlayerOnMap();
                 std::pair<int, int> highLight = { -1, -1 };
                 Vector2 point = GetMousePosition();
                 if (render->view()->isMouseFollowing())
