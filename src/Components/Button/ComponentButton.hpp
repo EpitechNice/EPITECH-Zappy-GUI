@@ -68,6 +68,7 @@ namespace Zappy {
                 private:
                     std::pair<float, float> _pos;
                     std::pair<float, float> _size;
+                    std::pair<float, float> _buttonSize;
                     std::pair<float, float> _textPos;
                     Color _color;
                     State _state;
