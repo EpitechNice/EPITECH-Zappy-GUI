@@ -40,6 +40,7 @@ namespace Zappy {
             }
 
 
+
             std::pair<float, float> RoundedRectangle::getPosition() const
             {
                 return _pos;
@@ -59,7 +60,6 @@ namespace Zappy {
             {
                 return _color;
             }
-
 
             void RoundedRectangle::draw()
             {

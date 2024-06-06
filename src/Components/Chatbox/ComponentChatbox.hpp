@@ -49,7 +49,7 @@ namespace Zappy {
                     std::unique_ptr<Rectangle> _rectTop;
                     std::unique_ptr<Rectangle> _rectMid;
                     std::unique_ptr<Rectangle> _rectBot;
-                    std::unique_ptr<Button> _openButton;
+                    std::pair<std::unique_ptr<Button>, std::string> _openButton;
                     std::unique_ptr<Circle> _notifCircle;
 
                     typedef enum {

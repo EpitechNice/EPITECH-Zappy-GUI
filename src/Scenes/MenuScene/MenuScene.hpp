@@ -11,6 +11,7 @@
     #include <memory>
     #include <vector>
     #include <string>
+    #include <tuple>
 
     #include "AScene.hpp"
     #include "ComponentButton.hpp"
@@ -37,9 +38,10 @@ namespace Zappy {
                 protected:
                 private:
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _buttons;
+                    std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, std::string, std::string>> _buttons;
                     std::unique_ptr<Zappy::GUI::Component::Image> _logo;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
+                    Zappy::GUI::I18n::SupportedLocale _lang;
             };
         }
     }

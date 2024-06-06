@@ -19,13 +19,16 @@ SRC		=   src/Main.cpp														\
 			src/Components/Ressources/ComponentRessources.cpp					\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
 			src/Components/Skybox/ComponentSkybox.cpp							\
+			src/Components/SliderVolume/SliderVolume.cpp						\
 			src/Components/Text/ComponentText.cpp								\
-			src/Components/TextBox/ComponentTextBox.cpp							\
+			src/Components/TextBox/ComponentTextBox.cpp 			 			\
 			src/Components/TextGroup/ComponentTextGroup.cpp						\
 			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp	\
 			src/Components/TextMessage/ComponentTextMessage.cpp					\
 			src/Components/Tile/ComponentTile.cpp								\
 			src/Components/TileMap/ComponentTileMap.cpp							\
+			src/Exceptions/Exceptions.cpp										\
+			src/I18n/I18nHelper.cpp												\
 			src/Parsing/Parsing.cpp												\
 			src/Parsing/ParsingError.cpp										\
 			src/Parsing/ParsingHelp.cpp											\
@@ -34,9 +37,15 @@ SRC		=   src/Main.cpp														\
 			src/Raylib/View/View.cpp											\
 			src/SceneManager/SceneManager.cpp									\
 			src/Scenes/AScene/AScene.cpp										\
+			src/Scenes/CreditScene/CreditScene.cpp								\
+			src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp	\
 			src/Scenes/GameScene/GameScene.cpp									\
+			src/Scenes/HelperScene/HelperScene.cpp								\
 			src/Scenes/MenuScene/MenuScene.cpp									\
 			src/Scenes/OptionScene/OptionScene.cpp								\
+			src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp	\
+			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp				\
+			src/Sfml/SoundManager/SoundManager.cpp								\
 			src/Utils/Utils.cpp													\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
@@ -66,39 +75,48 @@ FLAGS	=	-Wall 				\
 			-std=c++20			\
 			-O2
 
-INCLUDES	=	-I./libs/includes						\
-				-I./includes							\
-				-I./src									\
-				-I./src/Components/Background2D			\
-				-I./src/Components/Button				\
-				-I./src/Components/ButtonClassic		\
-				-I./src/Components/Chatbox				\
-				-I./src/Components/Circle				\
-				-I./src/Components/Cubic				\
-				-I./src/Components/Image				\
-				-I./src/Components/Model3D				\
-				-I./src/Components/Rectangle			\
-				-I./src/Components/Ressources			\
-				-I./src/Components/RoundedRectangle		\
-				-I./src/Components/Skybox				\
-				-I./src/Components/Text					\
-				-I./src/Components/TextBox				\
-				-I./src/Components/TextGroup			\
-				-I./src/Components/TextGroupDraggable	\
-				-I./src/Components/TextMessage			\
-				-I./src/Components/Tile					\
-				-I./src/Components/TileMap				\
-				-I./src/Parsing							\
-				-I./src/Raylib/ColorManager				\
-				-I./src/Raylib/Render					\
-				-I./src/Raylib/View						\
-				-I./src/SceneManager					\
-				-I./src/Scenes/IScene					\
-				-I./src/Scenes/AScene					\
-				-I./src/Scenes/GameScene				\
-				-I./src/Scenes/MenuScene				\
-				-I./src/Scenes/OptionScene				\
-				-I./src/Utils							\
+INCLUDES	=	-I./includes									\
+				-I./libs/includes								\
+				-I./src											\
+				-I./src/Components/Background2D					\
+				-I./src/Components/Button						\
+				-I./src/Components/ButtonClassic				\
+				-I./src/Components/Chatbox						\
+				-I./src/Components/Circle						\
+				-I./src/Components/Cubic						\
+				-I./src/Components/Image						\
+				-I./src/Components/Model3D						\
+				-I./src/Components/Rectangle					\
+				-I./src/Components/Ressources					\
+				-I./src/Components/RoundedRectangle				\
+				-I./src/Components/Skybox						\
+				-I./src/Components/SliderVolume					\
+				-I./src/Components/Text							\
+				-I./src/Components/TextBox						\
+				-I./src/Components/TextGroup					\
+				-I./src/Components/TextGroupDraggable			\
+				-I./src/Components/TextMessage					\
+				-I./src/Components/Tile							\
+				-I./src/Components/TileMap						\
+				-I./src/Exceptions								\
+				-I./src/I18n									\
+				-I./src/Parsing									\
+				-I./src/Raylib/ColorManager						\
+				-I./src/Raylib/Render							\
+				-I./src/Raylib/SoundManager						\
+				-I./src/Raylib/View								\
+				-I./src/SceneManager							\
+				-I./src/Scenes/AScene							\
+				-I./src/Scenes/CreditScene						\
+				-I./src/Scenes/CreditScene/DisplayCreditScene   \
+				-I./src/Scenes/GameScene						\
+				-I./src/Scenes/HelperScene						\
+				-I./src/Scenes/IScene							\
+				-I./src/Scenes/MenuScene						\
+				-I./src/Scenes/OptionScene						\
+				-I./src/Scenes/OptionScene/ResolutionOption 	\
+				-I./src/Scenes/OptionScene/SoundOption      	\
+				-I./src/Utils									\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\
@@ -107,7 +125,8 @@ LIBS	=	-L./libs	\
 			-lpthread	\
 			-ldl		\
 			-lrt		\
-			-lX11
+			-lX11		\
+			-lsfml-audio
 
 COMP	=	g++
 

@@ -26,12 +26,12 @@ namespace Zappy {
                 _rectMid->setStroke(3, BLACK);
                 _rectBot->setStroke(1, BLACK);
 
-                _openButton = std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), ">", 30, ORANGE);
-                _openButton->disableBubble();
-                std::pair<float, float> buttonSize = _openButton->getSize();
-                _openButton->setPos(std::make_pair(8, height / 2 - buttonSize.second / 2));
-                std::pair<float, float> openButtonSize = _openButton->getSize();
-                std::pair<float, float> openButtonPos = _openButton->getPos();
+                _openButton = std::make_pair(std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), ">", 30, ORANGE), "");
+                _openButton.first->disableBubble();
+                std::pair<float, float> buttonSize = _openButton.first->getSize();
+                _openButton.first->setPos(std::make_pair(8, height / 2 - buttonSize.second / 2));
+                std::pair<float, float> openButtonSize = _openButton.first->getSize();
+                std::pair<float, float> openButtonPos = _openButton.first->getPos();
                 _notifCircle = std::make_unique<Circle>(std::make_pair(openButtonSize.first + openButtonPos.first, openButtonPos.second), 4, RED);
 
                 std::vector<std::string> names = {
@@ -68,7 +68,7 @@ namespace Zappy {
 
             void Chatbox::destroy()
             {
-                _openButton->destroy();
+                _openButton.first->destroy();
                 for (auto &chat : _chats) {
                     std::get<BUTTON>(chat)->destroy();
                     std::get<TEXT_GROUP>(chat)->destroy();
@@ -88,21 +88,24 @@ namespace Zappy {
                 }
                 _rectTop->draw();
                 _rectBot->draw();
-                _openButton->draw();
+                _openButton.first->draw();
                 if (_hasNotif && !_open)
                     _notifCircle->draw();
             }
 
+//TODO (Refacto i18n): Check isClicked() condition
+//_openButton is now a pair, where second must be "[menu.back_button]" when chatbox is open (this condition is concilient with another situation of use)
+//_openButton.second is by default = ""
             void Chatbox::update()
             {
                 _updateChatbox();
                 std::get<TEXT_GROUP>(_chats[_chatIndex])->update();
-                if (_openButton->isClicked())
+                if (_openButton.first->isClicked(_openButton.second))
                     (_open) ? _setChatboxClose() : _setChatboxOpen();
 
                 if (IsKeyReleased(KEY_ENTER)) {
                     std::vector<std::string> names = {
-                        "Aelion",
+                        "Aeliondw",
                         "Arnaud",
                         "Dan13615",
                         "Dragusheen",
@@ -138,7 +141,7 @@ namespace Zappy {
 
             bool Chatbox::mouseIsOn() const
             {
-                bool isOn = _openButton->isHover() || _openButton->isClicked();
+                bool isOn = _openButton.first->isHover() || _openButton.first->isClicked();
                 if (_open)
                     isOn = GetMouseX() < _width ? true : isOn;
                 return isOn;
@@ -151,8 +154,8 @@ namespace Zappy {
                 _rectTop->setPosX(0);
                 _rectMid->setPosX(0);
                 _rectBot->setPosX(0);
-                _openButton->setPosX(_width + 8);
-                _openButton->setText("<");
+                _openButton.first->setPosX(_width + 8);
+                _openButton.first->setText("<");
 
                 for (auto &chat : _chats) {
                     std::get<BUTTON>(chat)->modPosX(_width * 2);
@@ -169,8 +172,8 @@ namespace Zappy {
                 _rectTop->setPosX(-_width * 2);
                 _rectMid->setPosX(-_width * 2);
                 _rectBot->setPosX(-_width * 2);
-                _openButton->setPosX(8);
-                _openButton->setText(">");
+                _openButton.first->setPosX(8);
+                _openButton.first->setText(">");
 
                 for (auto &chat : _chats) {
                     std::get<BUTTON>(chat)->modPosX(-_width * 2);
