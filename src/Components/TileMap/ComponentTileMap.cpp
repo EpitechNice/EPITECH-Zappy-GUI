@@ -25,21 +25,34 @@ namespace Zappy {
 
 
                         // TODO: Delete this
-                        ressourcesLine.back()->setFood(rand() % 2);
-                        ressourcesLine.back()->setEgg(rand() % 2);
-                        ressourcesLine.back()->setLinemate(rand() % 2);
-                        ressourcesLine.back()->setDeraumere(rand() % 2);
-                        ressourcesLine.back()->setSibur(rand() % 2);
-                        ressourcesLine.back()->setMendiane(rand() % 2);
-                        ressourcesLine.back()->setPhiras(rand() % 2);
-                        ressourcesLine.back()->setThystame(rand() % 2);
-                        ressourcesLine.back()->setPlayer(rand() % 2);
+                        ressourcesLine.back()->setFood(rand() % 3);
+                        ressourcesLine.back()->setEgg(rand() % 3);
+                        ressourcesLine.back()->setLinemate(rand() % 3);
+                        ressourcesLine.back()->setDeraumere(rand() % 3);
+                        ressourcesLine.back()->setSibur(rand() % 3);
+                        ressourcesLine.back()->setMendiane(rand() % 3);
+                        ressourcesLine.back()->setPhiras(rand() % 3);
+                        ressourcesLine.back()->setThystame(rand() % 3);
                     }
                     _tiles.push_back(line);
                     _ressources.push_back(ressourcesLine);
                 }
                 _highLight = std::make_pair(-1, -1);
                 _select = std::make_pair(-1, -1);
+
+                // TODO: Delete this
+                std::vector<std::shared_ptr<Zappy::GUI::Ressources::Players>> players;
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(1, 0, 0, BLUE));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(2, 0, 0, RED));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(3, 1, 0, GREEN));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(4, 0, 1, YELLOW));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(5, 1, 1, PURPLE));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(6, 1, 1, ORANGE));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(7, 1, 1, PINK));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(8, 4, 3, BROWN));
+                players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(9, 1, 0, BEIGE));
+                for (auto &player : players)
+                    _ressources[player->getX()][player->getY()]->addPlayer(player);
             }
 
             TileMap::~TileMap()

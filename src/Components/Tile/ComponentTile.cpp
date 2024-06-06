@@ -67,7 +67,7 @@ namespace Zappy {
                 if (_ressources->hasThystame()) _ressourcesDrawer->drawThystame();
                 if (_ressources->hasFood()) _ressourcesDrawer->drawFood();
                 if (_ressources->hasEgg()) _ressourcesDrawer->drawEgg();
-                if (_ressources->hasPlayer()) _ressourcesDrawer->drawZappy();
+                if (_ressources->hasPlayers()) _ressourcesDrawer->drawZappy();
             }
 
             void Tile::highlight(bool highlight)

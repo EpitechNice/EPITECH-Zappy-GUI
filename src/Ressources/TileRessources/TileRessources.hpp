@@ -8,6 +8,10 @@
 #ifndef TILE_RESSOURCES_HPP_
     #define TILE_RESSOURCES_HPP_
 
+    #include "Players.hpp"
+    #include <vector>
+    #include <memory>
+
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
@@ -48,9 +52,10 @@ namespace Zappy {
                     void setThystame(int thystame);
                     bool hasThystame() const;
 
-                    int getPlayer() const;
-                    void setPlayer(int player);
-                    bool hasPlayer() const;
+                    std::vector<std::shared_ptr<Players>> getPlayers() const;
+                    void clearPlayers();
+                    void addPlayer(std::shared_ptr<Players> player);
+                    bool hasPlayers() const;
 
                 protected:
                 private:
@@ -62,7 +67,7 @@ namespace Zappy {
                     int _mendiane;
                     int _phiras;
                     int _thystame;
-                    int _player;
+                    std::vector<std::shared_ptr<Players>> _players;
             };
         }
     }

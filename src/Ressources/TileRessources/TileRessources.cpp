@@ -150,19 +150,24 @@ namespace Zappy {
             }
 
 
-            int TileRessources::getPlayer() const
+            std::vector<std::shared_ptr<Players>> TileRessources::getPlayers() const
             {
-                return _player;
+                return _players;
             }
 
-            void TileRessources::setPlayer(int player)
+            void TileRessources::clearPlayers()
             {
-                _player = player;
+                _players.clear();
             }
 
-            bool TileRessources::hasPlayer() const
+            void TileRessources::addPlayer(std::shared_ptr<Players> player)
             {
-                return _player > 0;
+                _players.push_back(player);
+            }
+
+            bool TileRessources::hasPlayers() const
+            {
+                return !_players.empty();
             }
         }
     }
