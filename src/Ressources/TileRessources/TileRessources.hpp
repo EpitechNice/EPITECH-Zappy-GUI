@@ -48,6 +48,10 @@ namespace Zappy {
                     void setThystame(int thystame);
                     bool hasThystame() const;
 
+                    int getPlayer() const;
+                    void setPlayer(int player);
+                    bool hasPlayer() const;
+
                 protected:
                 private:
                     int _food;
@@ -58,6 +62,7 @@ namespace Zappy {
                     int _mendiane;
                     int _phiras;
                     int _thystame;
+                    int _player;
             };
         }
     }

@@ -148,6 +148,22 @@ namespace Zappy {
             {
                 return _thystame > 0;
             }
+
+
+            int TileRessources::getPlayer() const
+            {
+                return _player;
+            }
+
+            void TileRessources::setPlayer(int player)
+            {
+                _player = player;
+            }
+
+            bool TileRessources::hasPlayer() const
+            {
+                return _player > 0;
+            }
         }
     }
 }

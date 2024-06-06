@@ -33,6 +33,7 @@ namespace Zappy {
                         ressourcesLine.back()->setMendiane(rand() % 2);
                         ressourcesLine.back()->setPhiras(rand() % 2);
                         ressourcesLine.back()->setThystame(rand() % 2);
+                        ressourcesLine.back()->setPlayer(rand() % 2);
                     }
                     _tiles.push_back(line);
                     _ressources.push_back(ressourcesLine);

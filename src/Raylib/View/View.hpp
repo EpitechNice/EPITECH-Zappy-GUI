@@ -56,9 +56,9 @@ namespace Zappy {
                     bool _mouseFollowing;
                     bool _enable;
 
-                    float _speed = 0.15f;
-                    float _angle = 0.05f;
-                    float _dash = 4.0f;
+                    float _speed = 0.60f;
+                    float _angle = 0.10f;
+                    float _dash = 2.0f;
                     float _sensitivity = 0.003f;
 
 

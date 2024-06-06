@@ -21,14 +21,15 @@ namespace Zappy {
 
 
                 _pos = {0, 0, 0};
-                _refPosFood = {tileXPart * 3, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosEgg = {tileXPart * 5, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosLinemate = {tileXPart * 2, _pos.y + size.y / 2, tileYPart * 1};
-                _refPosDeraumere = {tileXPart * 6, _pos.y + size.y / 2, tileYPart * 1};
-                _refPosSibur = {tileXPart * 7, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosMendiane = {tileXPart * 6, _pos.y + size.y / 2, tileYPart * 3};
-                _refPosPhiras = {tileXPart * 2, _pos.y + size.y / 2, tileYPart * 3};
-                _refPosThystame = {tileXPart * 1, _pos.y + size.y / 2, tileYPart * 2};
+                _refPosFood         = {tileXPart * 3, _pos.y + size.y / 2, tileYPart * 2};
+                _refPosEgg          = {tileXPart * 5, _pos.y + size.y / 2, tileYPart * 2};
+                _refPosLinemate     = {tileXPart * 2, _pos.y + size.y / 2, tileYPart * 1};
+                _refPosDeraumere    = {tileXPart * 6, _pos.y + size.y / 2, tileYPart * 1};
+                _refPosSibur        = {tileXPart * 7, _pos.y + size.y / 2, tileYPart * 2};
+                _refPosMendiane     = {tileXPart * 6, _pos.y + size.y / 2, tileYPart * 3};
+                _refPosPhiras       = {tileXPart * 2, _pos.y + size.y / 2, tileYPart * 3};
+                _refPosThystame     = {tileXPart * 1, _pos.y + size.y / 2, tileYPart * 2};
+                _refPosZappy        = {tileXPart * 4, _pos.y + size.y / 2, tileYPart * 1};
 
                 _food = std::make_unique<Model3D>("Food/scene", _refPosFood, 1, (Vector3){1, 0, 0}, -20);
                 _food->setOnPosY(_pos.y + size.y / 2 - 0.2);
@@ -40,6 +41,8 @@ namespace Zappy {
                 _mendiane = std::make_unique<Model3D>("Rocks/rock_4/rock", _refPosMendiane, scale);
                 _phiras = std::make_unique<Model3D>("Rocks/rock_5/rock", _refPosPhiras, scale);
                 _thystame = std::make_unique<Model3D>("Rocks/rock_6/rock", _refPosThystame, scale);
+                _zappy = std::make_unique<Model3D>("Zappy/scene", _refPosZappy, 1, (Vector3){0, 1, 0}, 90);
+                _zappy->setOnPosY(_pos.y + size.y / 2);
             }
 
             Ressources::~Ressources()
@@ -59,6 +62,7 @@ namespace Zappy {
                 _mendiane->destroy();
                 _phiras->destroy();
                 _thystame->destroy();
+                _zappy->destroy();
                 _isDestroyed = true;
             }
 
@@ -78,6 +82,8 @@ namespace Zappy {
                 _mendiane->setPos((Vector3){_refPosMendiane.x +_pos.x, _refPosMendiane.y +_pos.y, _refPosMendiane.z +_pos.z});
                 _phiras->setPos((Vector3){_refPosPhiras.x +_pos.x, _refPosPhiras.y +_pos.y, _refPosPhiras.z +_pos.z});
                 _thystame->setPos((Vector3){_refPosThystame.x +_pos.x, _refPosThystame.y +_pos.y, _refPosThystame.z +_pos.z});
+                _zappy->setPos((Vector3){_refPosZappy.x +_pos.x, _refPosZappy.y +_pos.y, _refPosZappy.z +_pos.z});
+                _zappy->setOnPosY(_pos.y + _size.y / 2);
             }
 
 
@@ -119,6 +125,11 @@ namespace Zappy {
             void Ressources::drawThystame()
             {
                 _thystame->draw();
+            }
+
+            void Ressources::drawZappy()
+            {
+                _zappy->draw();
             }
         }
     }
