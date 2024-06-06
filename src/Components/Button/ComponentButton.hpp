@@ -44,6 +44,8 @@ namespace Zappy {
 
                     std::pair<float, float> getSize() const;
                     std::pair<float, float> getPos() const;
+                    bool isClicked() const;
+                    bool isHover() const;
                     std::string getText() const;
 
                     void changeColor(Color color);

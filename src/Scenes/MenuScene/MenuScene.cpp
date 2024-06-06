@@ -41,6 +41,7 @@ namespace Zappy {
             void Menu::start()
             {
                 EnableCursor();
+                _render->view()->disableCamera();
             }
 
             void Menu::destroy()

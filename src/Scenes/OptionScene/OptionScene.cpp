@@ -61,6 +61,7 @@ namespace Zappy {
             void Option::start()
             {
                 EnableCursor();
+                _render->view()->disableCamera();
             }
 
             void Option::destroy()

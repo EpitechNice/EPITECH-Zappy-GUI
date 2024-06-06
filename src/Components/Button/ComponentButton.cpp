@@ -108,11 +108,21 @@ namespace Zappy {
                 return false;
             }
 
+            bool Button::isClicked() const
+            {
+                return _state == CLICKED;
+            }
+
             bool Button::isClickedWihoutSong()
             {
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
                     return true;
                 return false;
+            }
+
+            bool Button::isHover() const
+            {
+                return _state == HOVER;
             }
 
             void Button::enableBubble()
@@ -159,7 +169,7 @@ namespace Zappy {
                     _state = DEFAULT;
             }
 
-             void Button::changeSize(const std::pair<float, float>& newSize)
+            void Button::changeSize(const std::pair<float, float>& newSize)
             {
                 std::pair<float, float> buttonSize = newSize;
                 std::pair<float, float> textSizes = _text->getSize();
@@ -179,7 +189,7 @@ namespace Zappy {
             void Button::changePos(const std::pair<float, float>& newPos)
             {
                 std::pair<float, float> nextPos = {newPos.first - _pos.first, newPos.second - _pos.second};
-               _pos = newPos;
+                _pos = newPos;
                 _blackStroke->setPosition({ _blackStroke->getPosition().first + nextPos.first, _blackStroke->getPosition().second + nextPos.second });
                 _upEffect->setPosition({ _upEffect->getPosition().first + nextPos.first, _upEffect->getPosition().second + nextPos.second });
                 _background->setPosition({ _background->getPosition().first + nextPos.first, _background->getPosition().second + nextPos.second });

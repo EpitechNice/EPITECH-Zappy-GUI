@@ -10,16 +10,9 @@
 namespace Zappy {
     namespace GUI {
         namespace Raylib {
-            View::View(
-                Vector3 position,
-                Vector3 target,
-                Vector3 up,
-                float fovy,
-                CameraMode mode
-            )
+            View::View(Vector3 position, Vector3 target, Vector3 up, float fovy)
                 : _position(position), _target(target), _up(up), _fovy(fovy), _mouseFollowing(true)
             {
-                (void)mode;
                 _camera = (Camera){
                     .position = position,
                     .target = target,
@@ -27,6 +20,7 @@ namespace Zappy {
                     .fovy = fovy,
                     .projection = CAMERA_PERSPECTIVE
                 };
+                _enable = true;
             }
 
 
@@ -116,8 +110,22 @@ namespace Zappy {
                 _mouseFollowing = mouseFollowing;
             }
 
+
+            void View::enableCamera()
+            {
+                _enable = true;
+            }
+
+            void View::disableCamera()
+            {
+                _enable = false;
+            }
+
+
             void View::update()
             {
+                if (!_enable) return;
+
                 int dash = (IsKeyDown(KEY_LEFT_SHIFT)) ? _dash : 1;
                 if (IsKeyDown(KEY_W)) _moveFront(_speed * dash);
                 if (IsKeyDown(KEY_A)) _moveSide(-_speed * dash);

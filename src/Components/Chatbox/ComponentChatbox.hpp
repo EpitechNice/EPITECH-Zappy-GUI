@@ -36,6 +36,8 @@ namespace Zappy {
 
                     void addMessage(const std::string &message, const std::string &name, const std::string &tabName);
 
+                    bool mouseIsOn() const;
+
                 protected:
                 private:
                     bool _isDestroyed;
