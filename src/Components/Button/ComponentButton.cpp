@@ -33,7 +33,7 @@ namespace Zappy {
                 _reflexioneffect = std::make_unique<RoundedRectangle>(std::make_pair(pos.first + 4, pos.second + 4), std::make_pair(buttonSize.first - 8, (buttonSize.second - 7 - 8) / 2), 0.3, Zappy::GUI::Raylib::ColorManager::Lighter(_color, 5));
                 _circle = std::make_unique<Circle>(std::make_pair(pos.first + buttonSize.first - 8, pos.second + 8), 4, Zappy::GUI::Raylib::ColorManager::Lighter(_color, 50));
                 _textStroke = std::make_unique<Text>(std::make_pair(textPosition.first, textPosition.second + 2), text, textSize, Zappy::GUI::Raylib::ColorManager::Darker(color, 50));
-                _size = buttonSize;
+                _buttonSize = buttonSize;
                 _textPos = textPosition;
 
                 _bubble = true;
@@ -75,12 +75,13 @@ namespace Zappy {
             void Button::setSize(const std::pair<float, float>& size)
             {
                 _size = size;
+                changeSize(size);
             }
 
 
             std::pair<float, float> Button::getSize() const
             {
-                return _size;
+                return _buttonSize;
             }
 
             std::string Button::getText() const
@@ -155,12 +156,13 @@ namespace Zappy {
             {
                 _text->setText(text);
                 _textStroke->setText(text);
+                changeSize(_size);
             }
 
 
             void Button::_updateState()
             {
-                if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_pos.first, _pos.second, _size.first, _size.second})) {
+                if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_pos.first, _pos.second, _buttonSize.first, _buttonSize.second})) {
                     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                         _state = CLICKED;
                     else
@@ -195,7 +197,8 @@ namespace Zappy {
                 _circle->setPos(std::make_pair(_pos.first + buttonSize.first - 8, _pos.second + 8));
                 _text->setPos(textPosition);
                 _textStroke->setPos(std::make_pair(textPosition.first, textPosition.second + 2));
-                _size = buttonSize;
+                _buttonSize = buttonSize;
+                _size = newSize;
                 _textPos = textPosition;
             }
 
@@ -226,36 +229,36 @@ namespace Zappy {
                 if (oldState == _state)
                     return;
                 if (_state == HOVER) {
-                    _blackStroke->setSize(std::make_pair(_size.first + 2, _size.second + 2 - _hoverEffect));
+                    _blackStroke->setSize(std::make_pair(_buttonSize.first + 2, _buttonSize.second + 2 - _hoverEffect));
                     _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1 + _hoverEffect));
-                    _upEffect->setSize(std::make_pair(_size.first, _size.second - _hoverEffect));
+                    _upEffect->setSize(std::make_pair(_buttonSize.first, _buttonSize.second - _hoverEffect));
                     _upEffect->setPosition(std::make_pair(_pos.first, _pos.second + _hoverEffect));
                     _background->setPosition(std::make_pair(_pos.first, _pos.second + _hoverEffect));
                     _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3 + _hoverEffect));
                     _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4 + _hoverEffect));
-                    _circle->setPos(std::make_pair(_pos.first + _size.first - 8, _pos.second + 8 + _hoverEffect));
+                    _circle->setPos(std::make_pair(_pos.first + _buttonSize.first - 8, _pos.second + 8 + _hoverEffect));
                     _text->setPos(std::make_pair(_textPos.first, _textPos.second + _hoverEffect));
                     _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _hoverEffect));
                 } else if (_state == CLICKED) {
-                    _blackStroke->setSize(std::make_pair(_size.first + 2, _size.second + 2 - _pressEffect));
+                    _blackStroke->setSize(std::make_pair(_buttonSize.first + 2, _buttonSize.second + 2 - _pressEffect));
                     _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1 + _pressEffect));
-                    _upEffect->setSize(std::make_pair(_size.first, _size.second - _pressEffect));
+                    _upEffect->setSize(std::make_pair(_buttonSize.first, _buttonSize.second - _pressEffect));
                     _upEffect->setPosition(std::make_pair(_pos.first, _pos.second + _pressEffect));
                     _background->setPosition(std::make_pair(_pos.first, _pos.second + _pressEffect));
                     _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3 + _pressEffect));
                     _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4 + _pressEffect));
-                    _circle->setPos(std::make_pair(_pos.first + _size.first - 8, _pos.second + 8 + _pressEffect));
+                    _circle->setPos(std::make_pair(_pos.first + _buttonSize.first - 8, _pos.second + 8 + _pressEffect));
                     _text->setPos(std::make_pair(_textPos.first, _textPos.second + _pressEffect));
                     _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _pressEffect));
                 } else {
-                    _blackStroke->setSize(std::make_pair(_size.first + 2, _size.second + 2));
+                    _blackStroke->setSize(std::make_pair(_buttonSize.first + 2, _buttonSize.second + 2));
                     _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1));
-                    _upEffect->setSize(_size);
+                    _upEffect->setSize(_buttonSize);
                     _upEffect->setPosition(_pos);
                     _background->setPosition(_pos);
                     _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3));
                     _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4));
-                    _circle->setPos(std::make_pair(_pos.first + _size.first - 8, _pos.second + 8));
+                    _circle->setPos(std::make_pair(_pos.first + _buttonSize.first - 8, _pos.second + 8));
                     _text->setPos(_textPos);
                     _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2));
                 }
