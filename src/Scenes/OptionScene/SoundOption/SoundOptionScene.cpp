@@ -20,9 +20,9 @@ namespace Zappy {
             _background = std::make_unique<Component::Background2D>("assets/img/map_forest_scenery.png");
             _backButton = std::make_pair(std::make_unique<Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), i18nHelper->getTranslation("[menu.back_button]"), 20, GREEN), "[menu.back_button]");
             std::vector<std::tuple<std::string, std::string, std::string>> text = {
-                {i18nHelper->getTranslation("[menu.settings.sound.sound_effect_title]"), "soundEffect", "[menu.settings.sound.sound_effect_title]"},
+                {i18nHelper->getTranslation("[menu.settings.sound.music_title]"), "soundEffect", "[menu.settings.sound.music_title]"},
                 {i18nHelper->getTranslation("[menu.settings.sound.volume_title]"), "slider1", "[menu.settings.sound.volume_title]"},
-                {i18nHelper->getTranslation("[menu.settings.sound.music_title]"), "music", "[menu.settings.sound.music_title]"},
+                {i18nHelper->getTranslation("[menu.settings.sound.sound_effect_title]"), "music", "[menu.settings.sound.sound_effect_title]"},
                 {i18nHelper->getTranslation("[menu.settings.sound.volume_title]"), "slider2", "[menu.settings.sound.volume_title]"},
             };
             _lang = i18nHelper->getCurrentLocale();
