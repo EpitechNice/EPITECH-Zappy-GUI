@@ -31,6 +31,7 @@ namespace Zappy {
                     void drawMendiane();
                     void drawPhiras();
                     void drawThystame();
+                    void drawZappy();
 
                     void setPos(Vector3 pos);
                 protected:
@@ -48,6 +49,7 @@ namespace Zappy {
                     Vector3 _refPosMendiane;
                     Vector3 _refPosPhiras;
                     Vector3 _refPosThystame;
+                    Vector3 _refPosZappy;
 
                     std::unique_ptr<Model3D> _food;
                     std::unique_ptr<Model3D> _egg;
@@ -57,6 +59,7 @@ namespace Zappy {
                     std::unique_ptr<Model3D> _mendiane;
                     std::unique_ptr<Model3D> _phiras;
                     std::unique_ptr<Model3D> _thystame;
+                    std::unique_ptr<Model3D> _zappy;
             };
         }
     }

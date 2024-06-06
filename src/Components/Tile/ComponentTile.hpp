@@ -16,13 +16,14 @@
     #include "ColorManager.hpp"
     #include "ComponentModel3D.hpp"
     #include "ComponentRessources.hpp"
+    #include "TileRessources.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
             class Tile {
                 public:
-                    Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressources);
+                    Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressourcesDrawer, std::shared_ptr<Zappy::GUI::Ressources::TileRessources> ressources);
                     ~Tile();
 
                     void destroy();
@@ -40,7 +41,8 @@ namespace Zappy {
                     Vector3 _pos;
                     Vector3 _size;
                     Color _color;
-                    std::shared_ptr<Ressources> _ressources;
+                    std::shared_ptr<Ressources> _ressourcesDrawer;
+                    std::shared_ptr<Zappy::GUI::Ressources::TileRessources> _ressources;
                     bool _highlight;
                     bool _select;
                     bool _isDestroyed;
@@ -52,7 +54,7 @@ namespace Zappy {
                     std::unique_ptr<Cubic> _grass;
                     std::unique_ptr<Cubic> _dirt;
                     std::unique_ptr<Cubic> _wire;
-
+                    float _selectEffect;
             };
         }
     }

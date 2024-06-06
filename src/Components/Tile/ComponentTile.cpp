@@ -10,10 +10,9 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            Tile::Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressources)
-                : _pos(pos), _size(size), _color(color), _ressources(ressources), _highlight(false), _select(false), _isDestroyed(false)
+            Tile::Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressourcesDrawer, std::shared_ptr<Zappy::GUI::Ressources::TileRessources> ressources)
+                : _pos(pos), _size(size), _color(color), _ressourcesDrawer(ressourcesDrawer), _ressources(ressources), _highlight(false), _select(false), _isDestroyed(false)
             {
-                std::cout << "Tile size: " << size.x << " " << size.y << " " << size.z << std::endl;
                 _grassSize = {size.x, size.y / 2, size.z};
                 _grassPos = {pos.x, pos.y + size.y / 4, pos.z};
                 _dirtSize = {size.x, size.y / 2, size.z};
@@ -22,6 +21,7 @@ namespace Zappy {
                 _dirt = std::make_unique<Cubic>(_dirtPos, _dirtSize, BROWN);
                 _wire = std::make_unique<Cubic>(_pos, _size, BLACK);
                 _wire->setMode(Cubic::WIRES);
+                _selectEffect = _size.y / 3;
             }
 
             Tile::~Tile()
@@ -57,16 +57,17 @@ namespace Zappy {
                     _wire->draw();
 
                 Vector3 pos = _pos;
-                pos.y += _select ? _size.y / 2 : 0;
-                _ressources->setPos(pos);
-                _ressources->drawLinemate();
-                _ressources->drawDeraumere();
-                _ressources->drawMendiane();
-                _ressources->drawPhiras();
-                _ressources->drawSibur();
-                _ressources->drawThystame();
-                _ressources->drawFood();
-                _ressources->drawEgg();
+                pos.y += _select ? _selectEffect : 0;
+                _ressourcesDrawer->setPos(pos);
+                if (_ressources->hasLinemate()) _ressourcesDrawer->drawLinemate();
+                if (_ressources->hasDeraumere()) _ressourcesDrawer->drawDeraumere();
+                if (_ressources->hasMendiane()) _ressourcesDrawer->drawMendiane();
+                if (_ressources->hasPhiras()) _ressourcesDrawer->drawPhiras();
+                if (_ressources->hasSibur()) _ressourcesDrawer->drawSibur();
+                if (_ressources->hasThystame()) _ressourcesDrawer->drawThystame();
+                if (_ressources->hasFood()) _ressourcesDrawer->drawFood();
+                if (_ressources->hasEgg()) _ressourcesDrawer->drawEgg();
+                if (_ressources->hasPlayers()) _ressourcesDrawer->drawZappy();
             }
 
             void Tile::highlight(bool highlight)
@@ -92,9 +93,9 @@ namespace Zappy {
                         _dirt->setPosY(_dirtPos.y);
                         _wire->setPosY(_pos.y);
                     } else {
-                        _grass->setPosY(_grassPos.y + _size.y / 2);
-                        _dirt->setPosY(_dirtPos.y + _size.y / 2);
-                        _wire->setPosY(_pos.y + _size.y / 2);
+                        _grass->setPosY(_grassPos.y + _selectEffect);
+                        _dirt->setPosY(_dirtPos.y + _selectEffect);
+                        _wire->setPosY(_pos.y + _selectEffect);
                     }
                 }
             }

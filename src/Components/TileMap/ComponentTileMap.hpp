@@ -14,6 +14,8 @@
     #include "ComponentTile.hpp"
     #include "Render.hpp"
     #include "ComponentRessources.hpp"
+    #include "TileRessources.hpp"
+    #include "Ressources.hpp"
 
 namespace Zappy {
     namespace GUI {

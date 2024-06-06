@@ -18,8 +18,8 @@ namespace Zappy {
             class View {
                 public:
                     View(
-                        Vector3 position = (Vector3){ -8.5f, 12.8f, -9.6f },
-                        Vector3 target = (Vector3){-5.4f, 10.5f, -5.9f},
+                        Vector3 position = (Vector3){ -7.04f, 11.11f, -27.61f },
+                        Vector3 target = (Vector3){-7.03f, 10.26f, -22.33f},
                         Vector3 up = (Vector3){0.0f, 1.0f, 0.0f},
                         float fovy = 45.0f
                     );
@@ -56,9 +56,9 @@ namespace Zappy {
                     bool _mouseFollowing;
                     bool _enable;
 
-                    float _speed = 0.15f;
-                    float _angle = 0.05f;
-                    float _dash = 4.0f;
+                    float _speed = 0.60f;
+                    float _angle = 0.10f;
+                    float _dash = 2.0f;
                     float _sensitivity = 0.003f;
 
 

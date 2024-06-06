@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sparky (Clash royale)
+* source:	https://sketchfab.com/3d-models/sparky-clash-royale-8a08351fc00844a79e1dbc2dfcf2fce0
+* author:	Nelson.Gollop (https://sketchfab.com/Nelson.Gollop)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sparky (Clash royale)" (https://sketchfab.com/3d-models/sparky-clash-royale-8a08351fc00844a79e1dbc2dfcf2fce0) by Nelson.Gollop (https://sketchfab.com/Nelson.Gollop) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

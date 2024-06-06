@@ -18,6 +18,7 @@
     #include "ComponentChatbox.hpp"
     #include "ComponentTileMap.hpp"
     #include "ComponentRessources.hpp"
+    #include "Ressources.hpp"
 
 namespace Zappy {
     namespace GUI {
