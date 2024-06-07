@@ -37,6 +37,7 @@ namespace Zappy {
                     void unhighlight();
 
                     bool hasSelected() const;
+                    std::pair<int, int> getSelected() const;
 
                 protected:
                 private:

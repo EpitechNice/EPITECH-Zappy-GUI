@@ -19,7 +19,7 @@ namespace Zappy {
                 _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, player->getTeam());
                 _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), 20, WHITE);
                 _size.second = _text->getSize().second + 20;
-                _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_size.first, (float)_size.second), 0.2, (Color){112, 108, 79, 255});
+                _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_size.first, (float)_size.second), 0.2, (Color){55, 56, 40, 255});
                 _team->setPos(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + _background->getSize().second / 2)));
                 _text->setPos(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)));
             }
@@ -44,7 +44,7 @@ namespace Zappy {
 
             void InspecterSelecter::draw()
             {
-                if (_state == HOVER || _state == CLICKED)
+                if (_state == HOVER || _state == CLICKED || _state == SELECTED)
                     _background->draw();
                 _text->draw();
                 _team->draw();
@@ -61,6 +61,22 @@ namespace Zappy {
             std::pair<int, int> InspecterSelecter::getSize() const
             {
                 return _size;
+            }
+
+            void InspecterSelecter::setSelected(bool selected)
+            {
+                if (selected) {
+                    _state = SELECTED;
+                    _background->setColor((Color){112, 108, 79, 255});
+                } else {
+                    _state = NONE;
+                    _background->setColor((Color){55, 56, 40, 255});
+                }
+            }
+
+            bool InspecterSelecter::isClicked() const
+            {
+                return _state == CLICKED;
             }
         }
     }

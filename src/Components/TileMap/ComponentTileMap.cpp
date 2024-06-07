@@ -121,6 +121,11 @@ namespace Zappy {
             {
                 return _select.first != -1 && _select.second != -1;
             }
+
+            std::pair<int, int> TileMap::getSelected() const
+            {
+                return _select;
+            }
         }
     }
 }

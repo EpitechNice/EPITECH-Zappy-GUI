@@ -35,12 +35,17 @@ namespace Zappy {
 
                     std::pair<int, int> getSize() const;
 
+                    void setSelected(bool selected);
+
+                    bool isClicked() const;
+
                 protected:
                 private:
                     typedef enum {
                         NONE,
                         HOVER,
                         CLICKED,
+                        SELECTED,
                     } State;
 
                     std::pair<int, int> _pos;

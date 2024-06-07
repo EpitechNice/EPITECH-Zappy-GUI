@@ -18,7 +18,7 @@
     #include "ComponentButton.hpp"
     #include "ComponentButtonClassic.hpp"
     #include "ComponentCircle.hpp"
-    #include "ComponentInspecterSelecter.hpp"
+    #include "ComponentInspecterSelecterGroup.hpp"
     #include "Ressources.hpp"
 
 namespace Zappy {
@@ -31,7 +31,7 @@ namespace Zappy {
 
                     void destroy();
 
-                    void update();
+                    void update(std::pair<int, int> selectedTile);
 
                     void draw();
 
@@ -61,12 +61,13 @@ namespace Zappy {
 
                     std::vector<std::tuple<std::string, std::unique_ptr<ButtonClassic>>> _tabs;
                     int _tabsIndex;
+                    std::pair<int, int> _selectedTile;
 
                     void _setInspecterOpen();
                     void _setInspecterClose();
                     void _updateTabs();
 
-                    std::vector<std::unique_ptr<InspecterSelecter>> _selecters;
+                    std::unique_ptr<InspecterSelecterGroup> _selecters;
             };
         }
     }

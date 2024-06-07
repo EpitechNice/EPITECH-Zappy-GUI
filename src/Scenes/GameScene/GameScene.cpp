@@ -65,7 +65,7 @@ namespace Zappy {
                 _skybox->update(_render);
                 _borderbox->update(_render);
                 _chatbox->update();
-                _inspecter->update();
+                _inspecter->update(_tileMap->getSelected());
                 if (_chatbox->mouseIsOn() || _inspecter->mouseIsOn())
                     _tileMap->unhighlight();
                 else
@@ -98,8 +98,7 @@ namespace Zappy {
             void Game::draw2D()
             {
                 _chatbox->draw();
-                if (_tileMap->hasSelected())
-                    _inspecter->draw();
+                _inspecter->draw();
 
                 if (!_cursor) {
                     _crossPointer.first->draw();
