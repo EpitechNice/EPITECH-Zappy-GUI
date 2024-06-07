@@ -21,6 +21,7 @@
     #include "ComponentInspecterSelecterGroupDragabble.hpp"
     #include "Ressources.hpp"
     #include "ComponentInspecterInfo.hpp"
+    #include "ComponentInspecterInfoTile.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -71,6 +72,7 @@ namespace Zappy {
 
                     std::unique_ptr<InspecterSelecterGroupDraggable> _selecters;
                     std::shared_ptr<InspecterInfo> _infos;
+                    std::unique_ptr<InspecterInfoTile> _infosTile;
             };
         }
     }

@@ -36,6 +36,7 @@ namespace Zappy {
                 std::vector<std::string> names = {
                     "Select",
                     "Inspect",
+                    "Tile",
                 };
                 int gap = 5;
                 int width = (_width - 40 - gap * (names.size() - 1)) / names.size();
@@ -57,6 +58,7 @@ namespace Zappy {
                     _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
 
                 _infos = std::make_shared<InspecterInfo>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
+                _infosTile = std::make_unique<InspecterInfoTile>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
             }
 
             Inspecter::~Inspecter()
@@ -74,6 +76,7 @@ namespace Zappy {
                     std::get<BUTTON>(tab)->destroy();
                 _selecters->destroy();
                 _infos->destroy();
+                _infosTile->destroy();
             }
 
 
@@ -82,8 +85,10 @@ namespace Zappy {
                 _rectMid->draw();
                 if (_tabsIndex == 0)
                     _selecters->draw();
-                else
+                else if (_tabsIndex == 1)
                     _infos->draw();
+                else
+                    _infosTile->draw();
                 _rectTopBackground->draw();
                 for (auto &tab : _tabs)
                     std::get<BUTTON>(tab)->draw();
@@ -98,13 +103,16 @@ namespace Zappy {
                     _selectedTile = selectedTile;
                     _selecters->reset(_infos);
                     _updateTabs(0);
-                    if (_selectedTile.first == -1 || _selectedTile.second == -1)
+                    if (_selectedTile.first == -1 || _selectedTile.second == -1) {
+                        _infosTile->setInfo(nullptr);
                         for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
                             _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
-                    else
+                    } else {
+                        _infosTile->setInfo(Zappy::GUI::Ressources::Ressources::get()->tileRessources[_selectedTile.first][_selectedTile.second]);
                         for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
                             if (Zappy::GUI::Ressources::Ressources::get()->players[i]->getX() == _selectedTile.first && Zappy::GUI::Ressources::Ressources::get()->players[i]->getY() == _selectedTile.second)
                                 _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                    }
                 }
                 _updateTabs();
                 if (_tabsIndex == 0)
@@ -148,6 +156,7 @@ namespace Zappy {
 
                 _selecters->modPosX(-_width);
                 _infos->modPosX(-_width);
+                _infosTile->modPosX(-_width);
 
                 _open = true;
             }
@@ -166,6 +175,7 @@ namespace Zappy {
 
                 _selecters->modPosX(_width);
                 _infos->modPosX(_width);
+                _infosTile->modPosX(_width);
 
                 _open = false;
             }
