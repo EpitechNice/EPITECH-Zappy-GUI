@@ -16,6 +16,7 @@
     #include "AScene.hpp"
     #include "ComponentSkybox.hpp"
     #include "ComponentChatbox.hpp"
+    #include "ComponentInspecter.hpp"
     #include "ComponentTileMap.hpp"
     #include "ComponentRessources.hpp"
     #include "Ressources.hpp"
@@ -43,6 +44,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _skybox;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;
+                    std::shared_ptr<Zappy::GUI::Component::Inspecter> _inspecter;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
                     std::shared_ptr<Zappy::GUI::Component::Ressources> _ressources;
                     std::unique_ptr<Zappy::GUI::Component::TileMap> _tileMap;

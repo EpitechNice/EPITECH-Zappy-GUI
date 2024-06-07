@@ -65,6 +65,11 @@ namespace Zappy {
                 return std::make_pair(size.x, size.y);
             }
 
+            std::pair<int, int> TextBox::getPos() const
+            {
+                return _pos;
+            }
+
             void TextBox::draw()
             {
                 if (_isDestroyed)

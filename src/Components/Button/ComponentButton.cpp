@@ -111,7 +111,7 @@ namespace Zappy {
 
             bool Button::isClicked() const
             {
-                return _state == CLICKED;
+                return _state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON);
             }
 
             bool Button::isClickedWihoutSong()

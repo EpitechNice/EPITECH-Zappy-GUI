@@ -35,6 +35,14 @@ namespace Zappy {
                 for (auto &player : players)
                     tileRessources[player->getX()][player->getY()]->addPlayer(player);
             }
+
+            std::shared_ptr<Players> Ressources::getPlayerFromId(int id) const
+            {
+                for (auto &player : players)
+                    if (player->getId() == id)
+                        return player;
+                return nullptr;
+            }
         }
     }
 }

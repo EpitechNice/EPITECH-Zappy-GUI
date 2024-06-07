@@ -6,51 +6,57 @@
 ##
 
 
-SRC		=   src/Main.cpp														\
-			src/Components/Background2D/ComponentBackground2D.cpp				\
-			src/Components/Button/ComponentButton.cpp							\
-			src/Components/ButtonClassic/ComponentButtonClassic.cpp				\
-			src/Components/Chatbox/ComponentChatbox.cpp							\
-			src/Components/Circle/ComponentCircle.cpp							\
-			src/Components/Cubic/ComponentCubic.cpp								\
-			src/Components/Image/ComponentImage.cpp								\
-			src/Components/Model3D/ComponentModel3D.cpp							\
-			src/Components/Rectangle/ComponentRectangle.cpp						\
-			src/Components/Ressources/ComponentRessources.cpp					\
-			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp		\
-			src/Components/Skybox/ComponentSkybox.cpp							\
-			src/Components/SliderVolume/SliderVolume.cpp						\
-			src/Components/Text/ComponentText.cpp								\
-			src/Components/TextBox/ComponentTextBox.cpp 			 			\
-			src/Components/TextGroup/ComponentTextGroup.cpp						\
-			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp	\
-			src/Components/TextMessage/ComponentTextMessage.cpp					\
-			src/Components/Tile/ComponentTile.cpp								\
-			src/Components/TileMap/ComponentTileMap.cpp							\
+SRC		=   src/Main.cpp																				\
+			src/Components/Background2D/ComponentBackground2D.cpp										\
+			src/Components/Button/ComponentButton.cpp													\
+			src/Components/ButtonClassic/ComponentButtonClassic.cpp										\
+			src/Components/Chatbox/ComponentChatbox.cpp													\
+			src/Components/Circle/ComponentCircle.cpp													\
+			src/Components/Cubic/ComponentCubic.cpp														\
+			src/Components/Image/ComponentImage.cpp														\
+			src/Components/Inspecter/ComponentInspecter.cpp												\
+			src/Components/InspecterInfo/ComponentInspecterInfo.cpp										\
+			src/Components/InspecterInfoTile/ComponentInspecterInfoTile.cpp								\
+			src/Components/InspecterSelecter/ComponentInspecterSelecter.cpp								\
+			src/Components/InspecterSelecterGroup/ComponentInspecterSelecterGroup.cpp					\
+			src/Components/InspecterSelecterGroupDraggable/ComponentInspecterSelecterGroupDraggable.cpp	\
+			src/Components/Model3D/ComponentModel3D.cpp													\
+			src/Components/Rectangle/ComponentRectangle.cpp												\
+			src/Components/Ressources/ComponentRessources.cpp											\
+			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp								\
+			src/Components/Skybox/ComponentSkybox.cpp													\
+			src/Components/SliderVolume/SliderVolume.cpp												\
+			src/Components/Text/ComponentText.cpp														\
+			src/Components/TextBox/ComponentTextBox.cpp 			 									\
+			src/Components/TextGroup/ComponentTextGroup.cpp												\
+			src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp							\
+			src/Components/TextMessage/ComponentTextMessage.cpp											\
+			src/Components/Tile/ComponentTile.cpp														\
+			src/Components/TileMap/ComponentTileMap.cpp													\
 			src/CommunicationServer/CommunicationServer.cpp 					\
-			src/Exceptions/Exceptions.cpp										\
-			src/I18n/I18nHelper.cpp												\
-			src/Parsing/Parsing.cpp												\
-			src/Parsing/ParsingError.cpp										\
-			src/Parsing/ParsingHelp.cpp											\
-			src/Raylib/ColorManager/ColorManager.cpp							\
-			src/Raylib/Render/Render.cpp										\
-			src/Raylib/View/View.cpp											\
-			src/Ressources/Players/Players.cpp									\
-			src/Ressources/Ressources/Ressources.cpp							\
-			src/Ressources/TileRessources/TileRessources.cpp					\
-			src/SceneManager/SceneManager.cpp									\
-			src/Scenes/AScene/AScene.cpp										\
-			src/Scenes/CreditScene/CreditScene.cpp								\
-			src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp	\
-			src/Scenes/GameScene/GameScene.cpp									\
-			src/Scenes/HelperScene/HelperScene.cpp								\
-			src/Scenes/MenuScene/MenuScene.cpp									\
-			src/Scenes/OptionScene/OptionScene.cpp								\
-			src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp	\
-			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp				\
-			src/Sfml/SoundManager/SoundManager.cpp								\
-			src/Utils/Utils.cpp													\
+			src/Exceptions/Exceptions.cpp																\
+			src/I18n/I18nHelper.cpp																		\
+			src/Parsing/Parsing.cpp																		\
+			src/Parsing/ParsingError.cpp																\
+			src/Parsing/ParsingHelp.cpp																	\
+			src/Raylib/ColorManager/ColorManager.cpp													\
+			src/Raylib/Render/Render.cpp																\
+			src/Raylib/View/View.cpp																	\
+			src/Ressources/Players/Players.cpp															\
+			src/Ressources/Ressources/Ressources.cpp													\
+			src/Ressources/TileRessources/TileRessources.cpp											\
+			src/SceneManager/SceneManager.cpp															\
+			src/Scenes/AScene/AScene.cpp																\
+			src/Scenes/CreditScene/CreditScene.cpp														\
+			src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp							\
+			src/Scenes/GameScene/GameScene.cpp															\
+			src/Scenes/HelperScene/HelperScene.cpp														\
+			src/Scenes/MenuScene/MenuScene.cpp															\
+			src/Scenes/OptionScene/OptionScene.cpp														\
+			src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp							\
+			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp										\
+			src/Sfml/SoundManager/SoundManager.cpp														\
+			src/Utils/Utils.cpp																			\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
 
@@ -79,52 +85,58 @@ FLAGS	=	-Wall 				\
 			-std=c++20			\
 			-O2
 
-INCLUDES	=	-I./includes									\
-				-I./libs/includes								\
-				-I./src											\
-				-I./src/Components/Background2D					\
-				-I./src/Components/Button						\
-				-I./src/Components/ButtonClassic				\
-				-I./src/Components/Chatbox						\
-				-I./src/Components/Circle						\
-				-I./src/Components/Cubic						\
-				-I./src/Components/Image						\
-				-I./src/Components/Model3D						\
-				-I./src/Components/Rectangle					\
-				-I./src/Components/Ressources					\
-				-I./src/Components/RoundedRectangle				\
-				-I./src/Components/Skybox						\
-				-I./src/Components/SliderVolume					\
-				-I./src/Components/Text							\
-				-I./src/Components/TextBox						\
-				-I./src/Components/TextGroup					\
-				-I./src/Components/TextGroupDraggable			\
-				-I./src/Components/TextMessage					\
-				-I./src/Components/Tile							\
-				-I./src/Components/TileMap						\
+INCLUDES	=	-I./includes										\
+				-I./libs/includes									\
+				-I./src												\
+				-I./src/Components/Background2D						\
+				-I./src/Components/Button							\
+				-I./src/Components/ButtonClassic					\
+				-I./src/Components/Chatbox							\
+				-I./src/Components/Circle							\
+				-I./src/Components/Cubic							\
+				-I./src/Components/Image							\
+				-I./src/Components/Inspecter						\
+				-I./src/Components/InspecterInfo					\
+				-I./src/Components/InspecterInfoTile				\
+				-I./src/Components/InspecterSelecter				\
+				-I./src/Components/InspecterSelecterGroup			\
+				-I./src/Components/InspecterSelecterGroupDraggable	\
+				-I./src/Components/Model3D							\
+				-I./src/Components/Rectangle						\
+				-I./src/Components/Ressources						\
+				-I./src/Components/RoundedRectangle					\
+				-I./src/Components/Skybox							\
+				-I./src/Components/SliderVolume						\
+				-I./src/Components/Text								\
+				-I./src/Components/TextBox							\
+				-I./src/Components/TextGroup						\
+				-I./src/Components/TextGroupDraggable				\
+				-I./src/Components/TextMessage						\
+				-I./src/Components/Tile								\
+				-I./src/Components/TileMap							\
 				-I./src/CommunicationServer 					\
-				-I./src/Exceptions								\
-				-I./src/I18n									\
-				-I./src/Parsing									\
-				-I./src/Raylib/ColorManager						\
-				-I./src/Raylib/Render							\
-				-I./src/Raylib/SoundManager						\
-				-I./src/Raylib/View								\
-				-I./src/Ressources/Players						\
-				-I./src/Ressources/Ressources					\
-				-I./src/Ressources/TileRessources				\
-				-I./src/SceneManager							\
-				-I./src/Scenes/AScene							\
-				-I./src/Scenes/CreditScene						\
-				-I./src/Scenes/CreditScene/DisplayCreditScene   \
-				-I./src/Scenes/GameScene						\
-				-I./src/Scenes/HelperScene						\
-				-I./src/Scenes/IScene							\
-				-I./src/Scenes/MenuScene						\
-				-I./src/Scenes/OptionScene						\
-				-I./src/Scenes/OptionScene/ResolutionOption 	\
-				-I./src/Scenes/OptionScene/SoundOption      	\
-				-I./src/Utils									\
+				-I./src/Exceptions									\
+				-I./src/I18n										\
+				-I./src/Parsing										\
+				-I./src/Raylib/ColorManager							\
+				-I./src/Raylib/Render								\
+				-I./src/Raylib/SoundManager							\
+				-I./src/Raylib/View									\
+				-I./src/Ressources/Players							\
+				-I./src/Ressources/Ressources						\
+				-I./src/Ressources/TileRessources					\
+				-I./src/SceneManager								\
+				-I./src/Scenes/AScene								\
+				-I./src/Scenes/CreditScene							\
+				-I./src/Scenes/CreditScene/DisplayCreditScene   	\
+				-I./src/Scenes/GameScene							\
+				-I./src/Scenes/HelperScene							\
+				-I./src/Scenes/IScene								\
+				-I./src/Scenes/MenuScene							\
+				-I./src/Scenes/OptionScene							\
+				-I./src/Scenes/OptionScene/ResolutionOption 		\
+				-I./src/Scenes/OptionScene/SoundOption      		\
+				-I./src/Utils										\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\
