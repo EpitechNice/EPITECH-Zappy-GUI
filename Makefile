@@ -15,6 +15,7 @@ SRC		=   src/Main.cpp																				\
 			src/Components/Cubic/ComponentCubic.cpp														\
 			src/Components/Image/ComponentImage.cpp														\
 			src/Components/Inspecter/ComponentInspecter.cpp												\
+			src/Components/InspecterInfo/ComponentInspecterInfo.cpp										\
 			src/Components/InspecterSelecter/ComponentInspecterSelecter.cpp								\
 			src/Components/InspecterSelecterGroup/ComponentInspecterSelecterGroup.cpp					\
 			src/Components/InspecterSelecterGroupDraggable/ComponentInspecterSelecterGroupDraggable.cpp	\
@@ -93,6 +94,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Components/Cubic							\
 				-I./src/Components/Image							\
 				-I./src/Components/Inspecter						\
+				-I./src/Components/InspecterInfo					\
 				-I./src/Components/InspecterSelecter				\
 				-I./src/Components/InspecterSelecterGroup			\
 				-I./src/Components/InspecterSelecterGroupDraggable	\

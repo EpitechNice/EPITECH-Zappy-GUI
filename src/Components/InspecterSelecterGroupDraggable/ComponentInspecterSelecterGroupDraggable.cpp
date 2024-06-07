@@ -34,9 +34,9 @@ namespace Zappy {
                 _selecterGroup->draw();
             }
 
-            void InspecterSelecterGroupDraggable::update()
+            void InspecterSelecterGroupDraggable::update(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info)
             {
-                _selecterGroup->update();
+                _selecterGroup->update(info);
                 if (IsMouseButtonUp(MOUSE_LEFT_BUTTON)) {
                     if (_isDragged)
                         _endDrag();
@@ -55,9 +55,9 @@ namespace Zappy {
                 _updateSelectersPos();
             }
 
-            void InspecterSelecterGroupDraggable::reset()
+            void InspecterSelecterGroupDraggable::reset(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info)
             {
-                _selecterGroup->reset();
+                _selecterGroup->reset(info);
             }
 
             void InspecterSelecterGroupDraggable::addSelecter(std::shared_ptr<Zappy::GUI::Ressources::Players> player)

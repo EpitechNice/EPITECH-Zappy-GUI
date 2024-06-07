@@ -20,6 +20,7 @@
     #include "ComponentCircle.hpp"
     #include "ComponentInspecterSelecterGroupDragabble.hpp"
     #include "Ressources.hpp"
+    #include "ComponentInspecterInfo.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -66,8 +67,10 @@ namespace Zappy {
                     void _setInspecterOpen();
                     void _setInspecterClose();
                     void _updateTabs();
+                    void _updateTabs(int index);
 
                     std::unique_ptr<InspecterSelecterGroupDraggable> _selecters;
+                    std::shared_ptr<InspecterInfo> _infos;
             };
         }
     }

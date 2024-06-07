@@ -13,6 +13,7 @@
     #include <vector>
 
     #include "ComponentInspecterSelecterGroup.hpp"
+    #include "ComponentInspecterInfo.hpp"
     #include "Players.hpp"
 
 namespace Zappy {
@@ -27,9 +28,9 @@ namespace Zappy {
 
                     void draw();
 
-                    void update();
+                    void update(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info);
 
-                    void reset();
+                    void reset(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info);
 
                     void addSelecter(std::shared_ptr<Zappy::GUI::Ressources::Players> player);
 

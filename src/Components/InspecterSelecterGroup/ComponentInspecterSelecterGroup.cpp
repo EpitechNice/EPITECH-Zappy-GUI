@@ -30,7 +30,7 @@ namespace Zappy {
                 _isDestroyed = true;
             }
 
-            void InspecterSelecterGroup::update()
+            void InspecterSelecterGroup::update(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info)
             {
                 int bselected = _selected;
                 for (std::size_t i = 0; i < _players.size(); i++) {
@@ -43,6 +43,7 @@ namespace Zappy {
                         _players[_selected]->setSelected(false);
                     _selected = bselected;
                     _players[_selected]->setSelected(true);
+                    info->setInfo(Zappy::GUI::Ressources::Ressources::get()->players[_selected]);
                 }
             }
 
@@ -52,11 +53,12 @@ namespace Zappy {
                     player->draw();
             }
 
-            void InspecterSelecterGroup::reset()
+            void InspecterSelecterGroup::reset(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info)
             {
                 _players.clear();
                 _size.second = 0;
                 _selected = -1;
+                info->setInfo(nullptr);
             }
 
             void InspecterSelecterGroup::addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player)

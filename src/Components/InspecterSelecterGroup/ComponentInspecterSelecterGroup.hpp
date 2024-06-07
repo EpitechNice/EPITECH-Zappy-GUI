@@ -11,6 +11,7 @@
     #include <vector>
 
     #include "ComponentInspecterSelecter.hpp"
+    #include "ComponentInspecterInfo.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -22,11 +23,11 @@ namespace Zappy {
 
                     void destroy();
 
-                    void update();
+                    void update(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info);
 
                     void draw();
 
-                    void reset();
+                    void reset(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info);
 
                     void addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player);
 
@@ -44,6 +45,7 @@ namespace Zappy {
                     std::vector<std::shared_ptr<InspecterSelecter>> _players;
                     bool _isDestroyed = false;
                     int _selected = -1;
+                    bool _justSelect = false;
             };
         }
     }

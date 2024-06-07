@@ -55,6 +55,8 @@ namespace Zappy {
                 _selecters = std::make_unique<InspecterSelecterGroupDraggable>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
                 for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
                     _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+
+                _infos = std::make_shared<InspecterInfo>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
             }
 
             Inspecter::~Inspecter()
@@ -71,13 +73,17 @@ namespace Zappy {
                 for (auto &tab : _tabs)
                     std::get<BUTTON>(tab)->destroy();
                 _selecters->destroy();
+                _infos->destroy();
             }
 
 
             void Inspecter::draw()
             {
                 _rectMid->draw();
-                _selecters->draw();
+                if (_tabsIndex == 0)
+                    _selecters->draw();
+                else
+                    _infos->draw();
                 _rectTopBackground->draw();
                 for (auto &tab : _tabs)
                     std::get<BUTTON>(tab)->draw();
@@ -90,7 +96,8 @@ namespace Zappy {
             {
                 if (_selectedTile != selectedTile) {
                     _selectedTile = selectedTile;
-                    _selecters->reset();
+                    _selecters->reset(_infos);
+                    _updateTabs(0);
                     if (_selectedTile.first == -1 || _selectedTile.second == -1)
                         for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
                             _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
@@ -100,7 +107,8 @@ namespace Zappy {
                                 _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
                 }
                 _updateTabs();
-                _selecters->update();
+                if (_tabsIndex == 0)
+                    _selecters->update(_infos);
                 if (_openButton->isClicked())
                     (_open) ? _setInspecterClose() : _setInspecterOpen();
             }
@@ -139,6 +147,7 @@ namespace Zappy {
                     std::get<BUTTON>(tab)->modPosX(-_width);
 
                 _selecters->modPosX(-_width);
+                _infos->modPosX(-_width);
 
                 _open = true;
             }
@@ -156,6 +165,7 @@ namespace Zappy {
                     std::get<BUTTON>(tab)->modPosX(_width);
 
                 _selecters->modPosX(_width);
+                _infos->modPosX(_width);
 
                 _open = false;
             }
@@ -163,15 +173,18 @@ namespace Zappy {
 
             void Inspecter::_updateTabs()
             {
-                for (std::size_t i = 0; i < _tabs.size(); i++) {
-                    if (std::get<BUTTON>(_tabs[i])->isClicked()) {
-                        std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){55, 56, 40, 255});
-                        std::get<BUTTON>(_tabs[_tabsIndex])->enableState();
-                        _tabsIndex = i;
-                        std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){112, 108, 79, 255});
-                        std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
-                    }
-                }
+                for (std::size_t i = 0; i < _tabs.size(); i++)
+                    if (std::get<BUTTON>(_tabs[i])->isClicked())
+                        _updateTabs(i);
+            }
+
+            void Inspecter::_updateTabs(int index)
+            {
+                std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){55, 56, 40, 255});
+                std::get<BUTTON>(_tabs[_tabsIndex])->enableState();
+                _tabsIndex = index;
+                std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){112, 108, 79, 255});
+                std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
             }
         }
     }

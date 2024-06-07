@@ -28,6 +28,7 @@ namespace Zappy {
                     void setText(std::string text);
 
                     std::pair<float, float> getSize() const;
+                    std::pair<int, int> getPos() const;
 
                     void draw();
 
