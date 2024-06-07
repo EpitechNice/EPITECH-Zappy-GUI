@@ -32,25 +32,59 @@ namespace Zappy {
                 _buttonSize = _openButton->getSize();
                 _openButton->setPos(std::make_pair(_screenWidth - 8 - _buttonSize.first, height / 2 - _buttonSize.second / 2));
                 _open = false;
+
+                std::vector<std::string> names = {
+                    "Select",
+                    "Inspect",
+                };
+                int gap = 5;
+                int width = (_width - 40 - gap * (names.size() - 1)) / names.size();
+                int heightButton = heightPart - heightPartMini;
+                int y = _screenWidth + 20;
+                for (auto &name : names) {
+                    _tabs.push_back(std::make_tuple(
+                        name,
+                        std::make_unique<ButtonClassic>(std::make_pair(y, heightPartMini), std::make_pair(width, heightButton), name, 20, (Color){55, 56, 40, 255})
+                    ));
+                    y += width + gap;
+                }
+                _tabsIndex = 0;
+                std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){112, 108, 79, 255});
+                std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
+
+                y = heightPartMini + heightButton + 20;
+                for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++) {
+                    _selecters.push_back(std::make_unique<InspecterSelecter>(std::make_pair(_screenWidth + 20, y), _width - 40, Zappy::GUI::Ressources::Ressources::get()->players[i]));
+                    y += _selecters.back()->getSize().second + 20;
+                }
             }
 
             Inspecter::~Inspecter()
             {
-                if (!_isDestroyed)
-                    destroy();
+                destroy();
             }
 
 
             void Inspecter::destroy()
             {
+                if (_isDestroyed)
+                    return;
                 _openButton->destroy();
+                for (auto &tab : _tabs)
+                    std::get<BUTTON>(tab)->destroy();
+                for (auto &selecter : _selecters)
+                    selecter->destroy();
             }
 
 
             void Inspecter::draw()
             {
                 _rectMid->draw();
+                for (auto &selecter : _selecters)
+                    selecter->draw();
                 _rectTopBackground->draw();
+                for (auto &tab : _tabs)
+                    std::get<BUTTON>(tab)->draw();
                 _rectTop->draw();
                 _rectBot->draw();
                 _openButton->draw();
@@ -58,6 +92,9 @@ namespace Zappy {
 
             void Inspecter::update()
             {
+                _updateTabs();
+                for (auto &selecter : _selecters)
+                    selecter->update();
                 if (_openButton->isClicked())
                     (_open) ? _setInspecterClose() : _setInspecterOpen();
             }
@@ -66,7 +103,7 @@ namespace Zappy {
             {
                 bool isOn = _openButton->isHover() || _openButton->isClicked();
                 if (_open)
-                    isOn = GetMouseX() < _width ? true : isOn;
+                    isOn = GetMouseX() > _screenWidth - _width ? true : isOn;
                 return isOn;
             }
 
@@ -92,6 +129,12 @@ namespace Zappy {
                 _openButton->setPosX(_screenWidth - _width - 8 - _buttonSize.first);
                 _openButton->setText(">");
 
+                for (auto &tab : _tabs)
+                    std::get<BUTTON>(tab)->modPosX(-_width);
+
+                for (auto &selecter : _selecters)
+                    selecter->modPosX(-_width);
+
                 _open = true;
             }
 
@@ -104,7 +147,27 @@ namespace Zappy {
                 _openButton->setPosX(_screenWidth - 8 - _buttonSize.first);
                 _openButton->setText("<");
 
+                for (auto &tab : _tabs)
+                    std::get<BUTTON>(tab)->modPosX(_width);
+
+                for (auto &selecter : _selecters)
+                    selecter->modPosX(_width);
+
                 _open = false;
+            }
+
+
+            void Inspecter::_updateTabs()
+            {
+                for (std::size_t i = 0; i < _tabs.size(); i++) {
+                    if (std::get<BUTTON>(_tabs[i])->isClicked()) {
+                        std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){55, 56, 40, 255});
+                        std::get<BUTTON>(_tabs[_tabsIndex])->enableState();
+                        _tabsIndex = i;
+                        std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){112, 108, 79, 255});
+                        std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
+                    }
+                }
             }
         }
     }

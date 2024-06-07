@@ -18,6 +18,8 @@
     #include "ComponentButton.hpp"
     #include "ComponentButtonClassic.hpp"
     #include "ComponentCircle.hpp"
+    #include "ComponentInspecterSelecter.hpp"
+    #include "Ressources.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -52,8 +54,19 @@ namespace Zappy {
                     std::unique_ptr<Rectangle> _rectBot;
                     std::unique_ptr<Button> _openButton;
 
+                    typedef enum {
+                        NAME = 0,
+                        BUTTON = 1,
+                    } TabsIndex;
+
+                    std::vector<std::tuple<std::string, std::unique_ptr<ButtonClassic>>> _tabs;
+                    int _tabsIndex;
+
                     void _setInspecterOpen();
                     void _setInspecterClose();
+                    void _updateTabs();
+
+                    std::vector<std::unique_ptr<InspecterSelecter>> _selecters;
             };
         }
     }
