@@ -19,6 +19,11 @@
 #include <queue>
 #include <mutex>
 #include <condition_variable>
+#include <unordered_map>
+#include <functional>
+
+#include "Command/BctCommand/BctCommand.hpp"
+#include "Command/MszCommand/MszCommand.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -33,7 +38,9 @@ namespace Zappy {
 
             void addCommand(const std::string& command);
             void sendCommand();
+
             void receiveAndProcessResponse();
+            void handleResponse(const std::string& buffer);
 
         private:
             void handleServerMessages();
@@ -46,6 +53,11 @@ namespace Zappy {
             std::queue<std::string> commandQueue;
             std::mutex commandQueueMutex;
             std::condition_variable commandQueueNotEmpty;
+
+            std::unordered_map<std::string, std::function<void(const std::string&)>> commandHandlers = {
+                {"msz", [this](const std::string& value) { Zappy::GUI::MszCommand(value).parseCommand(value); }},
+                {"bct", [this](const std::string& value) { Zappy::GUI::BctCommand(value).parseCommand(value); }},
+            };
         };
     }
 }

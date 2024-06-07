@@ -28,8 +28,11 @@ int main(int argc, char **argv)
             std::cerr << "Failed to connect to the server" << std::endl;
             return 1;
         }
-        Zappy::GUI::SceneManager sceneManager;
-        sceneManager.run();
+        // Zappy::GUI::SceneManager sceneManager;
+        // sceneManager.run();
+        while (1){
+            
+        }
     } catch (const Zappy::GUI::Parsing::ParsingError &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         std::cerr << ">> Use -help for help." << std::endl;
