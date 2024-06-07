@@ -20,6 +20,7 @@
     #include "OptionScene.hpp"
     #include "CreditScene.hpp"
     #include "HelperScene.hpp"
+    #include "CommunicationServer.hpp"
     #include "DisplayCreditScene/DisplayCreditScene.hpp"
     #include "SoundOption/SoundOptionScene.hpp"
     #include "ResolutionOption/ResolutionOptionScene.hpp"

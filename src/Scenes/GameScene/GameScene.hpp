@@ -19,6 +19,7 @@
     #include "ComponentTileMap.hpp"
     #include "ComponentRessources.hpp"
     #include "Ressources.hpp"
+    #include "CommunicationServer.hpp"
 
 namespace Zappy {
     namespace GUI {

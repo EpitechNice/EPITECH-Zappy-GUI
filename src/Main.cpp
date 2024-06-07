@@ -9,6 +9,7 @@
 
 #include "Parsing.hpp"
 #include "SceneManager.hpp"
+#include "CommunicationServer.hpp"
 
 int main(int argc, char **argv)
 {
@@ -17,6 +18,16 @@ int main(int argc, char **argv)
         Zappy::GUI::Parsing parsing(argc, argv);
         std::cout << "Port: " << parsing.getPort() << std::endl;
         std::cout << "Machine: " << parsing.getMachine() << std::endl;
+        auto serverCommunication = Zappy::GUI::ServerCommunication(parsing.getMachine(), parsing.getPort());
+        if (serverCommunication.connectToServer()) {
+            std::cout << "server connected " << std::endl;
+            serverCommunication.startCommunication();
+            serverCommunication.addCommand("GRAPHIC\r\n");
+            serverCommunication.addCommand("msz\r\n");
+        } else {
+            std::cerr << "Failed to connect to the server" << std::endl;
+            return 1;
+        }
         Zappy::GUI::SceneManager sceneManager;
         sceneManager.run();
     } catch (const Zappy::GUI::Parsing::ParsingError &e) {
