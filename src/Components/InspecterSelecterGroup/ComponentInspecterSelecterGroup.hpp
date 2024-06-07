@@ -31,6 +31,11 @@ namespace Zappy {
                     void addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player);
 
                     void modPosX(int x);
+                    void setPosX(int x);
+                    void setPosY(int y);
+
+                    std::pair<int, int> getSize() const;
+                    std::pair<int, int> getPos() const;
 
                 protected:
                 private:

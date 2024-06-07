@@ -18,7 +18,7 @@
     #include "ComponentButton.hpp"
     #include "ComponentButtonClassic.hpp"
     #include "ComponentCircle.hpp"
-    #include "ComponentInspecterSelecterGroup.hpp"
+    #include "ComponentInspecterSelecterGroupDragabble.hpp"
     #include "Ressources.hpp"
 
 namespace Zappy {
@@ -67,7 +67,7 @@ namespace Zappy {
                     void _setInspecterClose();
                     void _updateTabs();
 
-                    std::unique_ptr<InspecterSelecterGroup> _selecters;
+                    std::unique_ptr<InspecterSelecterGroupDraggable> _selecters;
             };
         }
     }

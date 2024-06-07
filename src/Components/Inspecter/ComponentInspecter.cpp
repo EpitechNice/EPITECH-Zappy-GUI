@@ -52,9 +52,9 @@ namespace Zappy {
                 std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){112, 108, 79, 255});
                 std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
 
-                _selecters = std::make_unique<InspecterSelecterGroup>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), _width - 40);
+                _selecters = std::make_unique<InspecterSelecterGroupDraggable>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
                 for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
-                    _selecters->addPlayer(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                    _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
             }
 
             Inspecter::~Inspecter()
@@ -93,11 +93,11 @@ namespace Zappy {
                     _selecters->reset();
                     if (_selectedTile.first == -1 || _selectedTile.second == -1)
                         for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
-                            _selecters->addPlayer(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                            _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
                     else
                         for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
                             if (Zappy::GUI::Ressources::Ressources::get()->players[i]->getX() == _selectedTile.first && Zappy::GUI::Ressources::Ressources::get()->players[i]->getY() == _selectedTile.second)
-                                _selecters->addPlayer(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                                _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
                 }
                 _updateTabs();
                 _selecters->update();

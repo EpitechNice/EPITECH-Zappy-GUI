@@ -56,6 +56,7 @@ namespace Zappy {
             {
                 _players.clear();
                 _size.second = 0;
+                _selected = -1;
             }
 
             void InspecterSelecterGroup::addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
@@ -71,6 +72,30 @@ namespace Zappy {
                 _pos.first += x;
                 for (auto &player : _players)
                     player->modPosX(x);
+            }
+
+            void InspecterSelecterGroup::setPosX(int x)
+            {
+                int diff = x - _pos.first;
+                modPosX(diff);
+            }
+
+            void InspecterSelecterGroup::setPosY(int y)
+            {
+                int diff = y - _pos.second;
+                _pos.second = y;
+                for (auto &player : _players)
+                    player->modPosY(diff);
+            }
+
+            std::pair<int, int> InspecterSelecterGroup::getSize() const
+            {
+                return _size;
+            }
+
+            std::pair<int, int> InspecterSelecterGroup::getPos() const
+            {
+                return _pos;
             }
         }
     }

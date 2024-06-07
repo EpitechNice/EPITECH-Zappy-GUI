@@ -32,6 +32,9 @@ namespace Zappy {
                     void draw();
 
                     void modPosX(int x);
+                    void modPosY(int y);
+                    void setPosX(int x);
+                    void setPosY(int y);
 
                     std::pair<int, int> getSize() const;
 

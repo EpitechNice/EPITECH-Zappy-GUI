@@ -55,7 +55,31 @@ namespace Zappy {
                 _pos.first += x;
                 _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
                 _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
-                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _team->getPos().second));
+                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+            }
+
+            void InspecterSelecter::modPosY(int y)
+            {
+                _pos.second += y;
+                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
+                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+            }
+
+            void InspecterSelecter::setPosX(int x)
+            {
+                _pos.first = x;
+                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
+                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+            }
+
+            void InspecterSelecter::setPosY(int y)
+            {
+                _pos.second = y;
+                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
+                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
             }
 
             std::pair<int, int> InspecterSelecter::getSize() const
