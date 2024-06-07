@@ -16,6 +16,7 @@
     #include "ComponentRessources.hpp"
     #include "TileRessources.hpp"
     #include "Ressources.hpp"
+    #include "ComponentInspecter.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -27,13 +28,16 @@ namespace Zappy {
 
                     void destroy();
 
-                    void update(std::shared_ptr<Raylib::Render> render);
+                    void update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter);
 
                     void draw();
 
                     std::vector<std::vector<std::shared_ptr<Tile>>> tiles();
 
                     void unhighlight();
+
+                    bool hasSelected() const;
+                    std::pair<int, int> getSelected() const;
 
                 protected:
                 private:

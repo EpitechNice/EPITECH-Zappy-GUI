@@ -17,8 +17,11 @@ namespace Zappy {
         namespace Ressources {
             class TileRessources {
                 public:
-                    TileRessources();
+                    TileRessources(int x, int y);
                     ~TileRessources() = default;
+
+                    int getX() const;
+                    int getY() const;
 
                     int getFood() const;
                     void setFood(int food);
@@ -59,6 +62,8 @@ namespace Zappy {
 
                 protected:
                 private:
+                    int _x;
+                    int _y;
                     int _food;
                     int _egg;
                     int _linemate;

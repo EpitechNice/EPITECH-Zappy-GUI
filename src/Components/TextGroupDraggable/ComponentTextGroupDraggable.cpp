@@ -18,12 +18,13 @@ namespace Zappy {
 
             TextGroupDraggable::~TextGroupDraggable()
             {
-                if (!_isDestroyed)
-                    destroy();
+                destroy();
             }
 
             void TextGroupDraggable::destroy()
             {
+                if (_isDestroyed)
+                    return;
                 _textGroup->destroy();
                 _isDestroyed = true;
             }

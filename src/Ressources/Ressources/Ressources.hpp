@@ -28,6 +28,8 @@ namespace Zappy {
                     std::vector<std::vector<std::shared_ptr<TileRessources>>> tileRessources;
                     std::vector<std::shared_ptr<Players>> players;
 
+                    std::shared_ptr<Players> getPlayerFromId(int id) const;
+
                 protected:
                 private:
                     Ressources();
