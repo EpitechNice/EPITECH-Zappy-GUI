@@ -10,8 +10,10 @@
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
-            TileRessources::TileRessources()
+            TileRessources::TileRessources(int x, int y)
             {
+                _x = x;
+                _y = y;
                 _food = 0;
                 _egg = 0;
                 _linemate = 0;
@@ -21,6 +23,17 @@ namespace Zappy {
                 _phiras = 0;
                 _thystame = 0;
             }
+
+            int TileRessources::getX() const
+            {
+                return _x;
+            }
+
+            int TileRessources::getY() const
+            {
+                return _y;
+            }
+
 
             int TileRessources::getFood() const
             {

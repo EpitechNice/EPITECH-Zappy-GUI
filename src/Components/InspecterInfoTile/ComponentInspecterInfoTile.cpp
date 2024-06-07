@@ -89,7 +89,7 @@ namespace Zappy {
             {
                 _tile = tile;
                 if (_tile == nullptr) return;
-                _name->setText("Tile [][]");// + std::to_string(tile->getX()) + " " + std::to_string(tile->getY()));
+                _name->setText("Tile [" + std::to_string(tile->getX()) + "][" + std::to_string(tile->getY()) + "]");
                 _food->setText("Food: " + std::to_string(_tile->getFood()));
                 _linemate->setText("Linemate: " + std::to_string(_tile->getLinemate()));
                 _deraumere->setText("Deraumere: " + std::to_string(_tile->getDeraumere()));

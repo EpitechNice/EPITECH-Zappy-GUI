@@ -42,6 +42,8 @@ namespace Zappy {
 
                     bool isClicked() const;
 
+                    std::shared_ptr<Zappy::GUI::Ressources::Players> getPlayer() const;
+
                 protected:
                 private:
                     typedef enum {

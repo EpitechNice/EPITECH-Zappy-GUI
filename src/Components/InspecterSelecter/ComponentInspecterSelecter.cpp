@@ -102,6 +102,11 @@ namespace Zappy {
             {
                 return _state == CLICKED;
             }
+
+            std::shared_ptr<Zappy::GUI::Ressources::Players> InspecterSelecter::getPlayer() const
+            {
+                return _player;
+            }
         }
     }
 }

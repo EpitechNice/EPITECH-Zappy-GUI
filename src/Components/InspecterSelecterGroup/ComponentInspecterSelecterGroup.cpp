@@ -43,7 +43,7 @@ namespace Zappy {
                         _players[_selected]->setSelected(false);
                     _selected = bselected;
                     _players[_selected]->setSelected(true);
-                    info->setInfo(Zappy::GUI::Ressources::Ressources::get()->players[_selected]);
+                    info->setInfo(Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(_players[_selected]->getPlayer()->getId()));
                 }
             }
 
