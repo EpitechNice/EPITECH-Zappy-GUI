@@ -10,7 +10,8 @@
 namespace Zappy {
     namespace GUI {
         ServerCommunication::ServerCommunication(const std::string& address, int port)
-            : serverAddress(address), serverPort(port), sockfd(-1), running(false), _sizeWorld(10, 10) {
+            : serverAddress(address), serverPort(port), sockfd(-1), running(false), _sizeWorld(10, 10)
+            {
         }
 
         ServerCommunication::~ServerCommunication()
@@ -131,31 +132,34 @@ namespace Zappy {
         {
             int _heightWorld, _widthWorld;
             std::istringstream iss(info);
-            if (!(iss >> _heightWorld >> _widthWorld)) {
-                std::cerr << "Error in parsing" << std::endl;
-            }
+            if (!(iss >> _heightWorld >> _widthWorld))
+                std::cerr << "Error in parsing sizeWorld" << std::endl;
             _sizeWorld = { _heightWorld, _widthWorld};
             std::cout << "info msz: " << _heightWorld << " " << _widthWorld << std::endl;
         }
 
         void ServerCommunication::handleCommandBct(const std::string& info) {
-            int x, y, q0, q1, q2, q3, q4, q5, q6;
-            std::istringstream iss(info);
-            std::cout << "info: " << info << std::endl;
+            size_t pos1 = info.find(' ');
+            size_t pos2 = info.find(' ', pos1 + 1);
+            int x = std::stoi(info.substr(pos1 + 1, pos2 - pos1 - 1));
+            int y = std::stoi(info.substr(pos2 + 1));
 
-            if (!(iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6)) {
-                std::cerr << "Error in parsing" << std::endl;
-                return;
-            }
-
-            std::cout << "Tile content at (" << x << ", " << y << "):" << std::endl;
-            std::cout << "  Food (q0): " << q0 << std::endl;
-            std::cout << "  Linemate (q1): " << q1 << std::endl;
-            std::cout << "  Deraumere (q2): " << q2 << std::endl;
-            std::cout << "  Sibur (q3): " << q3 << std::endl;
-            std::cout << "  Mendiane (q4): " << q4 << std::endl;
-            std::cout << "  Phiras (q5): " << q5 << std::endl;
-            std::cout << "  Thystame (q6): " << q6 << std::endl;
+            LastTileresearch_Resources LastTileresearch_Resources;
+            LastTileresearch_Resources.food = Ressources::Ressources::get()->tileRessources[x][y]->getFood();
+            LastTileresearch_Resources.linemate = Ressources::Ressources::get()->tileRessources[x][y]->getLinemate();
+            LastTileresearch_Resources.deraumere = Ressources::Ressources::get()->tileRessources[x][y]->getDeraumere();
+            LastTileresearch_Resources.sibur = Ressources::Ressources::get()->tileRessources[x][y]->getSibur();
+            LastTileresearch_Resources.mendiane = Ressources::Ressources::get()->tileRessources[x][y]->getMendiane();
+            LastTileresearch_Resources.phiras = Ressources::Ressources::get()->tileRessources[x][y]->getPhiras();
+            LastTileresearch_Resources.thystame = Ressources::Ressources::get()->tileRessources[x][y]->getThystame();
+            std::cout << "info bct command:" << std::endl;
+            std::cout << "\tFood: " << LastTileresearch_Resources.food << std::endl;
+            std::cout << "\tLinemate: " << LastTileresearch_Resources.linemate << std::endl;
+            std::cout << "\tDeraumere: " << LastTileresearch_Resources.deraumere << std::endl;
+            std::cout << "\tSibur: " << LastTileresearch_Resources.sibur << std::endl;
+            std::cout << "\tMendiane: " << LastTileresearch_Resources.mendiane << std::endl;
+            std::cout << "\tPhiras: " << LastTileresearch_Resources.phiras << std::endl;
+            std::cout << "\tThystame: " << LastTileresearch_Resources.thystame << std::endl;
         }
     }
 }

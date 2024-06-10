@@ -18,14 +18,30 @@
 #include <cstring>
 #include <thread>
 #include <queue>
+#include <map>
 #include <mutex>
 #include <condition_variable>
 #include <unordered_map>
 #include <functional>
 
+#include "TileRessources.hpp"
+#include "ComponentTileMap.hpp"
+#include "Ressources.hpp"
+
 namespace Zappy {
     namespace GUI {
         class ServerCommunication {
+
+            struct LastTileresearch_Resources {
+                int food;
+                int linemate;
+                int deraumere;
+                int sibur;
+                int mendiane;
+                int phiras;
+                int thystame;
+            };
+
         public:
             ServerCommunication(const std::string& address, int port);
             ~ServerCommunication();
