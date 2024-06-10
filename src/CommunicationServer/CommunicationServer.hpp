@@ -8,6 +8,7 @@
 #ifndef SCENE_CONECTSERVER_HPP_
     #define SCENE_CONECTSERVER_HPP_
 
+#include <sstream>
 #include <string>
 #include <iostream>
 #include <unistd.h>
@@ -21,9 +22,6 @@
 #include <condition_variable>
 #include <unordered_map>
 #include <functional>
-
-#include "Command/BctCommand/BctCommand.hpp"
-#include "Command/MszCommand/MszCommand.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -42,6 +40,9 @@ namespace Zappy {
             void receiveAndProcessResponse();
             void handleResponse(const std::string& buffer);
 
+            void handleCommandMsz(const std::string& info);
+            void handleCommandBct(const std::string& info);
+
         private:
             void handleServerMessages();
 
@@ -54,9 +55,12 @@ namespace Zappy {
             std::mutex commandQueueMutex;
             std::condition_variable commandQueueNotEmpty;
 
+            int _widthWorld;
+            int _heightWorld;
+
             std::unordered_map<std::string, std::function<void(const std::string&)>> commandHandlers = {
-                {"msz", [this](const std::string& value) { Zappy::GUI::MszCommand(value).parseCommand(value); }},
-                {"bct", [this](const std::string& value) { Zappy::GUI::BctCommand(value).parseCommand(value); }},
+                {"msz", [this](const std::string& value) { handleCommandMsz(value); }},
+                {"bct", [this](const std::string& value) { handleCommandBct(value); }},
             };
         };
     }

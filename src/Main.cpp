@@ -24,6 +24,7 @@ int main(int argc, char **argv)
             serverCommunication.startCommunication();
             serverCommunication.addCommand("GRAPHIC\r\n");
             serverCommunication.addCommand("msz\r\n");
+            serverCommunication.addCommand("bct 1 1\r\n");
         } else {
             std::cerr << "Failed to connect to the server" << std::endl;
             return 1;
