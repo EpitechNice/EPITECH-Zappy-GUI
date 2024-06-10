@@ -10,9 +10,10 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
-            Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
+            Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication) : _serverCommunication(serverCommunication)
             {
-                std::pair<int, int> size = { 10, 10 };
+                serverCommunication->addCommand("msz\r\n");
+                std::pair<int, int> size = serverCommunication->getSizeWorld();
                 int tileSize = 5;
 
                 // TODO: Delete this
@@ -39,6 +40,7 @@ namespace Zappy {
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
+                serverCommunication->addCommand("bct 4 3\r\n");
             }
 
             void Game::destroy()

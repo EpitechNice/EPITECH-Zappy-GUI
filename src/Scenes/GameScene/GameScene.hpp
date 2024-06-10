@@ -27,7 +27,7 @@ namespace Zappy {
         namespace Scene {
             class Game : public AScene {
                 public:
-                    Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
+                    Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication);
                     ~Game() = default;
 
                     void start() override;
@@ -41,6 +41,7 @@ namespace Zappy {
 
                 protected:
                 private:
+                    std::shared_ptr<Zappy::GUI::ServerCommunication> _serverCommunication;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _skybox;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;

@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         ServerCommunication::ServerCommunication(const std::string& address, int port)
-            : serverAddress(address), serverPort(port), sockfd(-1), running(false), _widthWorld(2), _heightWorld(2) {
+            : serverAddress(address), serverPort(port), sockfd(-1), running(false), _sizeWorld(10, 10) {
         }
 
         ServerCommunication::~ServerCommunication()
@@ -129,18 +129,22 @@ namespace Zappy {
 
         void ServerCommunication::handleCommandMsz(const std::string& info)
         {
+            int _heightWorld, _widthWorld;
             std::istringstream iss(info);
             if (!(iss >> _heightWorld >> _widthWorld)) {
-                std::cerr << "Error parsing size into integers" << std::endl;
+                std::cerr << "Error in parsing" << std::endl;
             }
+            _sizeWorld = { _heightWorld, _widthWorld};
             std::cout << "info msz: " << _heightWorld << " " << _widthWorld << std::endl;
         }
 
         void ServerCommunication::handleCommandBct(const std::string& info) {
             int x, y, q0, q1, q2, q3, q4, q5, q6;
             std::istringstream iss(info);
+            std::cout << "info: " << info << std::endl;
+
             if (!(iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6)) {
-                std::cerr << "Error parsing bct command into integers" << std::endl;
+                std::cerr << "Error in parsing" << std::endl;
                 return;
             }
 

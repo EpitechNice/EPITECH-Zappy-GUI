@@ -43,6 +43,8 @@ namespace Zappy {
             void handleCommandMsz(const std::string& info);
             void handleCommandBct(const std::string& info);
 
+            std::pair<int, int> getSizeWorld() { return _sizeWorld; };
+
         private:
             void handleServerMessages();
 
@@ -55,8 +57,7 @@ namespace Zappy {
             std::mutex commandQueueMutex;
             std::condition_variable commandQueueNotEmpty;
 
-            int _widthWorld;
-            int _heightWorld;
+            std::pair<int, int> _sizeWorld;
 
             std::unordered_map<std::string, std::function<void(const std::string&)>> commandHandlers = {
                 {"msz", [this](const std::string& value) { handleCommandMsz(value); }},

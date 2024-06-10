@@ -29,7 +29,7 @@ namespace Zappy {
     namespace GUI {
         class SceneManager {
             public:
-                SceneManager();
+                SceneManager(std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication);
                 ~SceneManager();
 
                 void destroy();
@@ -38,6 +38,7 @@ namespace Zappy {
 
             protected:
             private:
+                std::shared_ptr<Zappy::GUI::ServerCommunication> _serverCommunication;
                 bool _isDestroyed;
                 std::unordered_map<std::string, std::shared_ptr<Zappy::GUI::IScene>> _scenes;
                 std::string _currentScene;
