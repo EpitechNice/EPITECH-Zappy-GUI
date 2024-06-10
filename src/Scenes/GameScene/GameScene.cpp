@@ -10,10 +10,13 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
-            Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication) : _serverCommunication(serverCommunication)
+            Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
+                : _mapSize(10, 10), _serverCommunication(serverCommunication)
             {
+                serverCommunication->setMapSizeCallback([this](int width, int height) {
+                    this->setMapSize(width, height);
+                });
                 serverCommunication->addCommand("msz\r\n");
-                std::pair<int, int> size = serverCommunication->getSizeWorld();
                 int tileSize = 5;
 
                 // TODO: Delete this
@@ -29,18 +32,24 @@ namespace Zappy {
 
                 _render = render;
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
-                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100 * tileSize * size.first / 2);
+                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100 * tileSize * _mapSize.first / 2);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
                 _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){5, 5, 5});
 
-                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, size, tileSize, _ressources);
+                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, _mapSize, tileSize, _ressources);
 
                 _crossPointer = std::make_pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>>(
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
-                serverCommunication->addCommand("bct 4 3\r\n");
+                // serverCommunication->addCommand("bct 4 3\r\n");
+                // serverCommunication->addCommand("mct\r\n");
+            }
+
+            void Game::setMapSize(int width, int height)
+            {
+                _mapSize = { width, height };
             }
 
             void Game::destroy()

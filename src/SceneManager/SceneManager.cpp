@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         SceneManager::SceneManager(std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
-            : _isDestroyed(false), _serverCommunication(serverCommunication)
+            : _serverCommunication(serverCommunication), _isDestroyed(false)
         {
             _render = std::make_shared<Zappy::GUI::Raylib::Render>(600, 1200, 60);
 
