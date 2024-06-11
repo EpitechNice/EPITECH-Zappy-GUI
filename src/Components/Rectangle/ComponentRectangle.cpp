@@ -11,8 +11,14 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Rectangle::Rectangle(std::pair<int, int> pos, std::pair<int, int> size, Color color)
-                : _pos(pos), _size(size), _color(color)
             {
+                _posX = pos.first;
+                _posY = pos.second;
+                _color = color;
+                _sizeX = size.first;
+                _sizeY = size.second;
+                _color = color;
+
                 _strokeColor = BLACK;
                 _strokeSize = -1;
             }
@@ -21,8 +27,8 @@ namespace Zappy {
             void Rectangle::draw()
             {
                 if (_strokeSize >= 1)
-                    DrawRectangle(_pos.first - _strokeSize, _pos.second - _strokeSize, _size.first + _strokeSize * 2, _size.second + _strokeSize * 2, _strokeColor);
-                DrawRectangle(_pos.first, _pos.second, _size.first, _size.second, _color);
+                    DrawRectangle(_posX - _strokeSize, _posY - _strokeSize, _sizeX + _strokeSize * 2, _sizeY + _strokeSize * 2, _strokeColor);
+                DrawRectangle(_posX, _posY, _sizeX, _sizeY, _color);
             }
 
 
@@ -30,16 +36,6 @@ namespace Zappy {
             {
                 _strokeSize = strokeSize;
                 _strokeColor = strokeColor;
-            }
-
-            void Rectangle::unsetStroke()
-            {
-                _strokeSize = -1;
-            }
-
-            void Rectangle::setPosX(int x)
-            {
-                _pos.first = x;
             }
         }
     }
