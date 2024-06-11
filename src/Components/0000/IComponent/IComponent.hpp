@@ -8,6 +8,7 @@
 #ifndef INTERFACE_COMPONENT_HPP_
     #define INTERFACE_COMPONENT_HPP_
 
+    #include <raylib.h>
     #include <iostream>
 
 namespace Zappy {
@@ -42,6 +43,9 @@ namespace Zappy {
                     virtual void setSizeY(float y) = 0;
                     virtual void modSizeX(float x) = 0;
                     virtual void modSizeY(float y) = 0;
+
+                    virtual Color getColor() const = 0;
+                    virtual void setColor(Color color) = 0;
 
                 protected:
                 private:

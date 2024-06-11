@@ -10,15 +10,6 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            AComponent::AComponent(std::pair<float, float> pos, std::pair<float, float> size)
-            {
-                _isDestroyed = false;
-                _posX = pos.first;
-                _posY = pos.second;
-                _sizeX = size.first;
-                _sizeY = size.second;
-            }
-
             AComponent::~AComponent()
             {
                 destroy();
@@ -58,10 +49,10 @@ namespace Zappy {
             }
 
 
-            void AComponent::setPos(std::pair<float, float> pos)
+            void AComponent::setPos(float x, float y)
             {
-                _posX = pos.first;
-                _posY = pos.second;
+                _posX = x;
+                _posY = y;
             }
 
             void AComponent::setPosX(float x)
@@ -103,10 +94,10 @@ namespace Zappy {
             }
 
 
-            void AComponent::setSize(std::pair<float, float> size)
+            void AComponent::setSize(float x, float y)
             {
-                _sizeX = size.first;
-                _sizeY = size.second;
+                _sizeX = x;
+                _sizeY = y;
             }
 
             void AComponent::setSizeX(float x)
@@ -127,6 +118,18 @@ namespace Zappy {
             void AComponent::modSizeY(float y)
             {
                 _sizeY += y;
+            }
+
+
+
+            Color AComponent::getColor() const
+            {
+                return _color;
+            }
+
+            void AComponent::setColor(Color color)
+            {
+                _color = color;
             }
         }
     }
