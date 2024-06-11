@@ -11,56 +11,82 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Skybox::Skybox(std::string name, float size)
-                : _size(size), _isDestroyed(false)
             {
-                std::vector<std::string> textures = {
-                    "assets/img/skybox/" + name + "/skyRenderSide1.png",
-                    "assets/img/skybox/" + name + "/skyRenderSide2.png",
-                    "assets/img/skybox/" + name + "/skyRenderSide3.png",
-                    "assets/img/skybox/" + name + "/skyRenderSide4.png",
-                    "assets/img/skybox/" + name + "/skyRenderBottom.png",
-                    "assets/img/skybox/" + name + "/skyRenderTop.png",
+                std::vector<Texture2D> textures = {
+                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide1.png").c_str()),
+                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide2.png").c_str()),
+                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide3.png").c_str()),
+                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide4.png").c_str()),
+                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderBottom.png").c_str()),
+                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderTop.png").c_str()),
                 };
-                std::vector<Vector3> positions = {
-                    { 0, 0, _size / 2 },
-                    { -_size / 2, 0, 0 },
-                    { 0, 0, -_size / 2 },
-                    { _size / 2, 0, 0 },
-                    { 0, -_size / 2, 0 },
-                    { 0, _size / 2, 0 },
-                };
-                std::vector<Vector3> rotations = {
-                    { 90 * DEG2RAD, 0, 180 * DEG2RAD },
-                    { 90 * DEG2RAD, 0, -90 * DEG2RAD},
-                    { 90 * DEG2RAD, 0, 0 },
-                    { 90 * DEG2RAD, 0, 90 * DEG2RAD},
-                    { 0, 0, 0 },
-                    { 180 * DEG2RAD, 0, 0 },
-                };
-                for (std::size_t i = 0; i < textures.size(); i++) {
-                    Plane plane;
-                    plane.texture = LoadTexture(textures[i].c_str());
-                    plane.mesh = GenMeshPlane(_size, _size, 1, 1);
-                    plane.model = LoadModelFromMesh(plane.mesh);
-                    plane.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = plane.texture;
-                    plane.position = positions[i];
-                    plane.rotation = rotations[i];
-                    plane.model.transform = MatrixRotateXYZ(plane.rotation);
-                    plane.size = _size;
-                    _planes.push_back(plane);
-                }
+                _createSkybox(textures, size);
             }
 
             Skybox::Skybox(Color color, float size)
-                : _size(size), _isDestroyed(false)
             {
+                std::vector<Texture2D> textures = {
+                    LoadTextureFromImage(GenImageColor(1, 1, color)),
+                    LoadTextureFromImage(GenImageColor(1, 1, color)),
+                    LoadTextureFromImage(GenImageColor(1, 1, color)),
+                    LoadTextureFromImage(GenImageColor(1, 1, color)),
+                    LoadTextureFromImage(GenImageColor(1, 1, color)),
+                    LoadTextureFromImage(GenImageColor(1, 1, color)),
+                };
+                _createSkybox(textures, size);
+            }
+
+            void Skybox::destroy()
+            {
+                if (_isDestroyed) return;
+                for (auto &plane : _planes) {
+                    UnloadTexture(plane.texture);
+                    UnloadModel(plane.model);
+                }
+                _isDestroyed = true;
+            }
+
+            void Skybox::draw()
+            {
+                for (auto &plane : _planes)
+                    DrawModel(plane.model, plane.position, 1.0f, WHITE);
+            }
+
+            void Skybox::update(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
+            {
+                if (_isDestroyed)
+                    return;
+                Vector3 cameraPosition = render->view()->getPosition();
+                Vector3 modify = { 0, 0, 0 };
+
+                if (cameraPosition.x >= _sizeX / 2) modify.x = -_sizeX + 5;
+                if (cameraPosition.x <= -_sizeX / 2) modify.x = _sizeX - 5;
+                if (cameraPosition.y >= _sizeY / 2) modify.y = -_sizeY + 5;
+                if (cameraPosition.y <= -_sizeY / 2) modify.y = _sizeY - 5;
+                if (cameraPosition.z >= _sizeZ / 2) modify.z = -_sizeZ + 5;
+                if (cameraPosition.z <= -_sizeZ / 2) modify.z = _sizeZ - 5;
+
+                if (modify.x == 0 && modify.y == 0 && modify.z == 0) return;
+                std::cout << cameraPosition.x << " " << cameraPosition.y << " " << cameraPosition.z << std::endl;
+                std::cout << "Modify: " << modify.x << " " << modify.y << " " << modify.z << std::endl;
+                render->view()->modPosition(modify);
+                render->view()->modTarget(modify);
+            }
+
+
+            void Skybox::_createSkybox(std::vector<Texture2D> textures, float size)
+            {
+                _sizeX = size;
+                _sizeY = size;
+                _sizeZ = size;
+
                 std::vector<Vector3> positions = {
-                    { 0, 0, _size / 2 },
-                    { -_size / 2, 0, 0 },
-                    { 0, 0, -_size / 2 },
-                    { _size / 2, 0, 0 },
-                    { 0, -_size / 2, 0 },
-                    { 0, _size / 2, 0 },
+                    { 0, 0, _sizeY / 2 },
+                    { -_sizeX / 2, 0, 0 },
+                    { 0, 0, -_sizeY / 2 },
+                    { _sizeX / 2, 0, 0 },
+                    { 0, -_sizeY / 2, 0 },
+                    { 0, _sizeY / 2, 0 },
                 };
                 std::vector<Vector3> rotations = {
                     { 90 * DEG2RAD, 0, 180 * DEG2RAD },
@@ -72,52 +98,15 @@ namespace Zappy {
                 };
                 for (std::size_t i = 0; i < positions.size(); i++) {
                     Plane plane;
-                    plane.texture = LoadTextureFromImage(GenImageColor(1, 1, color));
-                    plane.mesh = GenMeshPlane(_size, _size, 1, 1);
+                    plane.texture = textures[i];
+                    plane.mesh = GenMeshPlane(_sizeX, _sizeY, 1, 1);
                     plane.model = LoadModelFromMesh(plane.mesh);
                     plane.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = plane.texture;
                     plane.position = positions[i];
                     plane.rotation = rotations[i];
                     plane.model.transform = MatrixRotateXYZ(plane.rotation);
-                    plane.size = _size;
                     _planes.push_back(plane);
                 }
-            }
-
-            void Skybox::destroy()
-            {
-                if (_isDestroyed)
-                    return;
-                for (auto &plane : _planes) {
-                    UnloadTexture(plane.texture);
-                    UnloadModel(plane.model);
-                }
-                _isDestroyed = true;
-            }
-
-            void Skybox::draw()
-            {
-                for (auto &plane : _planes) {
-                    DrawModel(plane.model, plane.position, 1.0f, WHITE);
-                }
-            }
-
-            void Skybox::update(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
-            {
-                if (_isDestroyed)
-                    return;
-                Vector3 cameraPosition = render->view()->getPosition();
-                Vector3 modify = { 0, 0, 0 };
-
-                if (cameraPosition.y >= _size / 2) modify.y = -_size + 1;
-                if (cameraPosition.y <= -_size / 2) modify.y = _size - 1;
-                if (cameraPosition.x >= _size / 2) modify.x = -_size + 1;
-                if (cameraPosition.x <= -_size / 2) modify.x = _size - 1;
-                if (cameraPosition.z >= _size / 2) modify.z = -_size + 1;
-                if (cameraPosition.z <= -_size / 2) modify.z = _size - 1;
-
-                render->view()->modPosition(modify);
-                render->view()->modTarget(modify);
             }
         }
     }

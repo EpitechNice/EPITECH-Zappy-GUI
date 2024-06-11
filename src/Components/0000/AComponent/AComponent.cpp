@@ -23,10 +23,6 @@ namespace Zappy {
                 _isDestroyed = true;
             }
 
-            void AComponent::update()
-            {
-            }
-
             void AComponent::draw()
             {
             }

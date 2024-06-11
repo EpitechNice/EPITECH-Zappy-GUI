@@ -20,7 +20,6 @@ namespace Zappy {
                     ~AComponent();
 
                     void destroy() override;
-                    void update() override;
                     void draw() override;
 
                     float getPosX() const override;

@@ -19,7 +19,6 @@ namespace Zappy {
                     virtual ~IComponent() = default;
 
                     virtual void destroy() = 0;
-                    virtual void update() = 0;
                     virtual void draw() = 0;
 
 
