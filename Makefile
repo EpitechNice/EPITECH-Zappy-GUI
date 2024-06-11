@@ -13,7 +13,7 @@ SRC		=   src/Main.cpp																				\
 			src/Components/ButtonClassic/ComponentButtonClassic.cpp										\
 			src/Components/Chatbox/ComponentChatbox.cpp													\
 			src/Components/Circle/ComponentCircle.cpp													\
-			src/Components/Cubic/ComponentCubic.cpp														\
+			src/Components/Cube/ComponentCube.cpp														\
 			src/Components/Image/ComponentImage.cpp														\
 			src/Components/Inspecter/ComponentInspecter.cpp												\
 			src/Components/InspecterInfo/ComponentInspecterInfo.cpp										\
@@ -95,7 +95,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Components/ButtonClassic					\
 				-I./src/Components/Chatbox							\
 				-I./src/Components/Circle							\
-				-I./src/Components/Cubic							\
+				-I./src/Components/Cube							\
 				-I./src/Components/Image							\
 				-I./src/Components/Inspecter						\
 				-I./src/Components/InspecterInfo					\

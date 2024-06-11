@@ -17,10 +17,9 @@ namespace Zappy {
                 _grassPos = {pos.x, pos.y + size.y / 4, pos.z};
                 _dirtSize = {size.x, size.y / 2, size.z};
                 _dirtPos = {pos.x, pos.y - size.y / 4, pos.z};
-                _grass = std::make_unique<Cubic>(_grassPos, _grassSize, color);
-                _dirt = std::make_unique<Cubic>(_dirtPos, _dirtSize, BROWN);
-                _wire = std::make_unique<Cubic>(_pos, _size, BLACK);
-                _wire->setMode(Cubic::WIRES);
+                _grass = std::make_unique<Cube>(_grassPos, _grassSize, color, Cube::CUBE);
+                _dirt = std::make_unique<Cube>(_dirtPos, _dirtSize, BROWN, Cube::CUBE);
+                _wire = std::make_unique<Cube>(_pos, _size, BLACK, Cube::WIRES);
                 _selectEffect = _size.y / 3;
             }
 

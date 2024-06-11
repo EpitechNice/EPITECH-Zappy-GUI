@@ -12,7 +12,7 @@
     #include <memory>
     #include <iostream>
 
-    #include "ComponentCubic.hpp"
+    #include "ComponentCube.hpp"
     #include "ColorManager.hpp"
     #include "ComponentModel3D.hpp"
     #include "ComponentRessources.hpp"
@@ -51,9 +51,9 @@ namespace Zappy {
                     Vector3 _dirtPos;
                     Vector3 _dirtSize;
 
-                    std::unique_ptr<Cubic> _grass;
-                    std::unique_ptr<Cubic> _dirt;
-                    std::unique_ptr<Cubic> _wire;
+                    std::unique_ptr<Cube> _grass;
+                    std::unique_ptr<Cube> _dirt;
+                    std::unique_ptr<Cube> _wire;
                     float _selectEffect;
             };
         }
