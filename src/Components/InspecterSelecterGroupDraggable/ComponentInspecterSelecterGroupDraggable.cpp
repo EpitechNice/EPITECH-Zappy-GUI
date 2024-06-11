@@ -5,7 +5,7 @@
 ** ComponentInspecterSelecterGroupDraggable
 */
 
-#include "ComponentInspecterSelecterGroupDragabble.hpp"
+#include "ComponentInspecterSelecterGroupDraggable.hpp"
 
 namespace Zappy {
     namespace GUI {

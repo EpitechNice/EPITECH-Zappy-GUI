@@ -18,7 +18,7 @@
     #include "ComponentButton.hpp"
     #include "ComponentButtonClassic.hpp"
     #include "ComponentCircle.hpp"
-    #include "ComponentInspecterSelecterGroupDragabble.hpp"
+    #include "ComponentInspecterSelecterGroupDraggable.hpp"
     #include "Ressources.hpp"
     #include "ComponentInspecterInfo.hpp"
     #include "ComponentInspecterInfoTile.hpp"

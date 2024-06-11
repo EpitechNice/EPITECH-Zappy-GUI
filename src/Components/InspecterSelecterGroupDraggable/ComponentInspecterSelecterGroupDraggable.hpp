@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2024
 ** GUI
 ** File description:
-** ComponentInspecterSelecterGroupDragabble
+** ComponentInspecterSelecterGroupDragagable
 */
 
-#ifndef COMPONENT_INSPECTER_SELECTER_GROUP_DRAGABBLE_HPP_
-    #define COMPONENT_INSPECTER_SELECTER_GROUP_DRAGABBLE_HPP_
+#ifndef COMPONENT_INSPECTER_SELECTER_GROUP_DRAGGABLE_HPP_
+    #define COMPONENT_INSPECTER_SELECTER_GROUP_DRAGGABLE_HPP_
 
     #include <raylib.h>
     #include <memory>
@@ -54,4 +54,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !COMPONENT_INSPECTER_SELECTER_GROUP_DRAGABBLE_HPP_ */
+#endif /* !COMPONENT_INSPECTER_SELECTER_GROUP_DRAGGABLE_HPP_ */
