@@ -204,14 +204,21 @@ namespace Zappy {
 
             void Button::changePos(const std::pair<float, float>& newPos)
             {
-                std::pair<float, float> nextPos = {newPos.first - _pos.first, newPos.second - _pos.second};
+                std::pair<float, float> offset = {newPos.first - _pos.first, newPos.second - _pos.second};
                 _pos = newPos;
-                _blackStroke->setPosition({ _blackStroke->getPosition().first + nextPos.first, _blackStroke->getPosition().second + nextPos.second });
-                _upEffect->setPosition({ _upEffect->getPosition().first + nextPos.first, _upEffect->getPosition().second + nextPos.second });
-                _background->setPosition({ _background->getPosition().first + nextPos.first, _background->getPosition().second + nextPos.second });
-                _topButton->setPosition({ _topButton->getPosition().first + nextPos.first, _topButton->getPosition().second + nextPos.second });
-                _reflexioneffect->setPosition({ _reflexioneffect->getPosition().first + nextPos.first, _reflexioneffect->getPosition().second + nextPos.second });
+                _textPos.first += offset.first;
+                _textPos.second += offset.second;
+                _text->setPos(_textPos);
+                _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2));
+                if (_bubble)
+                    _circle->setPos(std::make_pair(_circle->getPos().first + offset.first, _circle->getPos().second + offset.second));
+                _blackStroke->setPosition(std::make_pair(_blackStroke->getPosition().first + offset.first, _blackStroke->getPosition().second + offset.second));
+                _upEffect->setPosition(std::make_pair(_upEffect->getPosition().first + offset.first, _upEffect->getPosition().second + offset.second));
+                _background->setPosition(std::make_pair(_background->getPosition().first + offset.first, _background->getPosition().second + offset.second));
+                _topButton->setPosition(std::make_pair(_topButton->getPosition().first + offset.first, _topButton->getPosition().second + offset.second));
+                _reflexioneffect->setPosition(std::make_pair(_reflexioneffect->getPosition().first + offset.first, _reflexioneffect->getPosition().second + offset.second));
             }
+
 
             void Button::changeColor(Color color)
             {

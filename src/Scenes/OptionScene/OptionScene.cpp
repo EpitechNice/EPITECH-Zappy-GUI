@@ -40,7 +40,7 @@ namespace Zappy {
                     x_generalButton += button_width / 2;
                     i_generalButton++;
                 }
-                _text.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(x_generalButton * 0.9 , y_generalButton * 1.5), i18nHelper->getTranslation("[menu.settings.lang_title]"), 30, WHITE), "[menu.settings.lang_title]"));
+                _text.push_back(std::make_pair(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(x_generalButton * 0.85 , y_generalButton * 1.5), i18nHelper->getTranslation("[menu.settings.lang_title]"), 30, WHITE), "[menu.settings.lang_title]"));
                 int x_langueButton = x_generalButton / 2;
                 int y_langueButton = y_generalButton * 1.5 + 50;
                 int i_langueButton = 20;
@@ -89,6 +89,23 @@ namespace Zappy {
                     for (auto &text : _text)
                         text.first->setText(i18nHelper->getTranslation(text.second));
                     _backButton.first->setText(i18nHelper->getTranslation(_backButton.second));
+
+                    int height = _render->getHeight() / 1.5;
+                    int x_generalButton = _render->getWidth() / 2;
+                    int i_generalButton = 0;
+                    for (auto &button : _generalButtons) {
+                        auto button_width = std::get<0>(button)->getSize().first;
+                        int y_generalButton = (height / (_generalButtons.size() + 1)) * (i_generalButton + 1) - 30;
+                        x_generalButton -= button_width / 2;
+                        std::get<0>(button)->changePos(std::make_pair(x_generalButton, y_generalButton));
+                        x_generalButton += button_width / 2;
+                        i_generalButton++;
+                    }
+                    for (auto &text : _text) {
+                        int text_width = text.first->getSize().first;
+                        int x_text = (_render->getWidth() - text_width) / 2;
+                        text.first->setPos(std::make_pair(x_text, 360));
+                    }
                     _lang = i18nHelper->getCurrentLocale();
                 }
             }
