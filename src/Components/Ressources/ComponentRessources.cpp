@@ -72,17 +72,44 @@ namespace Zappy {
                 _pos = pos;
                 _pos.x -= _size.x / 2;
                 _pos.z -= _size.z / 2;
-                _food->setPos((Vector3){_refPosFood.x + _pos.x, _refPosFood.y + _pos.y, _refPosFood.z + _pos.z});
+
+                _food->setPosX(_refPosFood.x + _pos.x);
+                _food->setPosY(_refPosFood.y + _pos.y);
+                _food->setPosZ(_refPosFood.z + _pos.z);
                 _food->setOnPosY(_pos.y + _size.y / 2 - 0.2);
-                _egg->setPos((Vector3){_refPosEgg.x +_pos.x, _refPosEgg.y +_pos.y, _refPosEgg.z +_pos.z});
+
+                _egg->setPosX(_refPosEgg.x + _pos.x);
+                _egg->setPosY(_refPosEgg.y + _pos.y);
+                _egg->setPosZ(_refPosEgg.z + _pos.z);
                 _egg->setOnPosY(_pos.y + _size.y / 2);
-                _linemate->setPos((Vector3){_refPosLinemate.x +_pos.x, _refPosLinemate.y +_pos.y, _refPosLinemate.z +_pos.z});
-                _deraumere->setPos((Vector3){_refPosDeraumere.x +_pos.x, _refPosDeraumere.y +_pos.y, _refPosDeraumere.z +_pos.z});
-                _sibur->setPos((Vector3){_refPosSibur.x +_pos.x, _refPosSibur.y +_pos.y, _refPosSibur.z +_pos.z});
-                _mendiane->setPos((Vector3){_refPosMendiane.x +_pos.x, _refPosMendiane.y +_pos.y, _refPosMendiane.z +_pos.z});
-                _phiras->setPos((Vector3){_refPosPhiras.x +_pos.x, _refPosPhiras.y +_pos.y, _refPosPhiras.z +_pos.z});
-                _thystame->setPos((Vector3){_refPosThystame.x +_pos.x, _refPosThystame.y +_pos.y, _refPosThystame.z +_pos.z});
-                _zappy->setPos((Vector3){_refPosZappy.x +_pos.x, _refPosZappy.y +_pos.y, _refPosZappy.z +_pos.z});
+
+                _linemate->setPosX(_refPosLinemate.x + _pos.x);
+                _linemate->setPosY(_refPosLinemate.y + _pos.y);
+                _linemate->setPosZ(_refPosLinemate.z + _pos.z);
+
+                _deraumere->setPosX(_refPosDeraumere.x + _pos.x);
+                _deraumere->setPosY(_refPosDeraumere.y + _pos.y);
+                _deraumere->setPosZ(_refPosDeraumere.z + _pos.z);
+
+                _sibur->setPosX(_refPosSibur.x + _pos.x);
+                _sibur->setPosY(_refPosSibur.y + _pos.y);
+                _sibur->setPosZ(_refPosSibur.z + _pos.z);
+
+                _mendiane->setPosX(_refPosMendiane.x + _pos.x);
+                _mendiane->setPosY(_refPosMendiane.y + _pos.y);
+                _mendiane->setPosZ(_refPosMendiane.z + _pos.z);
+
+                _phiras->setPosX(_refPosPhiras.x + _pos.x);
+                _phiras->setPosY(_refPosPhiras.y + _pos.y);
+                _phiras->setPosZ(_refPosPhiras.z + _pos.z);
+
+                _thystame->setPosX(_refPosThystame.x + _pos.x);
+                _thystame->setPosY(_refPosThystame.y + _pos.y);
+                _thystame->setPosZ(_refPosThystame.z + _pos.z);
+
+                _zappy->setPosX(_refPosZappy.x + _pos.x);
+                _zappy->setPosY(_refPosZappy.y + _pos.y);
+                _zappy->setPosZ(_refPosZappy.z + _pos.z);
                 _zappy->setOnPosY(_pos.y + _size.y / 2);
             }
 
