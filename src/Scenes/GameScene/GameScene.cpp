@@ -44,7 +44,7 @@ namespace Zappy {
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
                 // serverCommunication->addCommand("bct 4 3\r\n");
-                serverCommunication->addCommand("mct\r\n");
+                // serverCommunication->addCommand("mct\r\n");
             }
 
             void Game::setMapSize(int width, int height)
@@ -119,8 +119,11 @@ namespace Zappy {
 
             std::string Game::nextScene()
             {
-                if (IsKeyReleased(KEY_TAB))
+                if (IsKeyReleased(KEY_TAB)){
+                    Sfml::SoundManager::getInstance().setMusique("assets/Musique/ClashofTekMainMusic.wav");
+                    Sfml::SoundManager::getInstance().playgeneralSound();
                     return "menu";
+                }
                 return "game";
             }
         }

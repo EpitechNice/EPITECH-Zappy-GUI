@@ -100,6 +100,9 @@ namespace Zappy {
                     if (textButton == "[menu.back_button]"){
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButtonBack.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
+                    } else if (textButton == "[menu.start_title]"){
+                        Sfml::SoundManager::getInstance().setMusique("assets/Musique/ClashofTekCombatMusic.wav");
+                        Sfml::SoundManager::getInstance().playgeneralSound();
                     } else {
                         Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();

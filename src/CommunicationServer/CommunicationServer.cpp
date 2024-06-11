@@ -331,7 +331,7 @@ namespace Zappy {
             std::cout << "Server message: " << message << std::endl;
         }
 
-        void ServerCommunication::handleCommandSbp(const std::string& responseValue)
+        void ServerCommunication::handleCommandSbp([[maybe_unused]] const std::string& responseValue)
         {
             std::cout << "Unknown command" << std::endl;
         }

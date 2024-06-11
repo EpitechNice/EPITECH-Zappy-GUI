@@ -59,7 +59,6 @@ namespace Zappy {
                     void disableBubble();
 
                     void setPosX(float x);
-                    // void setPos(std::pair<float, float> pos);
                     void setPos(const std::pair<float, float> pos);
 
                     void setText(std::string text);

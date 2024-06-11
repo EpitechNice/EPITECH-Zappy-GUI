@@ -83,9 +83,11 @@ namespace Zappy {
             std::string Menu::nextScene()
             {
                 for (auto &button : _buttons) {
-                    if (std::get<0>(button)->isClicked(std::get<0>(button)->getText()))
+                    if (std::get<0>(button)->isClicked(std::get<2>(button))) {
                         return std::get<1>(button);
+                    }
                 }
+
                 return "menu";
             }
         }
