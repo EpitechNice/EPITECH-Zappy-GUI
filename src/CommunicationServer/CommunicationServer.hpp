@@ -24,6 +24,8 @@
 #include <unordered_map>
 #include <functional>
 
+#include "Exceptions.hpp"
+
 namespace Zappy {
     namespace GUI {
         class ServerCommunication {
@@ -32,7 +34,7 @@ namespace Zappy {
             ServerCommunication(const std::string& address, int port);
             ~ServerCommunication();
 
-            bool connectToServer();
+            void connectToServer();
             void closeConnection();
             void startCommunication();
 
@@ -70,7 +72,6 @@ namespace Zappy {
 
             void setMapSizeCallback(std::function<void(int, int)> callback) { mapSizeCallback = callback; };
             void setUpdateTilesContentCallback(std::function<void(int, int, int, int, int, int, int, int, int)> callback) { tileContentCallback = callback; };
-
 
         private:
             void handleServerMessages();

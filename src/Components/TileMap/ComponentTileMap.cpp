@@ -135,12 +135,12 @@ namespace Zappy {
                 if (x >= 0 && x < _size.first && y >= 0 && y < _size.second) {
                     auto tile = _tiles[x][y];
                     tile->getRessources()->setFood(q0);
-                    tile->getRessources()->setEgg(q1);
-                    tile->getRessources()->setLinemate(q2);
-                    tile->getRessources()->setDeraumere(q3);
-                    tile->getRessources()->setSibur(q4);
-                    tile->getRessources()->setMendiane(q5);
-                    tile->getRessources()->setPhiras(q6);
+                    tile->getRessources()->setLinemate(q1);
+                    tile->getRessources()->setDeraumere(q2);
+                    tile->getRessources()->setSibur(q3);
+                    tile->getRessources()->setMendiane(q4);
+                    tile->getRessources()->setPhiras(q5);
+                    tile->getRessources()->setThystame(q6);
                 }
             }
         }

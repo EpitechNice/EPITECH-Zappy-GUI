@@ -45,10 +45,6 @@ namespace Zappy {
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
                 serverCommunication->addCommand("bct 1 3\r\n");
-                serverCommunication->addCommand("bct 2 3\r\n");
-                serverCommunication->addCommand("bct 3 3\r\n");
-                serverCommunication->addCommand("bct 1 2\r\n");
-                serverCommunication->addCommand("bct 1 1\r\n");
                 // serverCommunication->addCommand("mct\r\n");
             }
 

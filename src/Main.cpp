@@ -16,17 +16,10 @@ int main(int argc, char **argv)
     try {
         srand(time(NULL));
         Zappy::GUI::Parsing parsing(argc, argv);
-        std::cout << "Port: " << parsing.getPort() << std::endl;
-        std::cout << "Machine: " << parsing.getMachine() << std::endl;
         auto serverCommunication = std::make_shared<Zappy::GUI::ServerCommunication>(parsing.getMachine(), parsing.getPort());
-        if (serverCommunication->connectToServer()) {
-            std::cout << "server connected " << std::endl;
-            serverCommunication->startCommunication();
-            serverCommunication->addCommand("GRAPHIC\r\n");
-        } else {
-            std::cerr << "Failed to connect to the server" << std::endl;
-            return 1;
-        }
+        serverCommunication->connectToServer();
+        serverCommunication->startCommunication();
+        serverCommunication->addCommand("GRAPHIC\r\n");
         Zappy::GUI::SceneManager sceneManager(serverCommunication);
         sceneManager.run();
     } catch (const Zappy::GUI::Parsing::ParsingError &e) {
@@ -36,13 +29,15 @@ int main(int argc, char **argv)
     } catch (const Zappy::GUI::Parsing::Help &e) {
         e.what();
         return 0;
+    } catch (const Exceptions::ConnexionServeurFail &e) {
+        std::cerr << "Server connection error: " << e.what() << std::endl;
+        return 84;
     } catch (const std::exception &e) {
         std::cerr << "Unexpected error: " << e.what() << std::endl;
         return 84;
     }
     return 0;
 }
-
 
 ////Test I18nHelper
 //   #include "I18nHelper.hpp"

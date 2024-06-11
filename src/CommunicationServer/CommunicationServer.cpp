@@ -19,23 +19,20 @@ namespace Zappy {
             closeConnection();
         }
 
-        bool ServerCommunication::connectToServer()
+        void ServerCommunication::connectToServer()
         {
             sockfd = socket(AF_INET, SOCK_STREAM, 0);
             if (sockfd == -1) {
-                perror("Error: socket creation failed\n");
-                return false;
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", serverAddress, serverPort);
             }
             struct sockaddr_in serv_addr;
             serv_addr.sin_family = AF_INET;
             serv_addr.sin_port = htons(serverPort);
             inet_pton(AF_INET, serverAddress.c_str(), &serv_addr.sin_addr);
             if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
-                std::cout << "Error: connection to server failed\n" << std::endl;
                 closeConnection();
-                return false;
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", serverAddress, serverPort);
             }
-            return true;
         }
 
         void ServerCommunication::startCommunication()
