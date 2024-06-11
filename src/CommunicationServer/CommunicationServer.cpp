@@ -136,61 +136,84 @@ namespace Zappy {
 
         void ServerCommunication::handleCommandBct(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            // size_t pos1 = responseValue.find(' ');
-            // size_t pos2 = responseValue.find(' ', pos1 + 1);
-            // int x = std::stoi(responseValue.substr(pos1 + 1, pos2 - pos1 - 1));
-            // int y = std::stoi(responseValue.substr(pos2 + 1));
-        }
+            std::istringstream iss(responseValue);
+            std::string command;
+            int x, y, q0, q1, q2, q3, q4, q5, q6;
+            iss >> command >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
 
-        void ServerCommunication::handleCommandMct(const std::string& responseValue)
-        {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            // int mapHeight = Ressources::Ressources::get()->tileRessources.size();
-            // int mapWidth = Ressources::Ressources::get()->tileRessources[0].size();
-
+            std::cout << "x: " << x << ", y: " << y << std::endl;
+            std::cout << "q0: " << q0 << ", q1: " << q1 << ", q2: " << q2 << ", q3: " << q3 << ", q4: " << q4 << ", q5: " << q5 << ", q6: " << q6 << std::endl;
         }
 
         void ServerCommunication::handleCommandTna(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            std::istringstream iss(responseValue);
+            std::string teamName;
+            iss >> teamName;
+            std::cout << "Team name: " << teamName << std::endl;
         }
 
         void ServerCommunication::handleCommandPnw(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum, x, y, orientation, level;
+            std::string teamName;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> x >> y >> orientation >> level >> teamName;
+
+            std::cout << "New player: #" << playerNum << ", X: " << x << ", Y: " << y
+                    << ", Orientation: " << orientation << ", Level: " << level
+                    << ", Team: " << teamName << std::endl;
         }
 
         void ServerCommunication::handleCommandPpo(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum, x, y, orientation;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> x >> y >> orientation;
+
+            std::cout << "Player position: #" << playerNum << ", X: " << x << ", Y: " << y
+                    << ", Orientation: " << orientation << std::endl;
         }
 
         void ServerCommunication::handleCommandPlv(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum, level;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> level;
+
+            std::cout << "Player level: #" << playerNum << ", Level: " << level << std::endl;
         }
 
         void ServerCommunication::handleCommandPin(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum, x, y, q0, q1, q2, q3, q4, q5, q6;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+
+            std::cout << "Player inventory: #" << playerNum << ", X: " << x << ", Y: " << y
+                    << ", q0: " << q0 << ", q1: " << q1 << ", q2: " << q2
+                    << ", q3: " << q3 << ", q4: " << q4 << ", q5: " << q5
+                    << ", q6: " << q6 << std::endl;
         }
 
         void ServerCommunication::handleCommandPex(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum;
+            std::istringstream iss(responseValue);
+            iss >> playerNum;
+
+            std::cout << "Player expelled: #" << playerNum << std::endl;
         }
 
         void ServerCommunication::handleCommandPbc(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum;
+            std::string message;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> std::ws;
+            std::getline(iss, message);
+
+            std::cout << "Broadcast from player #" << playerNum << ": " << message << std::endl;
         }
 
         void ServerCommunication::handleCommandPic(const std::string& responseValue)
@@ -201,86 +224,121 @@ namespace Zappy {
 
         void ServerCommunication::handleCommandPie(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int x, y;
+            std::string result;
+            std::istringstream iss(responseValue);
+            iss >> x >> y >> result;
+
+            std::cout << "Incantation ended at (" << x << ", " << y << ") with result: " << result << std::endl;
         }
 
         void ServerCommunication::handleCommandPfk(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum;
+            std::istringstream iss(responseValue);
+            iss >> playerNum;
+
+            std::cout << "Player #" << playerNum << " laid an egg." << std::endl;
         }
 
         void ServerCommunication::handleCommandPdr(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum, resourceNum;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> resourceNum;
+
+            std::cout << "Player #" << playerNum << " dropped resource #" << resourceNum << std::endl;
         }
 
         void ServerCommunication::handleCommandPgt(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum, resourceNum;
+            std::istringstream iss(responseValue);
+            iss >> playerNum >> resourceNum;
+
+            std::cout << "Player #" << playerNum << " took resource #" << resourceNum << std::endl;
         }
 
         void ServerCommunication::handleCommandPdi(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int playerNum;
+            std::istringstream iss(responseValue);
+            iss >> playerNum;
+
+            std::cout << "Player #" << playerNum << " has died." << std::endl;
         }
 
         void ServerCommunication::handleCommandEnw(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int eggNum, playerNum, x, y;
+            std::istringstream iss(responseValue);
+            iss >> eggNum >> playerNum >> x >> y;
+
+            std::cout << "New egg: #" << eggNum << " laid by player #" << playerNum << " at (" << x << ", " << y << ")" << std::endl;
         }
 
         void ServerCommunication::handleCommandEbo(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int eggNum;
+            std::istringstream iss(responseValue);
+            iss >> eggNum;
+
+            std::cout << "Egg #" << eggNum << " hatched." << std::endl;
         }
 
         void ServerCommunication::handleCommandSgt(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int eggNum;
+            std::istringstream iss(responseValue);
+            iss >> eggNum;
+
+            std::cout << "Egg #" << eggNum << " died." << std::endl;
         }
 
         void ServerCommunication::handleCommandSst(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int timeUnit;
+            std::istringstream iss(responseValue);
+            iss >> timeUnit;
+
+            std::cout << "Current time unit: " << timeUnit << std::endl;
         }
 
         void ServerCommunication::handleCommandSeg(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            int timeUnit;
+            std::istringstream iss(responseValue);
+            iss >> timeUnit;
+
+            std::cout << "Time unit set to: " << timeUnit << std::endl;
         }
 
         void ServerCommunication::handleCommandSmg(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            std::string teamName;
+            std::istringstream iss(responseValue);
+            iss >> teamName;
+
+            std::cout << "Game ended. Winning team: " << teamName << std::endl;
         }
 
         void ServerCommunication::handleCommandSuc(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            std::string message;
+            std::istringstream iss(responseValue);
+            std::getline(iss, message);
+
+            std::cout << "Server message: " << message << std::endl;
         }
 
         void ServerCommunication::handleCommandSbp(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
-            //todo
+            std::cout << "Unknown command" << std::endl;
         }
 
         void ServerCommunication::handleCommandEdi(const std::string& responseValue)
         {
-            std::cout << "response serveur: " << responseValue << std::endl;
-            // Implement your handling logic here
+            std::cout << "Server broadcasted: " << responseValue << std::endl;
         }
     }
 }

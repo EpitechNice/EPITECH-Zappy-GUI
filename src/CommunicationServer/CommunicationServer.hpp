@@ -48,7 +48,6 @@ namespace Zappy {
             //commands
             void handleCommandMsz(const std::string& responseValue);
             void handleCommandBct(const std::string& responseValue);
-            void handleCommandMct(const std::string& responseValue);
             void handleCommandTna(const std::string& responseValue);
             void handleCommandPnw(const std::string& responseValue);
             void handleCommandPpo(const std::string& responseValue);
@@ -91,7 +90,6 @@ namespace Zappy {
             std::unordered_map<std::string, std::function<void(const std::string&)>> commandHandlers = {
                 {"msz", [this](const std::string& responseValue) { handleCommandMsz(responseValue); }},
                 {"bct", [this](const std::string& responseValue) { handleCommandBct(responseValue); }},
-                {"mct", [this](const std::string& responseValue) { handleCommandMct(responseValue); }},
                 {"tna", [this](const std::string& responseValue) { handleCommandTna(responseValue); }},
                 {"pnw", [this](const std::string& responseValue) { handleCommandPnw(responseValue); }},
                 {"ppo", [this](const std::string& responseValue) { handleCommandPpo(responseValue); }},

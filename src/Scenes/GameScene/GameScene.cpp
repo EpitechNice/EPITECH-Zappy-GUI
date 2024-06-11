@@ -44,7 +44,7 @@ namespace Zappy {
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
                 // serverCommunication->addCommand("bct 4 3\r\n");
-                // serverCommunication->addCommand("mct\r\n");
+                serverCommunication->addCommand("mct\r\n");
             }
 
             void Game::setMapSize(int width, int height)
