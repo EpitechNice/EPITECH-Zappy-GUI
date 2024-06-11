@@ -7,6 +7,7 @@
 
 
 SRC		=   src/Main.cpp																				\
+			src/Components/0000/AComponent/AComponent.cpp												\
 			src/Components/Background2D/ComponentBackground2D.cpp										\
 			src/Components/Button/ComponentButton.cpp													\
 			src/Components/ButtonClassic/ComponentButtonClassic.cpp										\
@@ -87,6 +88,8 @@ FLAGS	=	-Wall 				\
 INCLUDES	=	-I./includes										\
 				-I./libs/includes									\
 				-I./src												\
+				-I./src/Components/0000/IComponent					\
+				-I./src/Components/0000/AComponent					\
 				-I./src/Components/Background2D						\
 				-I./src/Components/Button							\
 				-I./src/Components/ButtonClassic					\
