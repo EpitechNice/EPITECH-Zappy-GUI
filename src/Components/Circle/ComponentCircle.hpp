@@ -20,7 +20,7 @@ namespace Zappy {
                 public:
                     Circle(std::pair<float, float> pos, float radius, Color color);
 
-                    void draw();
+                    void draw() override;
 
                     void setRadius(float radius);
                     float getRadius() const;

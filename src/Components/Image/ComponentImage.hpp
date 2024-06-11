@@ -20,8 +20,8 @@ namespace Zappy {
                 public:
                     Image(std::string path, std::pair<float, float> pos, float scale);
 
-                    void destroy();
-                    void draw();
+                    void destroy() override;
+                    void draw() override;
 
                 protected:
                 private:

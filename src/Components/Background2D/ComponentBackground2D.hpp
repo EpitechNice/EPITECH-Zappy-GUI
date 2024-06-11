@@ -20,8 +20,8 @@ namespace Zappy {
                 public:
                     Background2D(std::string texturePath, bool center = true);
 
-                    void destroy();
-                    void draw();
+                    void destroy() override;
+                    void draw() override;
 
                 protected:
                 private:

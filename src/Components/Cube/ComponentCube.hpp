@@ -24,7 +24,7 @@ namespace Zappy {
                     } Mode;
                     Cube(Vector3 pos, Vector3 size, Color color, Mode mode);
 
-                    void draw();
+                    void draw() override;
 
                 protected:
                 private:
