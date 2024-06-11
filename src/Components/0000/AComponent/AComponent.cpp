@@ -33,11 +33,6 @@ namespace Zappy {
 
 
 
-            std::pair<float, float> AComponent::getPos() const
-            {
-                return std::make_pair(_posX, _posY);
-            }
-
             float AComponent::getPosX() const
             {
                 return _posX;
@@ -48,11 +43,9 @@ namespace Zappy {
                 return _posY;
             }
 
-
-            void AComponent::setPos(float x, float y)
+            float AComponent::getPosZ() const
             {
-                _posX = x;
-                _posY = y;
+                return _posZ;
             }
 
             void AComponent::setPosX(float x)
@@ -65,6 +58,11 @@ namespace Zappy {
                 _posY = y;
             }
 
+            void AComponent::setPosZ(float z)
+            {
+                _posZ = z;
+            }
+
             void AComponent::modPosX(float x)
             {
                 _posX += x;
@@ -75,13 +73,12 @@ namespace Zappy {
                 _posY += y;
             }
 
-
-
-
-            std::pair<float, float> AComponent::getSize() const
+            void AComponent::modPosZ(float z)
             {
-                return std::make_pair(_sizeX, _sizeY);
+                _posZ += z;
             }
+
+
 
             float AComponent::getSizeX() const
             {
@@ -93,11 +90,9 @@ namespace Zappy {
                 return _sizeY;
             }
 
-
-            void AComponent::setSize(float x, float y)
+            float AComponent::getSizeZ() const
             {
-                _sizeX = x;
-                _sizeY = y;
+                return _sizeZ;
             }
 
             void AComponent::setSizeX(float x)
@@ -110,6 +105,11 @@ namespace Zappy {
                 _sizeY = y;
             }
 
+            void AComponent::setSizeZ(float z)
+            {
+                _sizeZ = z;
+            }
+
             void AComponent::modSizeX(float x)
             {
                 _sizeX += x;
@@ -118,6 +118,11 @@ namespace Zappy {
             void AComponent::modSizeY(float y)
             {
                 _sizeY += y;
+            }
+
+            void AComponent::modSizeZ(float z)
+            {
+                _sizeZ += z;
             }
 
 

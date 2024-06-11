@@ -23,26 +23,26 @@ namespace Zappy {
                     void update() override;
                     void draw() override;
 
-                    std::pair<float, float> getPos() const override;
                     float getPosX() const override;
                     float getPosY() const override;
-
-                    void setPos(float x, float y) override;
+                    float getPosZ() const override;
                     void setPosX(float x) override;
                     void setPosY(float y) override;
+                    void setPosZ(float z) override;
                     void modPosX(float x) override;
                     void modPosY(float y) override;
+                    void modPosZ(float z) override;
 
 
-                    std::pair<float, float> getSize() const override;
                     float getSizeX() const override;
                     float getSizeY() const override;
-
-                    void setSize(float x, float y) override;
+                    float getSizeZ() const override;
                     void setSizeX(float x) override;
                     void setSizeY(float y) override;
+                    void setSizeZ(float z) override;
                     void modSizeX(float x) override;
                     void modSizeY(float y) override;
+                    void modSizeZ(float z) override;
 
                     Color getColor() const override;
                     void setColor(Color color) override;
@@ -51,8 +51,10 @@ namespace Zappy {
                     bool _isDestroyed = false;
                     float _posX = 0;
                     float _posY = 0;
+                    float _posZ = 0;
                     float _sizeX = 0;
                     float _sizeY = 0;
+                    float _sizeZ = 0;
                     Color _color = WHITE;
 
                 private:

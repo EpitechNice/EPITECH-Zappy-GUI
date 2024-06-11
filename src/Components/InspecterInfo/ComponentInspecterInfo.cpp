@@ -69,7 +69,10 @@ namespace Zappy {
             {
                 _pos.first += x;
                 _noPlayerSelected->setPosX(_pos.first);
-                _circle->setPos((float)(_pos.first + 10), (float)(_pos.second + 10));
+
+                _circle->setPosX((float)(_pos.first + 10));
+                _circle->setPosY((float)(_pos.second + 10));
+
                 _name->setPosX(_pos.first + 30);
                 _food->setPosX(_pos.first);
                 _linemate->setPosX(_pos.first);
