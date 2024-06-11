@@ -13,33 +13,26 @@
     #include <string>
     #include <iostream>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Text {
+            class Text: public AComponent {
                 public:
                     Text(std::pair<float, float> pos, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
-                    ~Text();
 
-                    void destroy();
+                    void destroy() override;
+                    void draw() override;
 
-                    void setPos(std::pair<float, float> pos);
                     void setText(std::string text);
-                    void setColor(Color color);
-
-                    std::pair<float, float> getSize() const;
                     std::string getText() const;
-
-                    void draw();
 
                 protected:
                 private:
-                    std::pair<float, float> _pos;
                     std::string _text;
                     int _fontSize;
-                    Color _color;
                     Font _font;
-                    bool _isDestroyed;
             };
         }
     }

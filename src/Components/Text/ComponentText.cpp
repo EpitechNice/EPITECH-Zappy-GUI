@@ -11,58 +11,42 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Text::Text(std::pair<float, float> pos, std::string text, int fontSize, Color color, std::string font)
-                : _pos(pos), _text(text), _fontSize(fontSize), _color(color), _isDestroyed(false)
             {
+                _posX = pos.first;
+                _posY = pos.second;
+                _text = text;
+                _fontSize = fontSize;
+                _color = color;
+
                 std::string path = "./assets/font/" + font;
                 _font = LoadFont(path.c_str());
-            }
-
-            Text::~Text()
-            {
-                destroy();
+                setText(text);
             }
 
             void Text::destroy()
             {
-                if (!_isDestroyed) {
-                    UnloadFont(_font);
-                    _isDestroyed = true;
-                }
+                if (_isDestroyed) return;
+                UnloadFont(_font);
+                _isDestroyed = true;
             }
 
-
-            void Text::setPos(std::pair<float, float> pos)
+            void Text::draw()
             {
-                _pos = pos;
+                DrawTextEx(_font, _text.c_str(), Vector2{_posX, _posY}, _fontSize, 1, _color);
             }
+
 
             void Text::setText(std::string text)
             {
                 _text = text;
-            }
-
-            void Text::setColor(Color color)
-            {
-                _color = color;
-            }
-
-
-            std::pair<float, float> Text::getSize() const
-            {
                 Vector2 size = MeasureTextEx(_font, _text.c_str(), _fontSize, 1);
-                return std::make_pair(size.x, size.y);
+                _sizeX = size.x;
+                _sizeY = size.y;
             }
 
-            std::string Text::getText() const{
-                return _text;
-            }
-
-
-            void Text::draw()
+            std::string Text::getText() const
             {
-                if (_isDestroyed)
-                    return;
-                DrawTextEx(_font, _text.c_str(), Vector2{_pos.first, _pos.second}, _fontSize, 1, _color);
+                return _text;
             }
         }
     }

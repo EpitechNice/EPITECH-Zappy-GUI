@@ -66,9 +66,6 @@ namespace Zappy {
                 if (cameraPosition.z >= _sizeZ / 2) modify.z = -_sizeZ + 5;
                 if (cameraPosition.z <= -_sizeZ / 2) modify.z = _sizeZ - 5;
 
-                if (modify.x == 0 && modify.y == 0 && modify.z == 0) return;
-                std::cout << cameraPosition.x << " " << cameraPosition.y << " " << cameraPosition.z << std::endl;
-                std::cout << "Modify: " << modify.x << " " << modify.y << " " << modify.z << std::endl;
                 render->view()->modPosition(modify);
                 render->view()->modTarget(modify);
             }

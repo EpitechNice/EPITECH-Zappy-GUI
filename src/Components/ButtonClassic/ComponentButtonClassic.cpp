@@ -14,14 +14,15 @@ namespace Zappy {
                 : _pos(pos), _size(size), _color(color), _state(DEFAULT), _textStrokeVisible(false), _stateEnabled(true), _isDestroyed(false)
             {
                 _text = std::make_unique<Text>(std::make_pair(pos.first, pos.second), text, textSize, WHITE);
-                std::pair<float, float> textSizes = _text->getSize();
+                std::pair<float, float> textSizes = {_text->getSizeX(), _text->getSizeY()};
                 if (_size.first < 0)
                     _size.first = (_size.first * -1) * 2 + textSizes.first;
                 if (_size.second < 0)
                     _size.second = (_size.second * -1) * 2 + textSizes.second;
                 _textPos = std::make_pair(pos.first + (_size.first - textSizes.first) / 2, pos.second + (_size.second - textSizes.second) / 2);
 
-                _text->setPos(_textPos);
+                _text->setPosX(_textPos.first);
+                _text->setPosY(_textPos.second);
                 _state = DEFAULT;
                 _button = std::make_unique<RoundedRectangle>(pos, size, 0.3, _color);
                 _textStroke = std::make_unique<Text>(std::make_pair(_textPos.first, _textPos.second + 2), text, textSize, Zappy::GUI::Raylib::ColorManager::Darker(color, 50));
@@ -87,8 +88,10 @@ namespace Zappy {
                 _button->setPosX(pos.first);
                 _button->setPosY(pos.second);
 
-                _text->setPos(_textPos);
-                _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2));
+                _text->setPosX(_textPos.first);
+                _text->setPosY(_textPos.second);
+                _textStroke->setPosX(_textPos.first);
+                _textStroke->setPosY(_textPos.second + 2);
             }
 
             void ButtonClassic::enableTextStroke()

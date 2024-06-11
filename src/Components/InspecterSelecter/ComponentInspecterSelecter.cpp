@@ -18,13 +18,14 @@ namespace Zappy {
                 _size = std::make_pair(width, 0);
                 _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, player->getTeam());
                 _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), 20, WHITE);
-                _size.second = _text->getSize().second + 20;
+                _size.second = _text->getSizeY() + 20;
                 _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_size.first, (float)_size.second), 0.2, (Color){55, 56, 40, 255});
 
                 _team->setPosX((float)(pos.first + 20));
                 _team->setPosY((float)(pos.second + _background->getSizeY() / 2));
 
-                _text->setPos(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)));
+                _text->setPosX((float)(pos.first + 40));
+                _text->setPosY((float)(pos.second + 10));
             }
 
             InspecterSelecter::~InspecterSelecter()
@@ -58,7 +59,10 @@ namespace Zappy {
                 _pos.first += x;
                 _background->setPosX((float)_pos.first);
                 _background->setPosY((float)_pos.second);
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+
+                _text->setPosX((float)(_pos.first + 40));
+                _text->setPosY((float)(_pos.second + 10));
+
                 _team->setPosX((float)(_pos.first + 20));
             }
 
@@ -67,7 +71,10 @@ namespace Zappy {
                 _pos.second += y;
                 _background->setPosX((float)_pos.first);
                 _background->setPosY((float)_pos.second);
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+
+                _text->setPosX((float)(_pos.first + 40));
+                _text->setPosY((float)(_pos.second + 10));
+
                 _team->setPosY((float)(_pos.second + _background->getSizeY() / 2));
             }
 
@@ -76,7 +83,10 @@ namespace Zappy {
                 _pos.first = x;
                 _background->setPosX((float)_pos.first);
                 _background->setPosY((float)_pos.second);
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+
+                _text->setPosX((float)(_pos.first + 40));
+                _text->setPosY((float)(_pos.second + 10));
+
                 _team->setPosX((float)(_pos.first + 20));
             }
 
@@ -85,7 +95,10 @@ namespace Zappy {
                 _pos.second = y;
                 _background->setPosX((float)_pos.first);
                 _background->setPosY((float)_pos.second);
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
+
+                _text->setPosX((float)(_pos.first + 40));
+                _text->setPosY((float)(_pos.second + 10));
+
                 _team->setPosY((float)(_pos.second + _background->getSizeY() / 2));
             }
 

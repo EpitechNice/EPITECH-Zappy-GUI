@@ -15,7 +15,7 @@ namespace Zappy {
             {
                 std::pair<float, float> buttonSize = size;
                 _text = std::make_unique<Text>(std::make_pair(pos.first, pos.second), text, textSize, WHITE);
-                std::pair<float, float> textSizes = _text->getSize();
+                std::pair<float, float> textSizes = {_text->getSizeX(), _text->getSizeY()};
                 if (buttonSize.first < 0)
                     buttonSize.first = (buttonSize.first * -1) * 2 + textSizes.first;
                 if (buttonSize.second < 0)
@@ -24,7 +24,8 @@ namespace Zappy {
                 std::pair<float, float> topButtonPos = std::make_pair(pos.first + 3, pos.second + 3);
                 std::pair<float, float> textPosition = std::make_pair(topButtonPos.first + (topButtonSize.first - textSizes.first) / 2, topButtonPos.second + (topButtonSize.second - textSizes.second) / 2);
 
-                _text->setPos(textPosition);
+                _text->setPosX(textPosition.first);
+                _text->setPosY(textPosition.second);
                 _state = DEFAULT;
                 _blackStroke = std::make_unique<RoundedRectangle>(std::make_pair(pos.first - 1, pos.second - 1), std::make_pair(buttonSize.first + 2, buttonSize.second + 2), 0.3, Zappy::GUI::Raylib::ColorManager::Darker(color, 50));
                 _upEffect = std::make_unique<RoundedRectangle>(pos, buttonSize, 0.3, Zappy::GUI::Raylib::ColorManager::Darker(color, 20));
@@ -174,7 +175,7 @@ namespace Zappy {
             void Button::changeSize(const std::pair<float, float>& newSize)
             {
                 std::pair<float, float> buttonSize = newSize;
-                std::pair<float, float> textSizes = _text->getSize();
+                std::pair<float, float> textSizes = {_text->getSizeX(), _text->getSizeY()};
                 if (buttonSize.first < 0)
                     buttonSize.first = (buttonSize.first * -1) * 2 + textSizes.first;
                 if (buttonSize.second < 0)
@@ -182,8 +183,6 @@ namespace Zappy {
                 std::pair<float, float> topButtonSize = std::make_pair(buttonSize.first - 6, buttonSize.second - 7 - 6);
                 std::pair<float, float> topButtonPos = std::make_pair(_pos.first + 3, _pos.second + 3);
                 std::pair<float, float> textPosition = std::make_pair(topButtonPos.first + (topButtonSize.first - textSizes.first) / 2, topButtonPos.second + (topButtonSize.second - textSizes.second) / 2);
-
-                _text->setPos(textPosition);
 
                 _blackStroke->setSizeX(buttonSize.first + 2);
                 _blackStroke->setSizeY(buttonSize.second + 2);
@@ -213,8 +212,12 @@ namespace Zappy {
                 _circle->setPosX((float)(_pos.first + buttonSize.first - 8));
                 _circle->setPosY((float)(_pos.second + 8));
 
-                _text->setPos(textPosition);
-                _textStroke->setPos(std::make_pair(textPosition.first, textPosition.second + 2));
+                _text->setPosX(textPosition.first);
+                _text->setPosY(textPosition.second);
+
+                _textStroke->setPosX(textPosition.first);
+                _textStroke->setPosY(textPosition.second + 2);
+
                 _buttonSize = buttonSize;
                 _size = newSize;
                 _textPos = textPosition;
@@ -243,7 +246,8 @@ namespace Zappy {
                 _circle->setPosX(_circle->getPosX() + nextPos.first);
                 _circle->setPosY(_circle->getPosY() + nextPos.second);
 
-                // _text->setPosition({ _text->getPosition().first + nextPos.first, _text->getPosition().second + nextPos.second });
+                _text->setPosX(_text->getPosX() + nextPos.first);
+                _text->setPosY(_text->getPosY() + nextPos.second);
             }
 
             void Button::changeColor(Color color)
@@ -284,8 +288,11 @@ namespace Zappy {
                     _circle->setPosX((float)(_pos.first + _buttonSize.first - 8));
                     _circle->setPosY((float)(_pos.second + 8 + _hoverEffect));
 
-                    _text->setPos(std::make_pair(_textPos.first, _textPos.second + _hoverEffect));
-                    _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _hoverEffect));
+                    _text->setPosX(_textPos.first);
+                    _text->setPosY(_textPos.second + _hoverEffect);
+
+                    _textStroke->setPosX(_textPos.first);
+                    _textStroke->setPosY(_textPos.second + 2 + _hoverEffect);
                 } else if (_state == CLICKED) {
                     _blackStroke->setSizeX(_buttonSize.first + 2);
                     _blackStroke->setSizeY(_buttonSize.second + 2 - _pressEffect);
@@ -309,8 +316,11 @@ namespace Zappy {
                     _circle->setPosX((float)(_pos.first + _buttonSize.first - 8));
                     _circle->setPosY((float)(_pos.second + 8 + _pressEffect));
 
-                    _text->setPos(std::make_pair(_textPos.first, _textPos.second + _pressEffect));
-                    _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _pressEffect));
+                    _text->setPosX(_textPos.first);
+                    _text->setPosY(_textPos.second + _pressEffect);
+
+                    _textStroke->setPosX(_textPos.first);
+                    _textStroke->setPosY(_textPos.second + 2 + _pressEffect);
                 } else {
                     _blackStroke->setSizeX(_buttonSize.first + 2);
                     _blackStroke->setSizeY(_buttonSize.second + 2);
@@ -334,8 +344,11 @@ namespace Zappy {
                     _circle->setPosX((float)(_pos.first + _buttonSize.first - 8));
                     _circle->setPosY((float)(_pos.second + 8));
 
-                    _text->setPos(_textPos);
-                    _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2));
+                    _text->setPosX(_textPos.first);
+                    _text->setPosY(_textPos.second);
+
+                    _textStroke->setPosX(_textPos.first);
+                    _textStroke->setPosY(_textPos.second + 2);
                 }
             }
         }
