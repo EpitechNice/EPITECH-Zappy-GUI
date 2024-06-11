@@ -17,8 +17,8 @@ namespace Zappy {
                 _render = render;
                 _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_classic_scenery.png");
                 _logo = std::make_unique<Zappy::GUI::Component::Image>("assets/img/clash_of_tek.png", std::make_pair(100, 100), 0.6);
-                std::pair<int, int> logoSize = _logo->getSize();
-                _logo->setPos(std::make_pair((GetScreenWidth() / 8) * 6 - logoSize.first / 2 - 10, GetScreenHeight() / 2 - logoSize.second / 2 - 30));
+                _logo->setPosX((GetScreenWidth() / 8) * 6 - _logo->getSizeX() / 2 - 10);
+                _logo->setPosY(GetScreenHeight() / 2 - _logo->getSizeY() / 2 - 30);
                 std::vector<std::tuple<std::string, std::string, std::string>> buttons = {
                     {i18nHelper->getTranslation("[menu.start_title]"), "game", "[menu.start_title]"},
                     {i18nHelper->getTranslation("[menu.settings_title]"), "option", "[menu.settings_title]"},

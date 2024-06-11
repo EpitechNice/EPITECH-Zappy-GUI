@@ -11,17 +11,16 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Image::Image(std::string path, std::pair<float, float> pos, float scale)
-                : _path(path), _pos(pos)
             {
+                _posX = pos.first;
+                _posY = pos.second;
+                _path = path;
+
                 _texture = LoadTexture(path.c_str());
-                _isDestroyed = false;
                 _texture.width *= scale;
                 _texture.height *= scale;
-            }
-
-            Image::~Image()
-            {
-                destroy();
+                _sizeX = _texture.width;
+                _sizeY = _texture.height;
             }
 
             void Image::destroy()
@@ -32,22 +31,9 @@ namespace Zappy {
                 }
             }
 
-
             void Image::draw()
             {
-                DrawTexture(_texture, _pos.first, _pos.second, WHITE);
-            }
-
-
-            void Image::setPos(std::pair<float, float> pos)
-            {
-                _pos = pos;
-            }
-
-
-            std::pair<int, int> Image::getSize()
-            {
-                return std::make_pair(_texture.width, _texture.height);
+                DrawTexture(_texture, _posX, _posY, WHITE);
             }
         }
     }
