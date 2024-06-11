@@ -30,6 +30,7 @@ namespace Zappy {
 
                     Vector3 getPos() const;
                     BoundingBox getTopBox() const;
+                    std::shared_ptr<Zappy::GUI::Ressources::TileRessources> getRessources() const;
 
                     void draw();
 

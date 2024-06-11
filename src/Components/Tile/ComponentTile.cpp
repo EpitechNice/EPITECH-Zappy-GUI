@@ -49,6 +49,11 @@ namespace Zappy {
                 };
             }
 
+            std::shared_ptr<Zappy::GUI::Ressources::TileRessources> Tile::getRessources() const
+            {
+                return _ressources;
+            }
+
             void Tile::draw()
             {
                 _grass->draw();

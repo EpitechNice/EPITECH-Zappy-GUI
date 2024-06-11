@@ -11,12 +11,13 @@ namespace Zappy {
     namespace GUI {
         namespace Scene {
             Game::Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
-                : _mapSize(10, 10), _serverCommunication(serverCommunication)
+                : _mapSize(10, 10), _serverCommunication(serverCommunication), _render(render)
             {
-                serverCommunication->setMapSizeCallback([this](int width, int height) {
+                _serverCommunication->setMapSizeCallback([this](int width, int height) {
                     this->setMapSize(width, height);
                 });
-                serverCommunication->addCommand("msz\r\n");
+
+                _serverCommunication->addCommand("msz\r\n");
                 int tileSize = 5;
 
                 // TODO: Delete this
@@ -37,13 +38,17 @@ namespace Zappy {
                 _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){5, 5, 5});
 
-                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, _mapSize, tileSize, _ressources);
+                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, _mapSize, tileSize, _ressources, serverCommunication);
 
                 _crossPointer = std::make_pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>>(
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
-                // serverCommunication->addCommand("bct 4 3\r\n");
+                serverCommunication->addCommand("bct 1 3\r\n");
+                serverCommunication->addCommand("bct 2 3\r\n");
+                serverCommunication->addCommand("bct 3 3\r\n");
+                serverCommunication->addCommand("bct 1 2\r\n");
+                serverCommunication->addCommand("bct 1 1\r\n");
                 // serverCommunication->addCommand("mct\r\n");
             }
 

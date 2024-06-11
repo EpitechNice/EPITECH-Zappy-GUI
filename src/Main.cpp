@@ -29,9 +29,6 @@ int main(int argc, char **argv)
         }
         Zappy::GUI::SceneManager sceneManager(serverCommunication);
         sceneManager.run();
-        // while (1)
-        // {
-        // }
     } catch (const Zappy::GUI::Parsing::ParsingError &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         std::cerr << ">> Use -help for help." << std::endl;

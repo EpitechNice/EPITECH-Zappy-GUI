@@ -137,12 +137,9 @@ namespace Zappy {
         void ServerCommunication::handleCommandBct(const std::string& responseValue)
         {
             std::istringstream iss(responseValue);
-            std::string command;
             int x, y, q0, q1, q2, q3, q4, q5, q6;
-            iss >> command >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
-
-            std::cout << "x: " << x << ", y: " << y << std::endl;
-            std::cout << "q0: " << q0 << ", q1: " << q1 << ", q2: " << q2 << ", q3: " << q3 << ", q4: " << q4 << ", q5: " << q5 << ", q6: " << q6 << std::endl;
+            iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+            tileContentCallback(x, y, q0, q1, q2, q3, q4, q5, q6);
         }
 
         void ServerCommunication::handleCommandTna(const std::string& responseValue)

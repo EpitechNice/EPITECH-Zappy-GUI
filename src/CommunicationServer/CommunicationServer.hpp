@@ -24,9 +24,6 @@
 #include <unordered_map>
 #include <functional>
 
-#include "TileRessources.hpp"
-#include "ComponentTileMap.hpp"
-#include "Ressources.hpp"
 namespace Zappy {
     namespace GUI {
         class ServerCommunication {
@@ -71,7 +68,9 @@ namespace Zappy {
             void handleCommandSuc(const std::string& responseValue);
             void handleCommandSbp(const std::string& responseValue);
 
-            void setMapSizeCallback(std::function<void(int, int)> callback) { mapSizeCallback = callback; }
+            void setMapSizeCallback(std::function<void(int, int)> callback) { mapSizeCallback = callback; };
+            void setUpdateTilesContentCallback(std::function<void(int, int, int, int, int, int, int, int, int)> callback) { tileContentCallback = callback; };
+
 
         private:
             void handleServerMessages();
@@ -86,6 +85,7 @@ namespace Zappy {
             std::condition_variable commandQueueNotEmpty;
 
             std::function<void(int, int)> mapSizeCallback;
+            std::function<void(int, int, int, int, int, int, int, int, int)> tileContentCallback;
 
             std::unordered_map<std::string, std::function<void(const std::string&)>> commandHandlers = {
                 {"msz", [this](const std::string& responseValue) { handleCommandMsz(responseValue); }},
