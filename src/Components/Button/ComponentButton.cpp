@@ -184,16 +184,31 @@ namespace Zappy {
                 std::pair<float, float> textPosition = std::make_pair(topButtonPos.first + (topButtonSize.first - textSizes.first) / 2, topButtonPos.second + (topButtonSize.second - textSizes.second) / 2);
 
                 _text->setPos(textPosition);
-                _blackStroke->setSize(std::make_pair(buttonSize.first + 2, buttonSize.second + 2));
-                _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1));
-                _upEffect->setSize(buttonSize);
-                _upEffect->setPosition(_pos);
-                _background->setSize(std::make_pair(buttonSize.first, buttonSize.second - 7));
-                _background->setPosition(_pos);
-                _topButton->setSize(topButtonSize);
-                _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3));
-                _reflexioneffect->setSize(std::make_pair(buttonSize.first - 8, (buttonSize.second - 7 - 8) / 2));
-                _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4));
+
+                _blackStroke->setSizeX(buttonSize.first + 2);
+                _blackStroke->setSizeY(buttonSize.second + 2);
+                _blackStroke->setPosX(_pos.first - 1);
+                _blackStroke->setPosY(_pos.second - 1);
+
+                _upEffect->setSizeX(buttonSize.first);
+                _upEffect->setSizeY(buttonSize.second);
+                _upEffect->setPosX(_pos.first);
+                _upEffect->setPosY(_pos.second);
+
+                _background->setSizeX(buttonSize.first);
+                _background->setSizeY(buttonSize.second - 7);
+                _background->setPosX(_pos.first);
+                _background->setPosY(_pos.second);
+
+                _topButton->setSizeX(topButtonSize.first);
+                _topButton->setSizeY(topButtonSize.second);
+                _topButton->setPosX(topButtonPos.first);
+                _topButton->setPosY(topButtonPos.second);
+
+                _reflexioneffect->setSizeX(buttonSize.first - 8);
+                _reflexioneffect->setSizeY((buttonSize.second - 7 - 8) / 2);
+                _reflexioneffect->setPosX(_pos.first + 4);
+                _reflexioneffect->setPosY(_pos.second + 4);
 
                 _circle->setPosX((float)(_pos.first + buttonSize.first - 8));
                 _circle->setPosY((float)(_pos.second + 8));
@@ -209,11 +224,26 @@ namespace Zappy {
             {
                 std::pair<float, float> nextPos = {newPos.first - _pos.first, newPos.second - _pos.second};
                 _pos = newPos;
-                _blackStroke->setPosition({ _blackStroke->getPosition().first + nextPos.first, _blackStroke->getPosition().second + nextPos.second });
-                _upEffect->setPosition({ _upEffect->getPosition().first + nextPos.first, _upEffect->getPosition().second + nextPos.second });
-                _background->setPosition({ _background->getPosition().first + nextPos.first, _background->getPosition().second + nextPos.second });
-                _topButton->setPosition({ _topButton->getPosition().first + nextPos.first, _topButton->getPosition().second + nextPos.second });
-                _reflexioneffect->setPosition({ _reflexioneffect->getPosition().first + nextPos.first, _reflexioneffect->getPosition().second + nextPos.second });
+
+                _blackStroke->setPosX(_blackStroke->getPosX() + nextPos.first);
+                _blackStroke->setPosY(_blackStroke->getPosY() + nextPos.second);
+
+                _upEffect->setPosX(_upEffect->getPosX() + nextPos.first);
+                _upEffect->setPosY(_upEffect->getPosY() + nextPos.second);
+
+                _background->setPosX(_background->getPosX() + nextPos.first);
+                _background->setPosY(_background->getPosY() + nextPos.second);
+
+                _topButton->setPosX(_topButton->getPosX() + nextPos.first);
+                _topButton->setPosY(_topButton->getPosY() + nextPos.second);
+
+                _reflexioneffect->setPosX(_reflexioneffect->getPosX() + nextPos.first);
+                _reflexioneffect->setPosY(_reflexioneffect->getPosY() + nextPos.second);
+
+                _circle->setPosX(_circle->getPosX() + nextPos.first);
+                _circle->setPosY(_circle->getPosY() + nextPos.second);
+
+                // _text->setPosition({ _text->getPosition().first + nextPos.first, _text->getPosition().second + nextPos.second });
             }
 
             void Button::changeColor(Color color)
@@ -232,13 +262,24 @@ namespace Zappy {
                 if (oldState == _state)
                     return;
                 if (_state == HOVER) {
-                    _blackStroke->setSize(std::make_pair(_buttonSize.first + 2, _buttonSize.second + 2 - _hoverEffect));
-                    _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1 + _hoverEffect));
-                    _upEffect->setSize(std::make_pair(_buttonSize.first, _buttonSize.second - _hoverEffect));
-                    _upEffect->setPosition(std::make_pair(_pos.first, _pos.second + _hoverEffect));
-                    _background->setPosition(std::make_pair(_pos.first, _pos.second + _hoverEffect));
-                    _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3 + _hoverEffect));
-                    _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4 + _hoverEffect));
+                    _blackStroke->setSizeX(_buttonSize.first + 2);
+                    _blackStroke->setSizeY(_buttonSize.second + 2 - _hoverEffect);
+                    _blackStroke->setPosX(_pos.first - 1);
+                    _blackStroke->setPosY(_pos.second - 1 + _hoverEffect);
+
+                    _upEffect->setSizeX(_buttonSize.first);
+                    _upEffect->setSizeY(_buttonSize.second - _hoverEffect);
+                    _upEffect->setPosX(_pos.first);
+                    _upEffect->setPosY(_pos.second + _hoverEffect);
+
+                    _background->setPosX(_pos.first);
+                    _background->setPosY(_pos.second + _hoverEffect);
+
+                    _topButton->setPosX(_pos.first + 3);
+                    _topButton->setPosY(_pos.second + 3 + _hoverEffect);
+
+                    _reflexioneffect->setPosX(_pos.first + 4);
+                    _reflexioneffect->setPosY(_pos.second + 4 + _hoverEffect);
 
                     _circle->setPosX((float)(_pos.first + _buttonSize.first - 8));
                     _circle->setPosY((float)(_pos.second + 8 + _hoverEffect));
@@ -246,13 +287,24 @@ namespace Zappy {
                     _text->setPos(std::make_pair(_textPos.first, _textPos.second + _hoverEffect));
                     _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _hoverEffect));
                 } else if (_state == CLICKED) {
-                    _blackStroke->setSize(std::make_pair(_buttonSize.first + 2, _buttonSize.second + 2 - _pressEffect));
-                    _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1 + _pressEffect));
-                    _upEffect->setSize(std::make_pair(_buttonSize.first, _buttonSize.second - _pressEffect));
-                    _upEffect->setPosition(std::make_pair(_pos.first, _pos.second + _pressEffect));
-                    _background->setPosition(std::make_pair(_pos.first, _pos.second + _pressEffect));
-                    _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3 + _pressEffect));
-                    _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4 + _pressEffect));
+                    _blackStroke->setSizeX(_buttonSize.first + 2);
+                    _blackStroke->setSizeY(_buttonSize.second + 2 - _pressEffect);
+                    _blackStroke->setPosX(_pos.first - 1);
+                    _blackStroke->setPosY(_pos.second - 1 + _pressEffect);
+
+                    _upEffect->setSizeX(_buttonSize.first);
+                    _upEffect->setSizeY(_buttonSize.second - _pressEffect);
+                    _upEffect->setPosX(_pos.first);
+                    _upEffect->setPosY(_pos.second + _pressEffect);
+
+                    _background->setPosX(_pos.first);
+                    _background->setPosY(_pos.second + _pressEffect);
+
+                    _topButton->setPosX(_pos.first + 3);
+                    _topButton->setPosY(_pos.second + 3 + _pressEffect);
+
+                    _reflexioneffect->setPosX(_pos.first + 4);
+                    _reflexioneffect->setPosY(_pos.second + 4 + _pressEffect);
 
                     _circle->setPosX((float)(_pos.first + _buttonSize.first - 8));
                     _circle->setPosY((float)(_pos.second + 8 + _pressEffect));
@@ -260,13 +312,24 @@ namespace Zappy {
                     _text->setPos(std::make_pair(_textPos.first, _textPos.second + _pressEffect));
                     _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2 + _pressEffect));
                 } else {
-                    _blackStroke->setSize(std::make_pair(_buttonSize.first + 2, _buttonSize.second + 2));
-                    _blackStroke->setPosition(std::make_pair(_pos.first - 1, _pos.second - 1));
-                    _upEffect->setSize(_buttonSize);
-                    _upEffect->setPosition(_pos);
-                    _background->setPosition(_pos);
-                    _topButton->setPosition(std::make_pair(_pos.first + 3, _pos.second + 3));
-                    _reflexioneffect->setPosition(std::make_pair(_pos.first + 4, _pos.second + 4));
+                    _blackStroke->setSizeX(_buttonSize.first + 2);
+                    _blackStroke->setSizeY(_buttonSize.second + 2);
+                    _blackStroke->setPosX(_pos.first - 1);
+                    _blackStroke->setPosY(_pos.second - 1);
+
+                    _upEffect->setSizeX(_buttonSize.first);
+                    _upEffect->setSizeY(_buttonSize.second);
+                    _upEffect->setPosX(_pos.first);
+                    _upEffect->setPosY(_pos.second);
+
+                    _background->setPosX(_pos.first);
+                    _background->setPosY(_pos.second);
+
+                    _topButton->setPosX(_pos.first + 3);
+                    _topButton->setPosY(_pos.second + 3);
+
+                    _reflexioneffect->setPosX(_pos.first + 4);
+                    _reflexioneffect->setPosY(_pos.second + 4);
 
                     _circle->setPosX((float)(_pos.first + _buttonSize.first - 8));
                     _circle->setPosY((float)(_pos.second + 8));

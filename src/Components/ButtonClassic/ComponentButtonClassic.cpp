@@ -83,7 +83,10 @@ namespace Zappy {
                 _pos = pos;
                 _textPos.first -= tmp.first;
                 _textPos.second -= tmp.second;
-                _button->setPosition(pos);
+
+                _button->setPosX(pos.first);
+                _button->setPosY(pos.second);
+
                 _text->setPos(_textPos);
                 _textStroke->setPos(std::make_pair(_textPos.first, _textPos.second + 2));
             }
