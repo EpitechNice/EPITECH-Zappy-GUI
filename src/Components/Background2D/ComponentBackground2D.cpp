@@ -11,8 +11,11 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Background2D::Background2D(std::string texturePath, bool center)
-                : _posX(0), _posY(0), _isDestroyed(false)
             {
+                _isDestroyed = false;
+                _posX = 0;
+                _posY = 0;
+
                 _texture = LoadTexture(texturePath.c_str());
                 int screenW = GetScreenWidth();
                 int screenH = GetScreenHeight();
@@ -29,19 +32,15 @@ namespace Zappy {
                     _posX = (screenW - _texture.width) / 2;
                     _posY = (screenH - _texture.height) / 2;
                 }
-            }
-
-            Background2D::~Background2D()
-            {
-                destroy();
+                _sizeX = _texture.width;
+                _sizeY = _texture.height;
             }
 
             void Background2D::destroy()
             {
-                if (!_isDestroyed) {
-                    UnloadTexture(_texture);
-                    _isDestroyed = true;
-                }
+                if (_isDestroyed) return;
+                UnloadTexture(_texture);
+                _isDestroyed = true;
             }
 
             void Background2D::draw()

@@ -10,10 +10,13 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            AComponent::AComponent(std::pair<int, int> pos, std::pair<int, int> size)
+            AComponent::AComponent(std::pair<float, float> pos, std::pair<float, float> size)
             {
-                _pos = pos;
-                _size = size;
+                _isDestroyed = false;
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = size.first;
+                _sizeY = size.second;
             }
 
             AComponent::~AComponent()
@@ -21,42 +24,6 @@ namespace Zappy {
                 destroy();
             }
 
-
-            std::pair<int, int> AComponent::getPos() const
-            {
-                return _pos;
-            }
-
-            std::pair<int, int> AComponent::getSize() const
-            {
-                return _size;
-            }
-
-
-            void AComponent::setPos(std::pair<int, int> pos)
-            {
-                _pos = pos;
-            }
-
-            void AComponent::setPosX(int x)
-            {
-                _pos.first = x;
-            }
-
-            void AComponent::setPosY(int y)
-            {
-                _pos.second = y;
-            }
-
-            void AComponent::modPosX(int x)
-            {
-                _pos.first += x;
-            }
-
-            void AComponent::modPosY(int y)
-            {
-                _pos.second += y;
-            }
 
 
             void AComponent::destroy()
@@ -71,6 +38,95 @@ namespace Zappy {
 
             void AComponent::draw()
             {
+            }
+
+
+
+            std::pair<float, float> AComponent::getPos() const
+            {
+                return std::make_pair(_posX, _posY);
+            }
+
+            float AComponent::getPosX() const
+            {
+                return _posX;
+            }
+
+            float AComponent::getPosY() const
+            {
+                return _posY;
+            }
+
+
+            void AComponent::setPos(std::pair<float, float> pos)
+            {
+                _posX = pos.first;
+                _posY = pos.second;
+            }
+
+            void AComponent::setPosX(float x)
+            {
+                _posX = x;
+            }
+
+            void AComponent::setPosY(float y)
+            {
+                _posY = y;
+            }
+
+            void AComponent::modPosX(float x)
+            {
+                _posX += x;
+            }
+
+            void AComponent::modPosY(float y)
+            {
+                _posY += y;
+            }
+
+
+
+
+            std::pair<float, float> AComponent::getSize() const
+            {
+                return std::make_pair(_sizeX, _sizeY);
+            }
+
+            float AComponent::getSizeX() const
+            {
+                return _sizeX;
+            }
+
+            float AComponent::getSizeY() const
+            {
+                return _sizeY;
+            }
+
+
+            void AComponent::setSize(std::pair<float, float> size)
+            {
+                _sizeX = size.first;
+                _sizeY = size.second;
+            }
+
+            void AComponent::setSizeX(float x)
+            {
+                _sizeX = x;
+            }
+
+            void AComponent::setSizeY(float y)
+            {
+                _sizeY = y;
+            }
+
+            void AComponent::modSizeX(float x)
+            {
+                _sizeX += x;
+            }
+
+            void AComponent::modSizeY(float y)
+            {
+                _sizeY += y;
             }
         }
     }

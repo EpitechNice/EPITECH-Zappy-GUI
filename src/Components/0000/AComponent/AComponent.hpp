@@ -16,26 +16,41 @@ namespace Zappy {
         namespace Component {
             class AComponent : IComponent {
                 public:
-                    AComponent(std::pair<int, int> pos, std::pair<int, int> size);
+                    AComponent() = default;
+                    AComponent(std::pair<float, float> pos, std::pair<float, float> size);
                     ~AComponent();
-
-                    std::pair<int, int> getPos() const;
-                    std::pair<int, int> getSize() const;
-
-                    void setPos(std::pair<int, int> pos);
-                    void setPosX(int x);
-                    void setPosY(int y);
-                    void modPosX(int x);
-                    void modPosY(int y);
 
                     void destroy();
                     void update();
                     void draw();
 
+                    std::pair<float, float> getPos() const;
+                    float getPosX() const;
+                    float getPosY() const;
+
+                    void setPos(std::pair<float, float> pos);
+                    void setPosX(float x);
+                    void setPosY(float y);
+                    void modPosX(float x);
+                    void modPosY(float y);
+
+
+                    std::pair<float, float> getSize() const;
+                    float getSizeX() const;
+                    float getSizeY() const;
+
+                    void setSize(std::pair<float, float> size);
+                    void setSizeX(float x);
+                    void setSizeY(float y);
+                    void modSizeX(float x);
+                    void modSizeY(float y);
+
                 protected:
                     bool _isDestroyed = false;
-                    std::pair<int, int> _pos;
-                    std::pair<int, int> _size;
+                    float _posX = 0;
+                    float _posY = 0;
+                    float _sizeX = 0;
+                    float _sizeY = 0;
 
                 private:
             };

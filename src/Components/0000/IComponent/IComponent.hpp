@@ -17,18 +17,32 @@ namespace Zappy {
                 public:
                     virtual ~IComponent() = default;
 
-                    virtual std::pair<int, int> getPos() const = 0;
-                    virtual std::pair<int, int> getSize() const = 0;
-
                     virtual void destroy() = 0;
                     virtual void update() = 0;
                     virtual void draw() = 0;
 
-                    virtual void setPos(std::pair<int, int> pos) = 0;
-                    virtual void setPosX(int x) = 0;
-                    virtual void setPosY(int y) = 0;
-                    virtual void modPosX(int x) = 0;
-                    virtual void modPosY(int y) = 0;
+
+                    virtual std::pair<float, float> getPos() const = 0;
+                    virtual float getPosX() const = 0;
+                    virtual float getPosY() const = 0;
+
+                    virtual void setPos(float x, float y) = 0;
+                    virtual void setPosX(float x) = 0;
+                    virtual void setPosY(float y) = 0;
+                    virtual void modPosX(float x) = 0;
+                    virtual void modPosY(float y) = 0;
+
+
+                    virtual std::pair<float, float> getSize() const = 0;
+                    virtual float getSizeX() const = 0;
+                    virtual float getSizeY() const = 0;
+
+                    virtual void setSize(float x, float y) = 0;
+                    virtual void setSizeX(float x) = 0;
+                    virtual void setSizeY(float y) = 0;
+                    virtual void modSizeX(float x) = 0;
+                    virtual void modSizeY(float y) = 0;
+
                 protected:
                 private:
             };

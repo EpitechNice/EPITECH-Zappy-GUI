@@ -11,24 +11,21 @@
     #include <raylib.h>
     #include <string>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Background2D {
+            class Background2D: AComponent {
                 public:
                     Background2D(std::string texturePath, bool center = true);
-                    ~Background2D();
 
                     void destroy();
-
                     void draw();
 
                 protected:
                 private:
-                    int _posX;
-                    int _posY;
                     Texture2D _texture;
-                    bool _isDestroyed;
             };
         }
     }
