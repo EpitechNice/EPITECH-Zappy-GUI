@@ -11,36 +11,26 @@
     #include <raylib.h>
     #include <string>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class TextBox {
+            class TextBox: public AComponent {
                 public:
-                    TextBox(std::pair<int, int> pos, int size, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
-                    ~TextBox();
+                    TextBox(std::pair<int, int> pos, int width, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
 
-                    void destroy();
-
-                    void setPosX(int x);
-                    void setPosY(int y);
-                    void setPos(std::pair<int, int> pos);
+                    void destroy() override;
+                    void draw() override;
 
                     void setText(std::string text);
 
-                    std::pair<float, float> getSize() const;
-                    std::pair<int, int> getPos() const;
-
-                    void draw();
-
                 protected:
                 private:
-                    std::pair<int, int> _pos;
-                    int _size;
+                    int _width;
                     std::string _text;
                     int _fontSize;
-                    Color _color;
                     Font _font;
-                    bool _isDestroyed;
             };
         }
     }

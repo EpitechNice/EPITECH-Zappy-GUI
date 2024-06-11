@@ -17,15 +17,15 @@ namespace Zappy {
                 _size = size;
                 _noTileSelected = std::make_unique<TextBox>(std::make_pair(_pos.first, _pos.second), _size.first, "No tile selected", 20, WHITE);
                 _name = std::make_unique<TextBox>(std::make_pair(_pos.first, _pos.second), _size.first, "Player #", 20, WHITE);
-                _food = std::make_unique<TextBox>(std::make_pair(_pos.first, _name->getPos().second + _name->getSize().second + 10), _size.first, "Food: ", 20, WHITE);
-                _linemate = std::make_unique<TextBox>(std::make_pair(_pos.first, _food->getPos().second + _food->getSize().second + 10), _size.first, "Linemate: ", 20, WHITE);
-                _deraumere = std::make_unique<TextBox>(std::make_pair(_pos.first, _linemate->getPos().second + _linemate->getSize().second + 10), _size.first, "Deraumere: ", 20, WHITE);
-                _sibur = std::make_unique<TextBox>(std::make_pair(_pos.first, _deraumere->getPos().second + _deraumere->getSize().second + 10), _size.first, "Sibur: ", 20, WHITE);
-                _mendiane = std::make_unique<TextBox>(std::make_pair(_pos.first, _sibur->getPos().second + _sibur->getSize().second + 10), _size.first, "Mendiane: ", 20, WHITE);
-                _phiras = std::make_unique<TextBox>(std::make_pair(_pos.first, _mendiane->getPos().second + _mendiane->getSize().second + 10), _size.first, "Phiras: ", 20, WHITE);
-                _thystame = std::make_unique<TextBox>(std::make_pair(_pos.first, _phiras->getPos().second + _phiras->getSize().second + 10), _size.first, "Thystame: ", 20, WHITE);
-                _egg = std::make_unique<TextBox>(std::make_pair(_pos.first, _thystame->getPos().second + _thystame->getSize().second + 10), _size.first, "Egg: ", 20, WHITE);
-                _players = std::make_unique<TextBox>(std::make_pair(_pos.first, _egg->getPos().second + _egg->getSize().second + 10), _size.first, "Players: ", 20, WHITE);
+                _food = std::make_unique<TextBox>(std::make_pair(_pos.first, _name->getPosY() + _name->getSizeY() + 10), _size.first, "Food: ", 20, WHITE);
+                _linemate = std::make_unique<TextBox>(std::make_pair(_pos.first, _food->getPosY() + _food->getSizeY() + 10), _size.first, "Linemate: ", 20, WHITE);
+                _deraumere = std::make_unique<TextBox>(std::make_pair(_pos.first, _linemate->getPosY() + _linemate->getSizeY() + 10), _size.first, "Deraumere: ", 20, WHITE);
+                _sibur = std::make_unique<TextBox>(std::make_pair(_pos.first, _deraumere->getPosY() + _deraumere->getSizeY() + 10), _size.first, "Sibur: ", 20, WHITE);
+                _mendiane = std::make_unique<TextBox>(std::make_pair(_pos.first, _sibur->getPosY() + _sibur->getSizeY() + 10), _size.first, "Mendiane: ", 20, WHITE);
+                _phiras = std::make_unique<TextBox>(std::make_pair(_pos.first, _mendiane->getPosY() + _mendiane->getSizeY() + 10), _size.first, "Phiras: ", 20, WHITE);
+                _thystame = std::make_unique<TextBox>(std::make_pair(_pos.first, _phiras->getPosY() + _phiras->getSizeY() + 10), _size.first, "Thystame: ", 20, WHITE);
+                _egg = std::make_unique<TextBox>(std::make_pair(_pos.first, _thystame->getPosY() + _thystame->getSizeY() + 10), _size.first, "Egg: ", 20, WHITE);
+                _players = std::make_unique<TextBox>(std::make_pair(_pos.first, _egg->getPosY() + _egg->getSizeY() + 10), _size.first, "Players: ", 20, WHITE);
                 _isDestroyed = false;
             }
 

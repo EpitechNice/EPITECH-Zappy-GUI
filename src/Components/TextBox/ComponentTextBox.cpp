@@ -10,40 +10,25 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            TextBox::TextBox(std::pair<int, int> pos, int size, std::string text, int fontSize, Color color, std::string font)
-                : _pos(pos), _size(size), _text(text), _fontSize(fontSize), _color(color), _isDestroyed(false)
+            TextBox::TextBox(std::pair<int, int> pos, int width, std::string text, int fontSize, Color color, std::string font)
             {
+                _posX = pos.first;
+                _posY = pos.second;
+                _width = width;
+                _text = text;
+                _fontSize = fontSize;
+                _color = color;
+
                 std::string path = "./assets/font/" + font;
                 _font = LoadFont(path.c_str());
                 setText(text);
             }
 
-            TextBox::~TextBox()
-            {
-                destroy();
-            }
-
             void TextBox::destroy()
             {
-                if (!_isDestroyed) {
-                    UnloadFont(_font);
-                    _isDestroyed = true;
-                }
-            }
-
-            void TextBox::setPosX(int x)
-            {
-                _pos.first = x;
-            }
-
-            void TextBox::setPosY(int y)
-            {
-                _pos.second = y;
-            }
-
-            void TextBox::setPos(std::pair<int, int> pos)
-            {
-                _pos = pos;
+                if (_isDestroyed) return;
+                UnloadFont(_font);
+                _isDestroyed = true;
             }
 
             void TextBox::setText(std::string text)
@@ -53,28 +38,18 @@ namespace Zappy {
 
                 for (auto c : text) {
                     tmp = _text + c;
-                    if (MeasureTextEx(_font, tmp.c_str(), _fontSize, 1).x > _size)
+                    if (MeasureTextEx(_font, tmp.c_str(), _fontSize, 1).x > _width)
                         _text += '\n';
                     _text += c;
                 }
-            }
-
-            std::pair<float, float> TextBox::getSize() const
-            {
                 Vector2 size = MeasureTextEx(_font, _text.c_str(), _fontSize, 1);
-                return std::make_pair(size.x, size.y);
-            }
-
-            std::pair<int, int> TextBox::getPos() const
-            {
-                return _pos;
+                _sizeX = size.x;
+                _sizeY = size.y;
             }
 
             void TextBox::draw()
             {
-                if (_isDestroyed)
-                    return;
-                DrawTextEx(_font, _text.c_str(), Vector2{(float)_pos.first, (float)_pos.second}, _fontSize, 1, _color);
+                DrawTextEx(_font, _text.c_str(), Vector2{_posX, _posY}, _fontSize, 1, _color);
             }
         }
     }
