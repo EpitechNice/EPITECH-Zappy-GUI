@@ -13,9 +13,9 @@
 [menu.settings.lang.en_GB_button] = "ENGLISH"
 [menu.settings.lang.fr_FR_button] = "FRENCH"
 
-[menu.settings.credits.1_button] = "Credit 1 in EN"
-[menu.settings.credits.2_button] = "Credit 2 in EN"
-[menu.settings.credits.3_button] = "Credit 3 in EN"
+[menu.settings.credits.1_button] = "Artificial Intelligence"
+[menu.settings.credits.2_button] = "Server"
+[menu.settings.credits.3_button] = "Graphical User Interface"
 
 [menu.settings.credits.1] = "Welcome to Credit 1"
 [menu.settings.credits.2] = "Welcome to Credit 2"
