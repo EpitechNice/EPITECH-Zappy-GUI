@@ -37,7 +37,7 @@ namespace Zappy {
             void TextGroup::addText(std::string name, std::string text, int gap, Color color)
             {
                 _texts.push_back(std::make_unique<TextMessage>(std::make_pair(_pos.first, _pos.second + _height), _width, name, text, gap, color));
-                _height += _texts.back()->getSize().second + _gap;
+                _height += _texts.back()->getSizeY() + _gap;
             }
 
             void TextGroup::setPosX(int x)
@@ -53,7 +53,7 @@ namespace Zappy {
                 int tmp = 0;
                 for (auto &text : _texts) {
                     text->setPosY(y + tmp);
-                    tmp += text->getSize().second + _gap;
+                    tmp += text->getSizeY() + _gap;
                 }
             }
 
