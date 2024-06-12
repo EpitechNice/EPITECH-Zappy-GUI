@@ -25,10 +25,9 @@ namespace Zappy {
 
             void Image::destroy()
             {
-                if (!_isDestroyed) {
-                    UnloadTexture(_texture);
-                    _isDestroyed = true;
-                }
+                if (_isDestroyed) return;
+                UnloadTexture(_texture);
+                _isDestroyed = true;
             }
 
             void Image::draw()

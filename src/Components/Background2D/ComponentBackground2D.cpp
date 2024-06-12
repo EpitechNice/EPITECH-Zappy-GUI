@@ -12,7 +12,6 @@ namespace Zappy {
         namespace Component {
             Background2D::Background2D(std::string texturePath, bool center)
             {
-                _isDestroyed = false;
                 _posX = 0;
                 _posY = 0;
 

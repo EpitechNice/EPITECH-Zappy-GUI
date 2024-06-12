@@ -54,8 +54,6 @@ namespace Zappy {
 
             void Skybox::update(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
             {
-                if (_isDestroyed)
-                    return;
                 Vector3 cameraPosition = render->view()->getPosition();
                 Vector3 modify = { 0, 0, 0 };
 

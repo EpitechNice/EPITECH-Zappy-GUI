@@ -34,7 +34,6 @@ namespace Zappy {
 
                 protected:
                 private:
-                    bool _isDestroyed;
                     int _gap;
 
                     std::unique_ptr<TextBox> _name;

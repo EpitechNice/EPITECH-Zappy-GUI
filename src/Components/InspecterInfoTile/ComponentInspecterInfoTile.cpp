@@ -29,7 +29,6 @@ namespace Zappy {
                 _thystame = std::make_unique<TextBox>(std::make_pair(_posX, _phiras->getPosY() + _phiras->getSizeY() + 10), _sizeX, "Thystame: ", 20, WHITE);
                 _egg = std::make_unique<TextBox>(std::make_pair(_posX, _thystame->getPosY() + _thystame->getSizeY() + 10), _sizeX, "Egg: ", 20, WHITE);
                 _players = std::make_unique<TextBox>(std::make_pair(_posX, _egg->getPosY() + _egg->getSizeY() + 10), _sizeX, "Players: ", 20, WHITE);
-                _isDestroyed = false;
             }
 
             void InspecterInfoTile::draw()

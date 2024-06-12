@@ -11,8 +11,8 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             TextMessage::TextMessage(std::pair<int, int> pos, int width, std::string name, std::string text, int gap, Color color)
-                : _isDestroyed(false), _gap(gap)
             {
+                _gap = gap;
                 _name = std::make_unique<TextBox>(pos, width, name, 20, color, "supercell.ttf");
                 _text = std::make_unique<TextBox>(std::make_pair(pos.first, pos.second + _name->getSizeY() + _gap), width, text, 15, WHITE, "supercell.ttf");
             }

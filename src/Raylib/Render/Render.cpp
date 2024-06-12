@@ -29,13 +29,12 @@ namespace Zappy {
 
             void Render::destroy()
             {
-                if (!_isDestroyed) {
-                    _musiquePrincipal.stop();
-                    FontManager::get()->destroy();
-                    UnloadImage(_icon);
-                    CloseWindow();
-                    _isDestroyed = true;
-                }
+                if (_isDestroyed) return;
+                _musiquePrincipal.stop();
+                FontManager::get()->destroy();
+                UnloadImage(_icon);
+                CloseWindow();
+                _isDestroyed = true;
             }
 
             std::shared_ptr<View> Render::view() const

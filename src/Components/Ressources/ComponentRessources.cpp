@@ -50,8 +50,7 @@ namespace Zappy {
 
             void Ressources::destroy()
             {
-                if (_isDestroyed)
-                    return;
+                if (_isDestroyed) return;
                 _food->destroy();
                 _egg->destroy();
                 _linemate->destroy();

@@ -25,8 +25,7 @@ namespace Zappy {
 
             void Model3D::destroy()
             {
-                if (_isDestroyed)
-                    return;
+                if (_isDestroyed) return;
                 UnloadModel(_model);
                 _isDestroyed = true;
             }
