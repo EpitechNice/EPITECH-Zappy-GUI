@@ -38,7 +38,7 @@ namespace Zappy {
                 _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){5, 5, 5});
 
-                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, _mapSize, tileSize, _ressources, serverCommunication);
+                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, _mapSize, tileSize, _ressources);
 
                 _crossPointer = std::make_pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>>(
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
