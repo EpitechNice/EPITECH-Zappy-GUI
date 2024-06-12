@@ -36,11 +36,16 @@ namespace Zappy {
                 std::string tmp = "";
                 _text = "";
 
-                for (auto c : text) {
-                    tmp = _text + c;
+                for (std::size_t i = 0; i < text.size(); i++) {
+                    tmp = _text + text[i];
+                    if (text[i] == '\\' && text[i + 1] == 'n' && i + 1 < text.size()) {
+                        _text += '\n';
+                        i++;
+                        continue;
+                    }
                     if (MeasureTextEx(_font, tmp.c_str(), _fontSize, 1).x > _width)
                         _text += '\n';
-                    _text += c;
+                    _text += text[i];
                 }
                 Vector2 size = MeasureTextEx(_font, _text.c_str(), _fontSize, 1);
                 _sizeX = size.x;

@@ -17,9 +17,9 @@
 [menu.settings.credits.2_button] = "Serveur"
 [menu.settings.credits.3_button] = "Interface Utilisateur Graphique"
 
-[menu.settings.credits.1] = "Bienvenue dans Credit 1"
-[menu.settings.credits.2] = "Bienvenue dans Credit 2"
-[menu.settings.credits.3] = "Bienvenue dans Credit 3"
+[menu.settings.credits.1] = "IA (Players)\n- Leonard\n\n    Leonard a developpe les joueurs IA pour notre jeu. Son travail se concentre sur la creation d'adversaires intelligents et reactifs, garantissant une experience stimulante et engageante pour les joueurs. En mettant en œuvre des algorithmes et des strategies sophistiques, les contributions de Leonard permettent à l'IA d'atteindre un haut niveau de performance, en s'adaptant efficacement aux differentes situations de jeu.\n\nLangage utilise : C++"
+[menu.settings.credits.2] = "Serveur (Coeur du projet)\n- Clement, Daniil\n\n    Clement et Daniil sont responsables de la conception et de l'implementation du serveur, le centre nevralgique de notre jeu. Leur travail consiste à gerer la logique du jeu, le traitement des donnees et à assurer une communication fluide entre l'IA, l'interface graphique et les autres composants. Le serveur est conçu pour gerer plusieurs joueurs et fournir une experience de jeu fiable et efficace, ce qui en fait la pierre angulaire de notre projet.\n\nLangage utilise : C"
+[menu.settings.credits.3] = "GUI (Visualizer)\n- Arnaud, Caroline, Nathan\n\n    Arnaud, Caroline et Nathan ont cree l'interface utilisateur graphique, donnant vie au jeu grâce à leurs conceptions visuelles. Leur travail permet de s'assurer que le jeu est intuitif, convivial et visuellement attrayant. Ils se sont attaches à creer une experience utilisateur attrayante, en accordant une attention particulière aux details, tant au niveau de l'esthetique que de la fonctionnalite. L'interface graphique permet aux joueurs d'interagir avec le jeu de manière transparente, ameliorant ainsi le plaisir general.\n\nLangage utilise : C++"
 
 [menu.settings.help] = "Bienvenue dans Help"
 

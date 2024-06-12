@@ -18,12 +18,9 @@ namespace Zappy {
                 _render = render;
                 _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_forest_scenery.png");
                 _backButton = std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), i18nHelper->getTranslation("[menu.back_button]"), 20, GREEN), "[menu.back_button]");
-                _text = std::make_pair(std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(_render->getWidth() / 3 , _render->getHeight() / 3), i18nHelper->getTranslation(text), 30, WHITE), text);
+                _text = std::make_pair(std::make_unique<Zappy::GUI::Component::TextBox>(std::make_pair( 100, 100), _render->getWidth() - 200, i18nHelper->getTranslation(text), 30, WHITE), text);
                 _lang = i18nHelper->getCurrentLocale();
             }
-
-            void CreditScene::start()
-            {}
 
             void CreditScene::destroy()
             {
@@ -42,9 +39,6 @@ namespace Zappy {
                     _lang = i18nHelper->getCurrentLocale();
                 }
             }
-
-            void CreditScene::draw3D()
-            {}
 
             void CreditScene::draw2D()
             {

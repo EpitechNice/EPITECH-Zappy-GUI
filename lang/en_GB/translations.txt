@@ -17,9 +17,9 @@
 [menu.settings.credits.2_button] = "Server"
 [menu.settings.credits.3_button] = "Graphical User Interface"
 
-[menu.settings.credits.1] = "Welcome to Credit 1"
-[menu.settings.credits.2] = "Welcome to Credit 2"
-[menu.settings.credits.3] = "Welcome to Credit 3"
+[menu.settings.credits.1] = "IA (Players)\n- Leonard\n\n    Leonard developed the AI players for our game. His work focuses on creating intelligent and responsive opponents, ensuring a challenging and engaging experience for players. By implementing sophisticated algorithms and strategies, Leonard's contributions allow the AI to perform at a high level, adapting to different gameplay situations effectively.\n\nLanguage Used: C++"
+[menu.settings.credits.2] = "Server (Heart of the Project)\n- Clement, Daniil\n\n    Clement and Daniil are responsible for designing and implementing the server, the central hub of our game. Their work includes managing game logic, data handling, and ensuring smooth communication between the AI, GUI, and other components. The server is built to handle multiple players and provide a reliable and efficient gameplay experience, making it the cornerstone of our project.\n\nLanguage Used: C"
+[menu.settings.credits.3] = "GUI (Visualizer)\n- Arnaud, Caroline, Nathan\n\n    Arnaud, Caroline, and Nathan created the graphical user interface, bringing the game to life with their visual designs. Their work ensures that the game is intuitive, user-friendly, and visually appealing. They focused on creating an engaging user experience, with attention to detail in both aesthetics and functionality. The GUI allows players to interact with the game seamlessly, enhancing the overall enjoyment.\n\nLanguage Used: C++"
 
 [menu.settings.help] = "Welcome to Help"
 
