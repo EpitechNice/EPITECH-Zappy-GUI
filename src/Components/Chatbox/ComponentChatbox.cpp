@@ -11,17 +11,16 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Chatbox::Chatbox()
-                : _isDestroyed(false)
             {
-                int height = GetScreenHeight();
-                _width = GetScreenWidth() / 3;
-                int heightPart = height / 8;
-                int heightPartMini = heightPart / 4;
+                _sizeX = GetScreenWidth() / 3;
+                _sizeY = GetScreenHeight();
+                int _sizeYPart = _sizeY / 8;
+                int _sizeYPartMini = _sizeYPart / 4;
 
-                _rectTopBackground = std::make_unique<Rectangle>(std::make_pair(-_width, 0), std::make_pair(_width, heightPart), (Color){68, 69, 64, 255});
-                _rectTop = std::make_unique<Rectangle>(std::make_pair(-_width, heightPart - heightPartMini), std::make_pair(_width, heightPartMini), (Color){112, 108, 79, 255});
-                _rectMid = std::make_unique<Rectangle>(std::make_pair(-_width, 0), std::make_pair(_width, height), (Color){68, 69, 64, 255});
-                _rectBot = std::make_unique<Rectangle>(std::make_pair(-_width, height - heightPart), std::make_pair(_width, heightPart), (Color){112, 108, 79, 255});
+                _rectTopBackground = std::make_unique<Rectangle>(std::make_pair(-_sizeX, 0), std::make_pair(_sizeX, _sizeYPart), (Color){68, 69, 64, 255});
+                _rectTop = std::make_unique<Rectangle>(std::make_pair(-_sizeX, _sizeYPart - _sizeYPartMini), std::make_pair(_sizeX, _sizeYPartMini), (Color){112, 108, 79, 255});
+                _rectMid = std::make_unique<Rectangle>(std::make_pair(-_sizeX, 0), std::make_pair(_sizeX, _sizeY), (Color){68, 69, 64, 255});
+                _rectBot = std::make_unique<Rectangle>(std::make_pair(-_sizeX, _sizeY - _sizeYPart), std::make_pair(_sizeX, _sizeYPart), (Color){112, 108, 79, 255});
                 _rectTopBackground->setStroke(1, BLACK);
                 _rectMid->setStroke(3, BLACK);
                 _rectBot->setStroke(1, BLACK);
@@ -31,7 +30,7 @@ namespace Zappy {
 
                 std::pair<float, float> buttonSize = {_openButton.first->getSizeX(), _openButton.first->getSizeY()};
                 _openButton.first->setPosX(8);
-                _openButton.first->setPosY(height / 2 - buttonSize.second / 2);
+                _openButton.first->setPosY(_sizeY / 2 - buttonSize.second / 2);
                 _notifCircle = std::make_unique<Circle>(std::make_pair( _openButton.first->getSizeX() + _openButton.first->getPosX(), _openButton.first->getPosY()), 4, RED);
 
                 std::vector<std::string> names = {
@@ -39,15 +38,15 @@ namespace Zappy {
                     "Global",
                 };
                 int gap = 5;
-                int width = (_width - 40 - gap * (names.size() - 1)) / names.size();
-                int heightButton = heightPart - heightPartMini;
-                int y = -_width * 2 + 20;
+                int width = (_sizeX - 40 - gap * (names.size() - 1)) / names.size();
+                int _sizeYButton = _sizeYPart - _sizeYPartMini;
+                int y = -_sizeX * 2 + 20;
                 for (auto &name : names) {
                     _chats.push_back(std::make_tuple(
                         name,
-                        std::make_unique<ButtonClassic>(std::make_pair(y, heightPartMini), std::make_pair(width, heightButton), name, 20, (Color){55, 56, 40, 255}),
-                        std::make_unique<TextGroupDraggable>(std::make_pair(-_width + 10, heightPart + 10), std::make_pair(_width - 20, height - heightPart * 2), 20),
-                        std::make_unique<Circle>(std::make_pair(y + width, heightPartMini), 4, (Color){255, 0, 0, 255}),
+                        std::make_unique<ButtonClassic>(std::make_pair(y, _sizeYPartMini), std::make_pair(width, _sizeYButton), name, 20, (Color){55, 56, 40, 255}),
+                        std::make_unique<TextGroupDraggable>(std::make_pair(-_sizeX + 10, _sizeYPart + 10), std::make_pair(_sizeX - 20, _sizeY - _sizeYPart * 2), 20),
+                        std::make_unique<Circle>(std::make_pair(y + width, _sizeYPartMini), 4, (Color){255, 0, 0, 255}),
                         0
                     ));
                     y += width + gap;
@@ -59,15 +58,10 @@ namespace Zappy {
                 _hasNotif = false;
             }
 
-            Chatbox::~Chatbox()
-            {
-                if (!_isDestroyed)
-                    destroy();
-            }
-
 
             void Chatbox::destroy()
             {
+                if (_isDestroyed) return;
                 _openButton.first->destroy();
                 for (auto &chat : _chats) {
                     std::get<BUTTON>(chat)->destroy();
@@ -93,9 +87,6 @@ namespace Zappy {
                     _notifCircle->draw();
             }
 
-//TODO (Refacto i18n): Check isClicked() condition
-//_openButton is now a pair, where second must be "[menu.back_button]" when chatbox is open (this condition is concilient with another situation of use)
-//_openButton.second is by default = ""
             void Chatbox::update()
             {
                 _updateChatbox();
@@ -143,7 +134,7 @@ namespace Zappy {
             {
                 bool isOn = _openButton.first->isHover() || _openButton.first->isClicked();
                 if (_open)
-                    isOn = GetMouseX() < _width ? true : isOn;
+                    isOn = GetMouseX() < _sizeX ? true : isOn;
                 return isOn;
             }
 
@@ -154,13 +145,13 @@ namespace Zappy {
                 _rectTop->setPosX(0);
                 _rectMid->setPosX(0);
                 _rectBot->setPosX(0);
-                _openButton.first->setPosX(_width + 8);
+                _openButton.first->setPosX(_sizeX + 8);
                 _openButton.first->setText("<");
 
                 for (auto &chat : _chats) {
-                    std::get<BUTTON>(chat)->modPosX(_width * 2);
+                    std::get<BUTTON>(chat)->modPosX(_sizeX * 2);
                     std::get<TEXT_GROUP>(chat)->setPosX(10);
-                    std::get<NOTIF>(chat)->modPosX(_width * 2);
+                    std::get<NOTIF>(chat)->modPosX(_sizeX * 2);
                 }
                 _open = true;
                 _hasNotif = false;
@@ -168,17 +159,17 @@ namespace Zappy {
 
             void Chatbox::_setChatboxClose()
             {
-                _rectTopBackground->setPosX(-_width * 2);
-                _rectTop->setPosX(-_width * 2);
-                _rectMid->setPosX(-_width * 2);
-                _rectBot->setPosX(-_width * 2);
+                _rectTopBackground->setPosX(-_sizeX * 2);
+                _rectTop->setPosX(-_sizeX * 2);
+                _rectMid->setPosX(-_sizeX * 2);
+                _rectBot->setPosX(-_sizeX * 2);
                 _openButton.first->setPosX(8);
                 _openButton.first->setText(">");
 
                 for (auto &chat : _chats) {
-                    std::get<BUTTON>(chat)->modPosX(-_width * 2);
-                    std::get<TEXT_GROUP>(chat)->setPosX(-_width * 2 + 10);
-                    std::get<NOTIF>(chat)->modPosX(-_width * 2);
+                    std::get<BUTTON>(chat)->modPosX(-_sizeX * 2);
+                    std::get<TEXT_GROUP>(chat)->setPosX(-_sizeX * 2 + 10);
+                    std::get<NOTIF>(chat)->modPosX(-_sizeX * 2);
                 }
                 _open = false;
                 for (auto &chat : _chats)
