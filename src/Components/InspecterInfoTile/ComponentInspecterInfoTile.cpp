@@ -12,26 +12,24 @@ namespace Zappy {
         namespace Component {
             InspecterInfoTile::InspecterInfoTile(std::pair<int, int> pos, std::pair<int, int> size)
             {
-                _tile = nullptr;
-                _pos = pos;
-                _size = size;
-                _noTileSelected = std::make_unique<TextBox>(std::make_pair(_pos.first, _pos.second), _size.first, "No tile selected", 20, WHITE);
-                _name = std::make_unique<TextBox>(std::make_pair(_pos.first, _pos.second), _size.first, "Player #", 20, WHITE);
-                _food = std::make_unique<TextBox>(std::make_pair(_pos.first, _name->getPosY() + _name->getSizeY() + 10), _size.first, "Food: ", 20, WHITE);
-                _linemate = std::make_unique<TextBox>(std::make_pair(_pos.first, _food->getPosY() + _food->getSizeY() + 10), _size.first, "Linemate: ", 20, WHITE);
-                _deraumere = std::make_unique<TextBox>(std::make_pair(_pos.first, _linemate->getPosY() + _linemate->getSizeY() + 10), _size.first, "Deraumere: ", 20, WHITE);
-                _sibur = std::make_unique<TextBox>(std::make_pair(_pos.first, _deraumere->getPosY() + _deraumere->getSizeY() + 10), _size.first, "Sibur: ", 20, WHITE);
-                _mendiane = std::make_unique<TextBox>(std::make_pair(_pos.first, _sibur->getPosY() + _sibur->getSizeY() + 10), _size.first, "Mendiane: ", 20, WHITE);
-                _phiras = std::make_unique<TextBox>(std::make_pair(_pos.first, _mendiane->getPosY() + _mendiane->getSizeY() + 10), _size.first, "Phiras: ", 20, WHITE);
-                _thystame = std::make_unique<TextBox>(std::make_pair(_pos.first, _phiras->getPosY() + _phiras->getSizeY() + 10), _size.first, "Thystame: ", 20, WHITE);
-                _egg = std::make_unique<TextBox>(std::make_pair(_pos.first, _thystame->getPosY() + _thystame->getSizeY() + 10), _size.first, "Egg: ", 20, WHITE);
-                _players = std::make_unique<TextBox>(std::make_pair(_pos.first, _egg->getPosY() + _egg->getSizeY() + 10), _size.first, "Players: ", 20, WHITE);
-                _isDestroyed = false;
-            }
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = size.first;
+                _sizeY = size.second;
 
-            InspecterInfoTile::~InspecterInfoTile()
-            {
-                destroy();
+                _tile = nullptr;
+                _noTileSelected = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "No tile selected", 20, WHITE);
+                _name = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "Player #", 20, WHITE);
+                _food = std::make_unique<TextBox>(std::make_pair(_posX, _name->getPosY() + _name->getSizeY() + 10), _sizeX, "Food: ", 20, WHITE);
+                _linemate = std::make_unique<TextBox>(std::make_pair(_posX, _food->getPosY() + _food->getSizeY() + 10), _sizeX, "Linemate: ", 20, WHITE);
+                _deraumere = std::make_unique<TextBox>(std::make_pair(_posX, _linemate->getPosY() + _linemate->getSizeY() + 10), _sizeX, "Deraumere: ", 20, WHITE);
+                _sibur = std::make_unique<TextBox>(std::make_pair(_posX, _deraumere->getPosY() + _deraumere->getSizeY() + 10), _sizeX, "Sibur: ", 20, WHITE);
+                _mendiane = std::make_unique<TextBox>(std::make_pair(_posX, _sibur->getPosY() + _sibur->getSizeY() + 10), _sizeX, "Mendiane: ", 20, WHITE);
+                _phiras = std::make_unique<TextBox>(std::make_pair(_posX, _mendiane->getPosY() + _mendiane->getSizeY() + 10), _sizeX, "Phiras: ", 20, WHITE);
+                _thystame = std::make_unique<TextBox>(std::make_pair(_posX, _phiras->getPosY() + _phiras->getSizeY() + 10), _sizeX, "Thystame: ", 20, WHITE);
+                _egg = std::make_unique<TextBox>(std::make_pair(_posX, _thystame->getPosY() + _thystame->getSizeY() + 10), _sizeX, "Egg: ", 20, WHITE);
+                _players = std::make_unique<TextBox>(std::make_pair(_posX, _egg->getPosY() + _egg->getSizeY() + 10), _sizeX, "Players: ", 20, WHITE);
+                _isDestroyed = false;
             }
 
             void InspecterInfoTile::destroy()
@@ -69,20 +67,20 @@ namespace Zappy {
                 _players->draw();
             }
 
-            void InspecterInfoTile::modPosX(int x)
+            void InspecterInfoTile::modPosX(float x)
             {
-                _pos.first += x;
-                _noTileSelected->setPosX(_pos.first);
-                _name->setPosX(_pos.first);
-                _food->setPosX(_pos.first);
-                _linemate->setPosX(_pos.first);
-                _deraumere->setPosX(_pos.first);
-                _sibur->setPosX(_pos.first);
-                _mendiane->setPosX(_pos.first);
-                _phiras->setPosX(_pos.first);
-                _thystame->setPosX(_pos.first);
-                _egg->setPosX(_pos.first);
-                _players->setPosX(_pos.first);
+                _posX += x;
+                _noTileSelected->setPosX(_posX);
+                _name->setPosX(_posX);
+                _food->setPosX(_posX);
+                _linemate->setPosX(_posX);
+                _deraumere->setPosX(_posX);
+                _sibur->setPosX(_posX);
+                _mendiane->setPosX(_posX);
+                _phiras->setPosX(_posX);
+                _thystame->setPosX(_posX);
+                _egg->setPosX(_posX);
+                _players->setPosX(_posX);
             }
 
             void InspecterInfoTile::setInfo(std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile)

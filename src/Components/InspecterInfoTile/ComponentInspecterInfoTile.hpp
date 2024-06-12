@@ -15,27 +15,23 @@
     #include "Players.hpp"
     #include "Ressources.hpp"
     #include "ComponentTextBox.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class InspecterInfoTile {
+            class InspecterInfoTile: public AComponent {
                 public:
                     InspecterInfoTile(std::pair<int, int> pos, std::pair<int, int> size);
-                    ~InspecterInfoTile();
 
-                    void destroy();
-
-                    void draw();
-
-                    void modPosX(int x);
+                    void destroy() override;
+                    void draw() override;
+                    void modPosX(float x) override;
 
                     void setInfo(std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile);
 
                 protected:
                 private:
-                    std::pair<int, int> _pos;
-                    std::pair<int, int> _size;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _noTileSelected;
                     std::shared_ptr<Zappy::GUI::Ressources::TileRessources> _tile;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _name;
@@ -48,7 +44,6 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _thystame;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _egg;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _players;
-                    bool _isDestroyed;
             };
         }
     }
