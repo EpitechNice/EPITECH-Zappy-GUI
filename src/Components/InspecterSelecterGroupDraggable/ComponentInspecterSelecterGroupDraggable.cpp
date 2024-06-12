@@ -86,29 +86,28 @@ namespace Zappy {
 
             void InspecterSelecterGroupDraggable::_setDragOffset()
             {
-                std::pair<int, int> groupPos = _selecterGroup->getPos();
-                _dragOffset = {GetMouseX() - groupPos.first, GetMouseY() - groupPos.second};
+                _dragOffset = {GetMouseX() - _selecterGroup->getPosX(), GetMouseY() - _selecterGroup->getPosY()};
                 _isDragged = true;
             }
 
             void InspecterSelecterGroupDraggable::_endDrag()
             {
                 _isDragged = false;
-                std::pair<int, int> groupPos = _selecterGroup->getPos();
-                std::pair<int, int> groupSize = _selecterGroup->getSize();
+                float groupPosY = _selecterGroup->getPosY();
+                float groupSizeY = _selecterGroup->getSizeY();
 
-                if (groupSize.second < _size.second) {
+                if (groupSizeY < _size.second) {
                     _selecterGroup->setPosY(_pos.second);
                     return;
                 }
 
-                if (groupPos.second > _pos.second) {
+                if (groupPosY > _pos.second) {
                     _selecterGroup->setPosY(_pos.second);
                     return;
                 }
 
-                if (groupPos.second + groupSize.second < _pos.second + _size.second) {
-                    _selecterGroup->setPosY(_pos.second - groupSize.second + _size.second);
+                if (groupPosY + groupSizeY < _pos.second + _size.second) {
+                    _selecterGroup->setPosY(_pos.second - groupSizeY + _size.second);
                     return;
                 }
             }
