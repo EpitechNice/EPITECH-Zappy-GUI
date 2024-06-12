@@ -13,21 +13,20 @@
 [menu.settings.lang.en_GB_button] = "ANGLAIS"
 [menu.settings.lang.fr_FR_button] = "FRANCAIS"
 
-[menu.settings.credits.1_button] = "Credit 1 en FR"
-[menu.settings.credits.2_button] = "Credit 2 en FR"
-[menu.settings.credits.3_button] = "Credit 3 en FR"
+[menu.settings.credits.1_button] = "Intelligence Artificielle"
+[menu.settings.credits.2_button] = "Serveur"
+[menu.settings.credits.3_button] = "Interface Utilisateur Graphique"
 
-[menu.settings.credits.1] = "Bienvenue dans Credit 1"
-[menu.settings.credits.2] = "Bienvenue dans Credit 2"
-[menu.settings.credits.3] = "Bienvenue dans Credit 3"
+[menu.settings.credits.1] = "IA (Players)\n- Leonard\n\n    Leonard a developpe les joueurs IA pour notre jeu. Son travail se concentre sur la creation d'adversaires intelligents et reactifs, garantissant une experience stimulante et engageante pour les joueurs. En mettant en œuvre des algorithmes et des strategies sophistiques, les contributions de Leonard permettent a l'IA d'atteindre un haut niveau de performance, en s'adaptant efficacement aux differentes situations de jeu.\n\nLangage utilise : C++"
+[menu.settings.credits.2] = "Serveur (Coeur du projet)\n- Clement, Daniil\n\n    Clement et Daniil sont responsables de la conception et de l'implementation du serveur, le centre nevralgique de notre jeu. Leur travail consiste a gerer la logique du jeu, le traitement des donnees et a assurer une communication fluide entre l'IA, l'interface graphique et les autres composants. Le serveur est conçu pour gerer plusieurs joueurs et fournir une experience de jeu fiable et efficace, ce qui en fait la pierre angulaire de notre projet.\n\nLangage utilise : C"
+[menu.settings.credits.3] = "GUI (Visualizer)\n- Arnaud, Caroline, Nathan\n\n    Arnaud, Caroline et Nathan ont cree l'interface utilisateur graphique, donnant vie au jeu grâce a leurs conceptions visuelles. Leur travail permet de s'assurer que le jeu est intuitif, convivial et visuellement attrayant. Ils se sont attaches a creer une experience utilisateur attrayante, en accordant une attention particuliere aux details, tant au niveau de l'esthetique que de la fonctionnalite. L'interface graphique permet aux joueurs d'interagir avec le jeu de maniere transparente, ameliorant ainsi le plaisir general.\n\nLangage utilise : C++"
 
-[menu.settings.help] = "Bienvenue dans Help"
+[menu.settings.help] = "Bienvenue dans le jeu ! Vous trouverez ci-dessous les raccourcis clavier a connaitre pour naviguer et controler le jeu efficacement :\n\nControle de la Souris\n- C : Activer/desactiver le suivi de la souris.\n\nMouvement de la Camera\n- Z : Deplacer la camera vers l'avant.\n- Q : Deplacer la camera vers la gauche.\n- S : Deplacer la camera vers l'arriere.\n- D : Deplacer la camera vers la droite.\n\nOrientation de la Camera\n- Fleche Haut : Incliner la camera vers le haut.\n- Fleche Gauche : Tourner la camera vers la gauche.\n- Fleche Bas : Incliner la camera vers le bas.\n- Fleche Droite : Tourner la camera vers la droite.\n\nUtilisez ces controles pour explorer et interagir avec l'environnement du jeu. Amusez-vous bien !"
 
 [menu.settings.resolution.res_title] = "Resolution"
 [menu.settings.resolution.fps_title] = "FPS"
 
-[menu.settings.sound.sound_effect_title] = "Effets sonores"
-[menu.settings.sound.music_title] = "Musique"
-[menu.settings.sound.volume_title] = "Volume"
+[menu.settings.sound.sound] = "Effets sonores"
+[menu.settings.sound.music] = "Musique"
 
 [UwU] = "(ಠ_ಠ)"

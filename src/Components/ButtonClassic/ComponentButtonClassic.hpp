@@ -18,11 +18,12 @@
     #include "ComponentCircle.hpp"
     #include "ComponentRoundedRectangle.hpp"
     #include "ComponentText.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class ButtonClassic {
+            class ButtonClassic: public AComponent {
                 public:
                     typedef enum {
                         NONE = -1,
@@ -32,37 +33,25 @@ namespace Zappy {
                     } State;
 
                     ButtonClassic(std::pair<float, float> pos, std::pair<float, float> size, std::string text, int textSize, Color color);
-                    ~ButtonClassic();
 
-                    void destroy();
+                    void draw() override;
+                    void setPosX(float x) override;
+                    void setPosY(float y) override;
+                    void modPosX(float x) override;
+                    void modPosY(float y) override;
+                    void setColor(Color color) override;
 
-                    void draw();
-
-                    std::pair<float, float> getSize() const;
                     bool isClicked() const;
-
-                    void modPosX(float x);
-                    void setPosX(float x);
-                    void setPos(std::pair<float, float> pos);
-
                     void enableTextStroke();
                     void disableTextStroke();
-
                     void enableState();
                     void disableState();
 
-                    void setColor(Color color);
-
                 protected:
                 private:
-                    std::pair<float, float> _pos;
-                    std::pair<float, float> _size;
-                    std::pair<float, float> _textPos;
-                    Color _color;
                     State _state;
                     bool _textStrokeVisible;
                     bool _stateEnabled;
-                    bool _isDestroyed;
                     time_t _lastClick;
 
                     std::unique_ptr<RoundedRectangle> _button;

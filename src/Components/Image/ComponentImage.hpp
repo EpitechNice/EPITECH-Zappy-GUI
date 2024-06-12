@@ -11,27 +11,21 @@
     #include <raylib.h>
     #include <string>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Image {
+            class Image: public AComponent {
                 public:
                     Image(std::string path, std::pair<float, float> pos, float scale);
-                    ~Image();
 
-                    void destroy();
-
-                    void draw();
-
-                    void setPos(std::pair<float, float> pos);
-
-                    std::pair<int, int> getSize();
+                    void destroy() override;
+                    void draw() override;
 
                 protected:
                 private:
-                    bool _isDestroyed;
                     std::string _path;
-                    std::pair<float, float> _pos;
                     Texture2D _texture;
             };
         }

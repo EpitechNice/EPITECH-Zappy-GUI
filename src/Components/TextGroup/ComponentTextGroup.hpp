@@ -15,34 +15,24 @@
     #include <iostream>
 
     #include "ComponentTextMessage.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class TextGroup {
+            class TextGroup: public AComponent {
                 public:
                     TextGroup(std::pair<int, int> pos, int width, int gap);
-                    ~TextGroup();
 
-                    void destroy();
-
-                    void draw();
+                    void draw() override;
+                    void setPosX(float x) override;
+                    void setPosY(float y) override;
 
                     void addText(std::string name, std::string text, int gap, Color color);
 
-                    void setPosX(int x);
-                    void setPosY(int y);
-
-                    std::pair<int, int> getPos();
-                    std::pair<int, int> getSize();
-
                 protected:
                 private:
-                    std::pair<int, int> _pos;
-                    int _width;
-                    int _height;
                     int _gap;
-                    bool _isDestroyed;
                     std::vector<std::unique_ptr<TextMessage>> _texts;
             };
         }

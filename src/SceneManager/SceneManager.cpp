@@ -9,12 +9,12 @@
 
 namespace Zappy {
     namespace GUI {
-        SceneManager::SceneManager()
-            : _isDestroyed(false)
+        SceneManager::SceneManager(std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
+            : _serverCommunication(serverCommunication), _isDestroyed(false)
         {
             _render = std::make_shared<Zappy::GUI::Raylib::Render>(600, 1200, 60);
 
-            _scenes["game"] = std::make_shared<Zappy::GUI::Scene::Game>(_render);
+            _scenes["game"] = std::make_shared<Zappy::GUI::Scene::Game>(_render, _serverCommunication);
             _scenes["menu"] = std::make_shared<Zappy::GUI::Scene::Menu>(_render);
             _scenes["credits"] = std::make_shared<Zappy::GUI::Scene::Credit>(_render);
             _scenes["credit1"] = std::make_shared<Zappy::GUI::Scene::CreditScene>(_render, "[menu.settings.credits.1]", 1);
@@ -35,8 +35,7 @@ namespace Zappy {
 
         void SceneManager::destroy()
         {
-            if (_isDestroyed)
-                return;
+            if (_isDestroyed) return;
             for (auto &scene : _scenes)
                 scene.second->destroy();
             _render->destroy();
@@ -48,7 +47,6 @@ namespace Zappy {
             while (_currentScene != "end") {
                 _scenes[_currentScene]->start();
                 while (!WindowShouldClose() && _currentScene != "end") {
-                    _scenes[_currentScene]->event();
                     _scenes[_currentScene]->update();
                     _render->view()->update();
 

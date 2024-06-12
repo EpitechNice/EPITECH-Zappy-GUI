@@ -10,40 +10,17 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            TextBox::TextBox(std::pair<int, int> pos, int size, std::string text, int fontSize, Color color, std::string font)
-                : _pos(pos), _size(size), _text(text), _fontSize(fontSize), _color(color), _isDestroyed(false)
+            TextBox::TextBox(std::pair<int, int> pos, int width, std::string text, int fontSize, Color color, std::string font)
             {
-                std::string path = "./assets/font/" + font;
-                _font = LoadFont(path.c_str());
+                _posX = pos.first;
+                _posY = pos.second;
+                _width = width;
+                _text = text;
+                _fontSize = fontSize;
+                _color = color;
+
+                _font = Zappy::GUI::Raylib::FontManager::get()->getFont(font);
                 setText(text);
-            }
-
-            TextBox::~TextBox()
-            {
-                destroy();
-            }
-
-            void TextBox::destroy()
-            {
-                if (!_isDestroyed) {
-                    UnloadFont(_font);
-                    _isDestroyed = true;
-                }
-            }
-
-            void TextBox::setPosX(int x)
-            {
-                _pos.first = x;
-            }
-
-            void TextBox::setPosY(int y)
-            {
-                _pos.second = y;
-            }
-
-            void TextBox::setPos(std::pair<int, int> pos)
-            {
-                _pos = pos;
             }
 
             void TextBox::setText(std::string text)
@@ -51,30 +28,25 @@ namespace Zappy {
                 std::string tmp = "";
                 _text = "";
 
-                for (auto c : text) {
-                    tmp = _text + c;
-                    if (MeasureTextEx(_font, tmp.c_str(), _fontSize, 1).x > _size)
+                for (std::size_t i = 0; i < text.size(); i++) {
+                    tmp = _text + text[i];
+                    if (text[i] == '\\' && text[i + 1] == 'n' && i + 1 < text.size()) {
                         _text += '\n';
-                    _text += c;
+                        i++;
+                        continue;
+                    }
+                    if (MeasureTextEx(_font, tmp.c_str(), _fontSize, 1).x > _width)
+                        _text += '\n';
+                    _text += text[i];
                 }
-            }
-
-            std::pair<float, float> TextBox::getSize() const
-            {
                 Vector2 size = MeasureTextEx(_font, _text.c_str(), _fontSize, 1);
-                return std::make_pair(size.x, size.y);
-            }
-
-            std::pair<int, int> TextBox::getPos() const
-            {
-                return _pos;
+                _sizeX = size.x;
+                _sizeY = size.y;
             }
 
             void TextBox::draw()
             {
-                if (_isDestroyed)
-                    return;
-                DrawTextEx(_font, _text.c_str(), Vector2{(float)_pos.first, (float)_pos.second}, _fontSize, 1, _color);
+                DrawTextEx(_font, _text.c_str(), Vector2{_posX, _posY}, _fontSize, 1, _color);
             }
         }
     }

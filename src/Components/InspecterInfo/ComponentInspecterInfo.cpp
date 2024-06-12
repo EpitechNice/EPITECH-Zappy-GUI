@@ -12,40 +12,22 @@ namespace Zappy {
         namespace Component {
             InspecterInfo::InspecterInfo(std::pair<int, int> pos, std::pair<int, int> size)
             {
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = size.first;
+                _sizeY = size.second;
+
                 _player = nullptr;
-                _pos = pos;
-                _size = size;
-                _noPlayerSelected = std::make_unique<TextBox>(std::make_pair(_pos.first, _pos.second), _size.first, "No player selected", 20, WHITE);
-                _circle = std::make_unique<Circle>(std::make_pair(_pos.first + 10, _pos.second + 10), 10, PURPLE);
-                _name = std::make_unique<TextBox>(std::make_pair(_pos.first + 30, _pos.second), _size.first, "Player #", 20, WHITE);
-                _food = std::make_unique<TextBox>(std::make_pair(_pos.first, _name->getPos().second + _name->getSize().second + 10), _size.first, "Food: ", 20, WHITE);
-                _linemate = std::make_unique<TextBox>(std::make_pair(_pos.first, _food->getPos().second + _food->getSize().second + 10), _size.first, "Linemate: ", 20, WHITE);
-                _deraumere = std::make_unique<TextBox>(std::make_pair(_pos.first, _linemate->getPos().second + _linemate->getSize().second + 10), _size.first, "Deraumere: ", 20, WHITE);
-                _sibur = std::make_unique<TextBox>(std::make_pair(_pos.first, _deraumere->getPos().second + _deraumere->getSize().second + 10), _size.first, "Sibur: ", 20, WHITE);
-                _mendiane = std::make_unique<TextBox>(std::make_pair(_pos.first, _sibur->getPos().second + _sibur->getSize().second + 10), _size.first, "Mendiane: ", 20, WHITE);
-                _phiras = std::make_unique<TextBox>(std::make_pair(_pos.first, _mendiane->getPos().second + _mendiane->getSize().second + 10), _size.first, "Phiras: ", 20, WHITE);
-                _thystame = std::make_unique<TextBox>(std::make_pair(_pos.first, _phiras->getPos().second + _phiras->getSize().second + 10), _size.first, "Thystame: ", 20, WHITE);
-                _isDestroyed = false;
-            }
-
-            InspecterInfo::~InspecterInfo()
-            {
-                destroy();
-            }
-
-            void InspecterInfo::destroy()
-            {
-                if (_isDestroyed) return;
-                _noPlayerSelected->destroy();
-                _name->destroy();
-                _food->destroy();
-                _linemate->destroy();
-                _deraumere->destroy();
-                _sibur->destroy();
-                _mendiane->destroy();
-                _phiras->destroy();
-                _thystame->destroy();
-                _isDestroyed = true;
+                _noPlayerSelected = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "No player selected", 20, WHITE);
+                _circle = std::make_unique<Circle>(std::make_pair(_posX + 10, _posY + 10), 10, PURPLE);
+                _name = std::make_unique<TextBox>(std::make_pair(_posX + 30, _posY), _sizeX, "Player #", 20, WHITE);
+                _food = std::make_unique<TextBox>(std::make_pair(_posX, _name->getPosY() + _name->getSizeY() + 10), _sizeX, "Food: ", 20, WHITE);
+                _linemate = std::make_unique<TextBox>(std::make_pair(_posX, _food->getPosY() + _food->getSizeY() + 10), _sizeX, "Linemate: ", 20, WHITE);
+                _deraumere = std::make_unique<TextBox>(std::make_pair(_posX, _linemate->getPosY() + _linemate->getSizeY() + 10), _sizeX, "Deraumere: ", 20, WHITE);
+                _sibur = std::make_unique<TextBox>(std::make_pair(_posX, _deraumere->getPosY() + _deraumere->getSizeY() + 10), _sizeX, "Sibur: ", 20, WHITE);
+                _mendiane = std::make_unique<TextBox>(std::make_pair(_posX, _sibur->getPosY() + _sibur->getSizeY() + 10), _sizeX, "Mendiane: ", 20, WHITE);
+                _phiras = std::make_unique<TextBox>(std::make_pair(_posX, _mendiane->getPosY() + _mendiane->getSizeY() + 10), _sizeX, "Phiras: ", 20, WHITE);
+                _thystame = std::make_unique<TextBox>(std::make_pair(_posX, _phiras->getPosY() + _phiras->getSizeY() + 10), _sizeX, "Thystame: ", 20, WHITE);
             }
 
             void InspecterInfo::draw()
@@ -65,19 +47,19 @@ namespace Zappy {
                 _thystame->draw();
             }
 
-            void InspecterInfo::modPosX(int x)
+            void InspecterInfo::modPosX(float x)
             {
-                _pos.first += x;
-                _noPlayerSelected->setPosX(_pos.first);
-                _circle->setPos(std::make_pair((float)(_pos.first + 10), (float)(_pos.second + 10)));
-                _name->setPosX(_pos.first + 30);
-                _food->setPosX(_pos.first);
-                _linemate->setPosX(_pos.first);
-                _deraumere->setPosX(_pos.first);
-                _sibur->setPosX(_pos.first);
-                _mendiane->setPosX(_pos.first);
-                _phiras->setPosX(_pos.first);
-                _thystame->setPosX(_pos.first);
+                _posX += x;
+                _noPlayerSelected->setPosX(_posX);
+                _circle->setPosX((float)(_posX + 10));
+                _name->setPosX(_posX + 30);
+                _food->setPosX(_posX);
+                _linemate->setPosX(_posX);
+                _deraumere->setPosX(_posX);
+                _sibur->setPosX(_posX);
+                _mendiane->setPosX(_posX);
+                _phiras->setPosX(_posX);
+                _thystame->setPosX(_posX);
             }
 
             void InspecterInfo::setInfo(std::shared_ptr<Zappy::GUI::Ressources::Players> player)

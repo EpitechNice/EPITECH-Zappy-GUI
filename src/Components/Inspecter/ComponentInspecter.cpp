@@ -11,26 +11,25 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Inspecter::Inspecter()
-                : _isDestroyed(false)
             {
-                int height = GetScreenHeight();
                 _screenWidth = GetScreenWidth();
-                _width = _screenWidth / 3;
-                int heightPart = height / 8;
+                _sizeX = _screenWidth / 3;
+                _sizeY = GetScreenHeight();
+                int heightPart = _sizeY / 8;
                 int heightPartMini = heightPart / 4;
 
-                _rectTopBackground = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _width, 0), std::make_pair(_width, heightPart), (Color){68, 69, 64, 255});
-                _rectTop = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _width, heightPart - heightPartMini), std::make_pair(_width, heightPartMini), (Color){112, 108, 79, 255});
-                _rectMid = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _width, 0), std::make_pair(_width, height), (Color){68, 69, 64, 255});
-                _rectBot = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _width, height - heightPart), std::make_pair(_width, heightPart), (Color){112, 108, 79, 255});
+                _rectTopBackground = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _sizeX, 0), std::make_pair(_sizeX, heightPart), (Color){68, 69, 64, 255});
+                _rectTop = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _sizeX, heightPart - heightPartMini), std::make_pair(_sizeX, heightPartMini), (Color){112, 108, 79, 255});
+                _rectMid = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _sizeX, 0), std::make_pair(_sizeX, _sizeY), (Color){68, 69, 64, 255});
+                _rectBot = std::make_unique<Rectangle>(std::make_pair(_screenWidth + _sizeX, _sizeY - heightPart), std::make_pair(_sizeX, heightPart), (Color){112, 108, 79, 255});
                 _rectTopBackground->setStroke(1, BLACK);
                 _rectMid->setStroke(3, BLACK);
                 _rectBot->setStroke(1, BLACK);
 
                 _openButton = std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), "<", 30, SKYBLUE);
                 _openButton->disableBubble();
-                _buttonSize = _openButton->getSize();
-                _openButton->setPos(std::make_pair(_screenWidth - 8 - _buttonSize.first, height / 2 - _buttonSize.second / 2));
+                _openButton->setPosX(_screenWidth - 8 - _openButton->getSizeX());
+                _openButton->setPosY(_sizeY / 2 - _openButton->getSizeY() / 2);
                 _open = false;
 
                 std::vector<std::string> names = {
@@ -39,7 +38,7 @@ namespace Zappy {
                     "Tile",
                 };
                 int gap = 5;
-                int width = (_width - 40 - gap * (names.size() - 1)) / names.size();
+                int width = (_sizeX - 40 - gap * (names.size() - 1)) / names.size();
                 int heightButton = heightPart - heightPartMini;
                 int y = _screenWidth + 20;
                 for (auto &name : names) {
@@ -53,30 +52,12 @@ namespace Zappy {
                 std::get<BUTTON>(_tabs[_tabsIndex])->setColor((Color){112, 108, 79, 255});
                 std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
 
-                _selecters = std::make_unique<InspecterSelecterGroupDraggable>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
+                _selecters = std::make_unique<InspecterSelecterGroupDraggable>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
                 for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
                     _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
 
-                _infos = std::make_shared<InspecterInfo>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
-                _infosTile = std::make_unique<InspecterInfoTile>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_width - 40, height - heightPart - heightPartMini - heightButton - 40));
-            }
-
-            Inspecter::~Inspecter()
-            {
-                destroy();
-            }
-
-
-            void Inspecter::destroy()
-            {
-                if (_isDestroyed)
-                    return;
-                _openButton->destroy();
-                for (auto &tab : _tabs)
-                    std::get<BUTTON>(tab)->destroy();
-                _selecters->destroy();
-                _infos->destroy();
-                _infosTile->destroy();
+                _infos = std::make_shared<InspecterInfo>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
+                _infosTile = std::make_unique<InspecterInfoTile>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
             }
 
 
@@ -125,7 +106,7 @@ namespace Zappy {
             {
                 bool isOn = _openButton->isHover() || _openButton->isClicked();
                 if (_open)
-                    isOn = GetMouseX() > _screenWidth - _width ? true : isOn;
+                    isOn = GetMouseX() > _screenWidth - _sizeX ? true : isOn;
                 return isOn;
             }
 
@@ -144,19 +125,19 @@ namespace Zappy {
 
             void Inspecter::_setInspecterOpen()
             {
-                _rectTopBackground->setPosX(_screenWidth - _width);
-                _rectTop->setPosX(_screenWidth - _width);
-                _rectMid->setPosX(_screenWidth - _width);
-                _rectBot->setPosX(_screenWidth - _width);
-                _openButton->setPosX(_screenWidth - _width - 8 - _buttonSize.first);
+                _rectTopBackground->setPosX(_screenWidth - _sizeX);
+                _rectTop->setPosX(_screenWidth - _sizeX);
+                _rectMid->setPosX(_screenWidth - _sizeX);
+                _rectBot->setPosX(_screenWidth - _sizeX);
+                _openButton->setPosX(_screenWidth - _sizeX - 8 - _openButton->getSizeX());
                 _openButton->setText(">");
 
                 for (auto &tab : _tabs)
-                    std::get<BUTTON>(tab)->modPosX(-_width);
+                    std::get<BUTTON>(tab)->modPosX(-_sizeX);
 
-                _selecters->modPosX(-_width);
-                _infos->modPosX(-_width);
-                _infosTile->modPosX(-_width);
+                _selecters->modPosX(-_sizeX);
+                _infos->modPosX(-_sizeX);
+                _infosTile->modPosX(-_sizeX);
 
                 _open = true;
             }
@@ -167,15 +148,15 @@ namespace Zappy {
                 _rectTop->setPosX(_screenWidth);
                 _rectMid->setPosX(_screenWidth);
                 _rectBot->setPosX(_screenWidth);
-                _openButton->setPosX(_screenWidth - 8 - _buttonSize.first);
+                _openButton->setPosX(_screenWidth - 8 - _openButton->getSizeX());
                 _openButton->setText("<");
 
                 for (auto &tab : _tabs)
-                    std::get<BUTTON>(tab)->modPosX(_width);
+                    std::get<BUTTON>(tab)->modPosX(_sizeX);
 
-                _selecters->modPosX(_width);
-                _infos->modPosX(_width);
-                _infosTile->modPosX(_width);
+                _selecters->modPosX(_sizeX);
+                _infos->modPosX(_sizeX);
+                _infosTile->modPosX(_sizeX);
 
                 _open = false;
             }

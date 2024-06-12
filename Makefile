@@ -7,12 +7,13 @@
 
 
 SRC		=   src/Main.cpp																				\
+			src/Components/0000/AComponent/AComponent.cpp												\
 			src/Components/Background2D/ComponentBackground2D.cpp										\
 			src/Components/Button/ComponentButton.cpp													\
 			src/Components/ButtonClassic/ComponentButtonClassic.cpp										\
 			src/Components/Chatbox/ComponentChatbox.cpp													\
 			src/Components/Circle/ComponentCircle.cpp													\
-			src/Components/Cubic/ComponentCubic.cpp														\
+			src/Components/Cube/ComponentCube.cpp														\
 			src/Components/Image/ComponentImage.cpp														\
 			src/Components/Inspecter/ComponentInspecter.cpp												\
 			src/Components/InspecterInfo/ComponentInspecterInfo.cpp										\
@@ -25,7 +26,7 @@ SRC		=   src/Main.cpp																				\
 			src/Components/Ressources/ComponentRessources.cpp											\
 			src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp								\
 			src/Components/Skybox/ComponentSkybox.cpp													\
-			src/Components/SliderVolume/SliderVolume.cpp												\
+			src/Components/SliderVolume/ComponentSliderVolume.cpp												\
 			src/Components/Text/ComponentText.cpp														\
 			src/Components/TextBox/ComponentTextBox.cpp 			 									\
 			src/Components/TextGroup/ComponentTextGroup.cpp												\
@@ -33,12 +34,15 @@ SRC		=   src/Main.cpp																				\
 			src/Components/TextMessage/ComponentTextMessage.cpp											\
 			src/Components/Tile/ComponentTile.cpp														\
 			src/Components/TileMap/ComponentTileMap.cpp													\
+			src/Components/VolumeSection/ComponentVolumeSection.cpp										\
+			src/CommunicationServer/CommunicationServer.cpp 											\
 			src/Exceptions/Exceptions.cpp																\
 			src/I18n/I18nHelper.cpp																		\
 			src/Parsing/Parsing.cpp																		\
 			src/Parsing/ParsingError.cpp																\
 			src/Parsing/ParsingHelp.cpp																	\
 			src/Raylib/ColorManager/ColorManager.cpp													\
+			src/Raylib/FontManager/FontManager.cpp														\
 			src/Raylib/Render/Render.cpp																\
 			src/Raylib/View/View.cpp																	\
 			src/Ressources/Players/Players.cpp															\
@@ -87,12 +91,14 @@ FLAGS	=	-Wall 				\
 INCLUDES	=	-I./includes										\
 				-I./libs/includes									\
 				-I./src												\
+				-I./src/Components/0000/IComponent					\
+				-I./src/Components/0000/AComponent					\
 				-I./src/Components/Background2D						\
 				-I./src/Components/Button							\
 				-I./src/Components/ButtonClassic					\
 				-I./src/Components/Chatbox							\
 				-I./src/Components/Circle							\
-				-I./src/Components/Cubic							\
+				-I./src/Components/Cube								\
 				-I./src/Components/Image							\
 				-I./src/Components/Inspecter						\
 				-I./src/Components/InspecterInfo					\
@@ -113,10 +119,13 @@ INCLUDES	=	-I./includes										\
 				-I./src/Components/TextMessage						\
 				-I./src/Components/Tile								\
 				-I./src/Components/TileMap							\
+				-I./src/Components/VolumeSection					\
+				-I./src/CommunicationServer 						\
 				-I./src/Exceptions									\
 				-I./src/I18n										\
 				-I./src/Parsing										\
 				-I./src/Raylib/ColorManager							\
+				-I./src/Raylib/FontManager							\
 				-I./src/Raylib/Render								\
 				-I./src/Raylib/SoundManager							\
 				-I./src/Raylib/View									\
@@ -134,6 +143,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Scenes/OptionScene							\
 				-I./src/Scenes/OptionScene/ResolutionOption 		\
 				-I./src/Scenes/OptionScene/SoundOption      		\
+				-I./src/Sfml/SoundManager							\
 				-I./src/Utils										\
 
 LIBS	=	-L./libs	\

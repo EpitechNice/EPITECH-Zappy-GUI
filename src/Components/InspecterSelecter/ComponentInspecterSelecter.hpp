@@ -16,32 +16,24 @@
     #include "ComponentRoundedRectangle.hpp"
     #include "ComponentText.hpp"
     #include "ComponentCircle.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class InspecterSelecter {
+            class InspecterSelecter: public AComponent {
                 public:
                     InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Players> player);
-                    ~InspecterSelecter();
 
-                    void destroy();
+                    void draw() override;
+                    void modPosX(float x) override;
+                    void modPosY(float y) override;
+                    void setPosX(float x) override;
+                    void setPosY(float y) override;
 
                     void update();
-
-                    void draw();
-
-                    void modPosX(int x);
-                    void modPosY(int y);
-                    void setPosX(int x);
-                    void setPosY(int y);
-
-                    std::pair<int, int> getSize() const;
-
                     void setSelected(bool selected);
-
                     bool isClicked() const;
-
                     std::shared_ptr<Zappy::GUI::Ressources::Players> getPlayer() const;
 
                 protected:
@@ -53,14 +45,11 @@ namespace Zappy {
                         SELECTED,
                     } State;
 
-                    std::pair<int, int> _pos;
-                    std::pair<int, int> _size;
                     std::shared_ptr<Zappy::GUI::Ressources::Players> _player;
                     std::unique_ptr<RoundedRectangle> _background;
                     std::unique_ptr<Text> _text;
                     std::unique_ptr<Circle> _team;
                     State _state = NONE;
-                    bool _isDestroyed = false;
             };
         }
     }

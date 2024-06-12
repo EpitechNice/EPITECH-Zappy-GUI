@@ -12,28 +12,25 @@
     #include <string>
     #include <memory>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Model3D {
+            class Model3D: public AComponent {
                 public:
                     Model3D(std::string path, Vector3 pos, float scale, Vector3 rotationAxis = {0, 1, 0}, float angle = 0);
-                    ~Model3D();
 
-                    void destroy();
-
-                    void draw();
+                    void destroy() override;
+                    void draw() override;
 
                     void setOnPosY(float y);
-                    void setPos(Vector3 pos);
                 protected:
                 private:
                     Model _model;
-                    Vector3 _pos;
                     float _scale;
                     Vector3 _rotationAxis;
                     float _angle;
-                    bool _isDestroyed;
             };
         }
     }
