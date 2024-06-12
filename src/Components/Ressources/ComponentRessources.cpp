@@ -12,29 +12,32 @@ namespace Zappy {
         namespace Component {
             Ressources::Ressources(Vector3 size)
             {
-                _size = size;
-                _isDestroyed = false;
+                _sizeX = size.x;
+                _sizeY = size.y;
+                _sizeZ = size.z;
+                _posX = 0;
+                _posY = 0;
+                _posZ = 0;
 
                 float tileXPart = size.x / 8;
                 float tileYPart = size.y / 4;
                 float scale = 0.2;
 
 
-                _pos = {0, 0, 0};
-                _refPosFood         = {tileXPart * 3, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosEgg          = {tileXPart * 5, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosLinemate     = {tileXPart * 2, _pos.y + size.y / 2, tileYPart * 1};
-                _refPosDeraumere    = {tileXPart * 6, _pos.y + size.y / 2, tileYPart * 1};
-                _refPosSibur        = {tileXPart * 7, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosMendiane     = {tileXPart * 6, _pos.y + size.y / 2, tileYPart * 3};
-                _refPosPhiras       = {tileXPart * 2, _pos.y + size.y / 2, tileYPart * 3};
-                _refPosThystame     = {tileXPart * 1, _pos.y + size.y / 2, tileYPart * 2};
-                _refPosZappy        = {tileXPart * 4, _pos.y + size.y / 2, tileYPart * 1};
+                _refPosFood         = {tileXPart * 3, _posY + size.y / 2, tileYPart * 2};
+                _refPosEgg          = {tileXPart * 5, _posY + size.y / 2, tileYPart * 2};
+                _refPosLinemate     = {tileXPart * 2, _posY + size.y / 2, tileYPart * 1};
+                _refPosDeraumere    = {tileXPart * 6, _posY + size.y / 2, tileYPart * 1};
+                _refPosSibur        = {tileXPart * 7, _posY + size.y / 2, tileYPart * 2};
+                _refPosMendiane     = {tileXPart * 6, _posY + size.y / 2, tileYPart * 3};
+                _refPosPhiras       = {tileXPart * 2, _posY + size.y / 2, tileYPart * 3};
+                _refPosThystame     = {tileXPart * 1, _posY + size.y / 2, tileYPart * 2};
+                _refPosZappy        = {tileXPart * 4, _posY + size.y / 2, tileYPart * 1};
 
                 _food = std::make_unique<Model3D>("Food/scene", _refPosFood, 1, (Vector3){1, 0, 0}, -20);
-                _food->setOnPosY(_pos.y + size.y / 2 - 0.2);
+                _food->setOnPosY(_posY + size.y / 2 - 0.2);
                 _egg = std::make_unique<Model3D>("Egg/scene", _refPosEgg, 0.3);
-                _egg->setOnPosY(_pos.y + size.y / 2);
+                _egg->setOnPosY(_posY + size.y / 2);
                 _linemate = std::make_unique<Model3D>("Rocks/rock_1/rock", _refPosLinemate, scale);
                 _deraumere = std::make_unique<Model3D>("Rocks/rock_2/rock", _refPosDeraumere, scale);
                 _sibur = std::make_unique<Model3D>("Rocks/rock_3/rock", _refPosSibur, scale);
@@ -42,12 +45,7 @@ namespace Zappy {
                 _phiras = std::make_unique<Model3D>("Rocks/rock_5/rock", _refPosPhiras, scale);
                 _thystame = std::make_unique<Model3D>("Rocks/rock_6/rock", _refPosThystame, scale);
                 _zappy = std::make_unique<Model3D>("Zappy/scene", _refPosZappy, 1, (Vector3){0, 1, 0}, 90);
-                _zappy->setOnPosY(_pos.y + size.y / 2);
-            }
-
-            Ressources::~Ressources()
-            {
-                destroy();
+                _zappy->setOnPosY(_posY + size.y / 2);
             }
 
             void Ressources::destroy()
@@ -67,50 +65,51 @@ namespace Zappy {
             }
 
 
-            void Ressources::setPos(Vector3 pos)
+            void Ressources::setPosX(float x)
             {
-                _pos = pos;
-                _pos.x -= _size.x / 2;
-                _pos.z -= _size.z / 2;
+                _posX = x;
+                _posX -= _sizeX / 2;
+                _food->setPosX(_refPosFood.x + _posX);
+                _egg->setPosX(_refPosEgg.x + _posX);
+                _linemate->setPosX(_refPosLinemate.x + _posX);
+                _deraumere->setPosX(_refPosDeraumere.x + _posX);
+                _sibur->setPosX(_refPosSibur.x + _posX);
+                _mendiane->setPosX(_refPosMendiane.x + _posX);
+                _phiras->setPosX(_refPosPhiras.x + _posX);
+                _thystame->setPosX(_refPosThystame.x + _posX);
+                _zappy->setPosX(_refPosZappy.x + _posX);
+            }
 
-                _food->setPosX(_refPosFood.x + _pos.x);
-                _food->setPosY(_refPosFood.y + _pos.y);
-                _food->setPosZ(_refPosFood.z + _pos.z);
-                _food->setOnPosY(_pos.y + _size.y / 2 - 0.2);
+            void Ressources::setPosY(float y)
+            {
+                _posY = y;
+                _food->setPosY(_refPosFood.y + _posY);
+                _food->setOnPosY(_posY + _sizeY / 2 - 0.2);
+                _egg->setPosY(_refPosEgg.y + _posY);
+                _egg->setOnPosY(_posY + _sizeY / 2);
+                _linemate->setPosY(_refPosLinemate.y + _posY);
+                _deraumere->setPosY(_refPosDeraumere.y + _posY);
+                _sibur->setPosY(_refPosSibur.y + _posY);
+                _mendiane->setPosY(_refPosMendiane.y + _posY);
+                _phiras->setPosY(_refPosPhiras.y + _posY);
+                _thystame->setPosY(_refPosThystame.y + _posY);
+                _zappy->setPosY(_refPosZappy.y + _posY);
+                _zappy->setOnPosY(_posY + _sizeY / 2);
+            }
 
-                _egg->setPosX(_refPosEgg.x + _pos.x);
-                _egg->setPosY(_refPosEgg.y + _pos.y);
-                _egg->setPosZ(_refPosEgg.z + _pos.z);
-                _egg->setOnPosY(_pos.y + _size.y / 2);
-
-                _linemate->setPosX(_refPosLinemate.x + _pos.x);
-                _linemate->setPosY(_refPosLinemate.y + _pos.y);
-                _linemate->setPosZ(_refPosLinemate.z + _pos.z);
-
-                _deraumere->setPosX(_refPosDeraumere.x + _pos.x);
-                _deraumere->setPosY(_refPosDeraumere.y + _pos.y);
-                _deraumere->setPosZ(_refPosDeraumere.z + _pos.z);
-
-                _sibur->setPosX(_refPosSibur.x + _pos.x);
-                _sibur->setPosY(_refPosSibur.y + _pos.y);
-                _sibur->setPosZ(_refPosSibur.z + _pos.z);
-
-                _mendiane->setPosX(_refPosMendiane.x + _pos.x);
-                _mendiane->setPosY(_refPosMendiane.y + _pos.y);
-                _mendiane->setPosZ(_refPosMendiane.z + _pos.z);
-
-                _phiras->setPosX(_refPosPhiras.x + _pos.x);
-                _phiras->setPosY(_refPosPhiras.y + _pos.y);
-                _phiras->setPosZ(_refPosPhiras.z + _pos.z);
-
-                _thystame->setPosX(_refPosThystame.x + _pos.x);
-                _thystame->setPosY(_refPosThystame.y + _pos.y);
-                _thystame->setPosZ(_refPosThystame.z + _pos.z);
-
-                _zappy->setPosX(_refPosZappy.x + _pos.x);
-                _zappy->setPosY(_refPosZappy.y + _pos.y);
-                _zappy->setPosZ(_refPosZappy.z + _pos.z);
-                _zappy->setOnPosY(_pos.y + _size.y / 2);
+            void Ressources::setPosZ(float z)
+            {
+                _posZ = z;
+                _posZ -= _sizeZ / 2;
+                _food->setPosZ(_refPosFood.z + _posZ);
+                _egg->setPosZ(_refPosEgg.z + _posZ);
+                _linemate->setPosZ(_refPosLinemate.z + _posZ);
+                _deraumere->setPosZ(_refPosDeraumere.z + _posZ);
+                _sibur->setPosZ(_refPosSibur.z + _posZ);
+                _mendiane->setPosZ(_refPosMendiane.z + _posZ);
+                _phiras->setPosZ(_refPosPhiras.z + _posZ);
+                _thystame->setPosZ(_refPosThystame.z + _posZ);
+                _zappy->setPosZ(_refPosZappy.z + _posZ);
             }
 
 

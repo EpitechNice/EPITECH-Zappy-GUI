@@ -57,7 +57,11 @@ namespace Zappy {
 
                 Vector3 pos = _pos;
                 pos.y += _select ? _selectEffect : 0;
-                _ressourcesDrawer->setPos(pos);
+
+                _ressourcesDrawer->setPosX(pos.x);
+                _ressourcesDrawer->setPosY(pos.y);
+                _ressourcesDrawer->setPosZ(pos.z);
+
                 if (_ressources->hasLinemate()) _ressourcesDrawer->drawLinemate();
                 if (_ressources->hasDeraumere()) _ressourcesDrawer->drawDeraumere();
                 if (_ressources->hasMendiane()) _ressourcesDrawer->drawMendiane();
