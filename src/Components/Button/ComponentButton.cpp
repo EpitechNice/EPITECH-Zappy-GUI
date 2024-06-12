@@ -111,10 +111,10 @@ namespace Zappy {
                 _topButton->modPosX(x);
                 _reflexioneffect->modPosX(x);
                 _circle->modPosX(x);
-                _text->modPosX(x);
-                _textStroke->modPosX(x);
-                _modState(NONE);
                 _textPos.first += x;
+                _text->setPosX(_textPos.first);
+                _textStroke->setPosX(_textPos.first);
+                _modState(NONE);
             }
 
             void Button::modPosY(float y)
@@ -126,10 +126,10 @@ namespace Zappy {
                 _topButton->modPosY(y);
                 _reflexioneffect->modPosY(y);
                 _circle->modPosY(y);
-                _text->modPosY(y);
-                _textStroke->modPosY(y);
-                _modState(NONE);
                 _textPos.second += y;
+                _text->setPosY(_textPos.second);
+                _textStroke->setPosY(_textPos.second + 2);
+                _modState(NONE);
             }
 
 

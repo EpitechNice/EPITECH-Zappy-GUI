@@ -27,7 +27,6 @@ namespace Zappy {
                     void start() override;
                     void destroy() override;
                     void update() override;
-                    void draw3D() override;
                     void draw2D() override;
 
                     std::string nextScene() override;
@@ -36,9 +35,9 @@ namespace Zappy {
                 private:
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> _backButton;
-                    std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, std::string, std::string>> _generalButtons;
-                    std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, Zappy::GUI::I18n::SupportedLocale, std::string>> _languageButtons;
-                    std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
+                    std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, std::string, std::string, std::pair<float, float>>> _generalButtons;
+                    std::tuple<std::unique_ptr<Zappy::GUI::Component::Text>, std::string, std::pair<float, float>> _text;
+                    std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, Zappy::GUI::I18n::SupportedLocale, std::string, std::pair<float, float>>> _languageButtons;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
                     Zappy::GUI::I18n::SupportedLocale _lang;
             };
