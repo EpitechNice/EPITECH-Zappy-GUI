@@ -16,21 +16,20 @@
     #include <memory>
 
     #include "Render.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Skybox {
+            class Skybox : public AComponent {
                 public:
                     Skybox(std::string name, float size = 1000);
                     Skybox(Color color, float size = 1000);
-                    ~Skybox() = default;
 
-                    void destroy();
+                    void destroy() override;
+                    void draw() override;
 
                     void update(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
-
-                    void draw();
 
                 protected:
                 private:
@@ -40,12 +39,10 @@ namespace Zappy {
                         Model model;
                         Vector3 position;
                         Vector3 rotation;
-                        float size;
                     } Plane;
 
-                    float _size;
-                    bool _isDestroyed;
                     std::vector<Plane> _planes;
+                    void _createSkybox(std::vector<Texture2D> textures, float size);
             };
         }
     }

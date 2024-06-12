@@ -12,16 +12,19 @@
     #include <memory>
 
     #include "ComponentModel3D.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Ressources {
+            class Ressources: public AComponent {
                 public:
                     Ressources(Vector3 size);
-                    ~Ressources();
 
-                    void destroy();
+                    void destroy() override;
+                    void setPosX(float x) override;
+                    void setPosY(float y) override;
+                    void setPosZ(float z) override;
 
                     void drawFood();
                     void drawEgg();
@@ -33,14 +36,8 @@ namespace Zappy {
                     void drawThystame();
                     void drawZappy();
 
-                    void setPos(Vector3 pos);
                 protected:
                 private:
-                    bool _isDestroyed;
-
-                    Vector3 _size;
-                    Vector3 _pos;
-
                     Vector3 _refPosFood;
                     Vector3 _refPosEgg;
                     Vector3 _refPosLinemate;

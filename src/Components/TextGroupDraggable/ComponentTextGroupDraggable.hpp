@@ -12,33 +12,26 @@
     #include <memory>
 
     #include "ComponentTextGroup.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class TextGroupDraggable {
+            class TextGroupDraggable: public AComponent {
                 public:
                     TextGroupDraggable(std::pair<int, int> pos, std::pair<int, int> size, int gap);
-                    ~TextGroupDraggable();
 
-                    void destroy();
-
-                    void draw();
+                    void draw() override;
+                    void setPosX(float x) override;
 
                     void update();
-
                     void addText(std::string name, std::string text, int gap, Color color);
-
-                    void setPosX(int x);
 
                 protected:
                 private:
-                    std::pair<int, int> _pos;
-                    std::pair<int, int> _size;
                     int _gap;
                     bool _isDragged;
                     std::pair<int, int> _dragOffset;
-                    bool _isDestroyed;
                     std::unique_ptr<TextGroup> _textGroup;
 
                     void _updateTextsPos();

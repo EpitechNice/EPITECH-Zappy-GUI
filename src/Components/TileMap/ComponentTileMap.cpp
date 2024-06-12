@@ -11,17 +11,25 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources)
-                : _pos(pos), _size(size), _tileSize(tileSize), _isDestroyed(false)
             {
-                for (int x = 0; x < size.first; x++) {
+                _posX = pos.x;
+                _posY = pos.y;
+                _posZ = pos.z;
+                _sizeX = size.first;
+                _sizeY = size.second;
+                _tileSize = tileSize;
+                _highLight = std::make_pair(-1, -1);
+                _select = std::make_pair(-1, -1);
+
+                for (int x = 0; x < _sizeX; x++) {
                     std::vector<std::shared_ptr<Tile>> line;
                     std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> ressourcesLine;
-                    for (int z = 0; z < size.second; z++) {
+                    for (int z = 0; z < _sizeY; z++) {
                         Color grassColor = { 112, 224, 0, 255 };
                         if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
                             grassColor = { 60, 186, 2, 255 };
                         ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
-                        line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
+                        line.push_back(std::make_shared<Tile>((Vector3){(float)(_posX + x * _tileSize), (float)_posY, (float)(_posZ + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
 
 
                         // TODO: Delete this
@@ -37,24 +45,13 @@ namespace Zappy {
                     _tiles.push_back(line);
                     Zappy::GUI::Ressources::Ressources::get()->tileRessources.push_back(ressourcesLine);
                 }
-                _highLight = std::make_pair(-1, -1);
-                _select = std::make_pair(-1, -1);
             }
 
-            TileMap::~TileMap()
+            void TileMap::draw()
             {
-                destroy();
-            }
-
-            void TileMap::destroy()
-            {
-                if (_isDestroyed)
-                    return;
                 for (auto &line: _tiles)
                     for (auto &tile : line)
-                        tile->destroy();
-                _tiles.clear();
-                _isDestroyed = true;
+                        tile->draw();
             }
 
             void TileMap::update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter)
@@ -66,8 +63,8 @@ namespace Zappy {
                     point = {(float)(GetScreenWidth() / 2), (float)(GetScreenHeight() / 2)};
                 Ray ray = GetMouseRay(point, render->view()->getCamera());
 
-                for (int x = 0; x < _size.first; x++) {
-                    for (int z = 0; z < _size.second; z++) {
+                for (int x = 0; x < _sizeX; x++) {
+                    for (int z = 0; z < _sizeY; z++) {
                         BoundingBox box = _tiles[x][z]->getTopBox();
                         RayCollision tmp = GetRayCollisionBox(ray, box);
                         if (tmp.hit) {
@@ -95,13 +92,6 @@ namespace Zappy {
                     else
                         inspecter->close();
                 }
-            }
-
-            void TileMap::draw()
-            {
-                for (auto &line: _tiles)
-                    for (auto &tile : line)
-                        tile->draw();
             }
 
             std::vector<std::vector<std::shared_ptr<Tile>>> TileMap::tiles()

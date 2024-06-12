@@ -13,27 +13,21 @@
     #include <vector>
     #include <memory>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Rectangle {
+            class Rectangle : public AComponent {
                 public:
                     Rectangle(std::pair<int, int> pos, std::pair<int, int> size, Color color);
-                    ~Rectangle() = default;
 
-                    void draw();
+                    void draw() override;
 
                     void setStroke(int strokeSize, Color strokeColor);
-                    void unsetStroke();
-
-                    void setPosX(int x);
 
                 protected:
                 private:
-                    std::pair<int, int> _pos;
-                    std::pair<int, int> _size;
-                    Color _color;
-
                     int _strokeSize;
                     Color _strokeColor;
             };

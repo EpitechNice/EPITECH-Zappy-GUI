@@ -11,30 +11,23 @@
     #include <raylib.h>
     #include <raymath.h>
 
+    #include "AComponent.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Circle {
+            class Circle: public AComponent {
                 public:
                     Circle(std::pair<float, float> pos, float radius, Color color);
-                    ~Circle() = default;
 
-                    void draw();
+                    void draw() override;
 
-                    void modPosX(float x);
-                    void setPos(std::pair<float, float> pos);
                     void setRadius(float radius);
-                    void setColor(Color color);
-
-                    std::pair<float, float> getPos() const;
                     float getRadius() const;
-                    Color getColor() const;
 
                 protected:
                 private:
-                    std::pair<float, float> _pos;
                     float _radius;
-                    Color _color;
             };
         }
     }

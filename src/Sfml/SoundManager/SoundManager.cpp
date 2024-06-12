@@ -41,12 +41,14 @@ namespace Zappy {
                 _generalSound.play();
             }
 
-            void SoundManager::setVolumeEffetSonore(float newVolume){
+            void SoundManager::setVolumeEffetSonore(float newVolume)
+            {
                 _volumeClickSound = newVolume;
                 _generalSound.setVolume(_volumeGeneralSound);
             }
 
-            void SoundManager::setVolumeGeneralMusique(float newVolume){
+            void SoundManager::setVolumeGeneralMusique(float newVolume)
+            {
                 _volumeGeneralSound = newVolume;
                 _generalSound.setVolume(_volumeGeneralSound);
             }

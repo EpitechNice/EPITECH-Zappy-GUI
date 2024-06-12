@@ -11,41 +11,34 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             Tile::Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressourcesDrawer, std::shared_ptr<Zappy::GUI::Ressources::TileRessources> ressources)
-                : _pos(pos), _size(size), _color(color), _ressourcesDrawer(ressourcesDrawer), _ressources(ressources), _highlight(false), _select(false), _isDestroyed(false)
             {
+                _posX = pos.x;
+                _posY = pos.y;
+                _posZ = pos.z;
+                _sizeX = size.x;
+                _sizeY = size.y;
+                _sizeZ = size.z;
+                _color = color;
+                _ressourcesDrawer = ressourcesDrawer;
+                _ressources = ressources;
+                _highlight = false;
+                _select = false;
+
                 _grassSize = {size.x, size.y / 2, size.z};
                 _grassPos = {pos.x, pos.y + size.y / 4, pos.z};
                 _dirtSize = {size.x, size.y / 2, size.z};
                 _dirtPos = {pos.x, pos.y - size.y / 4, pos.z};
-                _grass = std::make_unique<Cubic>(_grassPos, _grassSize, color);
-                _dirt = std::make_unique<Cubic>(_dirtPos, _dirtSize, BROWN);
-                _wire = std::make_unique<Cubic>(_pos, _size, BLACK);
-                _wire->setMode(Cubic::WIRES);
-                _selectEffect = _size.y / 3;
-            }
-
-            Tile::~Tile()
-            {
-                destroy();
-            }
-
-            void Tile::destroy()
-            {
-                if (_isDestroyed)
-                    return;
-                _isDestroyed = true;
-            }
-
-            Vector3 Tile::getPos() const
-            {
-                return _pos;
+                _grass = std::make_unique<Cube>(_grassPos, _grassSize, color, Cube::CUBE);
+                _dirt = std::make_unique<Cube>(_dirtPos, _dirtSize, BROWN, Cube::CUBE);
+                _wire = std::make_unique<Cube>((Vector3){_posX, _posY, _posZ}, (Vector3){_sizeX, _sizeY, _sizeZ}, BLACK, Cube::WIRES);
+                _selectEffect = _sizeY / 3;
             }
 
             BoundingBox Tile::getTopBox() const
             {
                 return {
-                    .min = { _pos.x - _size.x / 2, (float)(_pos.y + _size.y / 2 - 0.1), _pos.z - _size.z / 2 },
-                    .max = { _pos.x + _size.x / 2, (float)(_pos.y + _size.y / 2 + 0.1), _pos.z + _size.z / 2 },
+                    .min = { _posX - _sizeX / 2, (float)(_posY + _sizeY / 2 - 0.1), _posZ - _sizeZ / 2 },
+                    .max = { _posX + _sizeX / 2, (float)(_posY + _sizeY / 2 + 0.1), _posZ + _sizeZ / 2 },
                 };
             }
 
@@ -56,9 +49,10 @@ namespace Zappy {
                 if (_select)
                     _wire->draw();
 
-                Vector3 pos = _pos;
-                pos.y += _select ? _selectEffect : 0;
-                _ressourcesDrawer->setPos(pos);
+                _ressourcesDrawer->setPosX(_posX);
+                _ressourcesDrawer->setPosY(_posY + (_select ? _selectEffect : 0));
+                _ressourcesDrawer->setPosZ(_posZ);
+
                 if (_ressources->hasLinemate()) _ressourcesDrawer->drawLinemate();
                 if (_ressources->hasDeraumere()) _ressourcesDrawer->drawDeraumere();
                 if (_ressources->hasMendiane()) _ressourcesDrawer->drawMendiane();
@@ -91,11 +85,11 @@ namespace Zappy {
                     if (!_select) {
                         _grass->setPosY(_grassPos.y);
                         _dirt->setPosY(_dirtPos.y);
-                        _wire->setPosY(_pos.y);
+                        _wire->setPosY(_posY);
                     } else {
                         _grass->setPosY(_grassPos.y + _selectEffect);
                         _dirt->setPosY(_dirtPos.y + _selectEffect);
-                        _wire->setPosY(_pos.y + _selectEffect);
+                        _wire->setPosY(_posY + _selectEffect);
                     }
                 }
             }

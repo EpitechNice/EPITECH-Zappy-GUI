@@ -32,7 +32,6 @@ namespace Zappy {
                     void start() override;
                     void destroy() override;
                     void update() override;
-                    void event() override;
                     void draw3D() override;
                     void draw2D() override;
 
