@@ -66,7 +66,7 @@ namespace Zappy {
                 int gap = (_players.empty()) ? 0 : 20;
                 std::shared_ptr<Zappy::GUI::Component::InspecterSelecter> newPlayer = std::make_shared<InspecterSelecter>(std::make_pair(_pos.first, _pos.second + _size.second + gap), _size.first, player);
                 _players.push_back(newPlayer);
-                _size.second += newPlayer->getSize().second + gap;
+                _size.second += newPlayer->getSizeY() + gap;
             }
 
             void InspecterSelecterGroup::modPosX(int x)
