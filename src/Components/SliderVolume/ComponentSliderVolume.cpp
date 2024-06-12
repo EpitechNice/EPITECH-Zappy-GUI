@@ -5,19 +5,18 @@
 ** ComponentSliderVolume
 */
 
-#include "SliderVolume.hpp"
+#include "ComponentSliderVolume.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            SliderVolume::SliderVolume(std::pair<float, float> pos, float width, float height, std::string name)
+            SliderVolume::SliderVolume(std::pair<float, float> pos, float width, float height)
             {
                 _posX = pos.first;
                 _posY = pos.second;
                 _sizeX = width;
                 _sizeY = height;
                 _active = true;
-                _name = name;
                 _isDrag = false;
 
                 _background = std::make_unique<Component::Rectangle>(std::make_pair(_posX, _posY), std::make_pair(_sizeX, _sizeY), GRAY);
@@ -74,11 +73,6 @@ namespace Zappy {
             {
                 if (!_active) return 0;
                 return _value->getSizeX() / _background->getSizeX() * 100;
-            }
-
-            std::string SliderVolume::getName() const
-            {
-                return _name;
             }
         }
     }

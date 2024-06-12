@@ -5,8 +5,8 @@
 ** ComponentSliderVolume
 */
 
-#ifndef COMPONENT_SLIDERVOLUME_HPP_
-    #define COMPONENT_SLIDERVOLUME_HPP_
+#ifndef COMPONENT_SLIDER_VOLUME_HPP_
+    #define COMPONENT_SLIDER_VOLUME_HPP_
 
     #include <raylib.h>
     #include <raymath.h>
@@ -24,7 +24,7 @@ namespace Zappy {
         namespace Component {
             class SliderVolume: public AComponent {
                 public:
-                    SliderVolume(std::pair<float, float> pos, float width, float height, std::string name);
+                    SliderVolume(std::pair<float, float> pos, float width, float height);
 
                     void draw() override;
 
@@ -33,12 +33,10 @@ namespace Zappy {
                     void setValue(float value);
                     bool getActive() const;
                     float getValue() const;
-                    std::string getName() const;
 
                 private:
                     bool _isDrag;
                     bool _active;
-                    std::string _name;
                     std::unique_ptr<Component::Rectangle> _background;
                     std::unique_ptr<Component::Rectangle> _value;
             };
@@ -46,4 +44,4 @@ namespace Zappy {
     }
 }
 
-#endif /* !COMPONENT_SLIDERVOLUME_HPP_ */
+#endif /* !COMPONENT_SLIDER_VOLUME_HPP_ */
