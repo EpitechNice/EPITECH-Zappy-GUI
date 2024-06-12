@@ -32,13 +32,13 @@ namespace Zappy {
                 Zappy::GUI::Ressources::Ressources::get()->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(9, 1, 0, BEIGE));
 
                 _render = render;
-                _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
-                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, tileSize * _mapSize.first * 2);
+                _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple", tileSize * _mapSize.first * 10);
+                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, tileSize * _mapSize.first * 2.5);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
                 _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){5, 5, 5});
 
-                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){0, 0, 0}, _mapSize, tileSize, _ressources);
+                _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){(float)-((tileSize * _mapSize.first) / 2), 0, (float)-((tileSize * _mapSize.second) / 2)}, _mapSize, tileSize, _ressources);
 
                 _crossPointer = std::make_pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>>(
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
@@ -113,6 +113,7 @@ namespace Zappy {
                     _crossPointer.first->draw();
                     _crossPointer.second->draw();
                 }
+
             }
 
             std::string Game::nextScene()
