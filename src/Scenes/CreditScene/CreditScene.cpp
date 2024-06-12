@@ -10,7 +10,6 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
-//TODO (Refacto i18n) : Create translation value for"Credit1", "Credit2", "Credit3"
             Credit::Credit(std::shared_ptr<Zappy::GUI::Raylib::Render> render)
             {
                 Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
@@ -38,9 +37,6 @@ namespace Zappy {
                 }
             }
 
-            void Credit::start()
-            {}
-
             void Credit::destroy()
             {
                 for (auto &button : _generalButtons)
@@ -61,9 +57,6 @@ namespace Zappy {
                     _lang = i18nHelper->getCurrentLocale();
                 }
             }
-
-            void Credit::draw3D()
-            {}
 
             void Credit::draw2D()
             {

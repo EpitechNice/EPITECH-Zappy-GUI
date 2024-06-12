@@ -23,10 +23,8 @@ namespace Zappy {
                     Credit(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~Credit() = default;
 
-                    void start() override;
                     void destroy() override;
                     void update() override;
-                    void draw3D() override;
                     void draw2D() override;
 
                     std::string nextScene() override;
