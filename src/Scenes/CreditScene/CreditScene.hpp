@@ -10,6 +10,7 @@
 
     #include <memory>
     #include <chrono>
+    #include <vector>
 
     #include "AScene.hpp"
     #include "ComponentBackground2D.hpp"
@@ -34,6 +35,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> _backButton;
                     std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, std::string, std::string>> _generalButtons;
+                    std::vector<std::pair<float, float>> _buttonsPositions;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
                     Zappy::GUI::I18n::SupportedLocale _lang;
             };
