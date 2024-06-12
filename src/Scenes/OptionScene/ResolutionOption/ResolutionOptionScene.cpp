@@ -64,9 +64,6 @@ namespace Zappy {
             }
         }
 
-        void Scene::ResolutionOption::start()
-        {}
-
         void Scene::ResolutionOption::destroy()
         {
             for (auto &text : _text)
@@ -91,26 +88,7 @@ namespace Zappy {
                 _backButton.first->setText(i18nHelper->getTranslation(_backButton.second));
                 _lang = i18nHelper->getCurrentLocale();
             }
-        }
 
-        void Scene::ResolutionOption::draw3D()
-        {}
-
-        void Scene::ResolutionOption::draw2D()
-        {
-            _background->draw();
-            _backButton.first->draw();
-            for (auto &text : _text)
-                text.first->draw();
-            for (auto &button : _resolutionButtons)
-                button.first->draw();
-            for (auto &button : _fpsButtons)
-                button.first->draw();
-        }
-        std::string Scene::ResolutionOption::nextScene()
-        {
-            if (_backButton.first->isClicked(_backButton.second))
-                return "option";
             for (auto &button : _resolutionButtons) {
                 if (button.first->isClicked(button.first->getText())){
                     if (button.second == "Resolution_2960x1440")
@@ -141,6 +119,24 @@ namespace Zappy {
                     button.first->setColor(BLUE);
                 }
             }
+        }
+
+        void Scene::ResolutionOption::draw2D()
+        {
+            _background->draw();
+            _backButton.first->draw();
+            for (auto &text : _text)
+                text.first->draw();
+            for (auto &button : _resolutionButtons)
+                button.first->draw();
+            for (auto &button : _fpsButtons)
+                button.first->draw();
+        }
+
+        std::string Scene::ResolutionOption::nextScene()
+        {
+            if (_backButton.first->isClicked(_backButton.second))
+                return "option";
             return "resolutionSetting";
         }
     }
