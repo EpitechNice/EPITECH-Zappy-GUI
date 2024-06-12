@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         ServerCommunication::ServerCommunication(const std::string& address, int port)
-            : serverAddress(address), serverPort(port), sockfd(-1), running(false)
+            : _serverAddress(address), _serverPort(port), _sockfd(-1), _running(false)
             {
         }
 
@@ -21,23 +21,23 @@ namespace Zappy {
 
         void ServerCommunication::connectToServer()
         {
-            sockfd = socket(AF_INET, SOCK_STREAM, 0);
-            if (sockfd == -1) {
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", serverAddress, serverPort);
+            _sockfd = socket(AF_INET, SOCK_STREAM, 0);
+            if (_sockfd == -1) {
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _serverAddress, _serverPort);
             }
             struct sockaddr_in serv_addr;
             serv_addr.sin_family = AF_INET;
-            serv_addr.sin_port = htons(serverPort);
-            inet_pton(AF_INET, serverAddress.c_str(), &serv_addr.sin_addr);
-            if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
+            serv_addr.sin_port = htons(_serverPort);
+            inet_pton(AF_INET, _serverAddress.c_str(), &serv_addr.sin_addr);
+            if (connect(_sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
                 closeConnection();
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", serverAddress, serverPort);
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _serverAddress, _serverPort);
             }
         }
 
         void ServerCommunication::startCommunication()
         {
-            running = true;
+            _running = true;
             std::thread communicationThread(&ServerCommunication::handleServerMessages, this);
             communicationThread.detach();
         }
@@ -49,16 +49,16 @@ namespace Zappy {
             timeout.tv_sec = 0;
             timeout.tv_usec = 1000;
 
-            while (running) {
+            while (_running) {
                 FD_ZERO(&readfds);
-                FD_SET(sockfd, &readfds);
+                FD_SET(_sockfd, &readfds);
 
-                int ready = select(sockfd + 1, &readfds, NULL, NULL, &timeout);
+                int ready = select(_sockfd + 1, &readfds, NULL, NULL, &timeout);
                 if (ready == -1) {
                     std::cout << "Error in select" << std::endl;
                     break;
                 } else if (ready > 0) {
-                    if (FD_ISSET(sockfd, &readfds)) {
+                    if (FD_ISSET(_sockfd, &readfds)) {
                         receiveAndProcessResponse();
                     }
                 }
@@ -69,13 +69,13 @@ namespace Zappy {
         void ServerCommunication::receiveAndProcessResponse()
         {
             char buffer[100];
-            ssize_t bytesReceived = recv(sockfd, buffer, 100, 0);
+            ssize_t bytesReceived = recv(_sockfd, buffer, 100, 0);
 
             if (bytesReceived == -1) {
                 std::cout << "Error receiving message" << std::endl;
             } else if (bytesReceived == 0) {
                 std::cout << "Connection closed by server" << std::endl;
-                running = false;
+                _running = false;
             } else {
                 buffer[bytesReceived] = '\0';
                 std::string bufferStr(buffer);
@@ -88,38 +88,38 @@ namespace Zappy {
             std::string command = buffer.substr(0, 3);
             std::string responseValue = buffer.substr(3);
 
-            auto it = commandHandlers.find(command);
-            if (it != commandHandlers.end()) {
+            auto it = _commandHandlers.find(command);
+            if (it != _commandHandlers.end()) {
                 it->second(responseValue);
             }
         }
 
         void ServerCommunication::sendCommand()
         {
-            std::unique_lock<std::mutex> lock(commandQueueMutex);
-            if (!commandQueue.empty()) {
-                std::string nextCommand = commandQueue.front();
-                commandQueue.pop();
-                send(sockfd, nextCommand.c_str(), nextCommand.size(), 0);
+            std::unique_lock<std::mutex> lock(_commandQueueMutex);
+            if (!_commandQueue.empty()) {
+                std::string nextCommand = _commandQueue.front();
+                _commandQueue.pop();
+                send(_sockfd, nextCommand.c_str(), nextCommand.size(), 0);
             }
             lock.unlock();
         }
 
         void ServerCommunication::addCommand(const std::string& command)
         {
-            if (sockfd != -1) {
-                std::lock_guard<std::mutex> lock(commandQueueMutex);
-                commandQueue.push(command);
-                commandQueueNotEmpty.notify_one();
+            if (_sockfd != -1) {
+                std::lock_guard<std::mutex> lock(_commandQueueMutex);
+                _commandQueue.push(command);
+                _commandQueueNotEmpty.notify_one();
             }
         }
 
         void ServerCommunication::closeConnection()
         {
-            running = false;
-            if (sockfd != -1) {
-                close(sockfd);
-                sockfd = -1;
+            _running = false;
+            if (_sockfd != -1) {
+                close(_sockfd);
+                _sockfd = -1;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Zappy {
             int _heightWorld, _widthWorld;
             std::istringstream iss(responseValue);
             iss >> _heightWorld >> _widthWorld;
-            mapSizeCallback(_heightWorld, _widthWorld);
+            _mapSizeCallback(_heightWorld, _widthWorld);
         }
 
         void ServerCommunication::handleCommandBct(const std::string& responseValue)
@@ -151,6 +151,7 @@ namespace Zappy {
             std::string teamName;
             iss >> teamName;
             std::cout << "Team name: " << teamName << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandPnw(const std::string& responseValue)
@@ -176,6 +177,7 @@ namespace Zappy {
             std::cout << "Player position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
             Ressources::Ressources::get()->getPlayerFromId(playerId)->setX(x);
             Ressources::Ressources::get()->getPlayerFromId(playerId)->setY(y);
+            // todo virify this
         }
 
         void ServerCommunication::handleCommandPlv(const std::string& responseValue)
@@ -186,6 +188,7 @@ namespace Zappy {
 
             std::cout << "Player level: #" << playerId << ", Level: " << level << std::endl;
             // Ressources::Ressources::get()->getPlayerFromId(playerId)->setLevel(level);
+            // todo
         }
 
         void ServerCommunication::handleCommandPin(const std::string& responseValue)
@@ -216,6 +219,7 @@ namespace Zappy {
             iss >> playerId;
 
             std::cout << "Player expelled: #" << playerId << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandPbc(const std::string& responseValue)
@@ -227,6 +231,7 @@ namespace Zappy {
             std::getline(iss, message);
 
             std::cout << "Broadcast from player #" << playerId << ": " << message << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandPic(const std::string& responseValue)
@@ -243,6 +248,7 @@ namespace Zappy {
             iss >> x >> y >> result;
 
             std::cout << "Incantation ended at (" << x << ", " << y << ") with result: " << result << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandPfk(const std::string& responseValue)
@@ -333,6 +339,7 @@ namespace Zappy {
             iss >> playerId;
 
             std::cout << "Player #" << playerId << " has died." << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandEnw(const std::string& responseValue)
@@ -342,6 +349,7 @@ namespace Zappy {
             iss >> eggNum >> playerId >> x >> y;
 
             std::cout << "New egg: #" << eggNum << " laid by player #" << playerId << " at (" << x << ", " << y << ")" << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandEbo(const std::string& responseValue)
@@ -351,6 +359,13 @@ namespace Zappy {
             iss >> eggNum;
 
             std::cout << "Egg #" << eggNum << " hatched." << std::endl;
+            // todo
+        }
+
+        void ServerCommunication::handleCommandEdi(const std::string& responseValue)
+        {
+            std::cout << "Server broadcasted: " << responseValue << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandSgt(const std::string& responseValue)
@@ -360,6 +375,7 @@ namespace Zappy {
             iss >> eggNum;
 
             std::cout << "Egg #" << eggNum << " died." << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandSst(const std::string& responseValue)
@@ -369,6 +385,7 @@ namespace Zappy {
             iss >> timeUnit;
 
             std::cout << "Current time unit: " << timeUnit << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandSeg(const std::string& responseValue)
@@ -378,6 +395,7 @@ namespace Zappy {
             iss >> timeUnit;
 
             std::cout << "Time unit set to: " << timeUnit << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandSmg(const std::string& responseValue)
@@ -387,6 +405,7 @@ namespace Zappy {
             iss >> teamName;
 
             std::cout << "Game ended. Winning team: " << teamName << std::endl;
+            // todo
         }
 
         void ServerCommunication::handleCommandSuc([[maybe_unused]] const std::string& responseValue)
@@ -397,11 +416,6 @@ namespace Zappy {
         void ServerCommunication::handleCommandSbp([[maybe_unused]] const std::string& responseValue)
         {
             std::cout << "command parametre" << std::endl;
-        }
-
-        void ServerCommunication::handleCommandEdi(const std::string& responseValue)
-        {
-            std::cout << "Server broadcasted: " << responseValue << std::endl;
         }
     }
 }

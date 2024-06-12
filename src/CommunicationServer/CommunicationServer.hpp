@@ -72,23 +72,23 @@ namespace Zappy {
             void handleCommandSuc(const std::string& responseValue);
             void handleCommandSbp(const std::string& responseValue);
 
-            void setMapSizeCallback(std::function<void(int, int)> callback) { mapSizeCallback = callback; };
+            void setMapSizeCallback(std::function<void(int, int)> callback) { _mapSizeCallback = callback; };
 
         private:
             void handleServerMessages();
 
-            std::string serverAddress;
-            int serverPort;
-            int sockfd;
-            bool running;
+            std::string _serverAddress;
+            int _serverPort;
+            int _sockfd;
+            bool _running;
 
-            std::queue<std::string> commandQueue;
-            std::mutex commandQueueMutex;
-            std::condition_variable commandQueueNotEmpty;
+            std::queue<std::string> _commandQueue;
+            std::mutex _commandQueueMutex;
+            std::condition_variable _commandQueueNotEmpty;
 
-            std::function<void(int, int)> mapSizeCallback;
+            std::function<void(int, int)> _mapSizeCallback;
 
-            std::unordered_map<std::string, std::function<void(const std::string&)>> commandHandlers = {
+            std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
                 {"msz", [this](const std::string& responseValue) { handleCommandMsz(responseValue); }},
                 {"bct", [this](const std::string& responseValue) { handleCommandBct(responseValue); }},
                 {"tna", [this](const std::string& responseValue) { handleCommandTna(responseValue); }},
