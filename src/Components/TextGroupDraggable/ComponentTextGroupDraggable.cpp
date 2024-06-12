@@ -57,8 +57,7 @@ namespace Zappy {
             void TextGroupDraggable::addText(std::string name, std::string text, int gap, Color color)
             {
                 _textGroup->addText(name, text, gap, color);
-                std::pair<int, int> groupSize = _textGroup->getSize();
-                _textGroup->setPosY(_pos.second - groupSize.second + _size.second);
+                _textGroup->setPosY(_pos.second - _textGroup->getSizeY() + _size.second);
             }
 
             void TextGroupDraggable::setPosX(int x)
@@ -75,28 +74,27 @@ namespace Zappy {
 
             void TextGroupDraggable::_setDragOffset()
             {
-                std::pair<int, int> groupPos = _textGroup->getPos();
-                _dragOffset = std::make_pair(GetMouseX() - groupPos.first, GetMouseY() - groupPos.second);
+                _dragOffset = std::make_pair(GetMouseX() - _textGroup->getPosX(), GetMouseY() - _textGroup->getPosY());
                 _isDragged = true;
             }
 
             void TextGroupDraggable::_endDrag()
             {
                 _isDragged = false;
-                std::pair<int, int> groupPos = _textGroup->getPos();
-                std::pair<int, int> groupSize = _textGroup->getSize();
+                float groupPosY = _textGroup->getPosY();
+                float groupSizeY = _textGroup->getSizeY();
 
-                if (groupSize.second < _size.second) {
-                    _textGroup->setPosY(_pos.second - groupSize.second + _size.second);
+                if (groupSizeY < _size.second) {
+                    _textGroup->setPosY(_pos.second - groupSizeY + _size.second);
                     return;
                 }
 
-                if (groupPos.second > _pos.second) {
+                if (groupPosY > _pos.second) {
                     _textGroup->setPosY(_pos.second);
                     return;
                 }
-                if (groupPos.second + groupSize.second < _pos.second + _size.second) {
-                    _textGroup->setPosY(_pos.second - groupSize.second + _size.second);
+                if (groupPosY + groupSizeY < _pos.second + _size.second) {
+                    _textGroup->setPosY(_pos.second - groupSizeY + _size.second);
                     return;
                 }
             }

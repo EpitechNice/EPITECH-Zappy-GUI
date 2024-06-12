@@ -11,19 +11,18 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             TextGroup::TextGroup(std::pair<int, int> pos, int width, int gap)
-                : _pos(pos), _width(width), _height(0), _gap(gap), _isDestroyed(false)
             {
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = width;
+                _sizeY = 0;
+                _gap = gap;
                 _texts.clear();
-            }
-
-            TextGroup::~TextGroup()
-            {
-                if (!_isDestroyed)
-                    destroy();
             }
 
             void TextGroup::destroy()
             {
+                if (_isDestroyed) return;
                 _texts.clear();
                 _isDestroyed = true;
             }
@@ -36,35 +35,25 @@ namespace Zappy {
 
             void TextGroup::addText(std::string name, std::string text, int gap, Color color)
             {
-                _texts.push_back(std::make_unique<TextMessage>(std::make_pair(_pos.first, _pos.second + _height), _width, name, text, gap, color));
-                _height += _texts.back()->getSizeY() + _gap;
+                _texts.push_back(std::make_unique<TextMessage>(std::make_pair(_posX, _posY + _sizeY), _sizeX, name, text, gap, color));
+                _sizeY += _texts.back()->getSizeY() + _gap;
             }
 
-            void TextGroup::setPosX(int x)
+            void TextGroup::setPosX(float x)
             {
-                _pos.first = x;
+                _posX = x;
                 for (auto &text : _texts)
                     text->setPosX(x);
             }
 
-            void TextGroup::setPosY(int y)
+            void TextGroup::setPosY(float y)
             {
-                _pos.second = y;
+                _posY = y;
                 int tmp = 0;
                 for (auto &text : _texts) {
                     text->setPosY(y + tmp);
                     tmp += text->getSizeY() + _gap;
                 }
-            }
-
-            std::pair<int, int> TextGroup::getPos()
-            {
-                return _pos;
-            }
-
-            std::pair<int, int> TextGroup::getSize()
-            {
-                return std::make_pair(_width, _height);
             }
         }
     }
