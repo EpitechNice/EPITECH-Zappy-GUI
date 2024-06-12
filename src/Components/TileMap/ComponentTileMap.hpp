@@ -40,8 +40,6 @@ namespace Zappy {
                     bool hasSelected() const;
                     std::pair<int, int> getSelected() const;
 
-                    void updateTilesContent(int x, int y, int q0, int q1, int q2, int q3, int q4, int q5, int q6);
-
                 protected:
                 private:
                     Vector3 _pos;

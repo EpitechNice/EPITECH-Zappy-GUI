@@ -136,7 +136,13 @@ namespace Zappy {
             std::istringstream iss(responseValue);
             int x, y, q0, q1, q2, q3, q4, q5, q6;
             iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
-            tileContentCallback(x, y, q0, q1, q2, q3, q4, q5, q6);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setFood(q0);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setLinemate(q1);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setDeraumere(q2);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setSibur(q3);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setMendiane(q4);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setPhiras(q5);
+            Ressources::Ressources::get()->getTileFromPos(x, y)->setThystame(q6);
         }
 
         void ServerCommunication::handleCommandTna(const std::string& responseValue)
@@ -149,70 +155,83 @@ namespace Zappy {
 
         void ServerCommunication::handleCommandPnw(const std::string& responseValue)
         {
-            int playerNum, x, y, orientation, level;
+            int playerId, x, y, orientation, level;
             std::string teamName;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> x >> y >> orientation >> level >> teamName;
+            iss >> playerId >> x >> y >> orientation >> level >> teamName;
 
-            std::cout << "New player: #" << playerNum << ", X: " << x << ", Y: " << y
+            std::cout << "New player: #" << playerId << ", X: " << x << ", Y: " << y
                     << ", Orientation: " << orientation << ", Level: " << level
                     << ", Team: " << teamName << std::endl;
+            //todo handle level, teamname and color
+            Ressources::Ressources::get()->players.push_back(std::make_shared<Ressources::Players>(playerId, x, y, BLUE));
         }
 
         void ServerCommunication::handleCommandPpo(const std::string& responseValue)
         {
-            int playerNum, x, y, orientation;
+            int playerId, x, y;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> x >> y >> orientation;
+            iss >> playerId >> x >> y;
 
-            std::cout << "Player position: #" << playerNum << ", X: " << x << ", Y: " << y
-                    << ", Orientation: " << orientation << std::endl;
+            std::cout << "Player position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setX(x);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setY(y);
         }
 
         void ServerCommunication::handleCommandPlv(const std::string& responseValue)
         {
-            int playerNum, level;
+            int playerId, level;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> level;
+            iss >> playerId >> level;
 
-            std::cout << "Player level: #" << playerNum << ", Level: " << level << std::endl;
+            std::cout << "Player level: #" << playerId << ", Level: " << level << std::endl;
+            // Ressources::Ressources::get()->getPlayerFromId(playerId)->setLevel(level);
         }
 
         void ServerCommunication::handleCommandPin(const std::string& responseValue)
         {
-            int playerNum, x, y, q0, q1, q2, q3, q4, q5, q6;
+            int playerId, x, y, q0, q1, q2, q3, q4, q5, q6;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+            iss >> playerId >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
 
-            std::cout << "Player inventory: #" << playerNum << ", X: " << x << ", Y: " << y
+            std::cout << "Player inventory: #" << playerId << ", X: " << x << ", Y: " << y
                     << ", q0: " << q0 << ", q1: " << q1 << ", q2: " << q2
                     << ", q3: " << q3 << ", q4: " << q4 << ", q5: " << q5
                     << ", q6: " << q6 << std::endl;
+            // Ressources::Ressources::get()->getPlayerFromId(playerId)->setX(x);
+            // Ressources::Ressources::get()->getPlayerFromId(playerId)->setY(y);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setFood(q0);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setLinemate(q1);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setDeraumere(q2);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setSibur(q3);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setMendiane(q4);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setPhiras(q5);
+            Ressources::Ressources::get()->getPlayerFromId(playerId)->setThystame(q6);
         }
 
         void ServerCommunication::handleCommandPex(const std::string& responseValue)
         {
-            int playerNum;
+            int playerId;
             std::istringstream iss(responseValue);
-            iss >> playerNum;
+            iss >> playerId;
 
-            std::cout << "Player expelled: #" << playerNum << std::endl;
+            std::cout << "Player expelled: #" << playerId << std::endl;
         }
 
         void ServerCommunication::handleCommandPbc(const std::string& responseValue)
         {
-            int playerNum;
+            int playerId;
             std::string message;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> std::ws;
+            iss >> playerId >> std::ws;
             std::getline(iss, message);
 
-            std::cout << "Broadcast from player #" << playerNum << ": " << message << std::endl;
+            std::cout << "Broadcast from player #" << playerId << ": " << message << std::endl;
         }
 
         void ServerCommunication::handleCommandPic(const std::string& responseValue)
         {
-            std::cout << "response serveur:" << responseValue << std::endl;
+            std::cout << responseValue << std::endl;
             //todo
         }
 
@@ -228,47 +247,101 @@ namespace Zappy {
 
         void ServerCommunication::handleCommandPfk(const std::string& responseValue)
         {
-            int playerNum;
+            int playerId;
             std::istringstream iss(responseValue);
-            iss >> playerNum;
+            iss >> playerId;
 
-            std::cout << "Player #" << playerNum << " laid an egg." << std::endl;
+            std::cout << "Player #" << playerId << " laid an egg." << std::endl;
+            int playerX = Ressources::Ressources::get()->getPlayerFromId(playerId)->getX();
+            int playerY = Ressources::Ressources::get()->getPlayerFromId(playerId)->getY();
+            int value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getEgg();
+            Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setEgg(value + 1);
         }
 
         void ServerCommunication::handleCommandPdr(const std::string& responseValue)
         {
-            int playerNum, resourceNum;
+            int playerId, resourceNum;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> resourceNum;
+            iss >> playerId >> resourceNum;
+            int playerX = Ressources::Ressources::get()->getPlayerFromId(playerId)->getX();
+            int playerY = Ressources::Ressources::get()->getPlayerFromId(playerId)->getY();
+            int value;
 
-            std::cout << "Player #" << playerNum << " dropped resource #" << resourceNum << std::endl;
+            std::cout << "Player #" << playerId << " dropped resource #" << resourceNum << std::endl;
+            if (resourceNum == 0) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getFood();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setFood(value + 1);
+            } else if (resourceNum == 1) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getLinemate();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setLinemate(value + 1);
+            } else if (resourceNum == 2) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getDeraumere();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setDeraumere(value + 1);
+            } else if (resourceNum == 3) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getSibur();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setSibur(value + 1);
+            } else if (resourceNum == 4) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getMendiane();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setMendiane(value + 1);
+            } else if (resourceNum == 5) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getPhiras();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setPhiras(value + 1);
+            } else if (resourceNum == 6) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getThystame();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setThystame(value + 1);
+            }
         }
 
         void ServerCommunication::handleCommandPgt(const std::string& responseValue)
         {
-            int playerNum, resourceNum;
+            int playerId, resourceNum;
             std::istringstream iss(responseValue);
-            iss >> playerNum >> resourceNum;
+            iss >> playerId >> resourceNum;
+            int playerX = Ressources::Ressources::get()->getPlayerFromId(playerId)->getX();
+            int playerY = Ressources::Ressources::get()->getPlayerFromId(playerId)->getY();
+            int value;
 
-            std::cout << "Player #" << playerNum << " took resource #" << resourceNum << std::endl;
+            std::cout << "Player #" << playerId << " took resource #" << resourceNum << std::endl;
+            if (resourceNum == 0) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getFood();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setFood(value - 1);
+            } else if (resourceNum == 1) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getLinemate();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setLinemate(value - 1);
+            } else if (resourceNum == 2) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getDeraumere();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setDeraumere(value - 1);
+            } else if (resourceNum == 3) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getSibur();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setSibur(value - 1);
+            } else if (resourceNum == 4) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getMendiane();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setMendiane(value - 1);
+            } else if (resourceNum == 5) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getPhiras();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setPhiras(value - 1);
+            } else if (resourceNum == 6) {
+                value = Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getThystame();
+                Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setThystame(value - 1);
+            }
         }
 
         void ServerCommunication::handleCommandPdi(const std::string& responseValue)
         {
-            int playerNum;
+            int playerId;
             std::istringstream iss(responseValue);
-            iss >> playerNum;
+            iss >> playerId;
 
-            std::cout << "Player #" << playerNum << " has died." << std::endl;
+            std::cout << "Player #" << playerId << " has died." << std::endl;
         }
 
         void ServerCommunication::handleCommandEnw(const std::string& responseValue)
         {
-            int eggNum, playerNum, x, y;
+            int eggNum, playerId, x, y;
             std::istringstream iss(responseValue);
-            iss >> eggNum >> playerNum >> x >> y;
+            iss >> eggNum >> playerId >> x >> y;
 
-            std::cout << "New egg: #" << eggNum << " laid by player #" << playerNum << " at (" << x << ", " << y << ")" << std::endl;
+            std::cout << "New egg: #" << eggNum << " laid by player #" << playerId << " at (" << x << ", " << y << ")" << std::endl;
         }
 
         void ServerCommunication::handleCommandEbo(const std::string& responseValue)
@@ -316,18 +389,14 @@ namespace Zappy {
             std::cout << "Game ended. Winning team: " << teamName << std::endl;
         }
 
-        void ServerCommunication::handleCommandSuc(const std::string& responseValue)
+        void ServerCommunication::handleCommandSuc([[maybe_unused]] const std::string& responseValue)
         {
-            std::string message;
-            std::istringstream iss(responseValue);
-            std::getline(iss, message);
-
-            std::cout << "Server message: " << message << std::endl;
+            std::cout << "Unknown command" << std::endl;
         }
 
         void ServerCommunication::handleCommandSbp([[maybe_unused]] const std::string& responseValue)
         {
-            std::cout << "Unknown command" << std::endl;
+            std::cout << "command parametre" << std::endl;
         }
 
         void ServerCommunication::handleCommandEdi(const std::string& responseValue)

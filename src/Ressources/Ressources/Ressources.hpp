@@ -29,6 +29,7 @@ namespace Zappy {
                     std::vector<std::shared_ptr<Players>> players;
 
                     std::shared_ptr<Players> getPlayerFromId(int id) const;
+                    std::shared_ptr<Zappy::GUI::Ressources::TileRessources> getTileFromPos(int posX, int posY) const;
 
                 protected:
                 private:

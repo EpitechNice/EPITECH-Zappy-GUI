@@ -44,7 +44,11 @@ namespace Zappy {
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
-                serverCommunication->addCommand("bct 1 3\r\n");
+                serverCommunication->addCommand("bct 2 1\r\n");
+                int id = Zappy::GUI::Ressources::Ressources::get()->players[1]->getId();
+                std::string command = "ppo " + std::to_string(id) + "\r\n";
+                serverCommunication->addCommand(command);
+                // serverCommunication->addCommand("plv #1\r\n");
                 // serverCommunication->addCommand("mct\r\n");
             }
 

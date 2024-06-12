@@ -13,9 +13,6 @@ namespace Zappy {
             TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
                 : _pos(pos), _size(size), _tileSize(tileSize), _isDestroyed(false)
             {
-                serverCommunication->setUpdateTilesContentCallback([this](int x, int y, int q0, int q1, int q2, int q3, int q4, int q5, int q6) {
-                    this->updateTilesContent(x, y, q0, q1, q2, q3, q4, q5, q6);
-                });
                 for (int x = 0; x < size.first; x++) {
                     std::vector<std::shared_ptr<Tile>> line;
                     std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> ressourcesLine;
@@ -25,7 +22,6 @@ namespace Zappy {
                             grassColor = { 60, 186, 2, 255 };
                         ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
                         line.push_back(std::make_shared<Tile>((Vector3){(float)(pos.x + x * _tileSize), (float)pos.y, (float)(pos.z + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
-
 
                         // TODO: Delete this
                         ressourcesLine.back()->setFood(rand() % 5);
@@ -128,20 +124,6 @@ namespace Zappy {
             std::pair<int, int> TileMap::getSelected() const
             {
                 return _select;
-            }
-
-            void TileMap::updateTilesContent(int x, int y, int q0, int q1, int q2, int q3, int q4, int q5, int q6)
-            {
-                if (x >= 0 && x < _size.first && y >= 0 && y < _size.second) {
-                    auto tile = _tiles[x][y];
-                    tile->getRessources()->setFood(q0);
-                    tile->getRessources()->setLinemate(q1);
-                    tile->getRessources()->setDeraumere(q2);
-                    tile->getRessources()->setSibur(q3);
-                    tile->getRessources()->setMendiane(q4);
-                    tile->getRessources()->setPhiras(q5);
-                    tile->getRessources()->setThystame(q6);
-                }
             }
         }
     }
