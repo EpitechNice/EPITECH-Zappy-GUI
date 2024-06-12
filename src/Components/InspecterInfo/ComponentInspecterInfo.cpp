@@ -30,21 +30,6 @@ namespace Zappy {
                 _thystame = std::make_unique<TextBox>(std::make_pair(_posX, _phiras->getPosY() + _phiras->getSizeY() + 10), _sizeX, "Thystame: ", 20, WHITE);
             }
 
-            void InspecterInfo::destroy()
-            {
-                if (_isDestroyed) return;
-                _noPlayerSelected->destroy();
-                _name->destroy();
-                _food->destroy();
-                _linemate->destroy();
-                _deraumere->destroy();
-                _sibur->destroy();
-                _mendiane->destroy();
-                _phiras->destroy();
-                _thystame->destroy();
-                _isDestroyed = true;
-            }
-
             void InspecterInfo::draw()
             {
                 if (_player == nullptr) {

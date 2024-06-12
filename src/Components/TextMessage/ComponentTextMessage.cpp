@@ -17,14 +17,6 @@ namespace Zappy {
                 _text = std::make_unique<TextBox>(std::make_pair(pos.first, pos.second + _name->getSizeY() + _gap), width, text, 15, WHITE, "supercell.ttf");
             }
 
-            void TextMessage::destroy()
-            {
-                if (_isDestroyed) return;
-                _name->destroy();
-                _text->destroy();
-                _isDestroyed = true;
-            }
-
             void TextMessage::draw()
             {
                 _name->draw();

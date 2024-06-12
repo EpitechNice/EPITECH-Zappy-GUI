@@ -47,16 +47,6 @@ namespace Zappy {
                 }
             }
 
-            void TileMap::destroy()
-            {
-                if (_isDestroyed) return;
-                for (auto &line: _tiles)
-                    for (auto &tile : line)
-                        tile->destroy();
-                _tiles.clear();
-                _isDestroyed = true;
-            }
-
             void TileMap::draw()
             {
                 for (auto &line: _tiles)

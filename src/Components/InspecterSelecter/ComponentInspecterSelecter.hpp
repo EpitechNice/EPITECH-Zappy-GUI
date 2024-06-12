@@ -25,7 +25,6 @@ namespace Zappy {
                 public:
                     InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Players> player);
 
-                    void destroy() override;
                     void draw() override;
                     void modPosX(float x) override;
                     void modPosY(float y) override;

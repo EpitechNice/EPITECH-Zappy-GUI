@@ -66,15 +66,6 @@ namespace Zappy {
 
         void Scene::ResolutionOption::destroy()
         {
-            for (auto &text : _text)
-                text.first->destroy();
-            for (auto &button : _resolutionButtons)
-                button.first->destroy();
-            _resolutionButtons.clear();
-            for (auto &button : _fpsButtons)
-                button.first->destroy();
-            _fpsButtons.clear();
-            _backButton.first->destroy();
             _background->destroy();
         }
 

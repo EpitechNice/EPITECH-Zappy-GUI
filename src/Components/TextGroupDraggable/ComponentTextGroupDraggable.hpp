@@ -21,7 +21,6 @@ namespace Zappy {
                 public:
                     TextGroupDraggable(std::pair<int, int> pos, std::pair<int, int> size, int gap);
 
-                    void destroy() override;
                     void draw() override;
                     void setPosX(float x) override;
 

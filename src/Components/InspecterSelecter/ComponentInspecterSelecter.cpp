@@ -30,14 +30,6 @@ namespace Zappy {
                 _text->setPosY((float)(pos.second + 10));
             }
 
-
-            void InspecterSelecter::destroy()
-            {
-                if (_isDestroyed) return;
-                _text->destroy();
-                _isDestroyed = true;
-            }
-
             void InspecterSelecter::update()
             {
                 _state = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)_posX, (float)_posY, (float)_sizeX, (float)_sizeY}) ? IsMouseButtonPressed(MOUSE_LEFT_BUTTON) ? CLICKED : HOVER : NONE;

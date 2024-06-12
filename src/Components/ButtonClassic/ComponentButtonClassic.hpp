@@ -34,7 +34,6 @@ namespace Zappy {
 
                     ButtonClassic(std::pair<float, float> pos, std::pair<float, float> size, std::string text, int textSize, Color color);
 
-                    void destroy() override;
                     void draw() override;
                     void setPosX(float x) override;
                     void setPosY(float y) override;

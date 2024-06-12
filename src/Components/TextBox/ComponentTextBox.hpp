@@ -12,6 +12,7 @@
     #include <string>
 
     #include "AComponent.hpp"
+    #include "FontManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -20,7 +21,6 @@ namespace Zappy {
                 public:
                     TextBox(std::pair<int, int> pos, int width, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
 
-                    void destroy() override;
                     void draw() override;
 
                     void setText(std::string text);

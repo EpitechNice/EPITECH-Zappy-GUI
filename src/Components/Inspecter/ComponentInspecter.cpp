@@ -61,18 +61,6 @@ namespace Zappy {
             }
 
 
-            void Inspecter::destroy()
-            {
-                if (_isDestroyed) return;
-                _openButton->destroy();
-                for (auto &tab : _tabs)
-                    std::get<BUTTON>(tab)->destroy();
-                _selecters->destroy();
-                _infos->destroy();
-                _infosTile->destroy();
-            }
-
-
             void Inspecter::draw()
             {
                 _rectMid->draw();

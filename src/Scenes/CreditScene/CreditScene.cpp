@@ -40,10 +40,6 @@ namespace Zappy {
 
             void Credit::destroy()
             {
-                for (auto &button : _generalButtons)
-                    std::get<0>(button)->destroy();
-                _generalButtons.clear();
-                std::get<0>(_backButton)->destroy();
                 _background->destroy();
             }
 

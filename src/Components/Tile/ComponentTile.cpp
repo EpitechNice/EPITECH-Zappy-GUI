@@ -34,13 +34,6 @@ namespace Zappy {
                 _selectEffect = _sizeY / 3;
             }
 
-            void Tile::destroy()
-            {
-                if (_isDestroyed)
-                    return;
-                _isDestroyed = true;
-            }
-
             BoundingBox Tile::getTopBox() const
             {
                 return {

@@ -35,8 +35,7 @@ namespace Zappy {
 
         void SceneManager::destroy()
         {
-            if (_isDestroyed)
-                return;
+            if (_isDestroyed) return;
             for (auto &scene : _scenes)
                 scene.second->destroy();
             _render->destroy();

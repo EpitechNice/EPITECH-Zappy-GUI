@@ -18,16 +18,8 @@ namespace Zappy {
                 _fontSize = fontSize;
                 _color = color;
 
-                std::string path = "./assets/font/" + font;
-                _font = LoadFont(path.c_str());
+                _font = Zappy::GUI::Raylib::FontManager::get()->getFont(font);
                 setText(text);
-            }
-
-            void Text::destroy()
-            {
-                if (_isDestroyed) return;
-                UnloadFont(_font);
-                _isDestroyed = true;
             }
 
             void Text::draw()

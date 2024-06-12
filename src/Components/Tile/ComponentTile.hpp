@@ -26,7 +26,6 @@ namespace Zappy {
                 public:
                     Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressourcesDrawer, std::shared_ptr<Zappy::GUI::Ressources::TileRessources> ressources);
 
-                    void destroy() override;
                     void draw() override;
 
                     BoundingBox getTopBox() const;

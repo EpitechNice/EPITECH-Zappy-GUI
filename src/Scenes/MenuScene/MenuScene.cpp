@@ -46,9 +46,6 @@ namespace Zappy {
 
             void Menu::destroy()
             {
-                for (auto &button : _buttons)
-                    std::get<0>(button)->destroy();
-                _buttons.clear();
                 _logo->destroy();
                 _background->destroy();
             }

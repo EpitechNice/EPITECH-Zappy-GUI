@@ -31,7 +31,6 @@ namespace Zappy {
                 public:
                     Inspecter();
 
-                    void destroy() override;
                     void draw() override;
 
                     void update(std::pair<int, int> selectedTile);

@@ -14,6 +14,7 @@
     #include <iostream>
 
     #include "AComponent.hpp"
+    #include "FontManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -22,7 +23,6 @@ namespace Zappy {
                 public:
                     Text(std::pair<float, float> pos, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
 
-                    void destroy() override;
                     void draw() override;
 
                     void setText(std::string text);

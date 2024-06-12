@@ -23,8 +23,6 @@ namespace Zappy {
 
             void HelperScene::destroy()
             {
-                _text.first->destroy();
-                _backButton.first->destroy();
                 _background->destroy();
             }
 

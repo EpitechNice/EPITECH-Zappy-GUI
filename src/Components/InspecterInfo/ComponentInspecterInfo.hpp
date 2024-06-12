@@ -25,7 +25,6 @@ namespace Zappy {
                 public:
                     InspecterInfo(std::pair<int, int> pos, std::pair<int, int> size);
 
-                    void destroy() override;
                     void draw() override;
                     void modPosX(float x) override;
 

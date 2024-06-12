@@ -22,13 +22,6 @@ namespace Zappy {
                 _textGroup = std::make_unique<TextGroup>(pos, _sizeX, gap);
             }
 
-            void TextGroupDraggable::destroy()
-            {
-                if (_isDestroyed) return;
-                _textGroup->destroy();
-                _isDestroyed = true;
-            }
-
             void TextGroupDraggable::draw()
             {
                 _textGroup->draw();

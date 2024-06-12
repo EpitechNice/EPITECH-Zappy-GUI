@@ -24,7 +24,6 @@ namespace Zappy {
                 public:
                     TextGroup(std::pair<int, int> pos, int width, int gap);
 
-                    void destroy() override;
                     void draw() override;
                     void setPosX(float x) override;
                     void setPosY(float y) override;

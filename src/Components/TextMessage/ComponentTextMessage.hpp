@@ -22,7 +22,6 @@ namespace Zappy {
                 public:
                     TextMessage(std::pair<int, int> pos, int width, std::string name, std::string text, int gap, Color color);
 
-                    void destroy() override;
                     void draw() override;
 
                     void setPosX(float x) override;

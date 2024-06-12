@@ -25,7 +25,6 @@ namespace Zappy {
 
         void Scene::SoundOption::destroy()
         {
-            _backButton.first->destroy();
             _background->destroy();
         }
 

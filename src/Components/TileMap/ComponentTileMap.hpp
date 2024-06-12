@@ -26,7 +26,6 @@ namespace Zappy {
                 public:
                     TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources);
 
-                    void destroy() override;
                     void draw() override;
 
                     void update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter);

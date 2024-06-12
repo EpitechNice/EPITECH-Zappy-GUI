@@ -20,13 +20,6 @@ namespace Zappy {
                 _texts.clear();
             }
 
-            void TextGroup::destroy()
-            {
-                if (_isDestroyed) return;
-                _texts.clear();
-                _isDestroyed = true;
-            }
-
             void TextGroup::draw()
             {
                 for (auto &text : _texts)

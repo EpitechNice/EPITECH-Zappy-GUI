@@ -21,7 +21,6 @@ namespace Zappy {
                 public:
                     InspecterSelecterGroup(std::pair<int, int> pos, int width);
 
-                    void destroy() override;
                     void draw() override;
                     void modPosX(float x) override;
                     void setPosX(float x) override;
@@ -34,7 +33,6 @@ namespace Zappy {
                 protected:
                 private:
                     std::vector<std::shared_ptr<InspecterSelecter>> _players;
-                    bool _isDestroyed = false;
                     int _selected = -1;
             };
         }

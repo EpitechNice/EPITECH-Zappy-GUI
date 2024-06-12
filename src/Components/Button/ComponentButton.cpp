@@ -46,14 +46,6 @@ namespace Zappy {
                 _modState(DEFAULT);
             }
 
-            void Button::destroy()
-            {
-                if (_isDestroyed) return;
-                _text->destroy();
-                _textStroke->destroy();
-                _isDestroyed = true;
-            }
-
             void Button::draw()
             {
                 State oldState = _state;

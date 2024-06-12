@@ -38,14 +38,6 @@ namespace Zappy {
                 _lastClick = -1;
             }
 
-            void ButtonClassic::destroy()
-            {
-                if (_isDestroyed) return;
-                _text->destroy();
-                _textStroke->destroy();
-                _isDestroyed = true;
-            }
-
             void ButtonClassic::draw()
             {
                 State oldState = _state;

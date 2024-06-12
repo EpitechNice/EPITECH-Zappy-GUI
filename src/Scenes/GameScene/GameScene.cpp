@@ -43,10 +43,7 @@ namespace Zappy {
 
             void Game::destroy()
             {
-                _tileMap->destroy();
                 _ressources->destroy();
-                _inspecter->destroy();
-                _chatbox->destroy();
                 _borderbox->destroy();
                 _skybox->destroy();
             }

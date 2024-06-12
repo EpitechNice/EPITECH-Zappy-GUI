@@ -62,14 +62,6 @@ namespace Zappy {
 
             void Option::destroy()
             {
-                for (auto &button : _generalButtons)
-                    std::get<0>(button)->destroy();
-                _generalButtons.clear();
-                std::get<0>(_text)->destroy();
-                for (auto &button : _languageButtons)
-                    std::get<0>(button)->destroy();
-                _languageButtons.clear();
-                _backButton.first->destroy();
                 _background->destroy();
             }
 

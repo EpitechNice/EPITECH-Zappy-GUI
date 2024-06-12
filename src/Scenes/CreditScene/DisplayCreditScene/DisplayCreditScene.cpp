@@ -24,8 +24,6 @@ namespace Zappy {
 
             void CreditScene::destroy()
             {
-                _text.first->destroy();
-                _backButton.first->destroy();
                 _background->destroy();
             }
 

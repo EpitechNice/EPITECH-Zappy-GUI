@@ -32,23 +32,6 @@ namespace Zappy {
                 _isDestroyed = false;
             }
 
-            void InspecterInfoTile::destroy()
-            {
-                if (_isDestroyed) return;
-                _noTileSelected->destroy();
-                _name->destroy();
-                _food->destroy();
-                _linemate->destroy();
-                _deraumere->destroy();
-                _sibur->destroy();
-                _mendiane->destroy();
-                _phiras->destroy();
-                _thystame->destroy();
-                _egg->destroy();
-                _players->destroy();
-                _isDestroyed = true;
-            }
-
             void InspecterInfoTile::draw()
             {
                 if (_tile == nullptr) {

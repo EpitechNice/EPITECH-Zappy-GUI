@@ -31,6 +31,7 @@ namespace Zappy {
             {
                 if (!_isDestroyed) {
                     _musiquePrincipal.stop();
+                    FontManager::get()->destroy();
                     UnloadImage(_icon);
                     CloseWindow();
                     _isDestroyed = true;

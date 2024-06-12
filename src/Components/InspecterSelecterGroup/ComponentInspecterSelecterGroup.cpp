@@ -18,15 +18,6 @@ namespace Zappy {
                 _sizeY = 0;
             }
 
-            void InspecterSelecterGroup::destroy()
-            {
-                if (_isDestroyed) return;
-                for (auto &player : _players)
-                    player->destroy();
-                _players.clear();
-                _isDestroyed = true;
-            }
-
             void InspecterSelecterGroup::draw()
             {
                 for (auto &player : _players)

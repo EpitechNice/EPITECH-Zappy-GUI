@@ -41,6 +41,7 @@ SRC		=   src/Main.cpp																				\
 			src/Parsing/ParsingError.cpp																\
 			src/Parsing/ParsingHelp.cpp																	\
 			src/Raylib/ColorManager/ColorManager.cpp													\
+			src/Raylib/FontManager/FontManager.cpp														\
 			src/Raylib/Render/Render.cpp																\
 			src/Raylib/View/View.cpp																	\
 			src/Ressources/Players/Players.cpp															\
@@ -96,7 +97,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Components/ButtonClassic					\
 				-I./src/Components/Chatbox							\
 				-I./src/Components/Circle							\
-				-I./src/Components/Cube							\
+				-I./src/Components/Cube								\
 				-I./src/Components/Image							\
 				-I./src/Components/Inspecter						\
 				-I./src/Components/InspecterInfo					\
@@ -122,6 +123,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/I18n										\
 				-I./src/Parsing										\
 				-I./src/Raylib/ColorManager							\
+				-I./src/Raylib/FontManager							\
 				-I./src/Raylib/Render								\
 				-I./src/Raylib/SoundManager							\
 				-I./src/Raylib/View									\

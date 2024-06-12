@@ -28,7 +28,6 @@ namespace Zappy {
                 public:
                     Chatbox();
 
-                    void destroy() override;
                     void draw() override;
 
                     void update();

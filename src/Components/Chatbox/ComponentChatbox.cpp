@@ -59,17 +59,6 @@ namespace Zappy {
             }
 
 
-            void Chatbox::destroy()
-            {
-                if (_isDestroyed) return;
-                _openButton.first->destroy();
-                for (auto &chat : _chats) {
-                    std::get<BUTTON>(chat)->destroy();
-                    std::get<TEXT_GROUP>(chat)->destroy();
-                }
-            }
-
-
             void Chatbox::draw()
             {
                 _rectMid->draw();

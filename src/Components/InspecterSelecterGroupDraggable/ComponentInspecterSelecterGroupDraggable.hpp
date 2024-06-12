@@ -24,7 +24,6 @@ namespace Zappy {
                 public:
                     InspecterSelecterGroupDraggable(std::pair<int, int> pos, std::pair<int, int> size);
 
-                    void destroy() override;
                     void draw() override;
                     void setPosX(float x) override;
                     void modPosX(float x) override;

@@ -21,13 +21,6 @@ namespace Zappy {
                 _selecterGroup = std::make_unique<InspecterSelecterGroup>(pos, size.first);
             }
 
-            void InspecterSelecterGroupDraggable::destroy()
-            {
-                if (_isDestroyed) return;
-                _selecterGroup->destroy();
-                _isDestroyed = true;
-            }
-
             void InspecterSelecterGroupDraggable::draw()
             {
                 _selecterGroup->draw();
