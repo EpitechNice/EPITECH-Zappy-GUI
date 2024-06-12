@@ -48,7 +48,6 @@ namespace Zappy {
             while (_currentScene != "end") {
                 _scenes[_currentScene]->start();
                 while (!WindowShouldClose() && _currentScene != "end") {
-                    _scenes[_currentScene]->event();
                     _scenes[_currentScene]->update();
                     _render->view()->update();
 

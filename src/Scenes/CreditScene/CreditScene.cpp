@@ -62,9 +62,6 @@ namespace Zappy {
                 }
             }
 
-            void Credit::event()
-            {}
-
             void Credit::draw3D()
             {}
 

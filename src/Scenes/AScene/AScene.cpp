@@ -21,10 +21,6 @@ namespace Zappy {
         {
         }
 
-        void AScene::event()
-        {
-        }
-
         void AScene::draw3D()
         {
         }

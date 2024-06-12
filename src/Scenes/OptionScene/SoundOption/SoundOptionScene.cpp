@@ -71,29 +71,6 @@ namespace Zappy {
         void Scene::SoundOption::start()
         {}
 
-        void Scene::SoundOption::event()
-        {
-            for (auto& slider : _volumeSlider) {
-                Rectangle cursorRect = {
-                    slider->getPos().first,
-                    slider->getPos().second,
-                    slider->getWidth(),
-                    slider->getHeight()
-                };
-                if (CheckCollisionPointRec(GetMousePosition(), cursorRect)) {
-                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-                        if (slider->getName() == "slider1" && _music){
-                            slider->updateValue();
-                            Sfml::SoundManager::getInstance().setVolumeGeneralMusique(slider->getValue());
-                        } else if (slider->getName() == "slider2" && _effetSonore){
-                            slider->updateValue();
-                            Sfml::SoundManager::getInstance().setVolumeEffetSonore(slider->getValue());
-                        }
-                    }
-                }
-            }
-        }
-
         void Scene::SoundOption::update()
         {
             Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
@@ -103,6 +80,14 @@ namespace Zappy {
                     text.first->setText(i18nHelper->getTranslation(text.second));
                 _backButton.first->setText(i18nHelper->getTranslation(_backButton.second));
                 _lang = i18nHelper->getCurrentLocale();
+            }
+
+            for (auto &slider : _volumeSlider) {
+                slider->update();
+                if (slider->getName() == "slider1")
+                    Sfml::SoundManager::getInstance().setVolumeGeneralMusique(slider->getValue());
+                else
+                    Sfml::SoundManager::getInstance().setVolumeEffetSonore(slider->getValue());
             }
         }
 
@@ -162,13 +147,13 @@ namespace Zappy {
                     Sfml::SoundManager::getInstance().setVolumeGeneralMusique(slider->getValue());
                 else
                     Sfml::SoundManager::getInstance().setVolumeEffetSonore(slider->getValue());
-                slider->setStatut(true);
+                slider->setActive(true);
             } else {
                 if (slider->getName() == "slider1")
                     Sfml::SoundManager::getInstance().setVolumeGeneralMusique(0.0f);
                 else
                     Sfml::SoundManager::getInstance().setVolumeEffetSonore(0.0f);
-                slider->setStatut(false);
+                slider->setActive(false);
             }
         }
 

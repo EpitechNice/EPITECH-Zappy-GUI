@@ -64,10 +64,6 @@ namespace Zappy {
                 }
             }
 
-            void Menu::event()
-            {
-            }
-
             void Menu::draw3D()
             {
             }

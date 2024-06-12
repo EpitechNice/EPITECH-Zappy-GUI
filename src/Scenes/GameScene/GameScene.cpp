@@ -84,10 +84,6 @@ namespace Zappy {
                 }
             }
 
-            void Game::event()
-            {
-            }
-
             void Game::draw3D()
             {
                 _skybox->draw();

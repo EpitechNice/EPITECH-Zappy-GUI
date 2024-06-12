@@ -42,9 +42,6 @@ namespace Zappy {
                 }
             }
 
-            void HelperScene::event()
-            {}
-
             void HelperScene::draw3D()
             {}
 

@@ -93,9 +93,6 @@ namespace Zappy {
             }
         }
 
-        void Scene::ResolutionOption::event()
-        {}
-
         void Scene::ResolutionOption::draw3D()
         {}
 

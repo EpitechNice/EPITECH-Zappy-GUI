@@ -15,46 +15,32 @@
     #include <memory>
 
     #include "ColorManager.hpp"
-    #include "ComponentCircle.hpp"
-    #include "ComponentRoundedRectangle.hpp"
     #include "ComponentText.hpp"
+    #include "ComponentRectangle.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class SliderVolume {
+            class SliderVolume: public AComponent {
                 public:
                     SliderVolume(std::pair<float, float> pos, float width, float height, std::string name);
-                    ~SliderVolume();
 
-                    void destroy();
-                    void draw();
+                    void draw() override;
 
-                    bool isClicked();
-                    void event();
-                    void updateValue();
-
-                    void setStatut(bool statut) { _statut = statut; }
-                    void setValue(float value) { _value = value; }
-                    void setWidth(float width) { _width = width; }
-                    void setHeight(float height) { _height = height; }
-
-                    bool getStatut() const { return _statut; };
+                    void update();
+                    void setActive(bool active);
+                    void setValue(float value);
+                    bool getActive() const;
                     float getValue() const;
-                    float getWidth() const { return _width; }
-                    float getHeight() const { return _height; }
-                    std::string getName() const { return _name; }
-                    std::pair<float, float> getPos() const {return _pos; }
+                    std::string getName() const;
 
                 private:
-                    std::pair<float, float> _pos;
-                    float _width;
-                    float _height;
-                    float _value;
-                    bool _isDragging;
-                    bool _isDestroyed;
-                    bool _statut;
+                    bool _isDrag;
+                    bool _active;
                     std::string _name;
+                    std::unique_ptr<Component::Rectangle> _background;
+                    std::unique_ptr<Component::Rectangle> _value;
             };
         }
     }

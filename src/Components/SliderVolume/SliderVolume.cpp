@@ -11,83 +11,74 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             SliderVolume::SliderVolume(std::pair<float, float> pos, float width, float height, std::string name)
-                : _pos(pos), _width(width), _height(height), _value(0.5f), _isDragging(false), _isDestroyed(false), _name(name)
             {
-            }
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = width;
+                _sizeY = height;
+                _active = true;
+                _name = name;
+                _isDrag = false;
 
-            SliderVolume::~SliderVolume()
-            {
-                destroy();
-            }
-
-            void SliderVolume::destroy()
-            {
-                if (!_isDestroyed) {
-                    _isDestroyed = true;
-                }
-            }
-
-            float SliderVolume::getValue() const{
-                float tmp = _value;
-                tmp = tmp * 100;
-                return tmp;
+                _background = std::make_unique<Component::Rectangle>(std::make_pair(_posX, _posY), std::make_pair(_sizeX, _sizeY), GRAY);
+                _value = std::make_unique<Component::Rectangle>(std::make_pair(_posX, _posY), std::make_pair(_sizeX, _sizeY), GREEN);
+                setValue(50);
             }
 
             void SliderVolume::draw()
             {
-                if (_statut) {
-                    DrawRectangle(_pos.first, _pos.second, _width, _height, GRAY);
-                    float cursorX = _pos.first + _value * (_width - 20);
-                    DrawRectangle(cursorX, _pos.second, 20, _height, GREEN);
-                    DrawRectangle(_pos.first, _pos.second, cursorX - _pos.first, _height, GREEN);
-                } else {
-                    Color fadedGray = Fade(GRAY, 0.3f);
-                    Color fadedGreen = Fade(GREEN, 0.3f);
-                    DrawRectangle(_pos.first, _pos.second, _width, _height, fadedGray);
-                    float cursorX = _pos.first + _value * (_width - 20);
-                    DrawRectangle(cursorX, _pos.second, 20, _height, fadedGreen);
-                    DrawRectangle(_pos.first, _pos.second, cursorX - _pos.first, _height, fadedGreen);
-                }
+                _background->draw();
+                _value->draw();
             }
 
-
-            bool SliderVolume::isClicked()
+            void SliderVolume::update()
             {
-                Rectangle cursorRect = { _pos.first, _pos.second, _width, _height };
-                if (CheckCollisionPointRec(GetMousePosition(), cursorRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-                    float mouseX = GetMouseX();
-                    float newValue = (mouseX - _pos.first) / _width;
-                    if (newValue < 0)
-                        newValue = 0;
-                    else if (newValue > 1)
-                        newValue = 1;
-                    _value = newValue;
-                    return true;
-                }
-                return false;
-            }
-
-            void SliderVolume::updateValue()
-            {
-                float mouseX = GetMouseX();
-                float newValue = (mouseX - _pos.first) / _width;
-                if (newValue < 0)
-                    newValue = 0;
-                else if (newValue > 1)
-                    newValue = 1;
-                _value = newValue;
-            }
-
-            void SliderVolume::event()
-            {
+                if (!_active) return;
                 if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-                    _isDragging = true;
-                    if (isClicked()) {
-                        updateValue();
-                    }
-                } else {
-                    _isDragging = false;
+                    if (CheckCollisionPointRec(GetMousePosition(), { _posX, _posY, _sizeX, _sizeY }))
+                        _isDrag = true;
+                } else
+                    _isDrag = false;
+                if (_isDrag) {
+                    _value->setSizeX(GetMousePosition().x - _posX);
+                    if (_value->getSizeX() < 0) _value->setSizeX(0);
+                    if (_value->getSizeX() > _sizeX) _value->setSizeX(_sizeX);
                 }
+            }
+
+
+            void SliderVolume::setActive(bool active)
+            {
+                if (_active == active) return;
+                _active = active;
+                if (_active) {
+                    _background->setColor(GRAY);
+                    _value->setColor(GREEN);
+                } else {
+                    _background->setColor(Fade(GRAY, 0.3f));
+                    _value->setColor(Fade(GREEN, 0.3f));
+                }
+            }
+
+            void SliderVolume::setValue(float value)
+            {
+                _value->setSizeX(_background->getSizeX() * value / 100);
+            }
+
+            bool SliderVolume::getActive() const
+            {
+                return _active;
+            }
+
+            float SliderVolume::getValue() const
+            {
+                if (!_active) return 0;
+                return _value->getSizeX() / _background->getSizeX() * 100;
+            }
+
+            std::string SliderVolume::getName() const
+            {
+                return _name;
             }
         }
     }

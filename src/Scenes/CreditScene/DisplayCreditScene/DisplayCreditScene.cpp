@@ -43,9 +43,6 @@ namespace Zappy {
                 }
             }
 
-            void CreditScene::event()
-            {}
-
             void CreditScene::draw3D()
             {}
 

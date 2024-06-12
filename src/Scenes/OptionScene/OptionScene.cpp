@@ -93,9 +93,6 @@ namespace Zappy {
                 }
             }
 
-            void Option::event()
-            {}
-
             void Option::draw3D()
             {}
 
