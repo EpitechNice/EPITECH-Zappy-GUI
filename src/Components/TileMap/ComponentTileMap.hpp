@@ -17,37 +17,30 @@
     #include "TileRessources.hpp"
     #include "Ressources.hpp"
     #include "ComponentInspecter.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class TileMap {
+            class TileMap: public AComponent {
                 public:
                     TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources);
-                    ~TileMap();
 
-                    void destroy();
+                    void destroy() override;
+                    void draw() override;
 
                     void update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter);
-
-                    void draw();
-
                     std::vector<std::vector<std::shared_ptr<Tile>>> tiles();
-
                     void unhighlight();
-
                     bool hasSelected() const;
                     std::pair<int, int> getSelected() const;
 
                 protected:
                 private:
-                    Vector3 _pos;
-                    std::pair<int, int> _size;
                     int _tileSize;
                     std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
                     std::pair<int, int> _highLight;
                     std::pair<int, int> _select;
-                    bool _isDestroyed;
             };
         }
     }
