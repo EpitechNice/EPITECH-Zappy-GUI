@@ -9,15 +9,18 @@
 
 #include "Parsing.hpp"
 #include "SceneManager.hpp"
+#include "CommunicationServer.hpp"
 
 int main(int argc, char **argv)
 {
     try {
         srand(time(NULL));
         Zappy::GUI::Parsing parsing(argc, argv);
-        std::cout << "Port: " << parsing.getPort() << std::endl;
-        std::cout << "Machine: " << parsing.getMachine() << std::endl;
-        Zappy::GUI::SceneManager sceneManager;
+        auto serverCommunication = std::make_shared<Zappy::GUI::ServerCommunication>(parsing.getMachine(), parsing.getPort());
+        serverCommunication->connectToServer();
+        serverCommunication->startCommunication();
+        serverCommunication->addCommand("GRAPHIC\r\n");
+        Zappy::GUI::SceneManager sceneManager(serverCommunication);
         sceneManager.run();
     } catch (const Zappy::GUI::Parsing::ParsingError &e) {
         std::cerr << "Error: " << e.what() << std::endl;
@@ -26,13 +29,15 @@ int main(int argc, char **argv)
     } catch (const Zappy::GUI::Parsing::Help &e) {
         e.what();
         return 0;
+    } catch (const Exceptions::ConnexionServeurFail &e) {
+        std::cerr << "Server connection error: " << e.what() << std::endl;
+        return 84;
     } catch (const std::exception &e) {
         std::cerr << "Unexpected error: " << e.what() << std::endl;
         return 84;
     }
     return 0;
 }
-
 
 ////Test I18nHelper
 //   #include "I18nHelper.hpp"

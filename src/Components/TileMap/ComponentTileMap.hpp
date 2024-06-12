@@ -18,13 +18,14 @@
     #include "Ressources.hpp"
     #include "ComponentInspecter.hpp"
     #include "AComponent.hpp"
+    #include "CommunicationServer.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
             class TileMap: public AComponent {
                 public:
-                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources);
+                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication);
 
                     void draw() override;
 

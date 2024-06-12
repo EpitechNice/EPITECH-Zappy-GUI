@@ -35,6 +35,7 @@ SRC		=   src/Main.cpp																				\
 			src/Components/Tile/ComponentTile.cpp														\
 			src/Components/TileMap/ComponentTileMap.cpp													\
 			src/Components/VolumeSection/ComponentVolumeSection.cpp										\
+			src/CommunicationServer/CommunicationServer.cpp 											\
 			src/Exceptions/Exceptions.cpp																\
 			src/I18n/I18nHelper.cpp																		\
 			src/Parsing/Parsing.cpp																		\
@@ -119,6 +120,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Components/Tile								\
 				-I./src/Components/TileMap							\
 				-I./src/Components/VolumeSection					\
+				-I./src/CommunicationServer 						\
 				-I./src/Exceptions									\
 				-I./src/I18n										\
 				-I./src/Parsing										\

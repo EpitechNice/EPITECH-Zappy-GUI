@@ -20,13 +20,14 @@
     #include "ComponentTileMap.hpp"
     #include "ComponentRessources.hpp"
     #include "Ressources.hpp"
+    #include "CommunicationServer.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Scene {
             class Game : public AScene {
                 public:
-                    Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
+                    Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::shared_ptr<ServerCommunication> serverCommunication);
                     ~Game() = default;
 
                     void start() override;
@@ -37,8 +38,12 @@ namespace Zappy {
 
                     std::string nextScene() override;
 
+                    void setMapSize(int width, int height);
+                    std::pair<int, int> getMapSize() { return _mapSize; };
                 protected:
                 private:
+                    std::pair<int, int> _mapSize;
+                    std::shared_ptr<Zappy::GUI::ServerCommunication> _serverCommunication;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _skybox;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;

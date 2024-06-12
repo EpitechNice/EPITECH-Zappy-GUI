@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources)
+            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
             {
                 _posX = pos.x;
                 _posY = pos.y;
@@ -30,7 +30,6 @@ namespace Zappy {
                             grassColor = { 60, 186, 2, 255 };
                         ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
                         line.push_back(std::make_shared<Tile>((Vector3){(float)(_posX + x * _tileSize), (float)_posY, (float)(_posZ + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
-
 
                         // TODO: Delete this
                         ressourcesLine.back()->setFood(rand() % 5);
