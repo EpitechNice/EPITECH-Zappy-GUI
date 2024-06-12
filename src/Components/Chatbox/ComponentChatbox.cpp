@@ -28,11 +28,11 @@ namespace Zappy {
 
                 _openButton = std::make_pair(std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), ">", 30, ORANGE), "");
                 _openButton.first->disableBubble();
-                std::pair<float, float> buttonSize = _openButton.first->getSize();
-                _openButton.first->setPos(std::make_pair(8, height / 2 - buttonSize.second / 2));
-                std::pair<float, float> openButtonSize = _openButton.first->getSize();
-                std::pair<float, float> openButtonPos = _openButton.first->getPos();
-                _notifCircle = std::make_unique<Circle>(std::make_pair(openButtonSize.first + openButtonPos.first, openButtonPos.second), 4, RED);
+
+                std::pair<float, float> buttonSize = {_openButton.first->getSizeX(), _openButton.first->getSizeY()};
+                _openButton.first->setPosX(8);
+                _openButton.first->setPosY(height / 2 - buttonSize.second / 2);
+                _notifCircle = std::make_unique<Circle>(std::make_pair( _openButton.first->getSizeX() + _openButton.first->getPosX(), _openButton.first->getPosY()), 4, RED);
 
                 std::vector<std::string> names = {
                     "Server",

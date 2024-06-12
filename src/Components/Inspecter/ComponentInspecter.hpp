@@ -48,7 +48,6 @@ namespace Zappy {
                     bool _open;
                     int _width;
                     int _screenWidth;
-                    std::pair<float, float> _buttonSize;
 
                     std::unique_ptr<Rectangle> _rectTopBackground;
                     std::unique_ptr<Rectangle> _rectTop;

@@ -19,11 +19,12 @@
     #include "ComponentRoundedRectangle.hpp"
     #include "ComponentText.hpp"
     #include "../Sfml/SoundManager/SoundManager.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Button {
+            class Button: public AComponent {
                 public:
                     typedef enum {
                         NONE = -1,
@@ -33,48 +34,36 @@ namespace Zappy {
                     } State;
 
                     Button(std::pair<float, float> pos, std::pair<float, float> size, std::string text, int textSize, Color color);
-                    ~Button();
 
-                    void destroy();
-                    void draw();
-                    bool isClicked(std::string textButton);
-                    bool isClickedWihoutSong();
-
-                    void setSize(const std::pair<float, float>& size);
-
-                    std::pair<float, float> getSize() const;
-                    std::pair<float, float> getPos() const;
-                    bool isClicked() const;
-                    bool isHover() const;
-                    std::string getText() const;
-
-                    void changeColor(Color color);
-                    void changePos(const std::pair<float, float>& newPos);
-                    void changeSize(const std::pair<float, float>& newSize);
-
-                    void _updateState();
-                    void _modState(State oldState);
+                    void destroy() override;
+                    void draw() override;
+                    void setPosX(float x) override;
+                    void modPosX(float x) override;
+                    void setPosY(float Y) override;
+                    void modPosY(float y) override;
+                    void setSizeX(float x) override;
+                    void setSizeY(float y) override;
+                    void setColor(Color color) override;
 
                     void enableBubble();
                     void disableBubble();
-
-                    void setPosX(float x);
-                    // void setPos(std::pair<float, float> pos);
-                    void setPos(const std::pair<float, float> pos);
-
+                    bool isHover() const;
+                    bool isClickedWihoutSong() const;
+                    bool isClicked() const;
+                    bool isClicked(std::string textButton);
                     void setText(std::string text);
+                    std::string getText() const;
+                    void setState(State state);
 
                 protected:
                 private:
-                    std::pair<float, float> _pos;
-                    std::pair<float, float> _size;
-                    std::pair<float, float> _buttonSize;
+                    float _initialSizeX;
+                    float _initialSizeY;
+
                     std::pair<float, float> _textPos;
-                    Color _color;
                     State _state;
                     int _pressEffect = 6;
                     int _hoverEffect = 2;
-                    bool _isDestroyed;
                     bool _bubble;
                     time_t _lastClick;
 
@@ -87,6 +76,9 @@ namespace Zappy {
                     std::unique_ptr<Text> _text;
                     std::unique_ptr<Text> _textStroke;
 
+                    void _updateState();
+                    void _modState(State oldState);
+                    void _changeSize(float sizeX, float sizeY);
             };
         }
     }

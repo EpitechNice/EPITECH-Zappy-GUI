@@ -50,7 +50,7 @@ namespace Zappy {
                             _resolutionButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, BLUE), button.second));
                         else
                             _resolutionButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, GREEN), button.second));
-                        buttonX += _resolutionButtons.back().first->getSize().first + buttonSpacing;
+                        buttonX += _resolutionButtons.back().first->getSizeX() + buttonSpacing;
                     }
                 } else if (text[i].second == "[menu.settings.resolution.fps_title]") {
                     for (const auto& button : buttons_fps) {
@@ -58,7 +58,7 @@ namespace Zappy {
                             _fpsButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, BLUE), button.second));
                         else
                             _fpsButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, GREEN), button.second));
-                        buttonX += _fpsButtons.back().first->getSize().first + buttonSpacing;
+                        buttonX += _fpsButtons.back().first->getSizeX() + buttonSpacing;
                     }
                 }
             }
@@ -121,9 +121,9 @@ namespace Zappy {
                         _render->setDimensions(700, 1250);
                     for (auto &otherButton : _resolutionButtons) {
                         if (otherButton.first != button.first)
-                            otherButton.first->changeColor(GREEN);
+                            otherButton.first->setColor(GREEN);
                     }
-                    button.first->changeColor(BLUE);
+                    button.first->setColor(BLUE);
                 }
             }
             for (auto &button : _fpsButtons) {
@@ -136,9 +136,9 @@ namespace Zappy {
                         _render->setFps(120);
                     for (auto &otherButton : _fpsButtons) {
                         if (otherButton.first != button.first)
-                            otherButton.first->changeColor(GREEN);
+                            otherButton.first->setColor(GREEN);
                     }
-                    button.first->changeColor(BLUE);
+                    button.first->setColor(BLUE);
                 }
             }
             return "resolutionSetting";

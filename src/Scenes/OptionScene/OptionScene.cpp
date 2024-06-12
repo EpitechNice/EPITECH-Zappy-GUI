@@ -33,7 +33,7 @@ namespace Zappy {
                 _lang = i18nHelper->getCurrentLocale();
 
                 for (auto &button : buttons) {
-                    auto button_width = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(0, 0), std::make_pair(-20, -10), std::get<0>(button), 30, GREEN)->getSize().first;
+                    auto button_width = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(0, 0), std::make_pair(-20, -10), std::get<0>(button), 30, GREEN)->getSizeX();
                     y_generalButton = (height / (buttons.size() + 1)) * (i_generalButton + 1) - 30;
                     x_generalButton -= button_width / 2;
                     _generalButtons.push_back(std::make_tuple(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(x_generalButton, y_generalButton), std::make_pair(-20, -10), std::get<0>(button), 30, GREEN), std::get<1>(button), std::get<2>(button)));
@@ -49,7 +49,7 @@ namespace Zappy {
                     y_langueButton = y_langueButton;
                     x_langueButton += i_langueButton;
                     if (!_languageButtons.empty())
-                        x_langueButton += std::get<0>(_languageButtons.back())->getSize().first;
+                        x_langueButton += std::get<0>(_languageButtons.back())->getSizeX();
                     if (std::get<1>(buttonLanguageValue) == i18nHelper->getCurrentLocale())
                         _languageButtons.push_back(std::make_tuple(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(x_langueButton, y_langueButton), std::make_pair(-20, -10), i18nHelper->getTranslation(std::get<0>(buttonLanguageValue)), 18, BLUE), std::get<1>(buttonLanguageValue), std::get<2>(buttonLanguageValue)));
                     else {
@@ -123,9 +123,9 @@ namespace Zappy {
                         i18nHelper->setCurrentLocale(std::get<1>(button));
                         for (auto &otherButton : _languageButtons) {
                             if (std::get<0>(otherButton) != std::get<0>(button))
-                                std::get<0>(otherButton)->changeColor(GREEN);
+                                std::get<0>(otherButton)->setColor(GREEN);
                         }
-                        std::get<0>(button)->changeColor(BLUE);
+                        std::get<0>(button)->setColor(BLUE);
                     }
                 }
                 return "option";

@@ -132,12 +132,15 @@ namespace Zappy {
                             adjustSliderVolume(slider, clickedButton.first->getText() == "ON");
                     }
                     newPosSmallButton = std::make_pair(xPos, yPos);
-                    otherButton.first->changePos(newPosSmallButton);
-                    otherButton.first->changeSize(SMALL_BUTTON_SIZE);
-                    otherButton.first->_modState(Component::Button::CLICKED);
+                    otherButton.first->setPosX(newPosSmallButton.first);
+                    otherButton.first->setPosY(newPosSmallButton.second);
+                    otherButton.first->setSizeX(SMALL_BUTTON_SIZE.first);
+                    otherButton.first->setSizeY(SMALL_BUTTON_SIZE.second);
+                    // otherButton.first->setState(Component::Button::CLICKED);
                 }
             }
-            clickedButton.first->changeSize(BIG_BUTTON_SIZE);
+            clickedButton.first->setSizeX(BIG_BUTTON_SIZE.first);
+            clickedButton.first->setSizeY(BIG_BUTTON_SIZE.second);
         }
 
         void Scene::SoundOption::adjustSliderVolume(std::unique_ptr<Component::SliderVolume> &slider, bool isButtonOn)

@@ -29,8 +29,8 @@ namespace Zappy {
 
                 _openButton = std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), "<", 30, SKYBLUE);
                 _openButton->disableBubble();
-                _buttonSize = _openButton->getSize();
-                _openButton->setPos(std::make_pair(_screenWidth - 8 - _buttonSize.first, height / 2 - _buttonSize.second / 2));
+                _openButton->setPosX(_screenWidth - 8 - _openButton->getSizeX());
+                _openButton->setPosY(height / 2 - _openButton->getSizeY() / 2);
                 _open = false;
 
                 std::vector<std::string> names = {
@@ -148,7 +148,7 @@ namespace Zappy {
                 _rectTop->setPosX(_screenWidth - _width);
                 _rectMid->setPosX(_screenWidth - _width);
                 _rectBot->setPosX(_screenWidth - _width);
-                _openButton->setPosX(_screenWidth - _width - 8 - _buttonSize.first);
+                _openButton->setPosX(_screenWidth - _width - 8 - _openButton->getSizeX());
                 _openButton->setText(">");
 
                 for (auto &tab : _tabs)
@@ -167,7 +167,7 @@ namespace Zappy {
                 _rectTop->setPosX(_screenWidth);
                 _rectMid->setPosX(_screenWidth);
                 _rectBot->setPosX(_screenWidth);
-                _openButton->setPosX(_screenWidth - 8 - _buttonSize.first);
+                _openButton->setPosX(_screenWidth - 8 - _openButton->getSizeX());
                 _openButton->setText("<");
 
                 for (auto &tab : _tabs)

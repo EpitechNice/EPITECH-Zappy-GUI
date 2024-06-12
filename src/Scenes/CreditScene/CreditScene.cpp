@@ -29,7 +29,7 @@ namespace Zappy {
                 };
                 _lang = i18nHelper->getCurrentLocale();
                 for (auto &button : buttons) {
-                    auto button_width = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(0, 0), std::make_pair(-20, -10), std::get<0>(button), 30, GREEN)->getSize().first;
+                    float button_width = std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(0, 0), std::make_pair(-20, -10), std::get<0>(button), 30, GREEN)->getSizeX();
                     y_generalButton = (height / (buttons.size() + 1)) * (i_generalButton + 1) - 30;
                     x_generalButton -= button_width / 2;
                     _generalButtons.push_back(std::make_tuple(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(x_generalButton, y_generalButton), std::make_pair(-20, -10), std::get<0>(button), 30, GREEN), std::get<1>(button), std::get<2>(button)));
