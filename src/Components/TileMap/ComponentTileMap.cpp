@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication)
+            TileMap::TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources)
             {
                 _posX = pos.x;
                 _posY = pos.y;

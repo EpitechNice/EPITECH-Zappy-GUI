@@ -25,7 +25,7 @@ namespace Zappy {
         namespace Component {
             class TileMap: public AComponent {
                 public:
-                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources, std::shared_ptr<Zappy::GUI::ServerCommunication> serverCommunication);
+                    TileMap(Vector3 pos, std::pair<int, int> size, int tileSize, std::shared_ptr<Ressources> ressources);
 
                     void draw() override;
 
