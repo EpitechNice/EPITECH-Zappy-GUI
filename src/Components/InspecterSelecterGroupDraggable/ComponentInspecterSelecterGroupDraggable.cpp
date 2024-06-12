@@ -11,20 +11,19 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             InspecterSelecterGroupDraggable::InspecterSelecterGroupDraggable(std::pair<int, int> pos, std::pair<int, int> size)
-                : _pos(pos), _size(size), _isDragged(false), _isDestroyed(false)
             {
-                _selecterGroup = std::make_unique<InspecterSelecterGroup>(pos, size.first);
-            }
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = size.first;
+                _sizeY = size.second;
+                _isDragged = false;
 
-            InspecterSelecterGroupDraggable::~InspecterSelecterGroupDraggable()
-            {
-                destroy();
+                _selecterGroup = std::make_unique<InspecterSelecterGroup>(pos, size.first);
             }
 
             void InspecterSelecterGroupDraggable::destroy()
             {
-                if (_isDestroyed)
-                    return;
+                if (_isDestroyed) return;
                 _selecterGroup->destroy();
                 _isDestroyed = true;
             }
@@ -33,6 +32,20 @@ namespace Zappy {
             {
                 _selecterGroup->draw();
             }
+
+            void InspecterSelecterGroupDraggable::setPosX(float x)
+            {
+                _posX = x;
+                _selecterGroup->setPosX(x);
+            }
+
+            void InspecterSelecterGroupDraggable::modPosX(float x)
+            {
+                _posX += x;
+                _selecterGroup->modPosX(x);
+            }
+
+
 
             void InspecterSelecterGroupDraggable::update(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info)
             {
@@ -46,7 +59,7 @@ namespace Zappy {
                     _updateSelectersPos();
                     return;
                 }
-                if (CheckCollisionPointRec(GetMousePosition(), Rectangle{(float)_pos.first, (float)_pos.second, (float)_size.first, (float)_size.second})) {
+                if (CheckCollisionPointRec(GetMousePosition(), Rectangle{(float)_posX, (float)_posY, (float)_sizeX, (float)_sizeY})) {
                     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                         if (!_isDragged)
                             _setDragOffset();
@@ -63,19 +76,7 @@ namespace Zappy {
             void InspecterSelecterGroupDraggable::addSelecter(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
             {
                 _selecterGroup->addPlayer(player);
-                _selecterGroup->setPosY(_pos.second);
-            }
-
-            void InspecterSelecterGroupDraggable::setPosX(int x)
-            {
-                _pos.first = x;
-                _selecterGroup->setPosX(x);
-            }
-
-            void InspecterSelecterGroupDraggable::modPosX(int x)
-            {
-                _pos.first += x;
-                _selecterGroup->modPosX(x);
+                _selecterGroup->setPosY(_posY);
             }
 
             void InspecterSelecterGroupDraggable::_updateSelectersPos()
@@ -96,18 +97,18 @@ namespace Zappy {
                 float groupPosY = _selecterGroup->getPosY();
                 float groupSizeY = _selecterGroup->getSizeY();
 
-                if (groupSizeY < _size.second) {
-                    _selecterGroup->setPosY(_pos.second);
+                if (groupSizeY < _sizeY) {
+                    _selecterGroup->setPosY(_posY);
                     return;
                 }
 
-                if (groupPosY > _pos.second) {
-                    _selecterGroup->setPosY(_pos.second);
+                if (groupPosY > _posY) {
+                    _selecterGroup->setPosY(_posY);
                     return;
                 }
 
-                if (groupPosY + groupSizeY < _pos.second + _size.second) {
-                    _selecterGroup->setPosY(_pos.second - groupSizeY + _size.second);
+                if (groupPosY + groupSizeY < _posY + _sizeY) {
+                    _selecterGroup->setPosY(_posY - groupSizeY + _sizeY);
                     return;
                 }
             }
