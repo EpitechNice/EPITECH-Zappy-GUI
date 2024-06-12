@@ -11,20 +11,20 @@ namespace Zappy {
     namespace GUI {
         namespace Component {
             TextGroupDraggable::TextGroupDraggable(std::pair<int, int> pos, std::pair<int, int> size, int gap)
-                : _pos(pos), _size(size), _gap(gap), _isDragged(false), _isDestroyed(false)
             {
-                _textGroup = std::make_unique<TextGroup>(pos, _size.first, gap);
-            }
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = size.first;
+                _sizeY = size.second;
+                _gap = gap;
+                _isDragged = false;
 
-            TextGroupDraggable::~TextGroupDraggable()
-            {
-                destroy();
+                _textGroup = std::make_unique<TextGroup>(pos, _sizeX, gap);
             }
 
             void TextGroupDraggable::destroy()
             {
-                if (_isDestroyed)
-                    return;
+                if (_isDestroyed) return;
                 _textGroup->destroy();
                 _isDestroyed = true;
             }
@@ -33,6 +33,13 @@ namespace Zappy {
             {
                 _textGroup->draw();
             }
+
+            void TextGroupDraggable::setPosX(float x)
+            {
+                _posX = x;
+                _textGroup->setPosX(x);
+            }
+
 
             void TextGroupDraggable::update()
             {
@@ -45,7 +52,7 @@ namespace Zappy {
                     _updateTextsPos();
                     return;
                 }
-                if (CheckCollisionPointRec(GetMousePosition(), Rectangle{(float)_pos.first, (float)_pos.second, (float)_size.first, (float)_size.second})) {
+                if (CheckCollisionPointRec(GetMousePosition(), Rectangle{(float)_posX, (float)_posY, (float)_sizeX, (float)_sizeY})) {
                     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                         if (!_isDragged)
                             _setDragOffset();
@@ -57,13 +64,7 @@ namespace Zappy {
             void TextGroupDraggable::addText(std::string name, std::string text, int gap, Color color)
             {
                 _textGroup->addText(name, text, gap, color);
-                _textGroup->setPosY(_pos.second - _textGroup->getSizeY() + _size.second);
-            }
-
-            void TextGroupDraggable::setPosX(int x)
-            {
-                _pos.first = x;
-                _textGroup->setPosX(x);
+                _textGroup->setPosY(_posY - _textGroup->getSizeY() + _sizeY);
             }
 
             void TextGroupDraggable::_updateTextsPos()
@@ -84,17 +85,17 @@ namespace Zappy {
                 float groupPosY = _textGroup->getPosY();
                 float groupSizeY = _textGroup->getSizeY();
 
-                if (groupSizeY < _size.second) {
-                    _textGroup->setPosY(_pos.second - groupSizeY + _size.second);
+                if (groupSizeY < _sizeY) {
+                    _textGroup->setPosY(_posY - groupSizeY + _sizeY);
                     return;
                 }
 
-                if (groupPosY > _pos.second) {
-                    _textGroup->setPosY(_pos.second);
+                if (groupPosY > _posY) {
+                    _textGroup->setPosY(_posY);
                     return;
                 }
-                if (groupPosY + groupSizeY < _pos.second + _size.second) {
-                    _textGroup->setPosY(_pos.second - groupSizeY + _size.second);
+                if (groupPosY + groupSizeY < _posY + _sizeY) {
+                    _textGroup->setPosY(_posY - groupSizeY + _sizeY);
                     return;
                 }
             }
