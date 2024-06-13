@@ -17,6 +17,7 @@
     #include "SoundManager.hpp"
     #include "I18nHelper.hpp"
     #include "FontManager.hpp"
+    #include "ModelManager.hpp"
 
 namespace Zappy {
     namespace GUI {

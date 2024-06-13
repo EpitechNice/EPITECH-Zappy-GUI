@@ -51,7 +51,7 @@ namespace Zappy {
             // Connect to the server
             _state = CONNECTED;
 
-            std::this_thread::sleep_for(std::chrono::seconds(5));
+            std::this_thread::sleep_for(std::chrono::seconds(10));
             for (int i = 0; i < 10; i++) {
                 std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
                 for (int j = 0; j < 10; j++) {

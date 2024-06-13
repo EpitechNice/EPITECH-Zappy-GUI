@@ -42,6 +42,7 @@ SRC		=   src/Main.cpp																				\
 			src/Parsing/ParsingHelp.cpp																	\
 			src/Raylib/ColorManager/ColorManager.cpp													\
 			src/Raylib/FontManager/FontManager.cpp														\
+			src/Raylib/ModelManager/ModelManager.cpp													\
 			src/Raylib/Render/Render.cpp																\
 			src/Raylib/View/View.cpp																	\
 			src/Ressources/Players/Players.cpp															\
@@ -127,6 +128,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Parsing										\
 				-I./src/Raylib/ColorManager							\
 				-I./src/Raylib/FontManager							\
+				-I./src/Raylib/ModelManager							\
 				-I./src/Raylib/Render								\
 				-I./src/Raylib/SoundManager							\
 				-I./src/Raylib/View									\
