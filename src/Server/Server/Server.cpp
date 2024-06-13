@@ -35,14 +35,28 @@ namespace Zappy {
 
         void Server::shutdown()
         {
+            close(_fd);
             _state = DISCONNECT;
         }
 
-
         void Server::_connect()
         {
-            // Connect to the server
-            _state = CONNECTED;
+            _fd = socket(AF_INET, SOCK_STREAM, 0);
+            if (_fd == -1)
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+
+            _socketAddress.sin_family = AF_INET;
+            _socketAddress.sin_port = htons(_port);
+            _socketAddress.sin_addr.s_addr = std::stoi(_address);
+
+            if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) {
+                shutdown();
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+            }
+             _state = CONNECTED;
+            //looplose(_fd);
+            _fd = -1;
+            _state = DOWN;
         }
 
         void Server::_loop()

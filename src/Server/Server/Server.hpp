@@ -9,6 +9,15 @@
     #define SERVER_HPP_
 
     #include <string>
+    #include <memory>
+    #include <iostream>
+    #include <sys/socket.h>
+    #include <arpa/inet.h>
+    #include <unistd.h>
+    #include <queue>
+
+    #include "Exceptions.hpp"
+    #include "Mutex.hpp"
 
 namespace Zappy {
     namespace Server {
@@ -35,6 +44,8 @@ namespace Zappy {
                 int _port;
                 State _state;
                 int _fd;
+
+                struct sockaddr_in _socketAddress;
 
                 // namepipe in
                 // namepipe out
