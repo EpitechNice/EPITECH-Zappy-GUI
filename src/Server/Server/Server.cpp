@@ -46,13 +46,13 @@ namespace Zappy {
 
             _socketAddress.sin_family = AF_INET;
             _socketAddress.sin_port = htons(_port);
-            _socketAddress.sin_addr.s_addr = std::stoi(_address);
+            inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
             if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) {
-                shutdown();
+                _disconnect();
                 throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             }
              _state = CONNECTED;
-            //looplose(_fd);
+            _loop();
             _fd = -1;
             _state = DOWN;
 
@@ -60,7 +60,45 @@ namespace Zappy {
 
         void Server::_loop()
         {
-            // Loop to get the data from the server
+            fd_set readfds, writefds;
+            struct timeval tv;
+            int max_fd = _fd;
+            bool mszCommandReceived = false;
+
+            while (_state == CONNECTED) {
+                FD_ZERO(&readfds);
+                FD_ZERO(&writefds);
+
+                FD_SET(_fd, &readfds);
+                FD_SET(_fd, &writefds);
+
+                tv.tv_sec = 1;
+                tv.tv_usec = 0;
+
+                select(max_fd + 1, &readfds, &writefds, NULL, &tv);
+                if (FD_ISSET(_fd, &readfds)) {
+                    char buffer[1024] = {0};
+                    int valread = read(_fd, buffer, sizeof(buffer));
+                    if (valread > 0) {
+                        std::string response(buffer, valread);
+                        if (!mszCommandReceived) {
+                            if (response.find("msz") == 0) {
+                                mszCommandReceived = true;
+                                addResponse(response);
+                            }
+                        } else
+                            addResponse(response);
+                    }
+                }
+                if (FD_ISSET(_fd, &writefds)) {
+                    std::lock_guard<Mutex> lock(_requestQueueMutex);
+                    if (!_requestQueue.empty()) {
+                        std::string request = _requestQueue.front();
+                        _requestQueue.pop();
+                        send(_fd, request.c_str(), request.size(), 0);
+                    }
+                }
+            }
         }
 
         void Server::_disconnect()
@@ -71,14 +109,14 @@ namespace Zappy {
 
         void Server::addRequest(const std::string &request)
         {
-            std::lock_guard<std::mutex> lock(_requestQueueMutex.getMutex());
+            std::lock_guard<Mutex> lock(_requestQueueMutex);
             _requestQueue.push(request);
             _requestQueueNotEmpty.notify_one();
         }
 
         void Server::addResponse(const std::string &response)
         {
-            std::lock_guard<std::mutex> lock(_responseQueueMutex.getMutex());
+            std::lock_guard<Mutex> lock(_responseQueueMutex);
             _responseQueue.push(response);
             _responseQueueNotEmpty.notify_one();
         }
