@@ -59,7 +59,8 @@ SRC		=   src/Main.cpp																				\
 			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp										\
 			src/Server/Server/Server.cpp																\
 			src/Server/Mutex/Mutex.cpp																	\
-			src/Server/Thread/Thread.cpp																	\
+			src/Server/Thread/Thread.cpp																\
+			src/Server/Commands/Commands.cpp															\
 			src/Sfml/SoundManager/SoundManager.cpp														\
 			src/Utils/Utils.cpp																			\
 
@@ -147,6 +148,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Server/Server								\
 				-I./src/Server/Mutex								\
 				-I./src/Server/Thread								\
+				-I./src/Server/Commands								\
 				-I./src/Sfml/SoundManager							\
 				-I./src/Utils										\
 

@@ -44,6 +44,17 @@ namespace Zappy {
                 return nullptr;
             }
 
+            std::shared_ptr<Zappy::GUI::Ressources::TileRessources> Ressources::getTileFromPos(int posX, int posY) const
+            {
+                for (auto &tileRessource : tileRessources) {
+                    for (auto &tile: tileRessource){
+                        if (tile->getX() == posX && tile->getY() == posY)
+                            return tile;
+                        }
+                }
+                return nullptr;
+            }
+
             std::pair<int, int> Ressources::getMapDimensions() const
             {
                 if (tileRessources.empty()) return std::make_pair(0, 0);

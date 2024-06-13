@@ -9,7 +9,7 @@
 
 namespace Zappy {
     namespace Server {
-        Server::Server(const std::string &address, int port)
+        Server::Server(const std::string &address, int port) : commandsInstance()
         {
             _address = address;
             _port = port;
@@ -51,11 +51,10 @@ namespace Zappy {
                 _disconnect();
                 throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             }
-             _state = CONNECTED;
+            _state = CONNECTED;
             _loop();
             _fd = -1;
             _state = DOWN;
-
         }
 
         void Server::_loop()
@@ -84,10 +83,13 @@ namespace Zappy {
                         if (!mszCommandReceived) {
                             if (response.find("msz") == 0) {
                                 mszCommandReceived = true;
-                                addResponse(response);
+                                _addResponse(response);
+                                _handleResponse(response);
                             }
-                        } else
-                            addResponse(response);
+                        } else {
+                            _addResponse(response);
+                            _handleResponse(response);
+                        }
                     }
                 }
                 if (FD_ISSET(_fd, &writefds)) {
@@ -101,20 +103,31 @@ namespace Zappy {
             }
         }
 
+        void Server::_handleResponse(const std::string& buffer)
+        {
+            std::string command = buffer.substr(0, 3);
+            std::string responseValue = buffer.substr(3);
+
+            auto it = _commandHandlers.find(command);
+            if (it != _commandHandlers.end()) {
+                it->second(responseValue);
+            }
+        }
+
         void Server::_disconnect()
         {
             close(_fd);
             _state = DOWN;
         }
 
-        void Server::addRequest(const std::string &request)
+        void Server::_addRequest(const std::string &request)
         {
             std::lock_guard<Mutex> lock(_requestQueueMutex);
             _requestQueue.push(request);
             _requestQueueNotEmpty.notify_one();
         }
 
-        void Server::addResponse(const std::string &response)
+        void Server::_addResponse(const std::string &response)
         {
             std::lock_guard<Mutex> lock(_responseQueueMutex);
             _responseQueue.push(response);
