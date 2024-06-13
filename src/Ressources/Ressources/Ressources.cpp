@@ -43,6 +43,12 @@ namespace Zappy {
                         return player;
                 return nullptr;
             }
+
+            std::pair<int, int> Ressources::getMapDimensions() const
+            {
+                if (tileRessources.empty()) return std::make_pair(0, 0);
+                return std::make_pair(tileRessources.size(), tileRessources[0].size());
+            }
         }
     }
 }

@@ -30,17 +30,6 @@ namespace Zappy {
                             grassColor = { 60, 186, 2, 255 };
                         ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
                         line.push_back(std::make_shared<Tile>((Vector3){(float)(_posX + x * _tileSize), (float)_posY, (float)(_posZ + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
-
-
-                        // TODO: Delete this
-                        ressourcesLine.back()->setFood(rand() % 5);
-                        ressourcesLine.back()->setEgg(rand() % 5);
-                        ressourcesLine.back()->setLinemate(rand() % 5);
-                        ressourcesLine.back()->setDeraumere(rand() % 5);
-                        ressourcesLine.back()->setSibur(rand() % 5);
-                        ressourcesLine.back()->setMendiane(rand() % 5);
-                        ressourcesLine.back()->setPhiras(rand() % 5);
-                        ressourcesLine.back()->setThystame(rand() % 5);
                     }
                     _tiles.push_back(line);
                     Zappy::GUI::Ressources::Ressources::get()->tileRessources.push_back(ressourcesLine);

@@ -50,7 +50,7 @@ namespace Zappy {
                 _background->destroy();
             }
 
-            void Menu::update()
+            void Menu::update(bool isGameReady)
             {
                 Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
 
@@ -58,6 +58,14 @@ namespace Zappy {
                     for (auto &button : _buttons)
                         std::get<0>(button)->setText(i18nHelper->getTranslation(std::get<2>(button)));
                     _lang = i18nHelper->getCurrentLocale();
+                }
+
+                if (!isGameReady) {
+                    std::get<0>(_buttons[0])->setState(Zappy::GUI::Component::Button::State::DISABLED);
+                    _isGameReady = false;
+                } else if (isGameReady && !_isGameReady) {
+                    std::get<0>(_buttons[0])->setState(Zappy::GUI::Component::Button::State::DEFAULT);
+                    _isGameReady = isGameReady;
                 }
             }
 

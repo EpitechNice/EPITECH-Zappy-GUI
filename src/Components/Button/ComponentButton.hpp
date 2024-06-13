@@ -30,7 +30,8 @@ namespace Zappy {
                         NONE = -1,
                         DEFAULT,
                         HOVER,
-                        CLICKED
+                        CLICKED,
+                        DISABLED
                     } State;
 
                     Button(std::pair<float, float> pos, std::pair<float, float> size, std::string text, int textSize, Color color);

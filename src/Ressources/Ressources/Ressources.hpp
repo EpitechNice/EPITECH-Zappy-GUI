@@ -30,6 +30,8 @@ namespace Zappy {
 
                     std::shared_ptr<Players> getPlayerFromId(int id) const;
 
+                    std::pair<int, int> getMapDimensions() const;
+
                 protected:
                 private:
                     Ressources();

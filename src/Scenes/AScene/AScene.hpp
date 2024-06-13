@@ -21,10 +21,11 @@ namespace Zappy {
                 void start() override;
                 void destroy() override;
                 void update() override;
+                void update(bool isGameReady) override;
                 void draw3D() override;
                 void draw2D() override;
-
                 std::string nextScene() override;
+                bool isReady() override;
 
             protected:
             private:

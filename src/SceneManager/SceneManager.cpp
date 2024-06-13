@@ -47,7 +47,9 @@ namespace Zappy {
             while (_currentScene != "end") {
                 _scenes[_currentScene]->start();
                 while (!WindowShouldClose() && _currentScene != "end") {
-                    _scenes[_currentScene]->update();
+                    bool isGameReady = _scenes["game"]->isReady();
+                    if (_currentScene == "menu") _scenes[_currentScene]->update(isGameReady);
+                    else _scenes[_currentScene]->update();
                     _render->view()->update();
 
                     BeginDrawing();
