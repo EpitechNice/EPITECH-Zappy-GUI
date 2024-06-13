@@ -10,12 +10,6 @@
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
-            Ressources *Ressources::get()
-            {
-                static Ressources ressources;
-                return &ressources;
-            }
-
             Ressources::Ressources()
             {
                 tileRessources = std::vector<std::vector<std::shared_ptr<TileRessources>>>();
@@ -46,7 +40,7 @@ namespace Zappy {
 
             std::pair<int, int> Ressources::getMapDimensions() const
             {
-                if (tileRessources.empty()) return std::make_pair(0, 0);
+                if (!mapSet) return std::make_pair(0, 0);
                 return std::make_pair(tileRessources.size(), tileRessources[0].size());
             }
         }

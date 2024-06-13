@@ -23,18 +23,13 @@ namespace Zappy {
 
                 for (int x = 0; x < _sizeX; x++) {
                     std::vector<std::shared_ptr<Tile>> line;
-                    std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> ressourcesLine;
                     for (int z = 0; z < _sizeY; z++) {
                         Color grassColor = { 112, 224, 0, 255 };
                         if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
                             grassColor = { 60, 186, 2, 255 };
-                        line.push_back(std::make_shared<Tile>((Vector3){(float)(_posX + x * _tileSize), (float)_posY, (float)(_posZ + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
-
-                        // TODO: Move this into Ressources
-                        ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
+                        line.push_back(std::make_shared<Tile>((Vector3){(float)(_posX + x * _tileSize), (float)_posY, (float)(_posZ + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, Zappy::GUI::Ressources::Ref::get()->ressources->tileRessources[x][z]));
                     }
                     _tiles.push_back(line);
-                    Zappy::GUI::Ressources::Ressources::get()->tileRessources.push_back(ressourcesLine);
                 }
             }
 
@@ -47,7 +42,7 @@ namespace Zappy {
 
             void TileMap::update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter)
             {
-                Zappy::GUI::Ressources::Ressources::get()->setPlayerOnMap();
+                Zappy::GUI::Ressources::Ref::get()->ressources->setPlayerOnMap();
                 std::pair<int, int> highLight = { -1, -1 };
                 Vector2 point = GetMousePosition();
                 if (render->view()->isMouseFollowing())

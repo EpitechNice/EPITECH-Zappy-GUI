@@ -19,7 +19,7 @@ namespace Zappy {
         namespace Ressources {
             class Ressources {
                 public:
-                    static Ressources *get();
+                    Ressources();
                     ~Ressources() = default;
 
                     void setPlayerOnMap();
@@ -33,9 +33,10 @@ namespace Zappy {
 
                     std::pair<int, int> getMapDimensions() const;
 
+                    bool mapSet = false;
+
                 protected:
                 private:
-                    Ressources();
             };
         }
     }

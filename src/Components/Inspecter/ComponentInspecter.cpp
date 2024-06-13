@@ -53,8 +53,8 @@ namespace Zappy {
                 std::get<BUTTON>(_tabs[_tabsIndex])->disableState();
 
                 _selecters = std::make_unique<InspecterSelecterGroupDraggable>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
-                for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
-                    _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                for (std::size_t i = 0; i <Zappy::GUI::Ressources::Ref::get()->ressources->players.size(); i++)
+                    _selecters->addSelecter(Zappy::GUI::Ressources::Ref::get()->ressources->players[i]);
 
                 _infos = std::make_shared<InspecterInfo>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
                 _infosTile = std::make_unique<InspecterInfoTile>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
@@ -86,13 +86,13 @@ namespace Zappy {
                     _updateTabs(0);
                     if (_selectedTile.first == -1 || _selectedTile.second == -1) {
                         _infosTile->setInfo(nullptr);
-                        for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
-                            _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                        for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ref::get()->ressources->players.size(); i++)
+                            _selecters->addSelecter(Zappy::GUI::Ressources::Ref::get()->ressources->players[i]);
                     } else {
-                        _infosTile->setInfo(Zappy::GUI::Ressources::Ressources::get()->tileRessources[_selectedTile.first][_selectedTile.second]);
-                        for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ressources::get()->players.size(); i++)
-                            if (Zappy::GUI::Ressources::Ressources::get()->players[i]->getX() == _selectedTile.first && Zappy::GUI::Ressources::Ressources::get()->players[i]->getY() == _selectedTile.second)
-                                _selecters->addSelecter(Zappy::GUI::Ressources::Ressources::get()->players[i]);
+                        _infosTile->setInfo(Zappy::GUI::Ressources::Ref::get()->ressources->tileRessources[_selectedTile.first][_selectedTile.second]);
+                        for (std::size_t i = 0; i < Zappy::GUI::Ressources::Ref::get()->ressources->players.size(); i++)
+                            if (Zappy::GUI::Ressources::Ref::get()->ressources->players[i]->getX() == _selectedTile.first && Zappy::GUI::Ressources::Ref::get()->ressources->players[i]->getY() == _selectedTile.second)
+                                _selecters->addSelecter(Zappy::GUI::Ressources::Ref::get()->ressources->players[i]);
                     }
                 }
                 _updateTabs();
