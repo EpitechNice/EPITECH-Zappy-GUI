@@ -10,6 +10,7 @@
 
     #include <memory>
     #include <vector>
+    #include <unordered_map>
 
     #include "TileRessources.hpp"
     #include "Players.hpp"
@@ -23,10 +24,11 @@ namespace Zappy {
                     ~Ressources() = default;
 
                     void setPlayerOnMap();
-                    void addPlayer(std::shared_ptr<Players> player);
+                    void addPlayer(std::shared_ptr<Players> player, std::string team);
 
                     std::vector<std::vector<std::shared_ptr<TileRessources>>> tileRessources;
                     std::vector<std::shared_ptr<Players>> players;
+                    std::unordered_map<std::string, Color> teamsColor;
 
                     std::shared_ptr<Players> getPlayerFromId(int id) const;
                     std::shared_ptr<Zappy::GUI::Ressources::TileRessources> getTileFromPos(int posX, int posY) const;

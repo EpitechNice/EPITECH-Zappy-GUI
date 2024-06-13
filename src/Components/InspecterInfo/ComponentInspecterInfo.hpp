@@ -35,6 +35,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _noPlayerSelected;
                     std::shared_ptr<Zappy::GUI::Ressources::Players> _player;
                     std::unique_ptr<Zappy::GUI::Component::Circle> _circle;
+                    std::unique_ptr<Zappy::GUI::Component::TextBox> _team;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _name;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _food;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _linemate;

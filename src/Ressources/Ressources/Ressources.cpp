@@ -16,9 +16,32 @@ namespace Zappy {
                 players = std::vector<std::shared_ptr<Players>>();
             }
 
-            void Ressources::addPlayer(std::shared_ptr<Players> player)
+            void Ressources::addPlayer(std::shared_ptr<Players> player, std::string team)
             {
                 players.push_back(player);
+
+                if (teamsColor.find(team) != teamsColor.end()) return;
+                unsigned char r = rand() % 256;
+                unsigned char g = rand() % 256;
+                unsigned char b = rand() % 256;
+                Color color = (Color){r, g, b, 255};
+                bool isUnique = false;
+                while (!isUnique) {
+                    isUnique = true;
+                    for (auto &teamColor : teamsColor) {
+                        if (teamColor.second.r == r && teamColor.second.g == g && teamColor.second.b == b) {
+                            isUnique = false;
+                            break;
+                        }
+                    }
+                    if (!isUnique) {
+                        r = rand() % 256;
+                        g = rand() % 256;
+                        b = rand() % 256;
+                        color = (Color){r, g, b, 255};
+                    }
+                }
+                teamsColor[team] = color;
             }
 
             void Ressources::setPlayerOnMap()

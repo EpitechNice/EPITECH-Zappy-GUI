@@ -18,7 +18,7 @@ namespace Zappy {
                 _sizeX = width;
                 _sizeY = 0;
                 _player = player;
-                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, player->getTeam());
+                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[player->getTeam()]);
                 _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), 20, WHITE);
                 _sizeY = _text->getSizeY() + 20;
                 _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_sizeX, (float)_sizeY), 0.2, (Color){55, 56, 40, 255});
