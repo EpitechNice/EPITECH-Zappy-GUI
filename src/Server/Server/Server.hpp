@@ -15,6 +15,7 @@
     #include <arpa/inet.h>
     #include <unistd.h>
     #include <queue>
+    #include <condition_variable>
 
     #include "Exceptions.hpp"
     #include "Mutex.hpp"
@@ -47,12 +48,22 @@ namespace Zappy {
 
                 struct sockaddr_in _socketAddress;
 
+                std::queue<std::string> _requestQueue;
+                Zappy::Server::Mutex _requestQueueMutex;
+                std::condition_variable _requestQueueNotEmpty;
+
+                std::queue<std::string> _responseQueue;
+                Zappy::Server::Mutex _responseQueueMutex;
+                std::condition_variable _responseQueueNotEmpty;
+
                 // namepipe in
                 // namepipe out
 
                 void _connect();
                 void _loop();
                 void _disconnect();
+                void addRequest(const std::string &request);
+                void addResponse(const std::string &request);
         };
     }
 }

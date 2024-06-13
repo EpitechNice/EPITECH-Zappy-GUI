@@ -35,7 +35,6 @@ namespace Zappy {
 
         void Server::shutdown()
         {
-            close(_fd);
             _state = DISCONNECT;
         }
 
@@ -48,7 +47,6 @@ namespace Zappy {
             _socketAddress.sin_family = AF_INET;
             _socketAddress.sin_port = htons(_port);
             _socketAddress.sin_addr.s_addr = std::stoi(_address);
-
             if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) {
                 shutdown();
                 throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
@@ -57,6 +55,7 @@ namespace Zappy {
             //looplose(_fd);
             _fd = -1;
             _state = DOWN;
+
         }
 
         void Server::_loop()
@@ -66,8 +65,22 @@ namespace Zappy {
 
         void Server::_disconnect()
         {
-            // Disconnect from the server
+            close(_fd);
             _state = DOWN;
+        }
+
+        void Server::addRequest(const std::string &request)
+        {
+            std::lock_guard<std::mutex> lock(_requestQueueMutex.getMutex());
+            _requestQueue.push(request);
+            _requestQueueNotEmpty.notify_one();
+        }
+
+        void Server::addResponse(const std::string &response)
+        {
+            std::lock_guard<std::mutex> lock(_responseQueueMutex.getMutex());
+            _responseQueue.push(response);
+            _responseQueueNotEmpty.notify_one();
         }
     }
 }
