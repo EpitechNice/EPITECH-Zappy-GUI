@@ -18,61 +18,51 @@
     #include "ComponentButton.hpp"
     #include "ComponentButtonClassic.hpp"
     #include "ComponentCircle.hpp"
-    #include "ComponentInspecterSelecterGroupDragabble.hpp"
+    #include "ComponentInspecterSelecterGroupDraggable.hpp"
     #include "Ressources.hpp"
     #include "ComponentInspecterInfo.hpp"
     #include "ComponentInspecterInfoTile.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Inspecter {
+            class Inspecter: public AComponent {
                 public:
                     Inspecter();
-                    ~Inspecter();
 
-                    void destroy();
+                    void draw() override;
 
                     void update(std::pair<int, int> selectedTile);
-
-                    void draw();
-
                     bool mouseIsOn() const;
-
                     void open();
                     void close();
 
                 protected:
                 private:
-                    bool _isDestroyed;
+                    typedef enum {
+                        NAME = 0,
+                        BUTTON = 1,
+                    } TabsIndex;
                     bool _open;
-                    int _width;
                     int _screenWidth;
-                    std::pair<float, float> _buttonSize;
+                    int _tabsIndex;
+                    std::pair<int, int> _selectedTile;
 
                     std::unique_ptr<Rectangle> _rectTopBackground;
                     std::unique_ptr<Rectangle> _rectTop;
                     std::unique_ptr<Rectangle> _rectMid;
                     std::unique_ptr<Rectangle> _rectBot;
                     std::unique_ptr<Button> _openButton;
-
-                    typedef enum {
-                        NAME = 0,
-                        BUTTON = 1,
-                    } TabsIndex;
-
                     std::vector<std::tuple<std::string, std::unique_ptr<ButtonClassic>>> _tabs;
-                    int _tabsIndex;
-                    std::pair<int, int> _selectedTile;
+                    std::unique_ptr<InspecterSelecterGroupDraggable> _selecters;
+                    std::shared_ptr<InspecterInfo> _infos;
+                    std::unique_ptr<InspecterInfoTile> _infosTile;
 
                     void _setInspecterOpen();
                     void _setInspecterClose();
                     void _updateTabs();
                     void _updateTabs(int index);
-
-                    std::unique_ptr<InspecterSelecterGroupDraggable> _selecters;
-                    std::shared_ptr<InspecterInfo> _infos;
-                    std::unique_ptr<InspecterInfoTile> _infosTile;
             };
         }
     }

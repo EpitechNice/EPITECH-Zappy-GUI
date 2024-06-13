@@ -28,7 +28,7 @@ namespace Zappy {
 
                 _render = render;
                 _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple");
-                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, 100 * tileSize * size.first / 2);
+                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, tileSize * size.first * 2);
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
                 _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){5, 5, 5});
@@ -43,10 +43,7 @@ namespace Zappy {
 
             void Game::destroy()
             {
-                _tileMap->destroy();
                 _ressources->destroy();
-                _inspecter->destroy();
-                _chatbox->destroy();
                 _borderbox->destroy();
                 _skybox->destroy();
             }
@@ -82,10 +79,6 @@ namespace Zappy {
                         _cursor = true;
                     }
                 }
-            }
-
-            void Game::event()
-            {
             }
 
             void Game::draw3D()

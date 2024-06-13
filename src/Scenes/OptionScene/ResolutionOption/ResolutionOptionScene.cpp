@@ -50,7 +50,7 @@ namespace Zappy {
                             _resolutionButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, BLUE), button.second));
                         else
                             _resolutionButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, GREEN), button.second));
-                        buttonX += _resolutionButtons.back().first->getSize().first + buttonSpacing;
+                        buttonX += _resolutionButtons.back().first->getSizeX() + buttonSpacing;
                     }
                 } else if (text[i].second == "[menu.settings.resolution.fps_title]") {
                     for (const auto& button : buttons_fps) {
@@ -58,26 +58,14 @@ namespace Zappy {
                             _fpsButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, BLUE), button.second));
                         else
                             _fpsButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, GREEN), button.second));
-                        buttonX += _fpsButtons.back().first->getSize().first + buttonSpacing;
+                        buttonX += _fpsButtons.back().first->getSizeX() + buttonSpacing;
                     }
                 }
             }
         }
 
-        void Scene::ResolutionOption::start()
-        {}
-
         void Scene::ResolutionOption::destroy()
         {
-            for (auto &text : _text)
-                text.first->destroy();
-            for (auto &button : _resolutionButtons)
-                button.first->destroy();
-            _resolutionButtons.clear();
-            for (auto &button : _fpsButtons)
-                button.first->destroy();
-            _fpsButtons.clear();
-            _backButton.first->destroy();
             _background->destroy();
         }
 
@@ -91,29 +79,7 @@ namespace Zappy {
                 _backButton.first->setText(i18nHelper->getTranslation(_backButton.second));
                 _lang = i18nHelper->getCurrentLocale();
             }
-        }
 
-        void Scene::ResolutionOption::event()
-        {}
-
-        void Scene::ResolutionOption::draw3D()
-        {}
-
-        void Scene::ResolutionOption::draw2D()
-        {
-            _background->draw();
-            _backButton.first->draw();
-            for (auto &text : _text)
-                text.first->draw();
-            for (auto &button : _resolutionButtons)
-                button.first->draw();
-            for (auto &button : _fpsButtons)
-                button.first->draw();
-        }
-        std::string Scene::ResolutionOption::nextScene()
-        {
-            if (_backButton.first->isClicked(_backButton.second))
-                return "option";
             for (auto &button : _resolutionButtons) {
                 if (button.first->isClicked(button.first->getText())){
                     if (button.second == "Resolution_2960x1440")
@@ -124,9 +90,9 @@ namespace Zappy {
                         _render->setDimensions(700, 1250);
                     for (auto &otherButton : _resolutionButtons) {
                         if (otherButton.first != button.first)
-                            otherButton.first->changeColor(GREEN);
+                            otherButton.first->setColor(GREEN);
                     }
-                    button.first->changeColor(BLUE);
+                    button.first->setColor(BLUE);
                 }
             }
             for (auto &button : _fpsButtons) {
@@ -139,11 +105,29 @@ namespace Zappy {
                         _render->setFps(120);
                     for (auto &otherButton : _fpsButtons) {
                         if (otherButton.first != button.first)
-                            otherButton.first->changeColor(GREEN);
+                            otherButton.first->setColor(GREEN);
                     }
-                    button.first->changeColor(BLUE);
+                    button.first->setColor(BLUE);
                 }
             }
+        }
+
+        void Scene::ResolutionOption::draw2D()
+        {
+            _background->draw();
+            _backButton.first->draw();
+            for (auto &text : _text)
+                text.first->draw();
+            for (auto &button : _resolutionButtons)
+                button.first->draw();
+            for (auto &button : _fpsButtons)
+                button.first->draw();
+        }
+
+        std::string Scene::ResolutionOption::nextScene()
+        {
+            if (_backButton.first->isClicked(_backButton.second))
+                return "option";
             return "resolutionSetting";
         }
     }

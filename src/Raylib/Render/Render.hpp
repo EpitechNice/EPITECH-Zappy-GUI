@@ -14,8 +14,10 @@
 
     #include "View.hpp"
     #include <iostream>
-    #include "../Sfml/SoundManager/SoundManager.hpp"
+    #include "SoundManager.hpp"
     #include "I18nHelper.hpp"
+    #include "FontManager.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Raylib {

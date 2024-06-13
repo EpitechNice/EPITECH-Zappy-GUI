@@ -13,33 +13,26 @@ namespace Zappy {
         namespace Component {
             InspecterSelecter::InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Players> player)
             {
-                _pos = pos;
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = width;
+                _sizeY = 0;
                 _player = player;
-                _size = std::make_pair(width, 0);
                 _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, player->getTeam());
                 _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), 20, WHITE);
-                _size.second = _text->getSize().second + 20;
-                _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_size.first, (float)_size.second), 0.2, (Color){55, 56, 40, 255});
-                _team->setPos(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + _background->getSize().second / 2)));
-                _text->setPos(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)));
-            }
+                _sizeY = _text->getSizeY() + 20;
+                _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_sizeX, (float)_sizeY), 0.2, (Color){55, 56, 40, 255});
 
-            InspecterSelecter::~InspecterSelecter()
-            {
-                destroy();
-            }
+                _team->setPosX((float)(pos.first + 20));
+                _team->setPosY((float)(pos.second + _background->getSizeY() / 2));
 
-            void InspecterSelecter::destroy()
-            {
-                if (_isDestroyed)
-                    return;
-                _text->destroy();
-                _isDestroyed = true;
+                _text->setPosX((float)(pos.first + 40));
+                _text->setPosY((float)(pos.second + 10));
             }
 
             void InspecterSelecter::update()
             {
-                _state = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)_pos.first, (float)_pos.second, (float)_size.first, (float)_size.second}) ? IsMouseButtonPressed(MOUSE_LEFT_BUTTON) ? CLICKED : HOVER : NONE;
+                _state = CheckCollisionPointRec(GetMousePosition(), (Rectangle){(float)_posX, (float)_posY, (float)_sizeX, (float)_sizeY}) ? IsMouseButtonPressed(MOUSE_LEFT_BUTTON) ? CLICKED : HOVER : NONE;
             }
 
             void InspecterSelecter::draw()
@@ -50,42 +43,54 @@ namespace Zappy {
                 _team->draw();
             }
 
-            void InspecterSelecter::modPosX(int x)
+            void InspecterSelecter::modPosX(float x)
             {
-                _pos.first += x;
-                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
-                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+                _posX += x;
+                _background->setPosX((float)_posX);
+                _background->setPosY((float)_posY);
+
+                _text->setPosX((float)(_posX + 40));
+                _text->setPosY((float)(_posY + 10));
+
+                _team->setPosX((float)(_posX + 20));
             }
 
-            void InspecterSelecter::modPosY(int y)
+            void InspecterSelecter::modPosY(float y)
             {
-                _pos.second += y;
-                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
-                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+                _posY += y;
+                _background->setPosX((float)_posX);
+                _background->setPosY((float)_posY);
+
+                _text->setPosX((float)(_posX + 40));
+                _text->setPosY((float)(_posY + 10));
+
+                _team->setPosY((float)(_posY + _background->getSizeY() / 2));
             }
 
-            void InspecterSelecter::setPosX(int x)
+            void InspecterSelecter::setPosX(float x)
             {
-                _pos.first = x;
-                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
-                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+                _posX = x;
+                _background->setPosX((float)_posX);
+                _background->setPosY((float)_posY);
+
+                _text->setPosX((float)(_posX + 40));
+                _text->setPosY((float)(_posY + 10));
+
+                _team->setPosX((float)(_posX + 20));
             }
 
-            void InspecterSelecter::setPosY(int y)
+            void InspecterSelecter::setPosY(float y)
             {
-                _pos.second = y;
-                _background->setPosition(std::make_pair<float, float>((float)_pos.first, (float)_pos.second));
-                _text->setPos(std::make_pair<float, float>((float)(_pos.first + 40), (float)(_pos.second + 10)));
-                _team->setPos(std::make_pair<float, float>((float)(_pos.first + 20), _pos.second + _background->getSize().second / 2));
+                _posY = y;
+                _background->setPosX((float)_posX);
+                _background->setPosY((float)_posY);
+
+                _text->setPosX((float)(_posX + 40));
+                _text->setPosY((float)(_posY + 10));
+
+                _team->setPosY((float)(_posY + _background->getSizeY() / 2));
             }
 
-            std::pair<int, int> InspecterSelecter::getSize() const
-            {
-                return _size;
-            }
 
             void InspecterSelecter::setSelected(bool selected)
             {

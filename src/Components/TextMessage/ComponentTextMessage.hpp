@@ -13,28 +13,27 @@
     #include <memory>
 
     #include "ComponentTextBox.hpp"
+    #include "AComponent.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class TextMessage {
+            class TextMessage: public AComponent {
                 public:
                     TextMessage(std::pair<int, int> pos, int width, std::string name, std::string text, int gap, Color color);
-                    ~TextMessage();
 
-                    void destroy();
+                    void draw() override;
 
-                    void setPosX(int x);
-                    void setPosY(int y);
-                    void setPos(std::pair<int, int> pos);
+                    void setPosX(float x) override;
+                    void setPosY(float y) override;
+                    void modPosX(float x) override;
+                    void modPosY(float y) override;
 
-                    std::pair<float, float> getSize() const;
-
-                    void draw();
+                    float getSizeX() const override;
+                    float getSizeY() const override;
 
                 protected:
                 private:
-                    bool _isDestroyed;
                     int _gap;
 
                     std::unique_ptr<TextBox> _name;

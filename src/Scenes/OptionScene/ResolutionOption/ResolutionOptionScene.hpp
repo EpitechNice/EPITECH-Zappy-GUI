@@ -36,11 +36,8 @@ namespace Zappy {
                     ResolutionOption(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~ResolutionOption() = default;
 
-                    void start() override;
                     void destroy() override;
                     void update() override;
-                    void event() override;
-                    void draw3D() override;
                     void draw2D() override;
 
                     std::string nextScene() override;
