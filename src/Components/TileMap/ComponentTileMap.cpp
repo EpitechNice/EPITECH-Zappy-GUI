@@ -28,8 +28,10 @@ namespace Zappy {
                         Color grassColor = { 112, 224, 0, 255 };
                         if (((int)x % 2 == 0 && (int)z % 2 == 0) || ((int)x % 2 != 0 && (int)z % 2 != 0))
                             grassColor = { 60, 186, 2, 255 };
-                        ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
                         line.push_back(std::make_shared<Tile>((Vector3){(float)(_posX + x * _tileSize), (float)_posY, (float)(_posZ + z * _tileSize)}, (Vector3){(float)_tileSize, (float)_tileSize, (float)_tileSize}, grassColor, ressources, ressourcesLine.back()));
+
+                        // TODO: Move this into Ressources
+                        ressourcesLine.push_back(std::make_shared<Zappy::GUI::Ressources::TileRessources>(x, z));
                     }
                     _tiles.push_back(line);
                     Zappy::GUI::Ressources::Ressources::get()->tileRessources.push_back(ressourcesLine);

@@ -92,10 +92,6 @@ namespace Zappy {
 
             bool Game::isReady()
             {
-                if (IsKeyReleased(KEY_A)) {
-                    createMap(std::make_pair(2, 4));
-                    _isReady = true;
-                }
                 if (_isReady) return true;
 
                 std::pair<int, int> mapSize = Zappy::GUI::Ressources::Ressources::get()->getMapDimensions();

@@ -57,6 +57,7 @@ SRC		=   src/Main.cpp																				\
 			src/Scenes/OptionScene/OptionScene.cpp														\
 			src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp							\
 			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp										\
+			src/Server/Server.cpp																		\
 			src/Sfml/SoundManager/SoundManager.cpp														\
 			src/Utils/Utils.cpp																			\
 
@@ -141,6 +142,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Scenes/OptionScene							\
 				-I./src/Scenes/OptionScene/ResolutionOption 		\
 				-I./src/Scenes/OptionScene/SoundOption      		\
+				-I./src/Server/Server								\
 				-I./src/Sfml/SoundManager							\
 				-I./src/Utils										\
 
