@@ -48,9 +48,11 @@ namespace Zappy {
 
             void Button::draw()
             {
-                State oldState = _state;
-                _updateState();
-                _modState(oldState);
+                if (_state != DISABLED) {
+                    State oldState = _state;
+                    _updateState();
+                    _modState(oldState);
+                }
 
                 _blackStroke->draw();
                 _upEffect->draw();
@@ -190,6 +192,8 @@ namespace Zappy {
 
             void Button::_updateState()
             {
+                if (_state == DISABLED)
+                    return;
                 if (CheckCollisionPointRec(GetMousePosition(), Rectangle{_posX, _posY, _sizeX, _sizeY})) {
                     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                         _state = CLICKED;
@@ -203,7 +207,25 @@ namespace Zappy {
             {
                 if (oldState == _state)
                     return;
-                if (_state == HOVER) {
+
+                if (_state == DISABLED) {
+                    _blackStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(DARKGRAY, 50));
+                    _upEffect->setColor(Zappy::GUI::Raylib::ColorManager::Darker(DARKGRAY, 20));
+                    _background->setColor(Zappy::GUI::Raylib::ColorManager::Darker(DARKGRAY, 10));
+                    _topButton->setColor(DARKGRAY);
+                    _reflexioneffect->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(DARKGRAY, 5));
+                    _circle->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(DARKGRAY, 50));
+                    _textStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(DARKGRAY, 50));
+                } else {
+                    _blackStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 50));
+                    _upEffect->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 20));
+                    _background->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 10));
+                    _topButton->setColor(_color);
+                    _reflexioneffect->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 5));
+                    _circle->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 50));
+                    _textStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 50));
+                }
+                if (_state == HOVER || _state == DISABLED) {
                     _blackStroke->setSizeX(_sizeX + 2);
                     _blackStroke->setSizeY(_sizeY + 2 - _hoverEffect);
                     _blackStroke->setPosX(_posX - 1);

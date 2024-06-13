@@ -18,7 +18,6 @@
     #include "Ressources.hpp"
     #include "ComponentInspecter.hpp"
     #include "AComponent.hpp"
-    #include "CommunicationServer.hpp"
 
 namespace Zappy {
     namespace GUI {

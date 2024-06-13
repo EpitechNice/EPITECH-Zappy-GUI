@@ -21,6 +21,11 @@ namespace Zappy {
         {
         }
 
+        void AScene::update(bool isGameReady)
+        {
+            (void)isGameReady;
+        }
+
         void AScene::draw3D()
         {
         }
@@ -32,6 +37,11 @@ namespace Zappy {
         std::string AScene::nextScene()
         {
             return "no scene";
+        }
+
+        bool AScene::isReady()
+        {
+            return true;
         }
     }
 }

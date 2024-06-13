@@ -28,14 +28,16 @@ namespace Zappy {
 
                     void start() override;
                     void destroy() override;
-                    void update() override;
                     void draw3D() override;
                     void draw2D() override;
 
                     std::string nextScene() override;
 
+                    void update(bool isGameReady);
+
                 protected:
                 private:
+                    bool _isGameReady;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::vector<std::tuple<std::unique_ptr<Zappy::GUI::Component::Button>, std::string, std::string>> _buttons;
                     std::unique_ptr<Zappy::GUI::Component::Image> _logo;
