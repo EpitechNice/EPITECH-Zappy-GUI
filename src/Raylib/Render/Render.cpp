@@ -20,6 +20,7 @@ namespace Zappy {
                 _view = std::make_shared<View>();
                 Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);
                 Sfml::SoundManager::getInstance().playgeneralSound();
+                ModelManager::get();
             }
 
             Render::~Render()
@@ -31,6 +32,7 @@ namespace Zappy {
             {
                 if (_isDestroyed) return;
                 _musiquePrincipal.stop();
+                ModelManager::get()->destroy();
                 FontManager::get()->destroy();
                 UnloadImage(_icon);
                 CloseWindow();

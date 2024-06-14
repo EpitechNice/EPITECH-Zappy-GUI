@@ -13,6 +13,7 @@
     #include <memory>
 
     #include "AComponent.hpp"
+    #include "ModelManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -21,7 +22,6 @@ namespace Zappy {
                 public:
                     Model3D(std::string path, Vector3 pos, float scale, Vector3 rotationAxis = {0, 1, 0}, float angle = 0);
 
-                    void destroy() override;
                     void draw() override;
 
                     void setOnPosY(float y);

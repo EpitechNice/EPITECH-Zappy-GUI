@@ -19,17 +19,8 @@ namespace Zappy {
                 _rotationAxis = rotationAxis;
                 _angle = angle;
 
-                std::string modelPath = "assets/models/" + path + ".gltf";
-                _model = LoadModel(modelPath.c_str());
+                _model = Raylib::ModelManager::get()->getModel(path);
             }
-
-            void Model3D::destroy()
-            {
-                if (_isDestroyed) return;
-                UnloadModel(_model);
-                _isDestroyed = true;
-            }
-
 
             void Model3D::draw()
             {

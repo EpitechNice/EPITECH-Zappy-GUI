@@ -9,6 +9,7 @@
     #define TILE_RESSOURCES_HPP_
 
     #include "Players.hpp"
+    #include "Eggs.hpp"
     #include <vector>
     #include <memory>
 
@@ -26,10 +27,6 @@ namespace Zappy {
                     int getFood() const;
                     void setFood(int food);
                     bool hasFood() const;
-
-                    int getEgg() const;
-                    void setEgg(int egg);
-                    bool hasEgg() const;
 
                     int getLinemate() const;
                     void setLinemate(int linemate);
@@ -60,12 +57,16 @@ namespace Zappy {
                     void addPlayer(std::shared_ptr<Players> player);
                     bool hasPlayers() const;
 
+                    std::vector<std::shared_ptr<Eggs>> getEggs() const;
+                    void clearEggs();
+                    void addEgg(std::shared_ptr<Eggs> egg);
+                    bool hasEggs() const;
+
                 protected:
                 private:
                     int _x;
                     int _y;
                     int _food;
-                    int _egg;
                     int _linemate;
                     int _deraumere;
                     int _sibur;
@@ -73,6 +74,7 @@ namespace Zappy {
                     int _phiras;
                     int _thystame;
                     std::vector<std::shared_ptr<Players>> _players;
+                    std::vector<std::shared_ptr<Eggs>> _eggs;
             };
         }
     }

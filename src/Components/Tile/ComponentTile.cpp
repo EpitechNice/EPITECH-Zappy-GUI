@@ -60,7 +60,7 @@ namespace Zappy {
                 if (_ressources->hasSibur()) _ressourcesDrawer->drawSibur();
                 if (_ressources->hasThystame()) _ressourcesDrawer->drawThystame();
                 if (_ressources->hasFood()) _ressourcesDrawer->drawFood();
-                if (_ressources->hasEgg()) _ressourcesDrawer->drawEgg();
+                if (_ressources->hasEggs()) _ressourcesDrawer->drawEgg();
                 if (_ressources->hasPlayers()) _ressourcesDrawer->drawZappy();
             }
 

@@ -43,9 +43,12 @@ SRC		=   src/Main.cpp																				\
 			src/Parsing/ParsingHelp.cpp																	\
 			src/Raylib/ColorManager/ColorManager.cpp													\
 			src/Raylib/FontManager/FontManager.cpp														\
+			src/Raylib/ModelManager/ModelManager.cpp													\
 			src/Raylib/Render/Render.cpp																\
 			src/Raylib/View/View.cpp																	\
+			src/Ressources/Eggs/Eggs.cpp																\
 			src/Ressources/Players/Players.cpp															\
+			src/Ressources/Ref/Ref.cpp																	\
 			src/Ressources/Ressources/Ressources.cpp													\
 			src/Ressources/TileRessources/TileRessources.cpp											\
 			src/SceneManager/SceneManager.cpp															\
@@ -60,7 +63,8 @@ SRC		=   src/Main.cpp																				\
 			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp										\
 			src/Server/Server/Server.cpp																\
 			src/Sfml/SoundManager/SoundManager.cpp														\
-			src/Utils/Utils.cpp																			\
+			src/Utils/Utils/Utils.cpp																	\
+			src/Utils/Mutex/Mutex.cpp																	\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
 
@@ -127,10 +131,13 @@ INCLUDES	=	-I./includes										\
 				-I./src/Parsing										\
 				-I./src/Raylib/ColorManager							\
 				-I./src/Raylib/FontManager							\
+				-I./src/Raylib/ModelManager							\
 				-I./src/Raylib/Render								\
 				-I./src/Raylib/SoundManager							\
 				-I./src/Raylib/View									\
+				-I./src/Ressources/Eggs								\
 				-I./src/Ressources/Players							\
+				-I./src/Ressources/Ref								\
 				-I./src/Ressources/Ressources						\
 				-I./src/Ressources/TileRessources					\
 				-I./src/SceneManager								\
@@ -146,7 +153,8 @@ INCLUDES	=	-I./includes										\
 				-I./src/Scenes/OptionScene/SoundOption      		\
 				-I./src/Server/Server								\
 				-I./src/Sfml/SoundManager							\
-				-I./src/Utils										\
+				-I./src/Utils/Utils									\
+				-I./src/Utils/Mutex									\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\

@@ -9,13 +9,14 @@
     #define RESSOURCES_PLAYERS_HPP_
 
     #include <raylib.h>
+    #include <string>
 
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
             class Players {
                 public:
-                    Players(int id, int x, int y, Color team);
+                    Players(int id, int x, int y, std::string team);
                     ~Players() = default;
 
                     int getId() const;
@@ -47,7 +48,7 @@ namespace Zappy {
                     int getFood() const;
                     void setFood(int food);
 
-                    Color getTeam() const;
+                    std::string getTeam() const;
 
                 protected:
                 private:
@@ -61,7 +62,7 @@ namespace Zappy {
                     int _phiras;
                     int _thystame;
                     int _food;
-                    Color _team;
+                    std::string _team;
             };
         }
     }

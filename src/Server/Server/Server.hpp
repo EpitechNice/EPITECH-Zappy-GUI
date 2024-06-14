@@ -10,6 +10,8 @@
 
     #include <string>
 
+    #include "Ref.hpp"
+
 namespace Zappy {
     namespace Server {
         class Server {
@@ -21,6 +23,7 @@ namespace Zappy {
                 void shutdown();
 
                 void setInOut(); // set the in and out namepipes -> shared ptr
+                void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
 
             protected:
             private:
@@ -35,6 +38,7 @@ namespace Zappy {
                 int _port;
                 State _state;
                 int _fd;
+                std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
 
                 // namepipe in
                 // namepipe out

@@ -99,7 +99,7 @@ namespace Zappy {
             {
                 if (_isReady) return true;
 
-                std::pair<int, int> mapSize = Zappy::GUI::Ressources::Ressources::get()->getMapDimensions();
+                std::pair<int, int> mapSize = Zappy::GUI::Ressources::Ref::get()->ressources->getMapDimensions();
                 if (mapSize.first <= 0 || mapSize.second <= 0) return false;
                 createMap(mapSize);
                 _isReady = true;

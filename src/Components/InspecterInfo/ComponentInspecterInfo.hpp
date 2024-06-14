@@ -13,7 +13,8 @@
     #include <iostream>
 
     #include "Players.hpp"
-    #include "Ressources.hpp"
+    #include "Eggs.hpp"
+    #include "Ref.hpp"
     #include "ComponentTextBox.hpp"
     #include "ComponentCircle.hpp"
     #include "AComponent.hpp"
@@ -28,13 +29,16 @@ namespace Zappy {
                     void draw() override;
                     void modPosX(float x) override;
 
-                    void setInfo(std::shared_ptr<Zappy::GUI::Ressources::Players> player);
+                    void setInfoPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player);
+                    void setInfoEgg(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg);
 
                 protected:
                 private:
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _noPlayerSelected;
                     std::shared_ptr<Zappy::GUI::Ressources::Players> _player;
+                    std::shared_ptr<Zappy::GUI::Ressources::Eggs> _egg;
                     std::unique_ptr<Zappy::GUI::Component::Circle> _circle;
+                    std::unique_ptr<Zappy::GUI::Component::TextBox> _team;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _name;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _food;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _linemate;
