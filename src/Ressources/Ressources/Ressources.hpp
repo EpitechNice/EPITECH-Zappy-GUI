@@ -14,6 +14,7 @@
 
     #include "TileRessources.hpp"
     #include "Players.hpp"
+    #include "Eggs.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -24,10 +25,14 @@ namespace Zappy {
                     ~Ressources() = default;
 
                     void setPlayerOnMap();
-                    void addPlayer(std::shared_ptr<Players> player, std::string team);
+                    void addPlayer(std::shared_ptr<Players> player);
+
+                    void setEggOnMap();
+                    void addEgg(std::shared_ptr<Eggs> egg);
 
                     std::vector<std::vector<std::shared_ptr<TileRessources>>> tileRessources;
                     std::vector<std::shared_ptr<Players>> players;
+                    std::vector<std::shared_ptr<Eggs>> eggs;
                     std::unordered_map<std::string, Color> teamsColor;
 
                     std::shared_ptr<Players> getPlayerFromId(int id) const;

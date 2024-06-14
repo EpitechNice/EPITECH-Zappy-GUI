@@ -46,6 +46,7 @@ SRC		=   src/Main.cpp																				\
 			src/Raylib/ModelManager/ModelManager.cpp													\
 			src/Raylib/Render/Render.cpp																\
 			src/Raylib/View/View.cpp																	\
+			src/Ressources/Eggs/Eggs.cpp																\
 			src/Ressources/Players/Players.cpp															\
 			src/Ressources/Ref/Ref.cpp																	\
 			src/Ressources/Ressources/Ressources.cpp													\
@@ -134,6 +135,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Raylib/Render								\
 				-I./src/Raylib/SoundManager							\
 				-I./src/Raylib/View									\
+				-I./src/Ressources/Eggs								\
 				-I./src/Ressources/Players							\
 				-I./src/Ressources/Ref								\
 				-I./src/Ressources/Ressources						\

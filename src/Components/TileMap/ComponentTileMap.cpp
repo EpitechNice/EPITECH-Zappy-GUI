@@ -43,6 +43,7 @@ namespace Zappy {
             void TileMap::update(std::shared_ptr<Raylib::Render> render, std::shared_ptr<Inspecter> inspecter)
             {
                 Zappy::GUI::Ressources::Ref::get()->ressources->setPlayerOnMap();
+                Zappy::GUI::Ressources::Ref::get()->ressources->setEggOnMap();
                 std::pair<int, int> highLight = { -1, -1 };
                 Vector2 point = GetMousePosition();
                 if (render->view()->isMouseFollowing())
