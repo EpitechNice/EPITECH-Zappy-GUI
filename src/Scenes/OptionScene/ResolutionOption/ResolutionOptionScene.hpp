@@ -15,24 +15,13 @@
     #include "ComponentButton.hpp"
     #include "ComponentText.hpp"
     #include "SceneManager.hpp"
+    #include "ComponentDelayServerSection.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Scene {
             class ResolutionOption : public AScene {
                 public:
-                    typedef enum {
-                        Resolution_2960x1440,
-                        Resolution_1920x1080,
-                        Resolution_1334x750,
-                    } Resolution;
-
-                    typedef enum {
-                        FPS_30,
-                        FPS_60,
-                        FPS_120,
-                    } Fps;
-
                     ResolutionOption(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~ResolutionOption() = default;
 
@@ -44,12 +33,11 @@ namespace Zappy {
 
                 protected:
                 private:
-                    Resolution _resolution;
-                    Fps _fps;
                     std::unique_ptr<Zappy::GUI::Component::Background2D> _background;
                     std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string> _backButton;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _resolutionButtons;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Button>, std::string>> _fpsButtons;
+                    std::unique_ptr<Zappy::GUI::Component::DelayServerSection> _delaySlider;
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
                     Zappy::GUI::I18n::SupportedLocale _lang;
