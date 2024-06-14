@@ -59,7 +59,10 @@ namespace Zappy {
                         _selecters[_selected]->setSelected(false);
                     _selected = bselected;
                     _selecters[_selected]->setSelected(true);
-                    info->setInfo(Zappy::GUI::Ressources::Ref::get()->ressources->getPlayerFromId(_selecters[_selected]->getPlayer()->getId()));
+                    if (_selecters[_selected]->isPlayer())
+                        info->setInfoPlayer(Zappy::GUI::Ressources::Ref::get()->ressources->getPlayerFromId(_selecters[_selected]->getPlayer()->getId()));
+                    else
+                        info->setInfoEgg(Zappy::GUI::Ressources::Ref::get()->ressources->getEggFromId(_selecters[_selected]->getEgg()->getId()));
                 }
             }
 
@@ -68,7 +71,7 @@ namespace Zappy {
                 _selecters.clear();
                 _sizeY = 0;
                 _selected = -1;
-                info->setInfo(nullptr);
+                info->setInfoPlayer(nullptr);
             }
 
             void InspecterSelecterGroup::addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
@@ -77,6 +80,14 @@ namespace Zappy {
                 std::shared_ptr<Zappy::GUI::Component::InspecterSelecter> newPlayer = std::make_shared<InspecterSelecter>(std::make_pair(_posX, _posY + _sizeY + gap), _sizeX, player);
                 _selecters.push_back(newPlayer);
                 _sizeY += newPlayer->getSizeY() + gap;
+            }
+
+            void InspecterSelecterGroup::addEgg(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg)
+            {
+                int gap = (_selecters.empty()) ? 0 : 20;
+                std::shared_ptr<Zappy::GUI::Component::InspecterSelecter> newEgg = std::make_shared<InspecterSelecter>(std::make_pair(_posX, _posY + _sizeY + gap), _sizeX, egg);
+                _selecters.push_back(newEgg);
+                _sizeY += newEgg->getSizeY() + gap;
             }
         }
     }

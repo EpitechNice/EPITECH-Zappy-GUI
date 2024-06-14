@@ -18,7 +18,8 @@ namespace Zappy {
                 _sizeY = size.second;
 
                 _player = nullptr;
-                _noPlayerSelected = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "No player selected", 20, WHITE);
+                _egg = nullptr;
+                _noPlayerSelected = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "No player or egg selected", 20, WHITE);
                 _circle = std::make_unique<Circle>(std::make_pair(_posX + 10, _posY + 10), 10, PURPLE);
                 _team = std::make_unique<TextBox>(std::make_pair(_posX + 30, _posY), _sizeX, "Team: ", 20, WHITE);
                 _name = std::make_unique<TextBox>(std::make_pair(_posX + 30, _team->getPosY() + _team->getSizeY() + 10), _sizeX, "Player #", 20, WHITE);
@@ -33,13 +34,14 @@ namespace Zappy {
 
             void InspecterInfo::draw()
             {
-                if (_player == nullptr) {
+                if (_player == nullptr && _egg == nullptr) {
                     _noPlayerSelected->draw();
                     return;
                 }
                 _circle->draw();
                 _team->draw();
                 _name->draw();
+                if (_player == nullptr) return;
                 _food->draw();
                 _linemate->draw();
                 _deraumere->draw();
@@ -65,7 +67,7 @@ namespace Zappy {
                 _thystame->setPosX(_posX);
             }
 
-            void InspecterInfo::setInfo(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
+            void InspecterInfo::setInfoPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
             {
                 _player = player;
                 if (_player == nullptr) return;
@@ -79,6 +81,16 @@ namespace Zappy {
                 _mendiane->setText("Mendiane: " + std::to_string(player->getMendiane()));
                 _phiras->setText("Phiras: " + std::to_string(player->getPhiras()));
                 _thystame->setText("Thystame: " + std::to_string(player->getThystame()));
+            }
+
+            void InspecterInfo::setInfoEgg(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg)
+            {
+                _player = nullptr;
+                _egg = egg;
+                if (_egg == nullptr) return;
+                _circle->setColor(Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[egg->getTeam()]);
+                _team->setText("Team: " + egg->getTeam());
+                _name->setText("Egg #" + std::to_string(egg->getId()));
             }
         }
     }

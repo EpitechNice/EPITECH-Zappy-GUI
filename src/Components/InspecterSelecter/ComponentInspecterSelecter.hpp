@@ -25,6 +25,7 @@ namespace Zappy {
             class InspecterSelecter: public AComponent {
                 public:
                     InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Players> player);
+                    InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg);
 
                     void draw() override;
                     void modPosX(float x) override;
@@ -35,7 +36,9 @@ namespace Zappy {
                     void update();
                     void setSelected(bool selected);
                     bool isClicked() const;
+                    bool isPlayer() const;
                     std::shared_ptr<Zappy::GUI::Ressources::Players> getPlayer() const;
+                    std::shared_ptr<Zappy::GUI::Ressources::Eggs> getEgg() const;
 
                 protected:
                 private:
@@ -47,6 +50,7 @@ namespace Zappy {
                     } State;
 
                     std::shared_ptr<Zappy::GUI::Ressources::Players> _player;
+                    std::shared_ptr<Zappy::GUI::Ressources::Eggs> _egg;
                     std::unique_ptr<RoundedRectangle> _background;
                     std::unique_ptr<Text> _text;
                     std::unique_ptr<Circle> _team;

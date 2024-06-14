@@ -29,6 +29,7 @@ namespace Zappy {
                     void update(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info);
                     void reset(std::shared_ptr<Zappy::GUI::Component::InspecterInfo> info);
                     void addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player);
+                    void addEgg(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg);
 
                 protected:
                 private:

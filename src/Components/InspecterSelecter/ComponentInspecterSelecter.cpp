@@ -18,8 +18,29 @@ namespace Zappy {
                 _sizeX = width;
                 _sizeY = 0;
                 _player = player;
+                _egg = nullptr;
                 _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[player->getTeam()]);
                 _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), 20, WHITE);
+                _sizeY = _text->getSizeY() + 20;
+                _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_sizeX, (float)_sizeY), 0.2, (Color){55, 56, 40, 255});
+
+                _team->setPosX((float)(pos.first + 20));
+                _team->setPosY((float)(pos.second + _background->getSizeY() / 2));
+
+                _text->setPosX((float)(pos.first + 40));
+                _text->setPosY((float)(pos.second + 10));
+            }
+
+            InspecterSelecter::InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg)
+            {
+                _posX = pos.first;
+                _posY = pos.second;
+                _sizeX = width;
+                _sizeY = 0;
+                _player = nullptr;
+                _egg = egg;
+                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[egg->getTeam()]);
+                _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Egg #" + std::to_string(egg->getId())), 20, WHITE);
                 _sizeY = _text->getSizeY() + 20;
                 _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_sizeX, (float)_sizeY), 0.2, (Color){55, 56, 40, 255});
 
@@ -106,6 +127,16 @@ namespace Zappy {
             bool InspecterSelecter::isClicked() const
             {
                 return _state == CLICKED;
+            }
+
+            bool InspecterSelecter::isPlayer() const
+            {
+                return _player != nullptr;
+            }
+
+            std::shared_ptr<Zappy::GUI::Ressources::Eggs> InspecterSelecter::getEgg() const
+            {
+                return _egg;
             }
 
             std::shared_ptr<Zappy::GUI::Ressources::Players> InspecterSelecter::getPlayer() const
