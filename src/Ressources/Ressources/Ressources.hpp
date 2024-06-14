@@ -36,6 +36,7 @@ namespace Zappy {
                     std::unordered_map<std::string, Color> teamsColor;
 
                     std::shared_ptr<Players> getPlayerFromId(int id) const;
+                    std::shared_ptr<Eggs> getEggFromId(int id) const;
                     std::shared_ptr<Zappy::GUI::Ressources::TileRessources> getTileFromPos(int posX, int posY) const;
 
                     std::pair<int, int> getMapDimensions() const;

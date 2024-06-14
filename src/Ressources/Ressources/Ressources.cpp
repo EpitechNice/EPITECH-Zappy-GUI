@@ -64,6 +64,14 @@ namespace Zappy {
                 return nullptr;
             }
 
+            std::shared_ptr<Eggs> Ressources::getEggFromId(int id) const
+            {
+                for (auto &egg : eggs)
+                    if (egg->getId() == id)
+                        return egg;
+                return nullptr;
+            }
+
             std::pair<int, int> Ressources::getMapDimensions() const
             {
                 if (!mapSet) return std::make_pair(0, 0);

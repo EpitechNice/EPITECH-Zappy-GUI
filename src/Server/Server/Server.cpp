@@ -78,8 +78,14 @@ namespace Zappy {
             _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(9, 1, 0, "team3"));
 
             _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(1, 0, 0, "team1"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(2, 0, 0, "team3"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(3, 4, 4, "team1"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(2, 0, 0, "team2"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(3, 1, 0, "team3"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(4, 0, 1, "team2"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(5, 1, 1, "team1"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(6, 1, 1, "team4"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(7, 1, 1, "team2"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(8, 4, 3, "team1"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(9, 1, 0, "team3"));
 
             _ressources->mapSet = true;
         }

@@ -32,7 +32,7 @@ namespace Zappy {
 
                 protected:
                 private:
-                    std::vector<std::shared_ptr<InspecterSelecter>> _players;
+                    std::vector<std::shared_ptr<InspecterSelecter>> _selecters;
                     int _selected = -1;
             };
         }
