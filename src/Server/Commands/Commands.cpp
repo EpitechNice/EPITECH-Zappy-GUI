@@ -9,9 +9,7 @@
 
 namespace Zappy {
     namespace Server {
-        Commands::Commands()
-        {
-            this->_ressources = nullptr;
+        Commands::Commands(){
         }
 
         void Commands::handleCommandMsz(const std::string& responseValue)
@@ -19,12 +17,8 @@ namespace Zappy {
             int _heightWorld, _widthWorld;
             std::istringstream iss(responseValue);
             iss >> _heightWorld >> _widthWorld;
+            std::cout << "\n\n\n\n\nAHHHHHHHH\n   MSZ commande ok\n";
             // todo
-        }
-
-        void Commands::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
-        {
-            this->_ressources = ressources;
         }
 
         void Commands::handleCommandBct(const std::string& responseValue)
@@ -61,7 +55,7 @@ namespace Zappy {
                     << ", Orientation: " << orientation << ", Level: " << level
                     << ", Team: " << teamName << std::endl;
             //todo handle level, teamname and color
-            // this->_ressources->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, BLUE));
+            this->_ressources->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName));
         }
 
         void Commands::handleCommandPpo(const std::string& responseValue)
@@ -147,7 +141,6 @@ namespace Zappy {
             // todo
         }
 
-//TODO: check method in comment
         void Commands::handleCommandPfk(const std::string& responseValue)
         {
             int playerId;
@@ -155,10 +148,9 @@ namespace Zappy {
             iss >> playerId;
 
             std::cout << "Player #" << playerId << " laid an egg." << std::endl;
-            // int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
-            // int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
-            // int value = this->_ressources->getTileFromPos(playerX, playerY)->getEgg();
-            // this->_ressources->getTileFromPos(playerX, playerY)->setEgg(value + 1);
+            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
+            int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
+            // this->_ressources->getTileFromPos(playerX, playerY)->addEgg();
         }
 
         void Commands::handleCommandPdr(const std::string& responseValue)

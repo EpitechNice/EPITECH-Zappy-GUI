@@ -28,6 +28,9 @@ int main(int argc, char **argv)
         server->setRessources(Zappy::GUI::Ressources::Ref::get()->ressources);
         // create namepipe in and out
         // server.setInOut(in, out);
+        std::shared_ptr<Zappy::Server::SharedMemory> sharedMemory = server->getSharedMemory();
+        sharedMemory->addCommand("bct 4 3\r\n");
+        sharedMemory->addCommand("msz\r\n");
         std::thread serverThread(threadFunction, server);
 
         Zappy::GUI::SceneManager sceneManager;

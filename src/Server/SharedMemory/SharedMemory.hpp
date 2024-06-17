@@ -10,29 +10,25 @@
 
     #include <sys/mman.h>
     #include <string>
+    #include <queue>
+    #include <condition_variable>
 
-namespace Zappy
-{
-    namespace Server
-    {
-        #pragma pack(push, 1)
-        struct SharedData {
-            void *data;
-        };
-        #pragma pack(pop)
+namespace Zappy {
+    namespace Server {
+        class SharedMemory {
+        public:
+            SharedMemory();
+            ~SharedMemory();
 
-        class SharedMemory
-        {
-            private:
-                SharedData* _dataPool;
+            void addCommand(const std::string& command);
+            std::string getCommand();
+            bool hasCommands();
+            void lockMutex();
 
-            public:
-                SharedMemory(std::string comand);
-                ~SharedMemory();
-
-                void updateData(Zappy::Server::SharedData& newData);
-
-                const Zappy::Server::SharedData* getData() const;
+        private:
+            std::deque<std::string> _commandList;
+            std::mutex _mutex;
+            std::condition_variable _condVar;
         };
     }
 }

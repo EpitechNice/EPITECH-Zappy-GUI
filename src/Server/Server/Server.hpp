@@ -24,7 +24,8 @@
 
     #include "Exceptions.hpp"
     #include "Mutex.hpp"
-    #include "../Commands/Commands.hpp"
+    #include "Commands.hpp"
+    #include "SharedMemory.hpp"
     #include "Ref.hpp"
 
 namespace Zappy {
@@ -39,6 +40,7 @@ namespace Zappy {
 
                 void setInOut(); // set the in and out namepipes -> shared ptr
                 void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
+                std::shared_ptr<SharedMemory> getSharedMemory();
 
             protected:
             private:
@@ -57,9 +59,7 @@ namespace Zappy {
                 std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
                 std::shared_ptr<Zappy::Server::Commands> _commands;
 
-                std::queue<std::string> _requestQueue;
-                Mutex _requestQueueMutex;
-                std::condition_variable _requestQueueNotEmpty;
+                std::shared_ptr<SharedMemory> _sharedMemory;
                 std::queue<std::string> _responseQueue;
                 Mutex _responseQueueMutex;
                 std::condition_variable _responseQueueNotEmpty;

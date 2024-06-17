@@ -11,11 +11,8 @@ namespace Zappy {
     namespace GUI {
         namespace Ressources {
             Eggs::Eggs(int id, int x, int y, std::string team)
+                : _id(id), _x(x), _y(y), _team(team)
             {
-                _id = id;
-                _x = x;
-                _y = y;
-                _team = team;
             }
 
             int Eggs::getId() const
