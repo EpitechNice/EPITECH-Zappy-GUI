@@ -51,14 +51,14 @@ namespace Zappy {
         {
             _fd = socket(AF_INET, SOCK_STREAM, 0);
             if (_fd == -1)
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+                throw Exceptions::ConnectionServerFail("Connection to server failed", _address, _port);
 
             _socketAddress.sin_family = AF_INET;
             _socketAddress.sin_port = htons(_port);
             inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
             if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) {
                 _disconnect();
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+                throw Exceptions::ConnectionServerFail("Connection to server failed", _address, _port);
             }
             _state = CONNECTED;
 

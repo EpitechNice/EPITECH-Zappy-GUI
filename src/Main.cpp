@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     } catch (const Zappy::GUI::Parsing::Help &e) {
         e.what();
         return 0;
-    } catch (const Exceptions::ConnexionServeurFail &e) {
+    } catch (const Exceptions::ConnectionServerFail &e) {
         std::cerr << "Server connection error: " << e.what() << std::endl;
         return 84;
     } catch (const std::exception &e) {

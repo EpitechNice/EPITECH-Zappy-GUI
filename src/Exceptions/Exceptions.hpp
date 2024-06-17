@@ -61,13 +61,13 @@ namespace Exceptions
             Exceptions::Exception(what, position)
             {}
     };
-    class ConnexionServeurFail: public Exceptions::Exception
+    class ConnectionServerFail: public Exceptions::Exception
     {
     public:
-        ConnexionServeurFail(std::string what = "Connection to server failed",
+        ConnectionServerFail(std::string what = "Connection to server failed",
                             std::string serverAddress = "",
                             int serverPort = 0)
-            : Exceptions::Exception(what + " (Server Adress: " + serverAddress + ", serveur Port: " + std::to_string(serverPort) + ")")
+            : Exceptions::Exception(what + " (Server Adress: " + serverAddress + ", Server Port: " + std::to_string(serverPort) + ")")
         {}
     };
 }
