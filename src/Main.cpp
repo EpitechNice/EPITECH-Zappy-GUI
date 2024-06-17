@@ -18,7 +18,7 @@ void threadFunction(std::shared_ptr<Zappy::Server::Server> server)
     server->run();
 }
 
-
+//TODO : use Thread custom class
 int main(int argc, char **argv)
 {
     try {

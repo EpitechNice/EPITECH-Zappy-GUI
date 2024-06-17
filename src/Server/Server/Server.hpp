@@ -19,10 +19,12 @@
     #include <condition_variable>
     #include <unordered_map>
     #include <functional>
+    #include <chrono>
+    #include <thread>
 
     #include "Exceptions.hpp"
     #include "Mutex.hpp"
-    #include "Commands.hpp"
+    #include "../Commands/Commands.hpp"
     #include "Ref.hpp"
 
 namespace Zappy {
@@ -53,7 +55,7 @@ namespace Zappy {
                 State _state;
                 int _fd;
                 std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
-                Commands commandsInstance;
+                std::shared_ptr<Zappy::Server::Commands> _commands;
 
                 std::queue<std::string> _requestQueue;
                 Mutex _requestQueueMutex;
@@ -73,30 +75,30 @@ namespace Zappy {
                 void _addResponse(const std::string &request);
 
                 std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
-                    {"msz", [this](const std::string& responseValue) { commandsInstance.handleCommandMsz(responseValue); }},
-                    {"bct", [this](const std::string& responseValue) { commandsInstance.handleCommandBct(responseValue); }},
-                    {"tna", [this](const std::string& responseValue) { commandsInstance.handleCommandTna(responseValue); }},
-                    {"pnw", [this](const std::string& responseValue) { commandsInstance.handleCommandPnw(responseValue); }},
-                    {"ppo", [this](const std::string& responseValue) { commandsInstance.handleCommandPpo(responseValue); }},
-                    {"plv", [this](const std::string& responseValue) { commandsInstance.handleCommandPlv(responseValue); }},
-                    {"pin", [this](const std::string& responseValue) { commandsInstance.handleCommandPin(responseValue); }},
-                    {"pex", [this](const std::string& responseValue) { commandsInstance.handleCommandPex(responseValue); }},
-                    {"pbc", [this](const std::string& responseValue) { commandsInstance.handleCommandPbc(responseValue); }},
-                    {"pic", [this](const std::string& responseValue) { commandsInstance.handleCommandPic(responseValue); }},
-                    {"pie", [this](const std::string& responseValue) { commandsInstance.handleCommandPie(responseValue); }},
-                    {"pfk", [this](const std::string& responseValue) { commandsInstance.handleCommandPfk(responseValue); }},
-                    {"pdr", [this](const std::string& responseValue) { commandsInstance.handleCommandPdr(responseValue); }},
-                    {"pgt", [this](const std::string& responseValue) { commandsInstance.handleCommandPgt(responseValue); }},
-                    {"pdi", [this](const std::string& responseValue) { commandsInstance.handleCommandPdi(responseValue); }},
-                    {"enw", [this](const std::string& responseValue) { commandsInstance.handleCommandEnw(responseValue); }},
-                    {"ebo", [this](const std::string& responseValue) { commandsInstance.handleCommandEbo(responseValue); }},
-                    {"edi", [this](const std::string& responseValue) { commandsInstance.handleCommandEdi(responseValue); }},
-                    {"sgt", [this](const std::string& responseValue) { commandsInstance.handleCommandSgt(responseValue); }},
-                    {"sst", [this](const std::string& responseValue) { commandsInstance.handleCommandSst(responseValue); }},
-                    {"seg", [this](const std::string& responseValue) { commandsInstance.handleCommandSeg(responseValue); }},
-                    {"smg", [this](const std::string& responseValue) { commandsInstance.handleCommandSmg(responseValue); }},
-                    {"suc", [this](const std::string& responseValue) { commandsInstance.handleCommandSuc(responseValue); }},
-                    {"sbp", [this](const std::string& responseValue) { commandsInstance.handleCommandSbp(responseValue); }},
+                    {"msz", [this](const std::string& responseValue) { _commands->handleCommandMsz(responseValue); }},
+                    {"bct", [this](const std::string& responseValue) { _commands->handleCommandBct(responseValue); }},
+                    {"tna", [this](const std::string& responseValue) { _commands->handleCommandTna(responseValue); }},
+                    {"pnw", [this](const std::string& responseValue) { _commands->handleCommandPnw(responseValue); }},
+                    {"ppo", [this](const std::string& responseValue) { _commands->handleCommandPpo(responseValue); }},
+                    {"plv", [this](const std::string& responseValue) { _commands->handleCommandPlv(responseValue); }},
+                    {"pin", [this](const std::string& responseValue) { _commands->handleCommandPin(responseValue); }},
+                    {"pex", [this](const std::string& responseValue) { _commands->handleCommandPex(responseValue); }},
+                    {"pbc", [this](const std::string& responseValue) { _commands->handleCommandPbc(responseValue); }},
+                    {"pic", [this](const std::string& responseValue) { _commands->handleCommandPic(responseValue); }},
+                    {"pie", [this](const std::string& responseValue) { _commands->handleCommandPie(responseValue); }},
+                    {"pfk", [this](const std::string& responseValue) { _commands->handleCommandPfk(responseValue); }},
+                    {"pdr", [this](const std::string& responseValue) { _commands->handleCommandPdr(responseValue); }},
+                    {"pgt", [this](const std::string& responseValue) { _commands->handleCommandPgt(responseValue); }},
+                    {"pdi", [this](const std::string& responseValue) { _commands->handleCommandPdi(responseValue); }},
+                    {"enw", [this](const std::string& responseValue) { _commands->handleCommandEnw(responseValue); }},
+                    {"ebo", [this](const std::string& responseValue) { _commands->handleCommandEbo(responseValue); }},
+                    {"edi", [this](const std::string& responseValue) { _commands->handleCommandEdi(responseValue); }},
+                    {"sgt", [this](const std::string& responseValue) { _commands->handleCommandSgt(responseValue); }},
+                    {"sst", [this](const std::string& responseValue) { _commands->handleCommandSst(responseValue); }},
+                    {"seg", [this](const std::string& responseValue) { _commands->handleCommandSeg(responseValue); }},
+                    {"smg", [this](const std::string& responseValue) { _commands->handleCommandSmg(responseValue); }},
+                    {"suc", [this](const std::string& responseValue) { _commands->handleCommandSuc(responseValue); }},
+                    {"sbp", [this](const std::string& responseValue) { _commands->handleCommandSbp(responseValue); }},
                 };
         };
     }

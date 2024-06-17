@@ -9,6 +9,7 @@
     #define MUTEX_HPP
 
     #include <mutex>
+    #include <iostream>
 
 namespace Zappy
 {
@@ -18,6 +19,7 @@ namespace Zappy
         {
             private:
                 std::mutex _mutex;
+                bool _isLocked = false;
 
             public:
                 Mutex();
@@ -25,6 +27,7 @@ namespace Zappy
 
                 void lock();
                 void unlock();
+                bool tryLock();
 
                 std::mutex& getMutex();
         };

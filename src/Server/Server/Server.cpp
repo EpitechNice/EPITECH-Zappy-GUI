@@ -6,13 +6,13 @@
 */
 
 #include "Server.hpp"
-#include <chrono>
-#include <thread>
+
 
 namespace Zappy {
     namespace Server {
-        Server::Server(const std::string &address, int port) : commandsInstance()
+        Server::Server(const std::string &address, int port)
         {
+            _commands = std::make_shared<Zappy::Server::Commands>();
             _address = address;
             _port = port;
             _state = TRY_CONNECT;
@@ -26,6 +26,7 @@ namespace Zappy {
         void Server::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
         {
             _ressources = ressources;
+            _commands->setRessources(_ressources);
         }
 
         void Server::run()

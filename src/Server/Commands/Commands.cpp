@@ -9,7 +9,10 @@
 
 namespace Zappy {
     namespace Server {
-        Commands::Commands(){}
+        Commands::Commands()
+        {
+            this->_ressources = nullptr;
+        }
 
         void Commands::handleCommandMsz(const std::string& responseValue)
         {
@@ -19,18 +22,23 @@ namespace Zappy {
             // todo
         }
 
+        void Commands::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
+        {
+            this->_ressources = ressources;
+        }
+
         void Commands::handleCommandBct(const std::string& responseValue)
         {
             std::istringstream iss(responseValue);
             int x, y, q0, q1, q2, q3, q4, q5, q6;
             iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setFood(q0);
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setLinemate(q1);
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setDeraumere(q2);
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setSibur(q3);
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setMendiane(q4);
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setPhiras(q5);
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(x, y)->setThystame(q6);
+            this->_ressources->getTileFromPos(x, y)->setFood(q0);
+            this->_ressources->getTileFromPos(x, y)->setLinemate(q1);
+            this->_ressources->getTileFromPos(x, y)->setDeraumere(q2);
+            this->_ressources->getTileFromPos(x, y)->setSibur(q3);
+            this->_ressources->getTileFromPos(x, y)->setMendiane(q4);
+            this->_ressources->getTileFromPos(x, y)->setPhiras(q5);
+            this->_ressources->getTileFromPos(x, y)->setThystame(q6);
         }
 
         void Commands::handleCommandTna(const std::string& responseValue)
@@ -53,7 +61,7 @@ namespace Zappy {
                     << ", Orientation: " << orientation << ", Level: " << level
                     << ", Team: " << teamName << std::endl;
             //todo handle level, teamname and color
-            Zappy::GUI::Ressources::Ressources::get()->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, BLUE));
+            // this->_ressources->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, BLUE));
         }
 
         void Commands::handleCommandPpo(const std::string& responseValue)
@@ -63,8 +71,8 @@ namespace Zappy {
             iss >> playerId >> x >> y;
 
             std::cout << "Player position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setX(x);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setY(y);
+            this->_ressources->getPlayerFromId(playerId)->setX(x);
+            this->_ressources->getPlayerFromId(playerId)->setY(y);
             // todo virify this
         }
 
@@ -89,15 +97,15 @@ namespace Zappy {
                     << ", q0: " << q0 << ", q1: " << q1 << ", q2: " << q2
                     << ", q3: " << q3 << ", q4: " << q4 << ", q5: " << q5
                     << ", q6: " << q6 << std::endl;
-            // Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setX(x);
-            // Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setY(y);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setFood(q0);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setLinemate(q1);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setDeraumere(q2);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setSibur(q3);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setMendiane(q4);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setPhiras(q5);
-            Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->setThystame(q6);
+            // this->_ressources->getPlayerFromId(playerId)->setX(x);
+            // this->_ressources->getPlayerFromId(playerId)->setY(y);
+            this->_ressources->getPlayerFromId(playerId)->setFood(q0);
+            this->_ressources->getPlayerFromId(playerId)->setLinemate(q1);
+            this->_ressources->getPlayerFromId(playerId)->setDeraumere(q2);
+            this->_ressources->getPlayerFromId(playerId)->setSibur(q3);
+            this->_ressources->getPlayerFromId(playerId)->setMendiane(q4);
+            this->_ressources->getPlayerFromId(playerId)->setPhiras(q5);
+            this->_ressources->getPlayerFromId(playerId)->setThystame(q6);
         }
 
         void Commands::handleCommandPex(const std::string& responseValue)
@@ -139,6 +147,7 @@ namespace Zappy {
             // todo
         }
 
+//TODO: check method in comment
         void Commands::handleCommandPfk(const std::string& responseValue)
         {
             int playerId;
@@ -146,10 +155,10 @@ namespace Zappy {
             iss >> playerId;
 
             std::cout << "Player #" << playerId << " laid an egg." << std::endl;
-            int playerX = Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->getX();
-            int playerY = Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->getY();
-            int value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getEgg();
-            Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setEgg(value + 1);
+            // int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
+            // int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
+            // int value = this->_ressources->getTileFromPos(playerX, playerY)->getEgg();
+            // this->_ressources->getTileFromPos(playerX, playerY)->setEgg(value + 1);
         }
 
         void Commands::handleCommandPdr(const std::string& responseValue)
@@ -157,32 +166,32 @@ namespace Zappy {
             int playerId, resourceNum;
             std::istringstream iss(responseValue);
             iss >> playerId >> resourceNum;
-            int playerX = Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->getX();
-            int playerY = Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->getY();
+            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
+            int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
             int value;
 
             std::cout << "Player #" << playerId << " dropped resource #" << resourceNum << std::endl;
             if (resourceNum == 0) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getFood();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setFood(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getFood();
+                this->_ressources->getTileFromPos(playerX, playerY)->setFood(value + 1);
             } else if (resourceNum == 1) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getLinemate();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setLinemate(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getLinemate();
+                this->_ressources->getTileFromPos(playerX, playerY)->setLinemate(value + 1);
             } else if (resourceNum == 2) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getDeraumere();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setDeraumere(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getDeraumere();
+                this->_ressources->getTileFromPos(playerX, playerY)->setDeraumere(value + 1);
             } else if (resourceNum == 3) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getSibur();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setSibur(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getSibur();
+                this->_ressources->getTileFromPos(playerX, playerY)->setSibur(value + 1);
             } else if (resourceNum == 4) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getMendiane();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setMendiane(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getMendiane();
+                this->_ressources->getTileFromPos(playerX, playerY)->setMendiane(value + 1);
             } else if (resourceNum == 5) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getPhiras();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setPhiras(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getPhiras();
+                this->_ressources->getTileFromPos(playerX, playerY)->setPhiras(value + 1);
             } else if (resourceNum == 6) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getThystame();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setThystame(value + 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getThystame();
+                this->_ressources->getTileFromPos(playerX, playerY)->setThystame(value + 1);
             }
         }
 
@@ -191,32 +200,32 @@ namespace Zappy {
             int playerId, resourceNum;
             std::istringstream iss(responseValue);
             iss >> playerId >> resourceNum;
-            int playerX = Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->getX();
-            int playerY = Zappy::GUI::Ressources::Ressources::get()->getPlayerFromId(playerId)->getY();
+            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
+            int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
             int value;
 
             std::cout << "Player #" << playerId << " took resource #" << resourceNum << std::endl;
             if (resourceNum == 0) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getFood();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setFood(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getFood();
+                this->_ressources->getTileFromPos(playerX, playerY)->setFood(value - 1);
             } else if (resourceNum == 1) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getLinemate();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setLinemate(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getLinemate();
+                this->_ressources->getTileFromPos(playerX, playerY)->setLinemate(value - 1);
             } else if (resourceNum == 2) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getDeraumere();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setDeraumere(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getDeraumere();
+                this->_ressources->getTileFromPos(playerX, playerY)->setDeraumere(value - 1);
             } else if (resourceNum == 3) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getSibur();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setSibur(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getSibur();
+                this->_ressources->getTileFromPos(playerX, playerY)->setSibur(value - 1);
             } else if (resourceNum == 4) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getMendiane();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setMendiane(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getMendiane();
+                this->_ressources->getTileFromPos(playerX, playerY)->setMendiane(value - 1);
             } else if (resourceNum == 5) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getPhiras();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setPhiras(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getPhiras();
+                this->_ressources->getTileFromPos(playerX, playerY)->setPhiras(value - 1);
             } else if (resourceNum == 6) {
-                value = Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->getThystame();
-                Zappy::GUI::Ressources::Ressources::get()->getTileFromPos(playerX, playerY)->setThystame(value - 1);
+                value = this->_ressources->getTileFromPos(playerX, playerY)->getThystame();
+                this->_ressources->getTileFromPos(playerX, playerY)->setThystame(value - 1);
             }
         }
 
