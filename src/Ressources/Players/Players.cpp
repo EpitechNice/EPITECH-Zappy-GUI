@@ -10,7 +10,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
-            Players::Players(int id, int x, int y, Color team)
+            Players::Players(int id, int x, int y, std::string team)
             {
                 _id = id;
                 _x = x;
@@ -130,7 +130,7 @@ namespace Zappy {
             }
 
 
-            Color Players::getTeam() const
+            std::string Players::getTeam() const
             {
                 return _team;
             }

@@ -77,7 +77,7 @@ namespace Zappy {
                 _mendiane->setText("Mendiane: " + std::to_string(_tile->getMendiane()));
                 _phiras->setText("Phiras: " + std::to_string(_tile->getPhiras()));
                 _thystame->setText("Thystame: " + std::to_string(_tile->getThystame()));
-                _egg->setText("Egg: " + std::to_string(_tile->getEgg()));
+                _egg->setText("Egg: " + std::to_string(_tile->getEggs().size()));
                 _players->setText("Players: " + std::to_string(_tile->getPlayers().size()));
             }
         }

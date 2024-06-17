@@ -72,6 +72,12 @@ namespace Zappy {
                 _selecterGroup->setPosY(_posY);
             }
 
+            void InspecterSelecterGroupDraggable::addSelecter(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg)
+            {
+                _selecterGroup->addEgg(egg);
+                _selecterGroup->setPosY(_posY);
+            }
+
             void InspecterSelecterGroupDraggable::_updateSelectersPos()
             {
                 if (_isDragged)

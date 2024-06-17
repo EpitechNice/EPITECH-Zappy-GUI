@@ -11,6 +11,7 @@
 #include "Parsing.hpp"
 #include "SceneManager.hpp"
 #include "Server.hpp"
+#include "Ref.hpp"
 
 void threadFunction(std::shared_ptr<Zappy::Server::Server> server)
 {
@@ -24,6 +25,7 @@ int main(int argc, char **argv)
         srand(time(NULL));
         Zappy::GUI::Parsing parsing(argc, argv);
         std::shared_ptr<Zappy::Server::Server> server = std::make_shared<Zappy::Server::Server>(parsing.getMachine(), parsing.getPort());
+        server->setRessources(Zappy::GUI::Ressources::Ref::get()->ressources);
         // create namepipe in and out
         // server.setInOut(in, out);
         std::thread serverThread(threadFunction, server);

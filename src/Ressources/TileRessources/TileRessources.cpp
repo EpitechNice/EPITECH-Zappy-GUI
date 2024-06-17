@@ -15,13 +15,14 @@ namespace Zappy {
                 _x = x;
                 _y = y;
                 _food = 0;
-                _egg = 0;
                 _linemate = 0;
                 _deraumere = 0;
                 _sibur = 0;
                 _mendiane = 0;
                 _phiras = 0;
                 _thystame = 0;
+                _players = std::vector<std::shared_ptr<Players>>();
+                _eggs = std::vector<std::shared_ptr<Eggs>>();
             }
 
             int TileRessources::getX() const
@@ -48,22 +49,6 @@ namespace Zappy {
             bool TileRessources::hasFood() const
             {
                 return _food > 0;
-            }
-
-
-            int TileRessources::getEgg() const
-            {
-                return _egg;
-            }
-
-            void TileRessources::setEgg(int egg)
-            {
-                _egg = egg;
-            }
-
-            bool TileRessources::hasEgg() const
-            {
-                return _egg > 0;
             }
 
 
@@ -181,6 +166,27 @@ namespace Zappy {
             bool TileRessources::hasPlayers() const
             {
                 return !_players.empty();
+            }
+
+
+            std::vector<std::shared_ptr<Eggs>> TileRessources::getEggs() const
+            {
+                return _eggs;
+            }
+
+            void TileRessources::clearEggs()
+            {
+                _eggs.clear();
+            }
+
+            void TileRessources::addEgg(std::shared_ptr<Eggs> egg)
+            {
+                _eggs.push_back(egg);
+            }
+
+            bool TileRessources::hasEggs() const
+            {
+                return !_eggs.empty();
             }
         }
     }

@@ -23,6 +23,7 @@
     #include "Exceptions.hpp"
     #include "Mutex.hpp"
     #include "Commands.hpp"
+    #include "Ref.hpp"
 
 namespace Zappy {
     namespace Server {
@@ -35,6 +36,7 @@ namespace Zappy {
                 void shutdown();
 
                 void setInOut(); // set the in and out namepipes -> shared ptr
+                void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
 
             protected:
             private:
@@ -50,6 +52,7 @@ namespace Zappy {
                 int _port;
                 State _state;
                 int _fd;
+                std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
                 Commands commandsInstance;
 
                 std::queue<std::string> _requestQueue;

@@ -25,6 +25,7 @@
 
 [menu.settings.resolution.res_title] = "Resolution"
 [menu.settings.resolution.fps_title] = "FPS"
+[menu.settings.resolution.delay_title] = "???"
 
 [menu.settings.sound.sound] = "Sound effects"
 [menu.settings.sound.music] = "Music"
