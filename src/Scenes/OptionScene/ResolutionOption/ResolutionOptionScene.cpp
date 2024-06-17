@@ -17,9 +17,9 @@ namespace Zappy {
             _background = std::make_unique<Component::Background2D>("assets/img/map_forest_scenery.png");
             _backButton = std::make_pair(std::make_unique<Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), i18nHelper->getTranslation("[menu.back_button]"), 20, GREEN), "[menu.back_button]");
             std::vector<std::pair<std::string, std::string>> buttons_resolution = {
-                {"2960x1440", "Resolution_2960x1440"},
                 {"1920x1080", "Resolution_1920x1080"},
-                {"1334x750", "Resolution_1334x750"},
+                {"1200x600", "Resolution_1200x600"},
+                {"800x400", "Resolution_800x400"},
             };
             std::vector<std::pair<std::string, std::string>> buttons_fps = {
                 {"30fps", "FPS_30"},
@@ -45,7 +45,7 @@ namespace Zappy {
                 buttonY = y - buttonHeight / 2;
                 if (text[i].second == "[menu.settings.resolution.res_title]") {
                     for (const auto& button : buttons_resolution) {
-                        if (button.second == "Resolution_1920x1080")
+                        if (button.second == "Resolution_1200x600")
                             _resolutionButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, BLUE), button.second));
                         else
                             _resolutionButtons.push_back(std::make_pair(std::make_unique<Component::Button>(std::make_pair(buttonX, buttonY), std::make_pair(-20, -10), button.first, buttonHeight, GREEN), button.second));
@@ -63,6 +63,7 @@ namespace Zappy {
                     _delaySlider = std::make_unique<Component::DelayServerSection>(std::make_pair(buttonX, y - buttonHeight / 2), std::make_pair(_render->getWidth() / 4, buttonHeight * 2), &Zappy::GUI::Sfml::SoundManager::setVolumeGeneralMusique);
                 }
             }
+            _wannaResize = false;
         }
 
         void Scene::ResolutionOption::destroy()
@@ -88,6 +89,13 @@ namespace Zappy {
                             otherButton.first->setColor(GREEN);
                     }
                     button.first->setColor(BLUE);
+                    _wannaResize = true;
+                    if (button.second == "Resolution_1920x1080")
+                        _render->setDimensions(1080, 1920);
+                    else if (button.second == "Resolution_1200x600")
+                        _render->setDimensions(600, 1200);
+                    else if (button.second == "Resolution_800x400")
+                        _render->setDimensions(400, 800);
                 }
             }
             for (auto &button : _fpsButtons) {
@@ -124,7 +132,24 @@ namespace Zappy {
         {
             if (_backButton.first->isClicked(_backButton.second))
                 return "option";
+            if (_wannaResize) {
+                _wannaResize = false;
+                return "resize";
+            }
             return "resolutionSetting";
+        }
+
+        void Scene::ResolutionOption::resize()
+        {
+            _background->resize();
+            _backButton.first->resize();
+            for (auto &button : _resolutionButtons)
+                button.first->resize();
+            for (auto &button : _fpsButtons)
+                button.first->resize();
+            _delaySlider->resize();
+            for (auto &text : _text)
+                text.first->resize();
         }
     }
 }

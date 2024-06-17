@@ -76,6 +76,14 @@ namespace Zappy {
                 }
                 return "credits";
             }
+
+            void Credit::resize()
+            {
+                _background->resize();
+                _backButton.first->resize();
+                for (auto &button : _generalButtons)
+                    std::get<0>(button)->resize();
+            }
         }
     }
 }

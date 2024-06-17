@@ -115,6 +115,18 @@ namespace Zappy {
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){(float)tileSize, (float)tileSize, (float)tileSize});
                 _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){(float)-((tileSize * size.first) / 2), 0, (float)-((tileSize * size.second) / 2)}, size, tileSize, _ressources);
             }
+
+            void Game::resize()
+            {
+                _skybox->resize();
+                _borderbox->resize();
+                _chatbox->resize();
+                _inspecter->resize();
+                _ressources->resize();
+                _tileMap->resize();
+                _crossPointer.first->resize();
+                _crossPointer.second->resize();
+            }
         }
     }
 }

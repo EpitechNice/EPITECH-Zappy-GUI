@@ -36,6 +36,7 @@ namespace Zappy {
                     void draw2D() override;
                     bool isReady() override;
                     std::string nextScene() override;
+                    void resize() override;
 
                     void createMap(std::pair<int, int> size);
 

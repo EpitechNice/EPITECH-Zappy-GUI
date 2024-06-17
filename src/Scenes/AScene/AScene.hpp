@@ -26,6 +26,7 @@ namespace Zappy {
                 void draw2D() override;
                 std::string nextScene() override;
                 bool isReady() override;
+                void resize() override;
 
             protected:
             private:

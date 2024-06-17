@@ -52,6 +52,13 @@ namespace Zappy {
                 std::string txt = "credit" + std::to_string(_sceneNbr);
                 return txt;
             }
+
+            void CreditScene::resize()
+            {
+                _background->resize();
+                _backButton.first->resize();
+                _text.first->resize();
+            }
         }
     }
 }

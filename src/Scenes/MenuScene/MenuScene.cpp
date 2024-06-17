@@ -91,6 +91,14 @@ namespace Zappy {
 
                 return "menu";
             }
+
+            void Menu::resize()
+            {
+                _background->resize();
+                for (auto &button : _buttons)
+                    std::get<0>(button)->resize();
+                _logo->resize();
+            }
         }
     }
 }

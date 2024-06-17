@@ -21,6 +21,9 @@ namespace Zappy {
 
                     void destroy() override;
                     void draw() override;
+                    void resize() override;
+
+                    void setRef() override;
 
                     float getPosX() const override;
                     float getPosY() const override;
@@ -31,7 +34,6 @@ namespace Zappy {
                     void modPosX(float x) override;
                     void modPosY(float y) override;
                     void modPosZ(float z) override;
-
 
                     float getSizeX() const override;
                     float getSizeY() const override;
@@ -55,6 +57,13 @@ namespace Zappy {
                     float _sizeY = 0;
                     float _sizeZ = 0;
                     Color _color = WHITE;
+
+                    float _refSizeX = -1;
+                    float _refSizeY = -1;
+                    float _refPosX = -1;
+                    float _refPosY = -1;
+                    float _refHeight = -1;
+                    float _refWidth = -1;
 
                 private:
             };

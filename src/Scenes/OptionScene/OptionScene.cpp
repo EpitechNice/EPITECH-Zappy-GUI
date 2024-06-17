@@ -111,6 +111,17 @@ namespace Zappy {
                 }
                 return "option";
             }
+
+            void Option::resize()
+            {
+                _background->resize();
+                _backButton.first->resize();
+                for (auto &button : _generalButtons)
+                    std::get<0>(button)->resize();
+                std::get<0>(_text)->resize();
+                for (auto &button : _languageButtons)
+                    std::get<0>(button)->resize();
+            }
         }
     }
 }

@@ -50,6 +50,13 @@ namespace Zappy {
                     return "menu";
                 return "help";
             }
+
+            void HelperScene::resize()
+            {
+                _background->resize();
+                _backButton.first->resize();
+                _text.first->resize();
+            }
         }
     }
 }

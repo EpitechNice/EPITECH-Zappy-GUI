@@ -55,5 +55,13 @@ namespace Zappy {
                 return "option";
             return "soundSetting";
         }
+
+        void Scene::SoundOption::resize()
+        {
+            _background->resize();
+            _backButton.first->resize();
+            _music->resize();
+            _sound->resize();
+        }
     }
 }

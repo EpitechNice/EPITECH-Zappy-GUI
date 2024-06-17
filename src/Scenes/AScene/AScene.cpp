@@ -43,5 +43,9 @@ namespace Zappy {
         {
             return true;
         }
+
+        void AScene::resize()
+        {
+        }
     }
 }

@@ -16,7 +16,7 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Background2D: AComponent {
+            class Background2D: public AComponent {
                 public:
                     Background2D(std::string texturePath, bool center = true);
 

@@ -20,7 +20,9 @@ namespace Zappy {
 
                     virtual void destroy() = 0;
                     virtual void draw() = 0;
+                    virtual void resize() = 0;
 
+                    virtual void setRef() = 0;
 
                     virtual float getPosX() const = 0;
                     virtual float getPosY() const = 0;
