@@ -70,12 +70,15 @@ namespace Zappy {
                 Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
 
                 if (i18nHelper->getCurrentLocale() != _lang) {
+                    int i = 1;
+                    int width = GetScreenWidth();
                     for (auto &button : _generalButtons) {
                         std::get<0>(button)->setText(i18nHelper->getTranslation(std::get<2>(button)));
-                        std::get<0>(button)->setPosX(std::get<3>(button).first - std::get<0>(button)->getSizeX() / 2);
+                        std::get<0>(button)->setPosX((width / 3) * i - std::get<0>(button)->getSizeX() / 2);
+                        i++;
                     }
                     std::get<0>(_text)->setText(i18nHelper->getTranslation(std::get<1>(_text)));
-                    std::get<0>(_text)->setPosX(std::get<2>(_text).first - std::get<0>(_text)->getSizeX() / 2);
+                    std::get<0>(_text)->setPosX(width / 2 - std::get<0>(_text)->getSizeX() / 2);
                     _backButton.first->setText(i18nHelper->getTranslation(_backButton.second));
                     _lang = i18nHelper->getCurrentLocale();
                 }
