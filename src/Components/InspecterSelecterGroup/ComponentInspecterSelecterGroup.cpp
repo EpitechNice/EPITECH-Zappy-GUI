@@ -16,6 +16,11 @@ namespace Zappy {
                 _posY = pos.second;
                 _sizeX = width;
                 _sizeY = 0;
+
+                setRef();
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
             }
 
             void InspecterSelecterGroup::draw()
@@ -24,9 +29,26 @@ namespace Zappy {
                     selecter->draw();
             }
 
+            void InspecterSelecterGroup::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+
+                int tmp = 0;
+                for (auto &selecter : _selecters) {
+                    selecter->resize();
+                    selecter->setPosX(_posX);
+                    selecter->setPosY(_posY + tmp);
+                    tmp += selecter->getSizeY();
+                }
+            }
+
             void InspecterSelecterGroup::modPosX(float x)
             {
                 _posX += x;
+                _refPosX = _posX / _refWidth * 100;
                 for (auto &selecter : _selecters)
                     selecter->modPosX(x);
             }
@@ -41,6 +63,7 @@ namespace Zappy {
             {
                 int diff = y - _posY;
                 _posY = y;
+                _refPosY = _posY / _refHeight * 100;
                 for (auto &selecter : _selecters)
                     selecter->modPosY(diff);
             }
