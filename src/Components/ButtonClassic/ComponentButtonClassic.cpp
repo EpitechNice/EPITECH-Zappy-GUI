@@ -67,11 +67,11 @@ namespace Zappy {
                 _button->resize();
                 _text->resize();
                 _textStroke->resize();
-                std::pair<float, float> textSizes = {_text->getSizeX(), _text->getSizeY()};
-                if (_sizeX < 0)
-                    _sizeX = (_sizeX * -1) * 2 + textSizes.first;
-                if (_sizeY < 0)
-                    _sizeY = (_sizeY * -1) * 2 + textSizes.second;
+
+                _text->setPosX(_posX + (_sizeX - _text->getSizeX()) / 2);
+                _text->setPosY(_posY + (_sizeY - _text->getSizeY()) / 2);
+                _textStroke->setPosX(_posX + (_sizeX - _textStroke->getSizeX()) / 2);
+                _textStroke->setPosY(_posY + (_sizeY - _textStroke->getSizeY()) / 2 + 2);
             }
 
 
