@@ -18,6 +18,7 @@
     #include "I18nHelper.hpp"
     #include "FontManager.hpp"
     #include "ModelManager.hpp"
+    #include "TextureManager.hpp"
 
 namespace Zappy {
     namespace GUI {

@@ -111,8 +111,8 @@ namespace Zappy {
             {
                 int tileSize = 5;
 
-                _skybox = std::make_unique<Zappy::GUI::Component::Skybox>("purple", tileSize * size.first * 10);
-                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>((Color){0, 0, 0, 0}, tileSize * size.first * 3);
+                _skybox = std::make_unique<Zappy::GUI::Component::Skybox>(true, tileSize * size.first * 10);
+                _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>(false, tileSize * size.first * 3);
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){(float)tileSize, (float)tileSize, (float)tileSize});
                 _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){(float)-((tileSize * size.first) / 2), 0, (float)-((tileSize * size.second) / 2)}, size, tileSize, _ressources);
             }

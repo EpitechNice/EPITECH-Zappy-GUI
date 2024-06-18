@@ -14,20 +14,12 @@ namespace Zappy {
             {
                 _posX = pos.first;
                 _posY = pos.second;
-                _path = path;
 
-                _texture = LoadTexture(path.c_str());
+                _texture = Zappy::GUI::Raylib::TextureManager::get()->getTexture(path);
                 _texture.width *= scale;
                 _texture.height *= scale;
                 _sizeX = _texture.width;
                 _sizeY = _texture.height;
-            }
-
-            void Image::destroy()
-            {
-                if (_isDestroyed) return;
-                UnloadTexture(_texture);
-                _isDestroyed = true;
             }
 
             void Image::draw()

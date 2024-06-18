@@ -17,14 +17,14 @@
 
     #include "Render.hpp"
     #include "AComponent.hpp"
+    #include "TextureManager.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
             class Skybox : public AComponent {
                 public:
-                    Skybox(std::string name, float size = 1000);
-                    Skybox(Color color, float size = 1000);
+                    Skybox(bool visible = true, float size = 1000);
 
                     void destroy() override;
                     void draw() override;
@@ -41,6 +41,7 @@ namespace Zappy {
                         Vector3 rotation;
                     } Plane;
 
+                    bool _visible;
                     std::vector<Plane> _planes;
                     void _createSkybox(std::vector<Texture2D> textures, float size);
             };

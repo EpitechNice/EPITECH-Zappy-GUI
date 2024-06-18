@@ -12,6 +12,7 @@
     #include <string>
 
     #include "AComponent.hpp"
+    #include "TextureManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -20,12 +21,10 @@ namespace Zappy {
                 public:
                     Image(std::string path, std::pair<float, float> pos, float scale);
 
-                    void destroy() override;
                     void draw() override;
 
                 protected:
                 private:
-                    std::string _path;
                     Texture2D _texture;
             };
         }

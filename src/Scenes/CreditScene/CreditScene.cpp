@@ -15,7 +15,7 @@ namespace Zappy {
                 Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
 
                 _render = render;
-                _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_war_scenery.png");
+                _background = std::make_unique<Zappy::GUI::Component::Background2D>("map_war_scenery.png");
                 _backButton = std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), i18nHelper->getTranslation("[menu.back_button]"), 20, GREEN), "[menu.back_button]");
                 int height = GetScreenHeight();
                 std::vector<std::tuple<std::string, std::string, std::string>> buttons = {

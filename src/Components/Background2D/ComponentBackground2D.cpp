@@ -15,7 +15,7 @@ namespace Zappy {
                 _posX = 0;
                 _posY = 0;
 
-                _texture = LoadTexture(texturePath.c_str());
+                _texture = Zappy::GUI::Raylib::TextureManager::get()->getTexture(texturePath);
                 int screenW = GetScreenWidth();
                 int screenH = GetScreenHeight();
                 int width = screenW - _texture.width;
@@ -33,13 +33,6 @@ namespace Zappy {
                 }
                 _sizeX = _texture.width;
                 _sizeY = _texture.height;
-            }
-
-            void Background2D::destroy()
-            {
-                if (_isDestroyed) return;
-                UnloadTexture(_texture);
-                _isDestroyed = true;
             }
 
             void Background2D::draw()

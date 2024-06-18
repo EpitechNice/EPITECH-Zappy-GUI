@@ -21,6 +21,8 @@ namespace Zappy {
                 Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);
                 Sfml::SoundManager::getInstance().playgeneralSound();
                 ModelManager::get();
+                FontManager::get();
+                TextureManager::get();
             }
 
             Render::~Render()
@@ -34,6 +36,7 @@ namespace Zappy {
                 _musiquePrincipal.stop();
                 ModelManager::get()->destroy();
                 FontManager::get()->destroy();
+                TextureManager::get()->destroy();
                 UnloadImage(_icon);
                 CloseWindow();
                 _isDestroyed = true;
@@ -75,8 +78,10 @@ namespace Zappy {
                 _width = width;
                 FontManager::get()->unload();
                 ModelManager::get()->unload();
+                TextureManager::get()->unload();
                 CloseWindow();
                 InitWindow(_width, _height, "Clash Of Tek");
+                TextureManager::get()->reload();
                 ModelManager::get()->reload();
                 FontManager::get()->reload();
             }

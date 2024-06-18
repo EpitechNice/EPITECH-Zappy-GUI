@@ -12,6 +12,7 @@
     #include <string>
 
     #include "AComponent.hpp"
+    #include "TextureManager.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -20,7 +21,6 @@ namespace Zappy {
                 public:
                     Background2D(std::string texturePath, bool center = true);
 
-                    void destroy() override;
                     void draw() override;
 
                 protected:

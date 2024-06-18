@@ -14,7 +14,7 @@ namespace Zappy {
             Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
 
             _lang = i18nHelper->getCurrentLocale();
-            _background = std::make_unique<Component::Background2D>("assets/img/map_forest_scenery.png");
+            _background = std::make_unique<Component::Background2D>("map_forest_scenery.png");
             _backButton = std::make_pair(std::make_unique<Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), i18nHelper->getTranslation("[menu.back_button]"), 20, GREEN), "[menu.back_button]");
 
             float partX = render->getWidth() / 7;
