@@ -48,22 +48,6 @@ namespace Zappy {
                 _zappy->setOnPosY(_posY + size.y / 2);
             }
 
-            void Ressources::destroy()
-            {
-                if (_isDestroyed) return;
-                _food->destroy();
-                _egg->destroy();
-                _linemate->destroy();
-                _deraumere->destroy();
-                _sibur->destroy();
-                _mendiane->destroy();
-                _phiras->destroy();
-                _thystame->destroy();
-                _zappy->destroy();
-                _isDestroyed = true;
-            }
-
-
             void Ressources::setPosX(float x)
             {
                 _posX = x;
@@ -155,6 +139,19 @@ namespace Zappy {
             void Ressources::drawZappy()
             {
                 _zappy->draw();
+            }
+
+            void Ressources::resize()
+            {
+                _food->resize();
+                _egg->resize();
+                _linemate->resize();
+                _deraumere->resize();
+                _sibur->resize();
+                _mendiane->resize();
+                _phiras->resize();
+                _thystame->resize();
+                _zappy->resize();
             }
         }
     }
