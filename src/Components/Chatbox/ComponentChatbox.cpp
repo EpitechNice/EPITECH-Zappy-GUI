@@ -26,7 +26,6 @@ namespace Zappy {
                 _rectBot->setStroke(1, BLACK);
 
                 _openButton = std::make_pair(std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), ">", 30, ORANGE), "");
-                _openButton.first->disableBubble();
 
                 std::pair<float, float> buttonSize = {_openButton.first->getSizeX(), _openButton.first->getSizeY()};
                 _openButton.first->setPosX(8);

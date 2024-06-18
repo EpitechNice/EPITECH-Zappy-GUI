@@ -35,7 +35,6 @@ namespace Zappy {
                 _background = std::make_unique<RoundedRectangle>(pos, std::make_pair(buttonSize.first, buttonSize.second - 7), 0.3, Zappy::GUI::Raylib::ColorManager::Darker(color, 10));
                 _topButton = std::make_unique<RoundedRectangle>(topButtonPos, topButtonSize, 0.3, _color);
                 _reflexioneffect = std::make_unique<RoundedRectangle>(std::make_pair(pos.first + 4, pos.second + 4), std::make_pair(buttonSize.first - 8, (buttonSize.second - 7 - 8) / 2), 0.3, Zappy::GUI::Raylib::ColorManager::Lighter(_color, 5));
-                _circle = std::make_unique<Circle>(std::make_pair(pos.first + buttonSize.first - 8, pos.second + 8), 4, Zappy::GUI::Raylib::ColorManager::Lighter(_color, 50));
                 _textStroke = std::make_unique<Text>(std::make_pair(textPosition.first, textPosition.second + 2), text, textSize, Zappy::GUI::Raylib::ColorManager::Darker(color, 50));
                 _sizeX = buttonSize.first;
                 _sizeY = buttonSize.second;
@@ -44,6 +43,14 @@ namespace Zappy {
                 _bubble = true;
                 _lastClick = -1;
                 _modState(DEFAULT);
+
+                setRef();
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
+                _refSizeY = _sizeY / _refHeight * 100;
+                _refPressEffect = _pressEffect / _refHeight * 100;
+                _refHoverEffect = _hoverEffect / _refHeight * 100;
             }
 
             void Button::draw()
@@ -59,10 +66,27 @@ namespace Zappy {
                 _background->draw();
                 _topButton->draw();
                 _reflexioneffect->draw();
-                if (_bubble)
-                    _circle->draw();
                 _textStroke->draw();
                 _text->draw();
+            }
+
+            void Button::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+                _sizeY = _refSizeY * _refHeight / 100;
+                _pressEffect = (int)(_refPressEffect * _refHeight / 100);
+                _hoverEffect = (int)(_refHoverEffect * _refHeight / 100);
+                _blackStroke->resize();
+                _upEffect->resize();
+                _background->resize();
+                _topButton->resize();
+                _reflexioneffect->resize();
+                _text->resize();
+                _textStroke->resize();
+                _textPos = std::make_pair(_text->getPosX(), _text->getPosY());
             }
 
             void Button::setSizeX(float x)
@@ -93,7 +117,6 @@ namespace Zappy {
                 _background->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 10));
                 _topButton->setColor(_color);
                 _reflexioneffect->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 5));
-                _circle->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 50));
             }
 
             void Button::modPosX(float x)
@@ -104,11 +127,11 @@ namespace Zappy {
                 _background->modPosX(x);
                 _topButton->modPosX(x);
                 _reflexioneffect->modPosX(x);
-                _circle->modPosX(x);
                 _textPos.first += x;
                 _text->setPosX(_textPos.first);
                 _textStroke->setPosX(_textPos.first);
                 _modState(NONE);
+                _refPosX = _posX / _refWidth * 100;
             }
 
             void Button::modPosY(float y)
@@ -119,23 +142,13 @@ namespace Zappy {
                 _background->modPosY(y);
                 _topButton->modPosY(y);
                 _reflexioneffect->modPosY(y);
-                _circle->modPosY(y);
                 _textPos.second += y;
                 _text->setPosY(_textPos.second);
                 _textStroke->setPosY(_textPos.second + 2);
                 _modState(NONE);
+                _refPosY = _posY / _refHeight * 100;
             }
 
-
-            void Button::enableBubble()
-            {
-                _bubble = true;
-            }
-
-            void Button::disableBubble()
-            {
-                _bubble = false;
-            }
 
             bool Button::isHover() const
             {
@@ -214,7 +227,6 @@ namespace Zappy {
                     _background->setColor(Zappy::GUI::Raylib::ColorManager::Darker(DARKGRAY, 10));
                     _topButton->setColor(DARKGRAY);
                     _reflexioneffect->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(DARKGRAY, 5));
-                    _circle->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(DARKGRAY, 50));
                     _textStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(DARKGRAY, 50));
                 } else {
                     _blackStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 50));
@@ -222,7 +234,6 @@ namespace Zappy {
                     _background->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 10));
                     _topButton->setColor(_color);
                     _reflexioneffect->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 5));
-                    _circle->setColor(Zappy::GUI::Raylib::ColorManager::Lighter(_color, 50));
                     _textStroke->setColor(Zappy::GUI::Raylib::ColorManager::Darker(_color, 50));
                 }
                 if (_state == HOVER || _state == DISABLED) {
@@ -244,9 +255,6 @@ namespace Zappy {
 
                     _reflexioneffect->setPosX(_posX + 4);
                     _reflexioneffect->setPosY(_posY + 4 + _hoverEffect);
-
-                    _circle->setPosX((float)(_posX + _sizeX - 8));
-                    _circle->setPosY((float)(_posY + 8 + _hoverEffect));
 
                     _text->setPosX(_textPos.first);
                     _text->setPosY(_textPos.second + _hoverEffect);
@@ -273,9 +281,6 @@ namespace Zappy {
                     _reflexioneffect->setPosX(_posX + 4);
                     _reflexioneffect->setPosY(_posY + 4 + _pressEffect);
 
-                    _circle->setPosX((float)(_posX + _sizeX - 8));
-                    _circle->setPosY((float)(_posY + 8 + _pressEffect));
-
                     _text->setPosX(_textPos.first);
                     _text->setPosY(_textPos.second + _pressEffect);
 
@@ -300,9 +305,6 @@ namespace Zappy {
 
                     _reflexioneffect->setPosX(_posX + 4);
                     _reflexioneffect->setPosY(_posY + 4);
-
-                    _circle->setPosX((float)(_posX + _sizeX - 8));
-                    _circle->setPosY((float)(_posY + 8));
 
                     _text->setPosX(_textPos.first);
                     _text->setPosY(_textPos.second);
@@ -349,9 +351,6 @@ namespace Zappy {
                 _reflexioneffect->setPosX(_posX + 4);
                 _reflexioneffect->setPosY(_posY + 4);
 
-                _circle->setPosX((float)(_posX + buttonSize.first - 8));
-                _circle->setPosY((float)(_posY + 8));
-
                 _text->setPosX(textPosition.first);
                 _text->setPosY(textPosition.second);
 
@@ -363,6 +362,9 @@ namespace Zappy {
                 _initialSizeX = sizeX;
                 _initialSizeY = sizeY;
                 _textPos = textPosition;
+
+                _refSizeX = _sizeX / _refWidth * 100;
+                _refSizeY = _sizeY / _refHeight * 100;
             }
         }
     }

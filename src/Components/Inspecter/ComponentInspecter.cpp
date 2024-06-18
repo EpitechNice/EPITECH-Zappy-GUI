@@ -27,7 +27,6 @@ namespace Zappy {
                 _rectBot->setStroke(1, BLACK);
 
                 _openButton = std::make_unique<Button>(std::make_pair(0, 0), std::make_pair(-5, -40), "<", 30, SKYBLUE);
-                _openButton->disableBubble();
                 _openButton->setPosX(_screenWidth - 8 - _openButton->getSizeX());
                 _openButton->setPosY(_sizeY / 2 - _openButton->getSizeY() / 2);
                 _open = false;
