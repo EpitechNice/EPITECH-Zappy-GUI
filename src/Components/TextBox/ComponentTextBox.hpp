@@ -35,6 +35,7 @@ namespace Zappy {
                      * @param font Font of the TextBox
                      *
                      * @warning The font will be loaded using the FontManager. So it must be in the 'assets/fonts/' folder.
+                     * @warning This function should be called in the raylib context
                      */
                     TextBox(std::pair<int, int> pos, int width, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
 

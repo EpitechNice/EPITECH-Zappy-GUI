@@ -30,6 +30,7 @@ namespace Zappy {
                      * @param texturePath Path to the texture to use as background.
                      *
                      * @note The texture will be loaded using the TextureManager. So it must be in the 'assets/img/' folder.
+                     * @warning This function should be called in the raylib context
                      */
                     Background2D(std::string texturePath);
 

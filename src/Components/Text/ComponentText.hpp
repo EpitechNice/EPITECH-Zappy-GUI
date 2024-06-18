@@ -34,6 +34,7 @@ namespace Zappy {
                      * @param font The font of the text
                      *
                      * @warning The font will be loaded using the FontManager. So it must be in the 'assets/fonts/' folder.
+                     * @warning This function should be called in the raylib context
                      */
                     Text(std::pair<float, float> pos, std::string text, int fontSize, Color color, std::string font = "supercell.ttf");
 
