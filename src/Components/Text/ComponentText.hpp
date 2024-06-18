@@ -55,6 +55,8 @@ namespace Zappy {
                      * @brief Set the text
                      *
                      * @param text The text to set
+                     *
+                     * @warning This function should be called in the raylib context
                      */
                     void setText(std::string text);
 
