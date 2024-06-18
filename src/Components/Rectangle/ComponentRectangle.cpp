@@ -46,7 +46,6 @@ namespace Zappy {
                 _sizeX = _refSizeX * _refWidth / 100;
                 _sizeY = _refSizeY * _refHeight / 100;
                 _strokeSize = _refStrokeSize * _refWidth / 100;
-                std::cout << "Stroke size: " << _strokeSize << std::endl;
             }
 
 

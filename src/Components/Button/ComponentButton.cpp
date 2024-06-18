@@ -87,6 +87,8 @@ namespace Zappy {
                 _text->resize();
                 _textStroke->resize();
                 _textPos = std::make_pair(_text->getPosX(), _text->getPosY());
+
+                _changeSize(_sizeX, _sizeY);
             }
 
             void Button::setSizeX(float x)

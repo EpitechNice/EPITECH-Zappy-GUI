@@ -94,6 +94,7 @@ namespace Zappy {
                     std::get<BUTTON>(chat)->resize();
                     std::get<TEXT_GROUP>(chat)->resize();
                     std::get<NOTIF>(chat)->resize();
+                    std::get<NOTIF>(chat)->setPosX(std::get<BUTTON>(chat)->getPosX() + std::get<BUTTON>(chat)->getSizeX());
                 }
             }
 
