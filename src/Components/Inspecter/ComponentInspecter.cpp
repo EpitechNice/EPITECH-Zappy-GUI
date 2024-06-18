@@ -59,6 +59,9 @@ namespace Zappy {
 
                 _infos = std::make_shared<InspecterInfo>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
                 _infosTile = std::make_unique<InspecterInfoTile>(std::make_pair(_screenWidth + 20, heightPartMini + heightButton + 20), std::make_pair(_sizeX - 40, _sizeY - heightPart - heightPartMini - heightButton - 40));
+
+                setRef();
+                _refSizeX = _sizeX / _refWidth * 100;
             }
 
 
@@ -77,6 +80,25 @@ namespace Zappy {
                 _rectTop->draw();
                 _rectBot->draw();
                 _openButton->draw();
+            }
+
+            void Inspecter::resize()
+            {
+                setRef();
+                _screenWidth = _refWidth;
+                _sizeX = _refSizeX * _refWidth / 100;
+                _sizeY = _refHeight;
+
+                _rectTopBackground->resize();
+                _rectTop->resize();
+                _rectMid->resize();
+                _rectBot->resize();
+                _openButton->resize();
+                for (auto &tab : _tabs)
+                    std::get<BUTTON>(tab)->resize();
+                _selecters->resize();
+                _infos->resize();
+                _infosTile->resize();
             }
 
             void Inspecter::update(std::pair<int, int> selectedTile)

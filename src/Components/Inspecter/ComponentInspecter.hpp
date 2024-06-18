@@ -27,15 +27,52 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
+            /**
+             * @brief Class representing the Inspecter component
+             */
             class Inspecter: public AComponent {
                 public:
+                    /**
+                     * @brief Construct a new Inspecter object
+                     */
                     Inspecter();
 
+                    /**
+                     * @brief Draw the Inspecter component
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
                     void draw() override;
 
+                    /**
+                     * @brief Resize the Inspecter component
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Update the Inspecter component
+                     *
+                     * @param selectedTile The coordinates of the selected tile
+                     */
                     void update(std::pair<int, int> selectedTile);
+
+                    /**
+                     * @brief Check if the mouse is on the Inspecter component
+                     *
+                     * @return `true` if the mouse is on the Inspecter component, `false` otherwise
+                     */
                     bool mouseIsOn() const;
+
+                    /**
+                     * @brief Open the Inspecter component
+                     */
                     void open();
+
+                    /**
+                     * @brief Close the Inspecter component
+                     */
                     void close();
 
                 protected:
