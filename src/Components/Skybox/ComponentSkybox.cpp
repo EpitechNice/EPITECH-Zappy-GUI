@@ -13,18 +13,9 @@ namespace Zappy {
             Skybox::Skybox(bool visible, float size)
             {
                 _visible = visible;
-                std::vector<std::string> paths = {
-                    std::string("skyRenderSide1.png"),
-                    std::string("skyRenderSide2.png"),
-                    std::string("skyRenderSide3.png"),
-                    std::string("skyRenderSide4.png"),
-                    std::string("skyRenderBottom.png"),
-                    std::string("skyRenderTop.png"),
-                };
-                std::vector<Texture2D> textures;
-                for (auto &path : paths)
-                    textures.push_back(Zappy::GUI::Raylib::TextureManager::get()->getTexture(path)),
-                _createSkybox(textures, size);
+                _size = size;
+
+                resize();
             }
 
             void Skybox::destroy()
@@ -56,6 +47,26 @@ namespace Zappy {
 
                 render->view()->modPosition(modify);
                 render->view()->modTarget(modify);
+            }
+
+            void Skybox::resize()
+            {
+                for (auto &plane : _planes)
+                    UnloadModel(plane.model);
+                _planes.clear();
+
+                std::vector<std::string> paths = {
+                    std::string("skyRenderSide1.png"),
+                    std::string("skyRenderSide2.png"),
+                    std::string("skyRenderSide3.png"),
+                    std::string("skyRenderSide4.png"),
+                    std::string("skyRenderBottom.png"),
+                    std::string("skyRenderTop.png"),
+                };
+                std::vector<Texture2D> textures;
+                for (auto &path : paths)
+                    textures.push_back(Zappy::GUI::Raylib::TextureManager::get()->getTexture(path)),
+                _createSkybox(textures, _size);
             }
 
 
