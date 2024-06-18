@@ -15,6 +15,9 @@ namespace Zappy
 {
     namespace Server
     {
+        /**
+         * @brief Thread communication class
+         */
         class Thread
         {
             private:
@@ -22,10 +25,19 @@ namespace Zappy
                 bool _running;
 
             public:
+                /**
+                 * @brief Construct a Thread
+                 */
                 Thread();
                 ~Thread();
 
+                /**
+                 * @brief Start a Thread
+                 */
                 void start(std::function<void()> function);
+                /**
+                 * @brief Join a Thread
+                 */
                 void join(void);
 
         };

@@ -20,16 +20,6 @@ namespace Zappy {
             _sharedMemory = std::make_shared<SharedMemory>();
         }
 
-        // Server::~Server()
-        // {
-        // }
-
-
-        void Server::setInOut()
-        {
-            // Set the in and out namepipes -> shared ptr
-        }
-
         void Server::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
         {
             _ressources = ressources;
@@ -41,16 +31,60 @@ namespace Zappy {
             return _sharedMemory;
         }
 
-        void Server::run()
+        void Server::runIn()
         {
-            if (_state == TRY_CONNECT)
-                _connect();
-            if (_state == CONNECTED)
-                _loop();
-            if (_state == DISCONNECT)
-                _disconnect();
-            if (_state == DOWN)
-                return;
+            _connect();
+            _loopIn();
+        }
+
+        void Server::runOut()
+        {
+            _sharedMemory->addCommand("msz\r\n");
+            while (_state == CONNECTED) {
+                if (_sharedMemory->hasCommands()) {
+                    std::string command = _sharedMemory->getCommand();
+                    write(_fd, command.c_str(), command.size());
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            }
+        }
+
+        void Server::_initRessources(int mapHeight, int mapWidth)
+        {
+            for (int i = 0; i < mapWidth; i++) {
+                std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
+                for (int j = 0; j < mapHeight; j++) {
+                    std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile = std::make_shared<Zappy::GUI::Ressources::TileRessources>(i, j);
+                    tile->setLinemate(rand() % 2);
+                    tile->setDeraumere(rand() % 2);
+                    tile->setSibur(rand() % 2);
+                    tile->setMendiane(rand() % 2);
+                    tile->setPhiras(rand() % 2);
+                    tile->setThystame(rand() % 2);
+                    line.push_back(tile);
+                }
+                _ressources->tileRessources.push_back(line);
+            }
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(1, 0, 0, "team1"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(2, 0, 0, "team2"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(3, 1, 0, "team3"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(4, 0, 1, "team2"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(5, 1, 1, "team1"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(6, 1, 1, "team4"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(7, 1, 1, "team2"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(8, 4, 3, "team1"));
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(9, 1, 0, "team3"));
+
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(1, 0, 0, "team1"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(2, 0, 0, "team2"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(3, 1, 0, "team3"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(4, 0, 1, "team2"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(5, 1, 1, "team1"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(6, 1, 1, "team4"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(7, 1, 1, "team2"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(8, 4, 3, "team1"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(9, 1, 0, "team3"));
+            _ressources->mapSet = true;
         }
 
         void Server::shutdown()
@@ -73,46 +107,7 @@ namespace Zappy {
             }
             _state = CONNECTED;
             std::string initRequest = "GRAPHIC\r\n";
-            send(_fd, initRequest.c_str(), initRequest.size(), 0);
-
-            for (int i = 0; i < 10; i++) {
-                std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
-                for (int j = 0; j < 10; j++) {
-                    std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile = std::make_shared<Zappy::GUI::Ressources::TileRessources>(i, j);
-                    tile->setLinemate(rand() % 2);
-                    tile->setDeraumere(rand() % 2);
-                    tile->setSibur(rand() % 2);
-                    tile->setMendiane(rand() % 2);
-                    tile->setPhiras(rand() % 2);
-                    tile->setThystame(rand() % 2);
-                    line.push_back(tile);
-                }
-                _ressources->tileRessources.push_back(line);
-            }
-
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(1, 0, 0, "team1"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(2, 0, 0, "team2"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(3, 1, 0, "team3"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(4, 0, 1, "team2"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(5, 1, 1, "team1"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(6, 1, 1, "team4"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(7, 1, 1, "team2"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(8, 4, 3, "team1"));
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(9, 1, 0, "team3"));
-
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(1, 0, 0, "team1"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(2, 0, 0, "team2"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(3, 1, 0, "team3"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(4, 0, 1, "team2"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(5, 1, 1, "team1"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(6, 1, 1, "team4"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(7, 1, 1, "team2"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(8, 4, 3, "team1"));
-            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(9, 1, 0, "team3"));
-
-            _ressources->mapSet = true;
-
-            _loop();
+            write(_fd, initRequest.c_str(), initRequest.size());
         }
 
         void Server::_disconnect()
@@ -124,7 +119,7 @@ namespace Zappy {
             _state = DOWN;
         }
 
-        void Server::_loop()
+        void Server::_loopIn()
         {
             fd_set readfds;
             struct timeval tv;
@@ -160,10 +155,6 @@ namespace Zappy {
                         _handleResponse(response);
                     }
                 }
-                if (_sharedMemory->hasCommands()) {
-                    std::string command = _sharedMemory->getCommand();
-                    write(_fd, command.c_str(), command.size());
-                }
             }
         }
 
@@ -179,6 +170,13 @@ namespace Zappy {
             std::string command = buffer.substr(0, 3);
             std::string responseValue = buffer.substr(3);
 
+            if (command == "msz") {
+                int _heightWorld, _widthWorld;
+                std::istringstream iss(responseValue);
+                iss >> _heightWorld >> _widthWorld;
+                _initRessources(_heightWorld, _widthWorld);
+                return;
+            }
             auto commandHandler = _commandHandlers.find(command);
             if (commandHandler != _commandHandlers.end()) {
                 commandHandler->second(responseValue);

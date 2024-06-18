@@ -19,15 +19,6 @@ namespace Zappy {
             this->_ressources = ressources;
         }
 
-        void Commands::handleCommandMsz(const std::string& responseValue)
-        {
-            int _heightWorld, _widthWorld;
-            std::istringstream iss(responseValue);
-            iss >> _heightWorld >> _widthWorld;
-            std::cout << "MSZ command:" << _heightWorld << _widthWorld << std::endl;
-            // todo
-        }
-
         void Commands::handleCommandBct(const std::string& responseValue)
         {
             std::istringstream iss(responseValue);
@@ -72,7 +63,7 @@ namespace Zappy {
             std::istringstream iss(responseValue);
             iss >> playerId >> x >> y;
 
-            std::cout << "Player position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
+            std::cout << "\n\n\n\nPlayer position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
             this->_ressources->getPlayerFromId(playerId)->setX(x);
             this->_ressources->getPlayerFromId(playerId)->setY(y);
             // todo virify this

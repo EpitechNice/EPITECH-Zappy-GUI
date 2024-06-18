@@ -18,13 +18,13 @@ namespace Zappy
                 std::lock_guard<std::mutex> lock(_mutex);
                 _commandList.push_back(command);
             }
-            _condVar.notify_one();
+            _conditionVariable.notify_one();
         }
 
         std::string SharedMemory::getCommand()
         {
             std::unique_lock<std::mutex> lock(_mutex);
-            _condVar.wait(lock, [this] { return !_commandList.empty(); });
+            _conditionVariable.wait(lock, [this] { return !_commandList.empty(); });
 
             if (!_commandList.empty()) {
                 std::string command = _commandList.front();

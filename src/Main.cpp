@@ -14,9 +14,14 @@
 #include "Thread.hpp"
 #include "Ref.hpp"
 
-void threadFunction(std::shared_ptr<Zappy::Server::Server> server)
+void inThreadFunction(std::shared_ptr<Zappy::Server::Server> server)
 {
-    server->run();
+    server->runIn();
+}
+
+void outThreadFunction(std::shared_ptr<Zappy::Server::Server> server)
+{
+    server->runOut();
 }
 
 //TODO : use Thread custom class
@@ -27,20 +32,22 @@ int main(int argc, char **argv)
         Zappy::GUI::Parsing parsing(argc, argv);
         std::shared_ptr<Zappy::Server::Server> server = std::make_shared<Zappy::Server::Server>(parsing.getMachine(), parsing.getPort());
         server->setRessources(Zappy::GUI::Ressources::Ref::get()->ressources);
-        // create namepipe in and out
-        // server.setInOut(in, out);
         std::shared_ptr<Zappy::Server::SharedMemory> sharedMemory = server->getSharedMemory();
-        sharedMemory->addCommand("msz\r\n");
-        sharedMemory->addCommand("bct 11 3\r\n");
-        sharedMemory->addCommand("bct 2 1\r\n");
-        sharedMemory->addCommand("bct 2 2\r\n");
-        sharedMemory->addCommand("mct\r\n");
-        Zappy::Server::Thread serverThread;
-        serverThread.start([server]() { threadFunction(server); });
+        Zappy::Server::Thread responseThread;
+        responseThread.start([server]() { inThreadFunction(server); });
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));  // wait for connection
+        Zappy::Server::Thread commandThread;
+        commandThread.start([server]() { outThreadFunction(server); });
         Zappy::GUI::SceneManager sceneManager;
+        sharedMemory->addCommand("bct 1 3\r\n");
+        // sharedMemory->addCommand("bct 2 1\r\n");
+        // sharedMemory->addCommand("bct 2 2\r\n");
+        sharedMemory->addCommand("mct\r\n");
+        // sharedMemory->addCommand("ppo\r\n");
         sceneManager.run();
         server->shutdown();
-        serverThread.join();
+        responseThread.join();
+        commandThread.join();
     } catch (const Zappy::GUI::Parsing::ParsingError &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         std::cerr << ">> Use -help for help." << std::endl;

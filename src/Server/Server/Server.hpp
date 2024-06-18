@@ -31,16 +31,42 @@
 
 namespace Zappy {
     namespace Server {
+        /**
+         * @brief server Communication class
+         */
         class Server {
             public:
+                /**
+                 * @brief Construct server communication
+                 *
+                 * @param address The adress of the server
+                 * @param port The port of the server
+                */
                 Server(const std::string &address, int port);
                 ~Server() = default;
 
-                void run();
+                /**
+                 * @brief Run the response thread for listen and process any response from the server
+                 */
+                void runIn();
+                /**
+                 * @brief Run the request thread for listen and process any request from the client
+                 */
+                void runOut();
+                /**
+                 * @brief Shutdown the client server communication
+                 */
                 void shutdown();
 
-                void setInOut(); // set the in and out namepipes -> shared ptr
+                /**
+                 * @brief Init ressources of the game in the server part for accesibility
+                 * @param ressources The ressources you want to init
+                 */
                 void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
+
+                /**
+                 * @brief Get the list of request/command
+                 */
                 std::shared_ptr<SharedMemory> getSharedMemory();
 
             protected:
@@ -67,18 +93,15 @@ namespace Zappy {
                 std::shared_ptr<SharedMemory> _sharedMemory;
                 std::thread _sendThread;
 
-                // namepipe in
-                // namepipe out
-
                 void _connect();
                 void _disconnect();
-                void _loop();
+                void _loopIn();
+                void _initRessources(int mapHeight, int mapWidth);
                 void _addResponse(const std::string &request);
                 void _handleResponse(const std::string& buffer);
                 void _sendRequest();
 
                 std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
-                    {"msz", [this](const std::string& responseValue) { _commands->handleCommandMsz(responseValue); }},
                     {"bct", [this](const std::string& responseValue) { _commands->handleCommandBct(responseValue); }},
                     {"tna", [this](const std::string& responseValue) { _commands->handleCommandTna(responseValue); }},
                     {"pnw", [this](const std::string& responseValue) { _commands->handleCommandPnw(responseValue); }},
