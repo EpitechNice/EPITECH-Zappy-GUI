@@ -23,13 +23,16 @@ namespace Zappy {
                     Rectangle(std::pair<int, int> pos, std::pair<int, int> size, Color color);
 
                     void draw() override;
+                    void resize() override;
 
-                    void setStroke(int strokeSize, Color strokeColor);
+                    void setStroke(float strokeSize, Color strokeColor);
 
                 protected:
                 private:
-                    int _strokeSize;
+                    float _strokeSize = -1;
                     Color _strokeColor;
+
+                    float _refStrokeSize;
             };
         }
     }
