@@ -98,6 +98,7 @@ namespace Zappy {
                 _team->resize();
                 _team->setPosX((float)(_posX + 20));
                 _team->setPosY((float)(_posY + _background->getSizeY() / 2));
+                _sizeY = _background->getSizeY();
             }
 
             void InspecterSelecter::modPosX(float x)

@@ -97,6 +97,7 @@ namespace Zappy {
                 private:
                     std::vector<std::shared_ptr<InspecterSelecter>> _selecters;
                     int _selected = -1;
+                    float _gap = 20;
             };
         }
     }
