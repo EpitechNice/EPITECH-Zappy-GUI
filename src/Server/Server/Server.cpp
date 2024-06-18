@@ -9,13 +9,15 @@
 
 namespace Zappy {
     namespace Server {
-        Server::Server(const std::string &address, int port) :
-            _address(address),
-            _port(port),
-            _state(TRY_CONNECT),
-            _fd(-1),
-            _commands(std::make_shared<Zappy::Server::Commands>()),
-            _sharedMemory(std::make_shared<SharedMemory>()) {}
+        Server::Server(const std::string &address, int port)
+        {
+            _address = address;
+            _port = port;
+            _state = TRY_CONNECT;
+            _fd = -1;
+            _commands = std::make_shared<Zappy::Server::Commands>();
+            _sharedMemory = std::make_shared<SharedMemory>();
+        }
 
         void Server::setInOut()
         {
@@ -25,6 +27,7 @@ namespace Zappy {
         void Server::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
         {
             _ressources = ressources;
+             _commands->setRessources(_ressources);
         }
 
         std::shared_ptr<SharedMemory> Server::getSharedMemory()
@@ -65,6 +68,7 @@ namespace Zappy {
             }
             _state = CONNECTED;
             std::string initRequest = "GRAPHIC\r\n";
+//TODO: Verify that socket is set with fcntl() -> O_NONBLOCK cause send is bloquant..
             send(_fd, initRequest.c_str(), initRequest.size(), 0);
 
             for (int i = 0; i < 10; i++) {

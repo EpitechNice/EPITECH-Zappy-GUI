@@ -10,12 +10,6 @@
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
-            Ressources *Ressources::get()
-            {
-                static Ressources ressources;
-                return &ressources;
-            }
-
             Ressources::Ressources()
             {
                 tileRessources = std::vector<std::vector<std::shared_ptr<TileRessources>>>();

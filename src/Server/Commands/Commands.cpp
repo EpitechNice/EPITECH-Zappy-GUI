@@ -9,7 +9,14 @@
 
 namespace Zappy {
     namespace Server {
-        Commands::Commands(){
+        Commands::Commands()
+        {
+            this->_ressources = nullptr;
+        }
+
+        void Commands::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
+        {
+            this->_ressources = ressources;
         }
 
         void Commands::handleCommandMsz(const std::string& responseValue)
@@ -17,7 +24,6 @@ namespace Zappy {
             int _heightWorld, _widthWorld;
             std::istringstream iss(responseValue);
             iss >> _heightWorld >> _widthWorld;
-            std::cout << "\n\n\n\n\nAHHHHHHHH\n   MSZ commande ok\n";
             // todo
         }
 

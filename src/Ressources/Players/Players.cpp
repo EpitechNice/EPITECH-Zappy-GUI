@@ -11,9 +11,18 @@ namespace Zappy {
     namespace GUI {
         namespace Ressources {
             Players::Players(int id, int x, int y, std::string team)
-                : _id(id), _x(x), _y(y), _team(team), _linemate(0), _deraumere(0), _sibur(0),
-                _mendiane(0), _phiras(0), _thystame(0), _food(0)
             {
+                _id = id;
+                _x = x;
+                _y = y;
+                _team = team;
+                _linemate = 0;
+                _deraumere = 0;
+                _sibur = 0;
+                _mendiane = 0;
+                _phiras = 0;
+                _thystame = 0;
+                _food = 0;
             }
 
             int Players::getId() const
