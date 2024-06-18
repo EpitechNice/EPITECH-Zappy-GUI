@@ -38,7 +38,7 @@ namespace Zappy {
                 private:
                     int _tileSize;
                     std::vector<std::vector<std::shared_ptr<Tile>>> _tiles;
-                    std::pair<int, int> _highLight;
+                    std::pair<int, int> _highLight = {-1, -1};
                     std::pair<int, int> _select;
             };
         }

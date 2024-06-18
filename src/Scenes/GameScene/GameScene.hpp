@@ -42,7 +42,7 @@ namespace Zappy {
 
                 protected:
                 private:
-                    bool _isReady;
+                    bool _isReady = false;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _skybox;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;

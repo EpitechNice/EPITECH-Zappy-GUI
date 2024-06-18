@@ -59,11 +59,6 @@ namespace Zappy {
                 return _fps;
             }
 
-            // Zappy::GUI::I18n::SupportedLocale Render::getLangue() const
-            // {
-            //     return Zappy::GUI::I18n::I18nHelper::getInstance()->getCurrentLocale();
-            // }
-
             void Render::setHeight(int height)
             {
                 setDimensions(height, _width);
@@ -79,21 +74,18 @@ namespace Zappy {
                 _height = height;
                 _width = width;
                 FontManager::get()->unload();
+                ModelManager::get()->unload();
                 CloseWindow();
                 InitWindow(_width, _height, "Clash Of Tek");
+                ModelManager::get()->reload();
                 FontManager::get()->reload();
             }
-
 
             void Render::setFps(int fps)
             {
                 _fps = fps;
                 SetTargetFPS(_fps);
             }
-
-            // void Render::setLangue(Zappy::GUI::I18n::SupportedLocale language){
-            //     _langue = Zappy::GUI::I18n::I18nHelper::getInstance()->setCurrentLocale(language);
-            // }
         }
     }
 }

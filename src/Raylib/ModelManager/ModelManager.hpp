@@ -22,6 +22,8 @@ namespace Zappy {
 
                     Model getModel(std::string &fileName);
                     void destroy();
+                    void unload();
+                    void reload();
 
                 private:
                     ModelManager();
@@ -29,6 +31,7 @@ namespace Zappy {
 
                     bool _isDestroyed = false;
                     std::unordered_map<std::string, Model> _models;
+                    std::vector<std::string> _refs;
             };
         }
     }
