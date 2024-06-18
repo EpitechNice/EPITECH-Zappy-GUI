@@ -14,12 +14,12 @@ namespace Zappy {
             {
                 _visible = visible;
                 std::vector<std::string> paths = {
-                    std::string("skybox/purple/skyRenderSide1.png"),
-                    std::string("skybox/purple/skyRenderSide2.png"),
-                    std::string("skybox/purple/skyRenderSide3.png"),
-                    std::string("skybox/purple/skyRenderSide4.png"),
-                    std::string("skybox/purple/skyRenderBottom.png"),
-                    std::string("skybox/purple/skyRenderTop.png"),
+                    std::string("skyRenderSide1.png"),
+                    std::string("skyRenderSide2.png"),
+                    std::string("skyRenderSide3.png"),
+                    std::string("skyRenderSide4.png"),
+                    std::string("skyRenderBottom.png"),
+                    std::string("skyRenderTop.png"),
                 };
                 std::vector<Texture2D> textures;
                 for (auto &path : paths)
