@@ -13,14 +13,18 @@ namespace Zappy {
         namespace Component {
             InspecterSelecter::InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Players> player)
             {
+                setRef();
                 _posX = pos.first;
                 _posY = pos.second;
                 _sizeX = width;
                 _sizeY = 0;
                 _player = player;
                 _egg = nullptr;
-                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[player->getTeam()]);
-                _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), 20, WHITE);
+
+                float refSize = 1.67;
+                float size = refSize * _refWidth / 100;
+                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + size), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[player->getTeam()]);
+                _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + size * 2), (float)(pos.second + 10)), std::string("Player #" + std::to_string(player->getId())), size, WHITE);
                 _sizeY = _text->getSizeY() + 20;
                 _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_sizeX, (float)_sizeY), 0.2, (Color){55, 56, 40, 255});
 
@@ -29,18 +33,26 @@ namespace Zappy {
 
                 _text->setPosX((float)(pos.first + 40));
                 _text->setPosY((float)(pos.second + 10));
+
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
             }
 
             InspecterSelecter::InspecterSelecter(std::pair<int, int> pos, int width, std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg)
             {
+                setRef();
                 _posX = pos.first;
                 _posY = pos.second;
                 _sizeX = width;
                 _sizeY = 0;
                 _player = nullptr;
                 _egg = egg;
-                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + 20), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[egg->getTeam()]);
-                _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + 40), (float)(pos.second + 10)), std::string("Egg #" + std::to_string(egg->getId())), 20, WHITE);
+
+                float refSize = 1.67;
+                float size = refSize * _refWidth / 100;
+                _team = std::make_unique<Circle>(std::make_pair<float, float>((float)(pos.first + size), (float)(pos.second + 10)), 10, Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[egg->getTeam()]);
+                _text = std::make_unique<Text>(std::make_pair<float, float>((float)(pos.first + size * 2), (float)(pos.second + 10)), std::string("Egg #" + std::to_string(egg->getId())), size, WHITE);
                 _sizeY = _text->getSizeY() + 20;
                 _background = std::make_unique<RoundedRectangle>(std::make_pair<float, float>((float)pos.first, (float)pos.second), std::make_pair<float, float>((float)_sizeX, (float)_sizeY), 0.2, (Color){55, 56, 40, 255});
 
@@ -49,6 +61,10 @@ namespace Zappy {
 
                 _text->setPosX((float)(pos.first + 40));
                 _text->setPosY((float)(pos.second + 10));
+
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
             }
 
             void InspecterSelecter::update()
@@ -62,6 +78,26 @@ namespace Zappy {
                     _background->draw();
                 _text->draw();
                 _team->draw();
+            }
+
+            void InspecterSelecter::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+
+                _background->resize();
+                _background->setPosX((float)_posX);
+                _background->setPosY((float)_posY);
+
+                _text->resize();
+                _text->setPosX((float)(_posX + 40));
+                _text->setPosY((float)(_posY + 10));
+
+                _team->resize();
+                _team->setPosX((float)(_posX + 20));
+                _team->setPosY((float)(_posY + _background->getSizeY() / 2));
             }
 
             void InspecterSelecter::modPosX(float x)
