@@ -29,7 +29,6 @@ namespace Zappy {
 
             void AComponent::resize()
             {
-                std::cout << "Resizing" << std::endl;
             }
 
 
