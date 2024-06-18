@@ -24,6 +24,7 @@ namespace Zappy {
             int _heightWorld, _widthWorld;
             std::istringstream iss(responseValue);
             iss >> _heightWorld >> _widthWorld;
+            std::cout << "MSZ command:" << _heightWorld << _widthWorld << std::endl;
             // todo
         }
 
@@ -32,6 +33,7 @@ namespace Zappy {
             std::istringstream iss(responseValue);
             int x, y, q0, q1, q2, q3, q4, q5, q6;
             iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+            std::cout << "BCT command:" << x << y << q0 << q1 << q2 << q3 << q4 << q5 << q6 << std::endl;
             this->_ressources->getTileFromPos(x, y)->setFood(q0);
             this->_ressources->getTileFromPos(x, y)->setLinemate(q1);
             this->_ressources->getTileFromPos(x, y)->setDeraumere(q2);
@@ -156,7 +158,7 @@ namespace Zappy {
             std::cout << "Player #" << playerId << " laid an egg." << std::endl;
             int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
             int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
-            // this->_ressources->getTileFromPos(playerX, playerY)->addEgg();
+            this->_ressources->getTileFromPos(playerX, playerY)->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(0, playerX, playerY, this->_ressources->getPlayerFromId(playerId)->getTeam()));
         }
 
         void Commands::handleCommandPdr(const std::string& responseValue)

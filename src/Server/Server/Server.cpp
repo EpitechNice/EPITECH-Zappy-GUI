@@ -15,9 +15,15 @@ namespace Zappy {
             _port = port;
             _state = TRY_CONNECT;
             _fd = -1;
+            _mszCommandReceived = false;
             _commands = std::make_shared<Zappy::Server::Commands>();
             _sharedMemory = std::make_shared<SharedMemory>();
         }
+
+        // Server::~Server()
+        // {
+        // }
+
 
         void Server::setInOut()
         {
@@ -27,7 +33,7 @@ namespace Zappy {
         void Server::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
         {
             _ressources = ressources;
-             _commands->setRessources(_ressources);
+            _commands->setRessources(_ressources);
         }
 
         std::shared_ptr<SharedMemory> Server::getSharedMemory()
@@ -58,7 +64,6 @@ namespace Zappy {
             _fd = socket(AF_INET, SOCK_STREAM, 0);
             if (_fd == -1)
                 throw Exceptions::ConnectionServerFail("Connection to server failed", _address, _port);
-
             _socketAddress.sin_family = AF_INET;
             _socketAddress.sin_port = htons(_port);
             inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
@@ -68,7 +73,6 @@ namespace Zappy {
             }
             _state = CONNECTED;
             std::string initRequest = "GRAPHIC\r\n";
-//TODO: Verify that socket is set with fcntl() -> O_NONBLOCK cause send is bloquant..
             send(_fd, initRequest.c_str(), initRequest.size(), 0);
 
             for (int i = 0; i < 10; i++) {
@@ -111,55 +115,63 @@ namespace Zappy {
             _loop();
         }
 
+        void Server::_disconnect()
+        {
+            if (_fd != -1) {
+                close(_fd);
+                _fd = -1;
+            }
+            _state = DOWN;
+        }
+
         void Server::_loop()
         {
-            fd_set readfds, writefds;
+            fd_set readfds;
             struct timeval tv;
             int max_fd = _fd;
-            bool mszCommandReceived = false;
 
             while (_state == CONNECTED) {
                 FD_ZERO(&readfds);
-                FD_ZERO(&writefds);
-
                 FD_SET(_fd, &readfds);
-                FD_SET(_fd, &writefds);
-
                 tv.tv_sec = 1;
                 tv.tv_usec = 0;
-
-                int activity = select(max_fd + 1, &readfds, &writefds, NULL, &tv);
+                int activity = select(max_fd + 1, &readfds, NULL, NULL, &tv);
                 if (activity == -1) {
                     _disconnect();
-                    break;
+                    throw Exceptions::ConnectionServerFail("Connection to server failed", _address, _port);
                 }
                 if (FD_ISSET(_fd, &readfds)) {
                     char buffer[1024] = {0};
-                    int valread = read(_fd, buffer, sizeof(buffer));
-                    if (valread > 0) {
-                        std::string response(buffer, valread);
-                        if (!mszCommandReceived) {
-                            if (response.find("msz") == 0) {
-                                mszCommandReceived = true;
-                                _handleResponse(response);
-                            }
-                        } else {
-                            _sharedMemory->addCommand(response);
-                            _handleResponse(response);
-                        }
-                    } else {
+                    ssize_t valread = read(_fd, buffer, 1024);
+                    std::string response(buffer, valread);
+                    if (valread == 0) {
+                        std::cerr << "server close connexion" << std::endl;
                         _disconnect();
                         break;
                     }
-                }
-                if (FD_ISSET(_fd, &writefds)) {
-                    _sharedMemory->lockMutex();
-                    if (_sharedMemory->hasCommands()) {
-                        std::string request = _sharedMemory->getCommand();
-                        send(_fd, request.c_str(), request.size(), 0);
+                    if (!_mszCommandReceived) {
+                        if (response.find("msz") == 0) {
+                            _mszCommandReceived = true;
+                            _addResponse(response);
+                            _handleResponse(response);
+                        }
+                    } else {
+                        _addResponse(response);
+                        _handleResponse(response);
                     }
                 }
+                if (_sharedMemory->hasCommands()) {
+                    std::string command = _sharedMemory->getCommand();
+                    write(_fd, command.c_str(), command.size());
+                }
             }
+        }
+
+        void Server::_addResponse(const std::string &request)
+        {
+            std::unique_lock<std::mutex> lock(_responseQueueMutex);
+            _responseQueue.push(request);
+            _responseQueueNotEmpty.notify_one();
         }
 
         void Server::_handleResponse(const std::string& buffer)
@@ -167,23 +179,10 @@ namespace Zappy {
             std::string command = buffer.substr(0, 3);
             std::string responseValue = buffer.substr(3);
 
-            auto it = _commandHandlers.find(command);
-            if (it != _commandHandlers.end()) {
-                it->second(responseValue);
+            auto commandHandler = _commandHandlers.find(command);
+            if (commandHandler != _commandHandlers.end()) {
+                commandHandler->second(responseValue);
             }
-        }
-
-        void Server::_disconnect()
-        {
-            close(_fd);
-            _state = DOWN;
-        }
-
-        void Server::_addResponse(const std::string &response)
-        {
-            std::lock_guard<Mutex> lock(_responseQueueMutex);
-            _responseQueue.push(response);
-            _responseQueueNotEmpty.notify_one();
         }
     }
 }

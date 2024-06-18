@@ -17,13 +17,15 @@ namespace Zappy {
     namespace Server {
         class SharedMemory {
         public:
-            SharedMemory();
-            ~SharedMemory();
+            SharedMemory() = default;
+            ~SharedMemory() = default;
 
             void addCommand(const std::string& command);
-            std::string getCommand();
             bool hasCommands();
+            std::string getCommand();
+
             void lockMutex();
+            void unlockMutex();
 
         private:
             std::deque<std::string> _commandList;

@@ -12,12 +12,6 @@ namespace Zappy
 {
     namespace Server
     {
-        SharedMemory::SharedMemory()
-        {}
-
-        SharedMemory::~SharedMemory()
-        {}
-
         void SharedMemory::addCommand(const std::string& command)
         {
             {
@@ -49,6 +43,11 @@ namespace Zappy
         void SharedMemory::lockMutex()
         {
             std::lock_guard<std::mutex> lock(_mutex);
+        }
+
+        void SharedMemory::unlockMutex()
+        {
+            std::lock_guard<std::mutex> unlock(_mutex);
         }
     }
 }

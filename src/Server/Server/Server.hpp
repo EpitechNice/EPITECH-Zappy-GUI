@@ -22,6 +22,7 @@
     #include <chrono>
     #include <thread>
 
+
     #include "Exceptions.hpp"
     #include "Mutex.hpp"
     #include "Commands.hpp"
@@ -56,23 +57,25 @@ namespace Zappy {
                 int _port;
                 State _state;
                 int _fd;
+                bool _mszCommandReceived;
                 std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
                 std::shared_ptr<Zappy::Server::Commands> _commands;
 
-                std::shared_ptr<SharedMemory> _sharedMemory;
                 std::queue<std::string> _responseQueue;
-                Mutex _responseQueueMutex;
+                std::mutex _responseQueueMutex;
                 std::condition_variable _responseQueueNotEmpty;
+                std::shared_ptr<SharedMemory> _sharedMemory;
+                std::thread _sendThread;
 
                 // namepipe in
                 // namepipe out
 
                 void _connect();
-                void _loop();
-                void _handleResponse(const std::string& buffer);
                 void _disconnect();
-                void _addRequest(const std::string &request);
+                void _loop();
                 void _addResponse(const std::string &request);
+                void _handleResponse(const std::string& buffer);
+                void _sendRequest();
 
                 std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
                     {"msz", [this](const std::string& responseValue) { _commands->handleCommandMsz(responseValue); }},

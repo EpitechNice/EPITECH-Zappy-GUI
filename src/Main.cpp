@@ -11,6 +11,7 @@
 #include "Parsing.hpp"
 #include "SceneManager.hpp"
 #include "Server.hpp"
+#include "Thread.hpp"
 #include "Ref.hpp"
 
 void threadFunction(std::shared_ptr<Zappy::Server::Server> server)
@@ -29,10 +30,13 @@ int main(int argc, char **argv)
         // create namepipe in and out
         // server.setInOut(in, out);
         std::shared_ptr<Zappy::Server::SharedMemory> sharedMemory = server->getSharedMemory();
-        sharedMemory->addCommand("bct 4 3\r\n");
         sharedMemory->addCommand("msz\r\n");
-        std::thread serverThread(threadFunction, server);
-
+        sharedMemory->addCommand("bct 11 3\r\n");
+        sharedMemory->addCommand("bct 2 1\r\n");
+        sharedMemory->addCommand("bct 2 2\r\n");
+        sharedMemory->addCommand("mct\r\n");
+        Zappy::Server::Thread serverThread;
+        serverThread.start([server]() { threadFunction(server); });
         Zappy::GUI::SceneManager sceneManager;
         sceneManager.run();
         server->shutdown();

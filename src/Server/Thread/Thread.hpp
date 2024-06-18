@@ -9,6 +9,7 @@
     #define THREAD_HPP
 
     #include <thread>
+    #include <functional>
 
 namespace Zappy
 {
@@ -24,7 +25,7 @@ namespace Zappy
                 Thread();
                 ~Thread();
 
-                void start(void (*function)(void));
+                void start(std::function<void()> function);
                 void join(void);
 
         };

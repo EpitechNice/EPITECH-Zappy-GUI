@@ -21,7 +21,7 @@ namespace Zappy
             this->join();
         }
 
-        void Thread::start(void (*function)(void))
+        void Thread::start(std::function<void()> function)
         {
             if (!this->_running) {
                 this->_running = true;
