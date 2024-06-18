@@ -35,11 +35,15 @@ namespace Zappy {
 
                     /**
                      * @brief Draw the background
+                     *
+                     * @warning This function should be called in the raylib context
                      */
                     void draw() override;
 
                     /**
                      * @brief Resize the background to fit the window
+                     *
+                     * @warning This function should be called in the raylib context
                      */
                     void resize() override;
 
