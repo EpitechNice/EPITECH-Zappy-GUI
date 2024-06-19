@@ -53,6 +53,7 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            this->_ressources->addTeam(teamName);
         }
 
         void Commands::handleCommandPnw(const std::string& responseValue)
@@ -65,8 +66,9 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            //todo handle level, teamname and color
-            this->_ressources->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName));
+            auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
+            player->setLvl(level);
+            this->_ressources->addPlayer(player);
         }
 
         void Commands::handleCommandPpo(const std::string& responseValue)

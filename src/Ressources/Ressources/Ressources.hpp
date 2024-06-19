@@ -82,6 +82,13 @@ namespace Zappy {
                     std::unordered_map<std::string, Color> teamsColor;
 
                     /**
+                     * @brief Register a team
+                     *
+                     * @param teamName The name of the team
+                     */
+                    void addTeam(std::string teamName);
+
+                    /**
                      * @brief Get a player from his id
                      *
                      * @param id The id of the player

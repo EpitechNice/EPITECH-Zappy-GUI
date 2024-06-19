@@ -24,8 +24,12 @@ namespace Zappy {
             {
                 players.push_back(player);
                 std::string team = player->getTeam();
+                addTeam(team);
+            }
 
-                if (teamsColor.find(team) != teamsColor.end()) return;
+            void Ressources::addTeam(std::string teamName)
+            {
+                if (teamsColor.find(teamName) != teamsColor.end()) return;
                 unsigned char r = rand() % 256;
                 unsigned char g = rand() % 256;
                 unsigned char b = rand() % 256;
@@ -46,7 +50,7 @@ namespace Zappy {
                         color = (Color){r, g, b, 255};
                     }
                 }
-                teamsColor[team] = color;
+                teamsColor[teamName] = color;
             }
 
             void Ressources::removePlayer(int id)
