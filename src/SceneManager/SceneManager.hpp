@@ -26,13 +26,27 @@
 
 namespace Zappy {
     namespace GUI {
+        /**
+         * @brief SceneManager class
+         */
         class SceneManager {
             public:
+                /**
+                 * @brief Construct a new SceneManager object
+                 */
                 SceneManager();
                 ~SceneManager();
 
+                /**
+                 * @brief Destroy the SceneManager object
+                 *
+                 * @warning After the destruction of the SceneManager, you won't be able to use it anymore
+                 */
                 void destroy();
 
+                /**
+                 * @brief Game loop
+                 */
                 void run();
 
             protected:
@@ -44,6 +58,9 @@ namespace Zappy {
 
                 std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
 
+                /**
+                 * @brief Used to call the resize method of each scenes
+                 */
                 void _resize();
         };
     }
