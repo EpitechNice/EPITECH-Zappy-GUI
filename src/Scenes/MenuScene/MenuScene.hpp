@@ -21,18 +21,56 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
+            /**
+             * @brief Menu class
+             */
             class Menu : public AScene {
                 public:
+                    /**
+                     * @brief Menu constructor
+                     *
+                     * @param render The render
+                     */
                     Menu(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~Menu() = default;
 
+                    /**
+                     * @brief Start the Menu Scene
+                     */
                     void start() override;
+
+                    /**
+                     * @brief Destroy the Menu Scene
+                     *
+                     * @warning After the destruction of the Menu Scene, you won't be able to use it anymore
+                     */
                     void destroy() override;
+
+                    /**
+                     * @brief Update the Menu Scene
+                     */
                     void draw3D() override;
+
+                    /**
+                     * @brief Draw the 2D objects of the Menu Scene
+                     */
                     void draw2D() override;
 
+                    /**
+                     * @brief Resize the Menu Scene
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Get the next scene
+                     *
+                     * @return `std::string` The next scene
+                     */
                     std::string nextScene() override;
 
+                    /**
+                     * @brief Update the Menu Scene
+                     */
                     void update(bool isGameReady);
 
                 protected:

@@ -12,6 +12,13 @@
 
 namespace Zappy {
     namespace GUI {
+        /**
+         * @brief Check if a string is made of only numbers
+         *
+         * @param str The string to check
+         *
+         * @return `true` if the string is made of only numbers, `false` otherwise
+         */
         bool isNumber(const std::string &str);
     }
 }

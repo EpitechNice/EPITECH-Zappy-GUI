@@ -20,13 +20,41 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
+            /**
+             * @brief VolumeSection class
+             */
             class VolumeSection : public AComponent {
                 public:
+                    /**
+                     * @brief Construct a new VolumeSection object
+                     *
+                     * @param pos Position of the volume section
+                     * @param size Size of the volume section
+                     * @param text Text of the volume section
+                     * @param callback Callback of the volume section (call a method from SoundManager)
+                     */
                     VolumeSection(std::pair<float, float> pos, std::pair<float, float> size, std::string text, void (Zappy::GUI::Sfml::SoundManager::*callback)(float));
 
+                    /**
+                     * @brief Draw the volume section
+                     */
                     void draw() override;
 
+                    /**
+                     * @brief Resize the volume section
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Update the volume section
+                     */
                     void update();
+
+                    /**
+                     * @brief Set the text of the volume section
+                     *
+                     * @param text Text to set
+                     */
                     void setText(std::string text);
 
                 private:

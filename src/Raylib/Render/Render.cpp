@@ -13,7 +13,7 @@ namespace Zappy {
             Render::Render(int height, int width, int fps)
                 : _height(height), _width(width), _fps(fps), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
-                InitWindow(width, height, "Zappy");
+                InitWindow(width, height, "Clash Of Tek");
                 SetTargetFPS(fps);
                 _icon = LoadImage("assets/img/clash_of_tek_logo.png");
                 SetWindowIcon(_icon);
@@ -21,6 +21,8 @@ namespace Zappy {
                 Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);
                 Sfml::SoundManager::getInstance().playgeneralSound();
                 ModelManager::get();
+                FontManager::get();
+                TextureManager::get();
             }
 
             Render::~Render()
@@ -34,6 +36,7 @@ namespace Zappy {
                 _musiquePrincipal.stop();
                 ModelManager::get()->destroy();
                 FontManager::get()->destroy();
+                TextureManager::get()->destroy();
                 UnloadImage(_icon);
                 CloseWindow();
                 _isDestroyed = true;
@@ -59,43 +62,35 @@ namespace Zappy {
                 return _fps;
             }
 
-            // Zappy::GUI::I18n::SupportedLocale Render::getLangue() const
-            // {
-            //     return Zappy::GUI::I18n::I18nHelper::getInstance()->getCurrentLocale();
-            // }
-
             void Render::setHeight(int height)
             {
-                _height = height;
-                SetWindowSize(_width, _height);
+                setDimensions(height, _width);
             }
 
             void Render::setWidth(int width)
             {
-                _width = width;
-                SetWindowSize(_width, _height);
+                setDimensions(_height, width);
             }
 
             void Render::setDimensions(int height, int width)
             {
                 _height = height;
                 _width = width;
-                SetWindowSize(_width, _height);
-                _icon = LoadImage("assets/img/clash_of_tek_logo.png");
-                SetWindowIcon(_icon);
-                _view = std::make_shared<View>();
+                FontManager::get()->unload();
+                ModelManager::get()->unload();
+                TextureManager::get()->unload();
+                CloseWindow();
+                InitWindow(_width, _height, "Clash Of Tek");
+                TextureManager::get()->reload();
+                ModelManager::get()->reload();
+                FontManager::get()->reload();
             }
-
 
             void Render::setFps(int fps)
             {
                 _fps = fps;
                 SetTargetFPS(_fps);
             }
-
-            // void Render::setLangue(Zappy::GUI::I18n::SupportedLocale language){
-            //     _langue = Zappy::GUI::I18n::I18nHelper::getInstance()->setCurrentLocale(language);
-            // }
         }
     }
 }

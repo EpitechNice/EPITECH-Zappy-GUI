@@ -19,16 +19,51 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
+            /**
+             * @brief Option class
+             */
             class Option : public AScene {
                 public:
+                    /**
+                     * @brief Option constructor
+                     *
+                     * @param render The render
+                     */
                     Option(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~Option() = default;
 
+                    /**
+                     * @brief Start the Option Scene
+                     */
                     void start() override;
+
+                    /**
+                     * @brief Destroy the Option Scene
+                     *
+                     * @warning After the destruction of the Option Scene, you won't be able to use it anymore
+                     */
                     void destroy() override;
+
+                    /**
+                     * @brief Update the Option Scene
+                     */
                     void update() override;
+
+                    /**
+                     * @brief Draw the 2D objects of the Option Scene
+                     */
                     void draw2D() override;
 
+                    /**
+                     * @brief Resize the Option Scene
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Get the next scene
+                     *
+                     * @return `std::string` The next scene
+                     */
                     std::string nextScene() override;
 
                 protected:

@@ -14,7 +14,20 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             namespace ColorManager {
+                /**
+                 * @brief Darken a color
+                 *
+                 * @param color The color to darken
+                 * @param percent The percent to darken
+                 */
                 Color Darker(Color color, float percent);
+
+                /**
+                 * @brief Lighten a color
+                 *
+                 * @param color The color to lighten
+                 * @param percent The percent to lighten
+                 */
                 Color Lighter(Color color, float percent);
             }
         }

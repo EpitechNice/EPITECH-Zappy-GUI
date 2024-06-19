@@ -16,11 +16,24 @@ namespace Zappy {
                 _posY = pos.second;
                 _radius = radius;
                 _color = color;
+
+                setRef();
+                _refRadius = _radius / _refWidth * 100;
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
             }
 
             void Circle::draw()
             {
                 DrawCircle(_posX, _posY, _radius, _color);
+            }
+
+            void Circle::resize()
+            {
+                setRef();
+                _radius = _refRadius * _refWidth / 100;
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
             }
 
             void Circle::setRadius(float radius)

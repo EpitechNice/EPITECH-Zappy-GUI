@@ -12,24 +12,50 @@
     #include <string>
 
     #include "AComponent.hpp"
+    #include "TextureManager.hpp"
 
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            class Background2D: AComponent {
+            /**
+             * @brief Background2D component
+             *
+             * @details This component is used to display a 2D background that covers the whole window
+             */
+            class Background2D: public AComponent {
                 public:
-                    Background2D(std::string texturePath, bool center = true);
+                    /**
+                     * @brief Construct a new Background2D object
+                     *
+                     * @param texturePath Path to the texture to use as background.
+                     *
+                     * @note The texture will be loaded using the TextureManager. So it must be in the 'assets/img/' folder.
+                     * @warning This function should be called in the raylib context
+                     */
+                    Background2D(std::string texturePath);
 
-                    void destroy() override;
+                    /**
+                     * @brief Draw the background
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
                     void draw() override;
+
+                    /**
+                     * @brief Resize the background to fit the window
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
+                    void resize() override;
 
                 protected:
                 private:
                     Texture2D _texture;
+                    std::string _texturePath;
             };
         }
     }
 
 }
 
-#endif /* !COMPONENTBACKGROUND2D_HPP_ */
+#endif /* !COMPONENT_BACKGROUND_2D_HPP_ */

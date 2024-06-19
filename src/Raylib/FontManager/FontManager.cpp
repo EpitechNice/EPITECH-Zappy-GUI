@@ -16,6 +16,12 @@ namespace Zappy {
                 return &instance;
             }
 
+            FontManager::FontManager()
+            {
+                _refs.clear();
+                _fonts.clear();
+            }
+
             FontManager::~FontManager()
             {
                 destroy();
@@ -24,9 +30,7 @@ namespace Zappy {
             void FontManager::destroy()
             {
                 if (_isDestroyed) return;
-                for (auto &font : _fonts)
-                    UnloadFont(font.second);
-                _fonts.clear();
+                unload();
                 _isDestroyed = true;
             }
 
@@ -36,9 +40,26 @@ namespace Zappy {
                     std::string path = "assets/font/" + fileName;
                     Font font = LoadFont(path.c_str());
                     _fonts[fileName] = font;
+                    _refs.push_back(fileName);
                     return font;
                 }
                 return _fonts[fileName];
+            }
+
+            void FontManager::unload()
+            {
+                for (auto &font : _fonts)
+                    UnloadFont(font.second);
+                _fonts.clear();
+            }
+
+            void FontManager::reload()
+            {
+                for (auto &ref: _refs) {
+                    std::string path = "assets/font/" + ref;
+                    Font font = LoadFont(path.c_str());
+                    _fonts[ref] = font;
+                }
             }
         }
     }

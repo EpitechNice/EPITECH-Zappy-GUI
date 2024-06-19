@@ -24,24 +24,75 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
+            /**
+             * @brief Game class
+             */
             class Game : public AScene {
                 public:
+                    /**
+                     * @brief Game constructor
+                     *
+                     * @param render The render
+                     */
                     Game(std::shared_ptr<Zappy::GUI::Raylib::Render> render);
                     ~Game() = default;
 
+                    /**
+                     * @brief Start the Game Scene
+                     */
                     void start() override;
+
+                    /**
+                     * @brief Destroy the Game Scene
+                     *
+                     * @warning After the destruction of the Game Scene, you won't be able to use it anymore
+                     */
                     void destroy() override;
+
+                    /**
+                     * @brief Update the Game Scene
+                     */
                     void update() override;
+
+                    /**
+                     * @brief Draw the 3D objects of the Game Scene
+                     */
                     void draw3D() override;
+
+                    /**
+                     * @brief Draw the 2D objects of the Game Scene
+                     */
                     void draw2D() override;
+
+                    /**
+                     * @brief Check if the Game Scene is ready
+                     *
+                     * @return `bool` If the Game Scene is ready
+                     */
                     bool isReady() override;
+
+                    /**
+                     * @brief Get the next scene
+                     *
+                     * @return `std::string` The next scene
+                     */
                     std::string nextScene() override;
 
+                    /**
+                     * @brief Resize the Game Scene
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Create the map
+                     *
+                     * @param size The size of the map
+                     */
                     void createMap(std::pair<int, int> size);
 
                 protected:
                 private:
-                    bool _isReady;
+                    bool _isReady = false;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _skybox;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;

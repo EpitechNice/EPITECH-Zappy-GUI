@@ -24,14 +24,54 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
+            /**
+             * @brief Chatbox component
+             */
             class Chatbox: public AComponent {
                 public:
+                    /**
+                     * @brief Construct a new Chatbox object
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
                     Chatbox();
 
+                    /**
+                     * @brief Draw the chatbox
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
                     void draw() override;
 
+                    /**
+                     * @brief Resize the chatbox
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Update the chatbox
+                     *
+                     * @warning This function should be called in the raylib context
+                     */
                     void update();
+
+                    /**
+                     * @brief Add a message to the chatbox
+                     *
+                     * @param message The message to add
+                     * @param name The name of the chat
+                     * @param tabName The name of the tab
+                     */
                     void addMessage(const std::string &message, const std::string &name, const std::string &tabName);
+
+                    /**
+                     * @brief Check if the mouse is on the chatbox
+                     *
+                     * @return true if the mouse is on the chatbox
+                     * @return false if the mouse is not on the chatbox
+                     */
                     bool mouseIsOn() const;
 
                 protected:

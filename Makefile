@@ -45,6 +45,7 @@ SRC		=   src/Main.cpp																				\
 			src/Raylib/FontManager/FontManager.cpp														\
 			src/Raylib/ModelManager/ModelManager.cpp													\
 			src/Raylib/Render/Render.cpp																\
+			src/Raylib/TextureManager/TextureManager.cpp												\
 			src/Raylib/View/View.cpp																	\
 			src/Ressources/Eggs/Eggs.cpp																\
 			src/Ressources/Players/Players.cpp															\
@@ -137,6 +138,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Raylib/FontManager							\
 				-I./src/Raylib/ModelManager							\
 				-I./src/Raylib/Render								\
+				-I./src/Raylib/TextureManager						\
 				-I./src/Raylib/SoundManager							\
 				-I./src/Raylib/View									\
 				-I./src/Ressources/Eggs								\
