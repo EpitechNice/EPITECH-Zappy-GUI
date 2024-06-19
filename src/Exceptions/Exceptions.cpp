@@ -9,8 +9,8 @@
 
 namespace Exceptions
 {
-    Exception::Exception(std::string what, std::pair<std::string, std::pair<std::string, std::size_t>> position):
-        _what(what), _position(position)
+    Exception::Exception(std::string what, std::pair<std::string, std::pair<std::string, std::size_t>> position)
+        : _what(what), _position(position)
     {
         this->_position = position;
         std::stringstream ss;
@@ -52,5 +52,29 @@ namespace Exceptions
     {
         os << obj.what();
         return os;
+    }
+}
+
+namespace Exceptions
+{
+    UnknownLocale::UnknownLocale(std::string what, std::pair<std::string, std::pair<std::string, std::size_t>> position)
+        : Exception(what, position)
+    {
+    }
+
+    TranslationFileNotFound::TranslationFileNotFound(std::string what, std::pair<std::string, std::pair<std::string, std::size_t>> position)
+        : Exception(what, position)
+    {
+    }
+
+    UnknownTranslationKey::UnknownTranslationKey(std::string what, std::pair<std::string, std::pair<std::string, std::size_t>> position)
+        : Exception(what, position)
+    {
+    }
+
+    ConnexionServerFail::ConnexionServerFail(std::string what, std::string serverAdress, int serverPort)
+    {
+        std::string msg = what + " (Adress: " + serverAdress + ", Port: " + std::to_string(serverPort) + ")";
+        Exception(msg);
     }
 }

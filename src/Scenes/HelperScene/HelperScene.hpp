@@ -19,16 +19,47 @@
 namespace Zappy {
     namespace GUI {
         namespace Scene {
+            /**
+             * @brief HelperScene class
+             */
             class HelperScene : public AScene {
                 public:
+                    /**
+                     * @brief HelperScene constructor
+                     *
+                     * @param render The render
+                     * @param text The text
+                     */
                     HelperScene(std::shared_ptr<Zappy::GUI::Raylib::Render> render, std::string text);
                     HelperScene() = default;
 
+                    /**
+                     * @brief Destroy the HelperScene object
+                     *
+                     * @warning After the destruction of the HelperScene object, you won't be able to use it anymore
+                     */
                     void destroy() override;
+
+                    /**
+                     * @brief Update the HelperScene object
+                     */
                     void update() override;
+
+                    /**
+                     * @brief Draw the 2D objects of the HelperScene object
+                     */
                     void draw2D() override;
+
+                    /**
+                     * @brief Resize the HelperScene object
+                     */
                     void resize() override;
 
+                    /**
+                     * @brief Get the next scene
+                     *
+                     * @return `std::string` The next scene
+                     */
                     std::string nextScene() override;
 
                 protected:
