@@ -27,7 +27,16 @@ namespace Zappy {
             {
             }
 
+            void AComponent::resize()
+            {
+            }
 
+
+            void AComponent::setRef()
+            {
+                _refWidth = GetScreenWidth();
+                _refHeight = GetScreenHeight();
+            }
 
             float AComponent::getPosX() const
             {
@@ -47,11 +56,13 @@ namespace Zappy {
             void AComponent::setPosX(float x)
             {
                 _posX = x;
+                _refPosX = _posX * 100 / _refWidth;
             }
 
             void AComponent::setPosY(float y)
             {
                 _posY = y;
+                _refPosY = _posY * 100 / _refHeight;
             }
 
             void AComponent::setPosZ(float z)
@@ -94,11 +105,13 @@ namespace Zappy {
             void AComponent::setSizeX(float x)
             {
                 _sizeX = x;
+                _refSizeX = _sizeX * 100 / _refWidth;
             }
 
             void AComponent::setSizeY(float y)
             {
                 _sizeY = y;
+                _refSizeY = _sizeY * 100 / _refHeight;
             }
 
             void AComponent::setSizeZ(float z)

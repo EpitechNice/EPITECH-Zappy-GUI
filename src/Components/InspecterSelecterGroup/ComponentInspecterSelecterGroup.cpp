@@ -16,6 +16,11 @@ namespace Zappy {
                 _posY = pos.second;
                 _sizeX = width;
                 _sizeY = 0;
+
+                setRef();
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
             }
 
             void InspecterSelecterGroup::draw()
@@ -24,9 +29,26 @@ namespace Zappy {
                     selecter->draw();
             }
 
+            void InspecterSelecterGroup::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+
+                int tmp = 0;
+                for (auto &selecter : _selecters) {
+                    selecter->resize();
+                    selecter->setPosX(_posX);
+                    selecter->setPosY(_posY + tmp);
+                    tmp += selecter->getSizeY() + _gap;
+                }
+            }
+
             void InspecterSelecterGroup::modPosX(float x)
             {
                 _posX += x;
+                _refPosX = _posX / _refWidth * 100;
                 for (auto &selecter : _selecters)
                     selecter->modPosX(x);
             }
@@ -41,6 +63,7 @@ namespace Zappy {
             {
                 int diff = y - _posY;
                 _posY = y;
+                _refPosY = _posY / _refHeight * 100;
                 for (auto &selecter : _selecters)
                     selecter->modPosY(diff);
             }
@@ -76,18 +99,14 @@ namespace Zappy {
 
             void InspecterSelecterGroup::addPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
             {
-                int gap = (_selecters.empty()) ? 0 : 20;
-                std::shared_ptr<Zappy::GUI::Component::InspecterSelecter> newPlayer = std::make_shared<InspecterSelecter>(std::make_pair(_posX, _posY + _sizeY + gap), _sizeX, player);
-                _selecters.push_back(newPlayer);
-                _sizeY += newPlayer->getSizeY() + gap;
+                _selecters.push_back(std::make_shared<InspecterSelecter>(std::make_pair(_posX, _posY + _sizeY), _sizeX, player));
+                _sizeY += _selecters.back()->getSizeY() + _gap;
             }
 
             void InspecterSelecterGroup::addEgg(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg)
             {
-                int gap = (_selecters.empty()) ? 0 : 20;
-                std::shared_ptr<Zappy::GUI::Component::InspecterSelecter> newEgg = std::make_shared<InspecterSelecter>(std::make_pair(_posX, _posY + _sizeY + gap), _sizeX, egg);
-                _selecters.push_back(newEgg);
-                _sizeY += newEgg->getSizeY() + gap;
+                _selecters.push_back(std::make_shared<InspecterSelecter>(std::make_pair(_posX, _posY + _sizeY), _sizeX, egg));
+                _sizeY += _selecters.back()->getSizeY() + _gap;
             }
         }
     }

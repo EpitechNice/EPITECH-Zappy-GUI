@@ -43,6 +43,8 @@ namespace Zappy {
                 std::string _nextScene;
 
                 std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
+
+                void _resize();
         };
     }
 }

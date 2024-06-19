@@ -18,6 +18,7 @@ namespace Zappy {
                 _scale = scale;
                 _rotationAxis = rotationAxis;
                 _angle = angle;
+                _path = path;
 
                 _model = Raylib::ModelManager::get()->getModel(path);
             }
@@ -25,6 +26,11 @@ namespace Zappy {
             void Model3D::draw()
             {
                 DrawModelEx(_model, { _posX, _posY, _posZ }, _rotationAxis, _angle, { _scale, _scale, _scale }, WHITE);
+            }
+
+            void Model3D::resize()
+            {
+                _model = Raylib::ModelManager::get()->getModel(_path);
             }
 
 

@@ -15,7 +15,7 @@ namespace Zappy {
                 Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
 
                 _render = render;
-                _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_war_scenery.png");
+                _background = std::make_unique<Zappy::GUI::Component::Background2D>("map_war_scenery.png");
                 _backButton = std::make_pair(std::make_unique<Zappy::GUI::Component::Button>(std::make_pair(20, 20), std::make_pair(-20, -10), i18nHelper->getTranslation("[menu.back_button]"), 20, GREEN), "[menu.back_button]");
                 _text = std::make_pair(std::make_unique<Zappy::GUI::Component::TextBox>(std::make_pair( 100, 100), _render->getWidth() - 200, i18nHelper->getTranslation(text), 20, WHITE), text);
                 _lang = i18nHelper->getCurrentLocale();
@@ -49,6 +49,13 @@ namespace Zappy {
                 if (_backButton.first->isClicked(_backButton.second))
                     return "menu";
                 return "help";
+            }
+
+            void HelperScene::resize()
+            {
+                _background->resize();
+                _backButton.first->resize();
+                _text.first->resize();
             }
         }
     }

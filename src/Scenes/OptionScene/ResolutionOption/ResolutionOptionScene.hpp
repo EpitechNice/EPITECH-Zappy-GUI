@@ -28,6 +28,7 @@ namespace Zappy {
                     void destroy() override;
                     void update() override;
                     void draw2D() override;
+                    void resize() override;
 
                     std::string nextScene() override;
 
@@ -41,6 +42,7 @@ namespace Zappy {
                     std::vector<std::pair<std::unique_ptr<Zappy::GUI::Component::Text>, std::string>> _text;
                     std::shared_ptr<Zappy::GUI::Raylib::Render> _render;
                     Zappy::GUI::I18n::SupportedLocale _lang;
+                    bool _wannaResize = false;
             };
         }
     }

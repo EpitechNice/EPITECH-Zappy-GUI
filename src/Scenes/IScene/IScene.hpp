@@ -24,6 +24,7 @@ namespace Zappy {
                 virtual void draw2D() = 0;
                 virtual std::string nextScene() = 0;
                 virtual bool isReady() = 0;
+                virtual void resize() = 0;
         };
     }
 }

@@ -15,8 +15,8 @@ namespace Zappy {
                 Zappy::GUI::I18n::I18nHelper* i18nHelper = Zappy::GUI::I18n::I18nHelper::getInstance();
 
                 _render = render;
-                _background = std::make_unique<Zappy::GUI::Component::Background2D>("assets/img/map_classic_scenery.png");
-                _logo = std::make_unique<Zappy::GUI::Component::Image>("assets/img/clash_of_tek.png", std::make_pair(100, 100), 0.6);
+                _background = std::make_unique<Zappy::GUI::Component::Background2D>("map_classic_scenery.png");
+                _logo = std::make_unique<Zappy::GUI::Component::Image>("clash_of_tek.png", std::make_pair(100, 100), 0.6);
                 _logo->setPosX((GetScreenWidth() / 8) * 6 - _logo->getSizeX() / 2 - 10);
                 _logo->setPosY(GetScreenHeight() / 2 - _logo->getSizeY() / 2 - 30);
                 std::vector<std::tuple<std::string, std::string, std::string>> buttons = {
@@ -90,6 +90,14 @@ namespace Zappy {
                 }
 
                 return "menu";
+            }
+
+            void Menu::resize()
+            {
+                _background->resize();
+                for (auto &button : _buttons)
+                    std::get<0>(button)->resize();
+                _logo->resize();
             }
         }
     }

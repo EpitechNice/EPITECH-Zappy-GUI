@@ -10,44 +10,25 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            Skybox::Skybox(std::string name, float size)
+            Skybox::Skybox(bool visible, float size)
             {
-                std::vector<Texture2D> textures = {
-                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide1.png").c_str()),
-                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide2.png").c_str()),
-                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide3.png").c_str()),
-                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderSide4.png").c_str()),
-                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderBottom.png").c_str()),
-                    LoadTexture(std::string("assets/img/skybox/" + name + "/skyRenderTop.png").c_str()),
-                };
-                _createSkybox(textures, size);
-            }
+                _visible = visible;
+                _size = size;
 
-            Skybox::Skybox(Color color, float size)
-            {
-                std::vector<Texture2D> textures = {
-                    LoadTextureFromImage(GenImageColor(1, 1, color)),
-                    LoadTextureFromImage(GenImageColor(1, 1, color)),
-                    LoadTextureFromImage(GenImageColor(1, 1, color)),
-                    LoadTextureFromImage(GenImageColor(1, 1, color)),
-                    LoadTextureFromImage(GenImageColor(1, 1, color)),
-                    LoadTextureFromImage(GenImageColor(1, 1, color)),
-                };
-                _createSkybox(textures, size);
+                resize();
             }
 
             void Skybox::destroy()
             {
                 if (_isDestroyed) return;
-                for (auto &plane : _planes) {
-                    UnloadTexture(plane.texture);
+                for (auto &plane : _planes)
                     UnloadModel(plane.model);
-                }
                 _isDestroyed = true;
             }
 
             void Skybox::draw()
             {
+                if (!_visible) return;
                 for (auto &plane : _planes)
                     DrawModel(plane.model, plane.position, 1.0f, WHITE);
             }
@@ -66,6 +47,26 @@ namespace Zappy {
 
                 render->view()->modPosition(modify);
                 render->view()->modTarget(modify);
+            }
+
+            void Skybox::resize()
+            {
+                for (auto &plane : _planes)
+                    UnloadModel(plane.model);
+                _planes.clear();
+
+                std::vector<std::string> paths = {
+                    std::string("skyRenderSide1.png"),
+                    std::string("skyRenderSide2.png"),
+                    std::string("skyRenderSide3.png"),
+                    std::string("skyRenderSide4.png"),
+                    std::string("skyRenderBottom.png"),
+                    std::string("skyRenderTop.png"),
+                };
+                std::vector<Texture2D> textures;
+                for (auto &path : paths)
+                    textures.push_back(Zappy::GUI::Raylib::TextureManager::get()->getTexture(path)),
+                _createSkybox(textures, _size);
             }
 
 

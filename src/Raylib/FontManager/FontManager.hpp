@@ -11,6 +11,7 @@
     #include <raylib.h>
     #include <unordered_map>
     #include <string>
+    #include <vector>
 
 namespace Zappy {
     namespace GUI {
@@ -21,13 +22,16 @@ namespace Zappy {
 
                     Font getFont(std::string &fileName);
                     void destroy();
+                    void unload();
+                    void reload();
 
                 private:
-                    FontManager() = default;
+                    FontManager();
                     ~FontManager();
 
                     bool _isDestroyed = false;
                     std::unordered_map<std::string, Font> _fonts;
+                    std::vector<std::string> _refs;
             };
         }
     }

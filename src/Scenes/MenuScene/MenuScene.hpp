@@ -30,6 +30,7 @@ namespace Zappy {
                     void destroy() override;
                     void draw3D() override;
                     void draw2D() override;
+                    void resize() override;
 
                     std::string nextScene() override;
 
