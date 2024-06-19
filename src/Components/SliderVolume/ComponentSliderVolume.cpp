@@ -22,12 +22,37 @@ namespace Zappy {
                 _background = std::make_unique<Component::Rectangle>(std::make_pair(_posX, _posY), std::make_pair(_sizeX, _sizeY), GRAY);
                 _value = std::make_unique<Component::Rectangle>(std::make_pair(_posX, _posY), std::make_pair(_sizeX, _sizeY), GREEN);
                 setValue(50);
+
+                setRef();
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
+                _refSizeY = _sizeY / _refHeight * 100;
             }
 
             void SliderVolume::draw()
             {
                 _background->draw();
                 _value->draw();
+            }
+
+            void SliderVolume::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+                _sizeY = _refSizeY * _refHeight / 100;
+
+                _background->setPosX(_posX);
+                _background->setPosY(_posY);
+                _background->setSizeX(_sizeX);
+                _background->setSizeY(_sizeY);
+
+                _value->setPosX(_posX);
+                _value->setPosY(_posY);
+                _value->setSizeY(_sizeY);
+                _value->setSizeX(_background->getSizeX() * value / 100);
             }
 
             void SliderVolume::update()
