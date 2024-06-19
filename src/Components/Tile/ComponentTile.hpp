@@ -22,14 +22,46 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
+            /**
+             * @brief Tile class
+             */
             class Tile: public AComponent {
                 public:
+                    /**
+                     * @brief Construct a new Tile object
+                     *
+                     * @param pos The position of the tile
+                     * @param size The size of the tile
+                     * @param color The color of the grass of the tile
+                     * @param ressourcesDrawer A pointer to the ressources drawer
+                     * @param ressources A pointer to the tile ressources
+                     */
                     Tile(Vector3 pos, Vector3 size, Color color, std::shared_ptr<Ressources> ressourcesDrawer, std::shared_ptr<Zappy::GUI::Ressources::TileRessources> ressources);
 
+                    /**
+                     * @brief Draw the tile
+                     */
                     void draw() override;
 
+                    /**
+                     * @brief Get the Top Box object
+                     *
+                     * @return `BoundingBox` The top box of the tile
+                     */
                     BoundingBox getTopBox() const;
+
+                    /**
+                     * @brief Set the highlight of the tile
+                     *
+                     * @param highlight The highlight value
+                     */
                     void highlight(bool highlight);
+
+                    /**
+                     * @brief Set the select of the tile
+                     *
+                     * @param select The select value
+                     */
                     void select(bool select);
 
                 protected:

@@ -36,12 +36,13 @@ namespace Zappy {
                     void draw2D() override;
                     bool isReady() override;
                     std::string nextScene() override;
+                    void resize() override;
 
                     void createMap(std::pair<int, int> size);
 
                 protected:
                 private:
-                    bool _isReady;
+                    bool _isReady = false;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _skybox;
                     std::unique_ptr<Zappy::GUI::Component::Skybox> _borderbox;
                     std::unique_ptr<Zappy::GUI::Component::Chatbox> _chatbox;

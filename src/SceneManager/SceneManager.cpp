@@ -60,6 +60,10 @@ namespace Zappy {
                     _scenes[_currentScene]->draw2D();
                     EndDrawing();
                     _nextScene = _scenes[_currentScene]->nextScene();
+                    if (_nextScene == "resize") {
+                        _resize();
+                        _nextScene = _currentScene;
+                    }
                     if (_currentScene != _nextScene)
                         break;
                 }
@@ -74,6 +78,13 @@ namespace Zappy {
                     }
                 }
             }
+        }
+
+
+        void SceneManager::_resize()
+        {
+            for (auto &scene : _scenes)
+                scene.second->resize();
         }
     }
 }

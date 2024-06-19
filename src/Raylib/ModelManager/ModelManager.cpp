@@ -18,6 +18,9 @@ namespace Zappy {
 
             ModelManager::ModelManager()
             {
+                _models.clear();
+                _refs.clear();
+
                 std::vector<std::string> models = {
                     "Food/scene",
                     "Egg/scene",
@@ -29,14 +32,20 @@ namespace Zappy {
                     "Rocks/rock_6/rock",
                     "Zappy/scene"
                 };
-                for (auto &model : models) {
+                for (auto &model : models)
                     getModel(model);
-                }
             }
 
             ModelManager::~ModelManager()
             {
                 destroy();
+            }
+
+            void ModelManager::destroy()
+            {
+                if (_isDestroyed) return;
+                unload();
+                _isDestroyed = true;
             }
 
             Model ModelManager::getModel(std::string &fileName)
@@ -45,18 +54,26 @@ namespace Zappy {
                     std::string modelPath = "assets/models/" + fileName + ".gltf";
                     Model model = LoadModel(modelPath.c_str());
                     _models[fileName] = model;
+                    _refs.push_back(fileName);
                     return model;
                 }
                 return _models[fileName];
             }
 
-            void ModelManager::destroy()
+            void ModelManager::unload()
             {
-                if (_isDestroyed) return;
-                for (auto &model : _models) {
+                for (auto &model : _models)
                     UnloadModel(model.second);
+                _models.clear();
+            }
+
+            void ModelManager::reload()
+            {
+                for (auto &ref: _refs) {
+                    std::string modelPath = "assets/models/" + ref + ".gltf";
+                    Model model = LoadModel(modelPath.c_str());
+                    _models[ref] = model;
                 }
-                _isDestroyed = true;
             }
         }
     }

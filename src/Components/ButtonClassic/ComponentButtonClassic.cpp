@@ -36,6 +36,12 @@ namespace Zappy {
                 _textStroke = std::make_unique<Text>(std::make_pair(_text->getPosX(), _text->getPosY() + 2), text, textSize, Zappy::GUI::Raylib::ColorManager::Darker(color, 50));
 
                 _lastClick = -1;
+
+                setRef();
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
+                _refSizeY = _sizeY / _refHeight * 100;
             }
 
             void ButtonClassic::draw()
@@ -50,6 +56,23 @@ namespace Zappy {
                 _text->draw();
             }
 
+            void ButtonClassic::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+                _sizeY = _refSizeY * _refHeight / 100;
+
+                _button->resize();
+                _text->resize();
+                _textStroke->resize();
+
+                _text->setPosX(_posX + (_sizeX - _text->getSizeX()) / 2);
+                _text->setPosY(_posY + (_sizeY - _text->getSizeY()) / 2);
+                _textStroke->setPosX(_posX + (_sizeX - _textStroke->getSizeX()) / 2);
+                _textStroke->setPosY(_posY + (_sizeY - _textStroke->getSizeY()) / 2 + 2);
+            }
 
 
             void ButtonClassic::setPosX(float x)
@@ -60,6 +83,7 @@ namespace Zappy {
                 _button->setPosX(x);
                 _text->modPosX(-tmp);
                 _textStroke->modPosX(-tmp);
+                _refPosX = _posX / _refWidth * 100;
             }
 
             void ButtonClassic::modPosX(float x)
@@ -75,6 +99,7 @@ namespace Zappy {
                 _button->setPosY(y);
                 _text->modPosY(-tmp);
                 _textStroke->modPosY(-tmp + 2);
+                _refPosY = _posY / _refHeight * 100;
             }
 
             void ButtonClassic::modPosY(float y)

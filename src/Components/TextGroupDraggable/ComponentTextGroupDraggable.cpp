@@ -20,6 +20,12 @@ namespace Zappy {
                 _isDragged = false;
 
                 _textGroup = std::make_unique<TextGroup>(pos, _sizeX, gap);
+
+                setRef();
+                _refPosX = _posX / _refWidth * 100;
+                _refPosY = _posY / _refHeight * 100;
+                _refSizeX = _sizeX / _refWidth * 100;
+                _refSizeY = _sizeY / _refHeight * 100;
             }
 
             void TextGroupDraggable::draw()
@@ -27,10 +33,22 @@ namespace Zappy {
                 _textGroup->draw();
             }
 
+            void TextGroupDraggable::resize()
+            {
+                setRef();
+                _posX = _refPosX * _refWidth / 100;
+                _posY = _refPosY * _refHeight / 100;
+                _sizeX = _refSizeX * _refWidth / 100;
+                _sizeY = _refSizeY * _refHeight / 100;
+
+                _textGroup->resize();
+            }
+
             void TextGroupDraggable::setPosX(float x)
             {
                 _posX = x;
                 _textGroup->setPosX(x);
+                _refPosX = _posX / _refWidth * 100;
             }
 
 
