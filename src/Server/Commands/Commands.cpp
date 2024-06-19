@@ -30,9 +30,9 @@ namespace Zappy {
         {
             std::istringstream iss(responseValue);
             int x, y, q0, q1, q2, q3, q4, q5, q6;
-            iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+            iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6 >> std::ws;
             if (iss.fail() || !iss.eof()) {
-                handleCommandSuc(responseValue);
+                handleCommandSbp(responseValue);
                 return;
             }
             this->_ressources->getTileFromPos(x, y)->setFood(q0);
@@ -48,13 +48,11 @@ namespace Zappy {
         {
             std::istringstream iss(responseValue);
             std::string teamName;
-            iss >> teamName;
+            iss >> teamName >> std::ws;
             if (iss.fail() || !iss.eof()) {
-                handleCommandSuc(responseValue);
+                handleCommandSbp(responseValue);
                 return;
             }
-            std::cout << "Team name: " << teamName << std::endl;
-            // todo
         }
 
         void Commands::handleCommandPnw(const std::string& responseValue)
@@ -62,15 +60,11 @@ namespace Zappy {
             int playerId, x, y, orientation, level;
             std::string teamName;
             std::istringstream iss(responseValue);
-            iss >> playerId >> x >> y >> orientation >> level >> teamName;
+            iss >> playerId >> x >> y >> orientation >> level >> teamName >> std::ws;
             if (iss.fail() || !iss.eof()) {
-                handleCommandSuc(responseValue);
+                handleCommandSbp(responseValue);
                 return;
             }
-
-            std::cout << "New player: #" << playerId << ", X: " << x << ", Y: " << y
-                    << ", Orientation: " << orientation << ", Level: " << level
-                    << ", Team: " << teamName << std::endl;
             //todo handle level, teamname and color
             this->_ressources->players.push_back(std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName));
         }
@@ -79,47 +73,36 @@ namespace Zappy {
         {
             int playerId, x, y;
             std::istringstream iss(responseValue);
-            iss >> playerId >> x >> y;
+            iss >> playerId >> x >> y >> std::ws;
             if (iss.fail() || !iss.eof()) {
-                handleCommandSuc(responseValue);
+                handleCommandSbp(responseValue);
                 return;
             }
-
-            std::cout << "Player position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
             this->_ressources->getPlayerFromId(playerId)->setX(x);
             this->_ressources->getPlayerFromId(playerId)->setY(y);
-            // todo virify this
         }
 
         void Commands::handleCommandPlv(const std::string& responseValue)
         {
             int playerId, level;
             std::istringstream iss(responseValue);
-            iss >> playerId >> level;
+            iss >> playerId >> level >> std::ws;
             if (iss.fail() || !iss.eof()) {
-                handleCommandSuc(responseValue);
+                handleCommandSbp(responseValue);
                 return;
             }
-
-            std::cout << "Player level: #" << playerId << ", Level: " << level << std::endl;
             // Ressources::Ressources::get()->getPlayerFromId(playerId)->setLevel(level);
-            // todo
         }
 
         void Commands::handleCommandPin(const std::string& responseValue)
         {
             int playerId, x, y, q0, q1, q2, q3, q4, q5, q6;
             std::istringstream iss(responseValue);
-            iss >> playerId >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+            iss >> playerId >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6 >> std::ws;
             if (iss.fail() || !iss.eof()) {
-                handleCommandSuc(responseValue);
+                handleCommandSbp(responseValue);
                 return;
             }
-
-            std::cout << "Player inventory: #" << playerId << ", X: " << x << ", Y: " << y
-                    << ", q0: " << q0 << ", q1: " << q1 << ", q2: " << q2
-                    << ", q3: " << q3 << ", q4: " << q4 << ", q5: " << q5
-                    << ", q6: " << q6 << std::endl;
             // this->_ressources->getPlayerFromId(playerId)->setX(x);
             // this->_ressources->getPlayerFromId(playerId)->setY(y);
             this->_ressources->getPlayerFromId(playerId)->setFood(q0);
@@ -135,10 +118,11 @@ namespace Zappy {
         {
             int playerId;
             std::istringstream iss(responseValue);
-            iss >> playerId;
-
-            std::cout << "Player expelled: #" << playerId << std::endl;
-            // todo
+            iss >> playerId >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandPbc(const std::string& responseValue)
@@ -147,16 +131,20 @@ namespace Zappy {
             std::string message;
             std::istringstream iss(responseValue);
             iss >> playerId >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
             std::getline(iss, message);
-
-            std::cout << "Broadcast from player #" << playerId << ": " << message << std::endl;
-            // todo
         }
 
         void Commands::handleCommandPic(const std::string& responseValue)
         {
-            std::cout << responseValue << std::endl;
             //todo
+            // if (iss.fail() || !iss.eof()) {
+            //     handleCommandSbp(responseValue);
+            //     return;
+            // }
         }
 
         void Commands::handleCommandPie(const std::string& responseValue)
@@ -164,19 +152,22 @@ namespace Zappy {
             int x, y;
             std::string result;
             std::istringstream iss(responseValue);
-            iss >> x >> y >> result;
-
-            std::cout << "Incantation ended at (" << x << ", " << y << ") with result: " << result << std::endl;
-            // todo
+            iss >> x >> y >> result >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandPfk(const std::string& responseValue)
         {
             int playerId;
             std::istringstream iss(responseValue);
-            iss >> playerId;
-
-            std::cout << "Player #" << playerId << " laid an egg." << std::endl;
+            iss >> playerId >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
             int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
             int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
             this->_ressources->getTileFromPos(playerX, playerY)->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(0, playerX, playerY, this->_ressources->getPlayerFromId(playerId)->getTeam()));
@@ -186,12 +177,15 @@ namespace Zappy {
         {
             int playerId, resourceNum;
             std::istringstream iss(responseValue);
-            iss >> playerId >> resourceNum;
+            iss >> playerId >> resourceNum >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
             int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
             int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
             int value;
 
-            std::cout << "Player #" << playerId << " dropped resource #" << resourceNum << std::endl;
             if (resourceNum == 0) {
                 value = this->_ressources->getTileFromPos(playerX, playerY)->getFood();
                 this->_ressources->getTileFromPos(playerX, playerY)->setFood(value + 1);
@@ -220,12 +214,15 @@ namespace Zappy {
         {
             int playerId, resourceNum;
             std::istringstream iss(responseValue);
-            iss >> playerId >> resourceNum;
+            iss >> playerId >> resourceNum >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
             int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
             int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
             int value;
 
-            std::cout << "Player #" << playerId << " took resource #" << resourceNum << std::endl;
             if (resourceNum == 0) {
                 value = this->_ressources->getTileFromPos(playerX, playerY)->getFood();
                 this->_ressources->getTileFromPos(playerX, playerY)->setFood(value - 1);
@@ -254,77 +251,87 @@ namespace Zappy {
         {
             int playerId;
             std::istringstream iss(responseValue);
-            iss >> playerId;
+            iss >> playerId >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
 
-            std::cout << "Player #" << playerId << " has died." << std::endl;
             _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just died.", "Server", "Server"));
-            // todo
         }
 
         void Commands::handleCommandEnw(const std::string& responseValue)
         {
             int eggNum, playerId, x, y;
             std::istringstream iss(responseValue);
-            iss >> eggNum >> playerId >> x >> y;
-
-            std::cout << "New egg: #" << eggNum << " laid by player #" << playerId << " at (" << x << ", " << y << ")" << std::endl;
-            // todo
+            iss >> eggNum >> playerId >> x >> y >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandEbo(const std::string& responseValue)
         {
             int eggNum;
             std::istringstream iss(responseValue);
-            iss >> eggNum;
-
-            std::cout << "Egg #" << eggNum << " hatched." << std::endl;
-            // todo
+            iss >> eggNum >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandEdi(const std::string& responseValue)
         {
-            std::cout << "Server broadcasted: " << responseValue << std::endl;
-            // todo
+            // if (iss.fail() || !iss.eof()) {
+            //     handleCommandSbp(responseValue);
+            //     return;
+            // }
         }
 
         void Commands::handleCommandSgt(const std::string& responseValue)
         {
             int eggNum;
             std::istringstream iss(responseValue);
-            iss >> eggNum;
-
-            std::cout << "Egg #" << eggNum << " died." << std::endl;
-            // todo
+            iss >> eggNum >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandSst(const std::string& responseValue)
         {
             int timeUnit;
             std::istringstream iss(responseValue);
-            iss >> timeUnit;
-
-            std::cout << "Current time unit: " << timeUnit << std::endl;
-            // todo
+            iss >> timeUnit >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandSeg(const std::string& responseValue)
         {
             int timeUnit;
             std::istringstream iss(responseValue);
-            iss >> timeUnit;
-
-            std::cout << "Time unit set to: " << timeUnit << std::endl;
-            // todo
+            iss >> timeUnit >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandSmg(const std::string& responseValue)
         {
             std::string teamName;
             std::istringstream iss(responseValue);
-            iss >> teamName;
-
-            std::cout << "Game ended. Winning team: " << teamName << std::endl;
-            // todo
+            iss >> teamName >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
         }
 
         void Commands::handleCommandSuc([[maybe_unused]] const std::string& responseValue)
@@ -335,46 +342,6 @@ namespace Zappy {
         void Commands::handleCommandSbp([[maybe_unused]] const std::string& responseValue)
         {
             std::cout << "command parametre" << std::endl;
-        }
-
-        std::vector<std::string> Commands::split(const std::string &str, const std::string &delim)
-        {
-            if (str.empty())
-                return {};
-            if (str.find(delim) == std::string::npos)
-                return {str};
-
-            std::vector<std::string> tokens;
-            std::size_t start = 0;
-
-            while (true) {
-                std::size_t end = str.find(delim, start);
-                if (end == std::string::npos) {
-                    tokens.push_back(str.substr(start));
-                    break;
-                }
-                tokens.push_back(str.substr(start, end - start));
-                start = end + delim.size();
-                while (delim.find(str[start]) != std::string::npos && start < str.size())
-                    start++;
-            }
-            return tokens;
-        }
-
-        std::string Commands::clean(const std::string &str)
-        {
-            std::string cleaned = str;
-            cleaned.erase(std::remove(cleaned.begin(), cleaned.end(), '\n'), cleaned.end());
-            cleaned.erase(std::remove(cleaned.begin(), cleaned.end(), '\r'), cleaned.end());
-            cleaned.erase(std::remove(cleaned.begin(), cleaned.end(), '\t'), cleaned.end());
-            for (size_t i = 0; i < cleaned.size(); i++)
-                if (cleaned[i] == ' ' && cleaned[i + 1] == ' ')
-                    cleaned.erase(i, 1);
-            for (size_t i = 0; cleaned[i] == ' ';)
-                cleaned.erase(i, 1);
-            for (size_t i = cleaned.size() - 1; cleaned[i] == ' '; i--)
-                cleaned.erase(i, 1);
-            return cleaned;
         }
     }
 }

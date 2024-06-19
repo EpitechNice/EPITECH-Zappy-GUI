@@ -28,9 +28,6 @@ namespace Zappy
                 ~Commands() = default;
 
                 void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
-                std::vector<std::string> split(const std::string &str, const std::string &delim);
-                std::string clean(const std::string &str);
-
                 /**
                  * @brief Handle the command msz
                  *

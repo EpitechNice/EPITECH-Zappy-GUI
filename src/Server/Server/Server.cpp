@@ -155,13 +155,13 @@ namespace Zappy {
             if (command == "msz") {
                 int _heightWorld, _widthWorld;
                 std::istringstream iss(responseValue);
-                iss >> _heightWorld >> _widthWorld;
-                // if (iss.fail() || !iss.eof()) {
-                //     auto commandHandler = _commandHandlers.find("suc");
-                //     if (commandHandler != _commandHandlers.end())
-                //         commandHandler->second(responseValue);
-                //     return;
-                // }
+                iss >> _heightWorld >> _widthWorld >> std::ws;
+                if (iss.fail() || !iss.eof()) {
+                    auto commandHandler = _commandHandlers.find("suc");
+                    if (commandHandler != _commandHandlers.end())
+                        commandHandler->second(responseValue);
+                    return;
+                }
                 auto commandHandler = _commandHandlers.find("msz");
                 if (commandHandler != _commandHandlers.end())
                     commandHandler->second(responseValue);
