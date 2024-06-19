@@ -16,6 +16,8 @@ namespace Zappy {
                 players = std::vector<std::shared_ptr<Players>>();
                 eggs = std::vector<std::shared_ptr<Eggs>>();
                 teamsColor = std::unordered_map<std::string, Color>();
+                mapSet = false;
+                logs = std::vector<std::tuple<std::string, std::string, std::string>>();
             }
 
             void Ressources::addPlayer(std::shared_ptr<Players> player)
@@ -45,6 +47,16 @@ namespace Zappy {
                     }
                 }
                 teamsColor[team] = color;
+            }
+
+            void Ressources::removePlayer(int id)
+            {
+                for (auto it = players.begin(); it != players.end(); it++) {
+                    if ((*it)->getId() == id) {
+                        players.erase(it);
+                        break;
+                    }
+                }
             }
 
             void Ressources::setPlayerOnMap()

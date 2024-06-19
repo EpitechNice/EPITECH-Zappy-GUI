@@ -104,27 +104,10 @@ namespace Zappy {
                 std::get<TEXT_GROUP>(_chats[_chatIndex])->update();
                 if (_openButton.first->isClicked(_openButton.second))
                     (_open) ? _setChatboxClose() : _setChatboxOpen();
-
-                if (IsKeyReleased(KEY_ENTER)) {
-                    std::vector<std::string> names = {
-                        "Aeliondw",
-                        "Arnaud",
-                        "Dan13615",
-                        "Dragusheen",
-                        "H4rdeol",
-                        "Tech0ne",
-                    };
-                    std::vector<std::string> messages = {
-                        "Hello everyone! How are you doing?",
-                        "I think we should go to the north, or maybe the east ?... No ! The west ! AHH I don't know !",
-                        "I'm going to the south, I need some wood !",
-                        "Can someone give me some food ? I'm starving !",
-                        "UwU",
-                    };
-                    int randomName = rand() % names.size();
-                    int randomMessage = rand() % messages.size();
-                    int randomChat = rand() % _chats.size();
-                    addMessage(messages[randomMessage], names[randomName], std::get<NAME>(_chats[randomChat]));
+                while (Zappy::GUI::Ressources::Ref::get()->ressources->logs.size() > 0) {
+                    std::tuple<std::string, std::string, std::string> log = Zappy::GUI::Ressources::Ref::get()->ressources->logs.front();
+                    Zappy::GUI::Ressources::Ref::get()->ressources->logs.erase(Zappy::GUI::Ressources::Ref::get()->ressources->logs.begin());
+                    addMessage(std::get<0>(log), std::get<1>(log), std::get<2>(log));
                 }
             }
 

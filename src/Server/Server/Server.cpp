@@ -97,11 +97,8 @@ namespace Zappy {
                     _disconnect();
                     throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
                 }
-                std::cerr << "AAAA" << std::endl;
                 _readServer(readfds);
-                std::cerr << "BBBB" << std::endl;
                 _writeServer();
-                std::cerr << "CCCC" << std::endl;
             }
         }
 
@@ -159,6 +156,15 @@ namespace Zappy {
                 int _heightWorld, _widthWorld;
                 std::istringstream iss(responseValue);
                 iss >> _heightWorld >> _widthWorld;
+                // if (iss.fail() || !iss.eof()) {
+                //     auto commandHandler = _commandHandlers.find("suc");
+                //     if (commandHandler != _commandHandlers.end())
+                //         commandHandler->second(responseValue);
+                //     return;
+                // }
+                auto commandHandler = _commandHandlers.find("msz");
+                if (commandHandler != _commandHandlers.end())
+                    commandHandler->second(responseValue);
                 _initRessources(_heightWorld, _widthWorld);
             } else {
                 auto commandHandler = _commandHandlers.find(command);
@@ -185,7 +191,6 @@ namespace Zappy {
 
             std::string command = _sharedMemory->getCommand();
             while (!command.empty()) {
-                std::cerr << "1111" << std::endl;
                 int tmp = write(_fd, command.c_str(), command.size());
                 if (tmp == -1) {
                     _disconnect();

@@ -20,6 +20,7 @@
     #include "ComponentTextGroupDraggable.hpp"
     #include "ComponentCircle.hpp"
     #include "AComponent.hpp"
+    #include "Ref.hpp"
 
 namespace Zappy {
     namespace GUI {

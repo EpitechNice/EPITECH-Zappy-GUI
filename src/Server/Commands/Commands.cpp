@@ -24,8 +24,6 @@ namespace Zappy {
             int _heightWorld, _widthWorld;
             std::istringstream iss(responseValue);
             iss >> _heightWorld >> _widthWorld;
-            std::cout << "MSZ command:" << _heightWorld << _widthWorld << std::endl;
-            // todo
         }
 
         void Commands::handleCommandBct(const std::string& responseValue)
@@ -33,7 +31,10 @@ namespace Zappy {
             std::istringstream iss(responseValue);
             int x, y, q0, q1, q2, q3, q4, q5, q6;
             iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
-            std::cout << "BCT command:" << x << y << q0 << q1 << q2 << q3 << q4 << q5 << q6 << std::endl;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSuc(responseValue);
+                return;
+            }
             this->_ressources->getTileFromPos(x, y)->setFood(q0);
             this->_ressources->getTileFromPos(x, y)->setLinemate(q1);
             this->_ressources->getTileFromPos(x, y)->setDeraumere(q2);
@@ -48,6 +49,10 @@ namespace Zappy {
             std::istringstream iss(responseValue);
             std::string teamName;
             iss >> teamName;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSuc(responseValue);
+                return;
+            }
             std::cout << "Team name: " << teamName << std::endl;
             // todo
         }
@@ -58,6 +63,10 @@ namespace Zappy {
             std::string teamName;
             std::istringstream iss(responseValue);
             iss >> playerId >> x >> y >> orientation >> level >> teamName;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSuc(responseValue);
+                return;
+            }
 
             std::cout << "New player: #" << playerId << ", X: " << x << ", Y: " << y
                     << ", Orientation: " << orientation << ", Level: " << level
@@ -71,6 +80,10 @@ namespace Zappy {
             int playerId, x, y;
             std::istringstream iss(responseValue);
             iss >> playerId >> x >> y;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSuc(responseValue);
+                return;
+            }
 
             std::cout << "Player position: #" << playerId << ", X: " << x << ", Y: " << y << std::endl;
             this->_ressources->getPlayerFromId(playerId)->setX(x);
@@ -83,6 +96,10 @@ namespace Zappy {
             int playerId, level;
             std::istringstream iss(responseValue);
             iss >> playerId >> level;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSuc(responseValue);
+                return;
+            }
 
             std::cout << "Player level: #" << playerId << ", Level: " << level << std::endl;
             // Ressources::Ressources::get()->getPlayerFromId(playerId)->setLevel(level);
@@ -94,6 +111,10 @@ namespace Zappy {
             int playerId, x, y, q0, q1, q2, q3, q4, q5, q6;
             std::istringstream iss(responseValue);
             iss >> playerId >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSuc(responseValue);
+                return;
+            }
 
             std::cout << "Player inventory: #" << playerId << ", X: " << x << ", Y: " << y
                     << ", q0: " << q0 << ", q1: " << q1 << ", q2: " << q2
@@ -236,6 +257,7 @@ namespace Zappy {
             iss >> playerId;
 
             std::cout << "Player #" << playerId << " has died." << std::endl;
+            _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just died.", "Server", "Server"));
             // todo
         }
 
@@ -313,6 +335,46 @@ namespace Zappy {
         void Commands::handleCommandSbp([[maybe_unused]] const std::string& responseValue)
         {
             std::cout << "command parametre" << std::endl;
+        }
+
+        std::vector<std::string> Commands::split(const std::string &str, const std::string &delim)
+        {
+            if (str.empty())
+                return {};
+            if (str.find(delim) == std::string::npos)
+                return {str};
+
+            std::vector<std::string> tokens;
+            std::size_t start = 0;
+
+            while (true) {
+                std::size_t end = str.find(delim, start);
+                if (end == std::string::npos) {
+                    tokens.push_back(str.substr(start));
+                    break;
+                }
+                tokens.push_back(str.substr(start, end - start));
+                start = end + delim.size();
+                while (delim.find(str[start]) != std::string::npos && start < str.size())
+                    start++;
+            }
+            return tokens;
+        }
+
+        std::string Commands::clean(const std::string &str)
+        {
+            std::string cleaned = str;
+            cleaned.erase(std::remove(cleaned.begin(), cleaned.end(), '\n'), cleaned.end());
+            cleaned.erase(std::remove(cleaned.begin(), cleaned.end(), '\r'), cleaned.end());
+            cleaned.erase(std::remove(cleaned.begin(), cleaned.end(), '\t'), cleaned.end());
+            for (size_t i = 0; i < cleaned.size(); i++)
+                if (cleaned[i] == ' ' && cleaned[i + 1] == ' ')
+                    cleaned.erase(i, 1);
+            for (size_t i = 0; cleaned[i] == ' ';)
+                cleaned.erase(i, 1);
+            for (size_t i = cleaned.size() - 1; cleaned[i] == ' '; i--)
+                cleaned.erase(i, 1);
+            return cleaned;
         }
     }
 }

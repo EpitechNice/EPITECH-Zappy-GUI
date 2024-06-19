@@ -43,6 +43,13 @@ namespace Zappy {
                     void addPlayer(std::shared_ptr<Players> player);
 
                     /**
+                     * @brief Remove a player
+                     *
+                     * @param id The id of the player to remove
+                     */
+                    void removePlayer(int id);
+
+                    /**
                      * @brief Set all the registered egg on the map based on their position
                      */
                     void setEggOnMap();
@@ -113,6 +120,8 @@ namespace Zappy {
                      * @brief A boolean that represent if the map is set
                      */
                     bool mapSet = false;
+
+                    std::vector<std::tuple<std::string, std::string, std::string>> logs;
 
                 protected:
                 private:
