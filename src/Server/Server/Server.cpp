@@ -18,6 +18,7 @@ namespace Zappy {
             _mszCommandReceived = false;
             _commands = std::make_shared<Zappy::Server::Commands>();
             _sharedMemory = std::make_shared<SharedMemory>();
+            _commands->setSharedMemory(_sharedMemory);
         }
 
         void Server::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)

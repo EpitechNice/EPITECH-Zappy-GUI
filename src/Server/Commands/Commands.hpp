@@ -14,6 +14,7 @@
 
     #include "Ressources.hpp"
     #include "TileRessources.hpp"
+    #include "SharedMemory.hpp"
 
 namespace Zappy
 {
@@ -23,9 +24,12 @@ namespace Zappy
         {
             private:
                 std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
+                std::shared_ptr<Zappy::Server::SharedMemory> _sharedMemory;
             public:
                 Commands();
                 ~Commands() = default;
+
+                void setSharedMemory(std::shared_ptr<Zappy::Server::SharedMemory> ressources);
 
                 void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
                 /**

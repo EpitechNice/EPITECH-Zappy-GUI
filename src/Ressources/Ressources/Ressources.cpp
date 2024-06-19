@@ -106,6 +106,16 @@ namespace Zappy {
                 eggs.push_back(egg);
             }
 
+            void Ressources::removeEgg(int id)
+            {
+                for (auto it = eggs.begin(); it != eggs.end(); it++) {
+                    if ((*it)->getId() == id) {
+                        eggs.erase(it);
+                        break;
+                    }
+                }
+            }
+
             void Ressources::setEggOnMap()
             {
                 for (auto &line: tileRessources)

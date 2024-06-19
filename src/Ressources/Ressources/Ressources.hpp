@@ -62,6 +62,13 @@ namespace Zappy {
                     void addEgg(std::shared_ptr<Eggs> egg);
 
                     /**
+                     * @brief Remove an egg
+                     *
+                     * @param id The id of the egg to remove
+                     */
+                    void removeEgg(int id);
+
+                    /**
                      * @brief A table that represent the map
                      */
                     std::vector<std::vector<std::shared_ptr<TileRessources>>> tileRessources;

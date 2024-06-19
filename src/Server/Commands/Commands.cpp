@@ -19,6 +19,11 @@ namespace Zappy {
             this->_ressources = ressources;
         }
 
+        void Commands::setSharedMemory(std::shared_ptr<Zappy::Server::SharedMemory> ressources)
+        {
+            this->_sharedMemory = ressources;
+        }
+
         void Commands::handleCommandMsz(const std::string& responseValue)
         {
             int _heightWorld, _widthWorld;
@@ -54,6 +59,7 @@ namespace Zappy {
                 return;
             }
             this->_ressources->addTeam(teamName);
+            _ressources->logs.push_back(std::make_tuple("Team " + teamName + " just added.", "Server", "Server"));
         }
 
         void Commands::handleCommandPnw(const std::string& responseValue)
@@ -69,6 +75,7 @@ namespace Zappy {
             auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
             player->setLvl(level);
             this->_ressources->addPlayer(player);
+            _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just added.", "Server", "Server"));
         }
 
         void Commands::handleCommandPpo(const std::string& responseValue)
@@ -138,15 +145,31 @@ namespace Zappy {
                 return;
             }
             std::getline(iss, message);
+            std::string name = "Player #" + std::to_string(playerId);
+            _ressources->logs.push_back(std::make_tuple(message, name, "Global"));
         }
 
         void Commands::handleCommandPic(const std::string& responseValue)
         {
-            //todo
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
+            int x, y, level;
+            std::vector<int> playersId;
+            std::istringstream iss(responseValue);
+            iss >> x >> y >> level;
+            while (!iss.eof()) {
+                int playerId;
+                iss >> playerId;
+                playersId.push_back(playerId);
+            }
+            if (iss.fail()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
+
+            std::string msg = "Incantation at " + std::to_string(x) + " " + std::to_string(y) + " has started by ";
+            for (auto &playerId : playersId)
+                msg += "Player #" + std::to_string(playerId) + " ";
+            std::string name = "Server";
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
         }
 
         void Commands::handleCommandPie(const std::string& responseValue)
@@ -159,6 +182,9 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            std::string msg = "Incantation at " + std::to_string(x) + " " + std::to_string(y) + " has " + (result == "ko" ? "failed" : "succeed");
+            std::string name = "Server";
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
         }
 
         void Commands::handleCommandPfk(const std::string& responseValue)
@@ -170,9 +196,9 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
-            int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
-            this->_ressources->getTileFromPos(playerX, playerY)->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(0, playerX, playerY, this->_ressources->getPlayerFromId(playerId)->getTeam()));
+            std::string msg = "I have laid an egg !";
+            std::string name = "Player #" + std::to_string(playerId);
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
         }
 
         void Commands::handleCommandPdr(const std::string& responseValue)
@@ -184,32 +210,23 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
-            int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
-            int value;
 
-            if (resourceNum == 0) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getFood();
-                this->_ressources->getTileFromPos(playerX, playerY)->setFood(value + 1);
-            } else if (resourceNum == 1) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getLinemate();
-                this->_ressources->getTileFromPos(playerX, playerY)->setLinemate(value + 1);
-            } else if (resourceNum == 2) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getDeraumere();
-                this->_ressources->getTileFromPos(playerX, playerY)->setDeraumere(value + 1);
-            } else if (resourceNum == 3) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getSibur();
-                this->_ressources->getTileFromPos(playerX, playerY)->setSibur(value + 1);
-            } else if (resourceNum == 4) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getMendiane();
-                this->_ressources->getTileFromPos(playerX, playerY)->setMendiane(value + 1);
-            } else if (resourceNum == 5) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getPhiras();
-                this->_ressources->getTileFromPos(playerX, playerY)->setPhiras(value + 1);
-            } else if (resourceNum == 6) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getThystame();
-                this->_ressources->getTileFromPos(playerX, playerY)->setThystame(value + 1);
-            }
+            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
+            int playerY = this->_ressources->getPlayerFromId(playerId)->getX();
+            int tileX = this->_ressources->getTileFromPos(playerX, playerY)->getX();
+            int tileY = this->_ressources->getTileFromPos(playerX, playerY)->getX();
+            std::ostringstream commandStream;
+            commandStream << "bct " << tileX << " " << tileY << "\r\n";
+            const std::string command = commandStream.str();
+            _sharedMemory->addCommand(command);
+            std::ostringstream commandStream;
+            commandStream << "pin " << playerId << "\r\n";
+            const std::string command = commandStream.str();
+            _sharedMemory->addCommand(command);
+
+            std::string msg = "I drop that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
+            std::string name = "Player #" + std::to_string(playerId);
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
         }
 
         void Commands::handleCommandPgt(const std::string& responseValue)
@@ -221,32 +238,23 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
-            int playerY = this->_ressources->getPlayerFromId(playerId)->getY();
-            int value;
 
-            if (resourceNum == 0) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getFood();
-                this->_ressources->getTileFromPos(playerX, playerY)->setFood(value - 1);
-            } else if (resourceNum == 1) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getLinemate();
-                this->_ressources->getTileFromPos(playerX, playerY)->setLinemate(value - 1);
-            } else if (resourceNum == 2) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getDeraumere();
-                this->_ressources->getTileFromPos(playerX, playerY)->setDeraumere(value - 1);
-            } else if (resourceNum == 3) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getSibur();
-                this->_ressources->getTileFromPos(playerX, playerY)->setSibur(value - 1);
-            } else if (resourceNum == 4) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getMendiane();
-                this->_ressources->getTileFromPos(playerX, playerY)->setMendiane(value - 1);
-            } else if (resourceNum == 5) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getPhiras();
-                this->_ressources->getTileFromPos(playerX, playerY)->setPhiras(value - 1);
-            } else if (resourceNum == 6) {
-                value = this->_ressources->getTileFromPos(playerX, playerY)->getThystame();
-                this->_ressources->getTileFromPos(playerX, playerY)->setThystame(value - 1);
-            }
+            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
+            int playerY = this->_ressources->getPlayerFromId(playerId)->getX();
+            int tileX = this->_ressources->getTileFromPos(playerX, playerY)->getX();
+            int tileY = this->_ressources->getTileFromPos(playerX, playerY)->getX();
+            std::ostringstream commandStream;
+            commandStream << "bct " << tileX << " " << tileY << "\r\n";
+            const std::string command = commandStream.str();
+            _sharedMemory->addCommand(command);
+            std::ostringstream commandStream;
+            commandStream << "pin " << playerId << "\r\n";
+            const std::string command = commandStream.str();
+            _sharedMemory->addCommand(command);
+
+            std::string msg = "I take that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
+            std::string name = "Player #" + std::to_string(playerId);
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
         }
 
         void Commands::handleCommandPdi(const std::string& responseValue)
@@ -258,7 +266,6 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-
             _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just died.", "Server", "Server"));
         }
 
@@ -271,6 +278,10 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            std::string msg = "Egg #" + std::to_string(eggNum) + " just laid by Player #" + std::to_string(playerId);
+            std::string name = "Server";
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+            _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(eggNum, x, y, _ressources->getPlayerFromId(playerId)->getTeam()));
         }
 
         void Commands::handleCommandEbo(const std::string& responseValue)
@@ -282,17 +293,13 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            _ressources->logs.push_back(std::make_tuple("Egg #" + std::to_string(eggNum) + " just hatched.", "Server", "Server"));
+            auto egg = _ressources->getEggFromId(eggNum);
+            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(egg->getX(), egg->getY(), egg->getTeam()));
+            _ressources->removeEgg(eggNum);
         }
 
         void Commands::handleCommandEdi(const std::string& responseValue)
-        {
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-        }
-
-        void Commands::handleCommandSgt(const std::string& responseValue)
         {
             int eggNum;
             std::istringstream iss(responseValue);
@@ -301,6 +308,20 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            _ressources->logs.push_back(std::make_tuple("Egg #" + std::to_string(eggNum) + " just died.", "Server", "Server"));
+            _ressources->removeEgg(eggNum);
+        }
+
+        void Commands::handleCommandSgt(const std::string& responseValue)
+        {
+            int timeUnit;
+            std::istringstream iss(responseValue);
+            iss >> timeUnit >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
+            _ressources->logs.push_back(std::make_tuple("Time unit set to " + std::to_string(timeUnit), "Server", "Server"));
         }
 
         void Commands::handleCommandSst(const std::string& responseValue)
@@ -312,20 +333,10 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            _ressources->logs.push_back(std::make_tuple("Time unit set to " + std::to_string(timeUnit), "Server", "Server"));
         }
 
         void Commands::handleCommandSeg(const std::string& responseValue)
-        {
-            int timeUnit;
-            std::istringstream iss(responseValue);
-            iss >> timeUnit >> std::ws;
-            if (iss.fail() || !iss.eof()) {
-                handleCommandSbp(responseValue);
-                return;
-            }
-        }
-
-        void Commands::handleCommandSmg(const std::string& responseValue)
         {
             std::string teamName;
             std::istringstream iss(responseValue);
@@ -334,6 +345,21 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            std::string msg = "Team " + teamName + " won the game.";
+            std::string name = "Team " + teamName;
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+        }
+
+        void Commands::handleCommandSmg(const std::string& responseValue)
+        {
+            std::string msg;
+            std::istringstream iss(responseValue);
+            iss >> msg >> std::ws;
+            if (iss.fail() || !iss.eof()) {
+                handleCommandSbp(responseValue);
+                return;
+            }
+            _ressources->logs.push_back(std::make_tuple(msg, "Server", "Server"));
         }
 
         void Commands::handleCommandSuc([[maybe_unused]] const std::string& responseValue)
