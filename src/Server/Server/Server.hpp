@@ -39,7 +39,6 @@ namespace Zappy {
                 void run();
                 void shutdown();
 
-                void setInOut(); // set the in and out namepipes -> shared ptr
                 void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
                 std::shared_ptr<SharedMemory> getSharedMemory();
 
@@ -67,15 +66,14 @@ namespace Zappy {
                 std::shared_ptr<SharedMemory> _sharedMemory;
                 std::thread _sendThread;
 
-                // namepipe in
-                // namepipe out
-
                 void _connect();
                 void _disconnect();
                 void _loop();
+                void _initRessources(int mapHeight, int mapWidth);
                 void _addResponse(const std::string &request);
                 void _handleResponse(const std::string& buffer);
-                void _sendRequest();
+                void _readServer(fd_set readfds);
+                void _writeServer();
 
                 std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
                     {"msz", [this](const std::string& responseValue) { _commands->handleCommandMsz(responseValue); }},

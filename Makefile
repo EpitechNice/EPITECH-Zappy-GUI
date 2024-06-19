@@ -69,7 +69,6 @@ SRC		=   src/Main.cpp																				\
 			src/Server/SharedMemory/SharedMemory.cpp													\
 			src/Sfml/SoundManager/SoundManager.cpp														\
 			src/Utils/Utils/Utils.cpp																	\
-			src/Utils/Mutex/Mutex.cpp																	\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
 
@@ -164,7 +163,6 @@ INCLUDES	=	-I./includes										\
 				-I./src/Server/SharedMemory							\
 				-I./src/Sfml/SoundManager							\
 				-I./src/Utils/Utils									\
-				-I./src/Utils/Mutex									\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\

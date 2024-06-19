@@ -72,9 +72,9 @@ namespace Exceptions
     {
     }
 
-    ConnexionServerFail::ConnexionServerFail(std::string what, std::string serverAdress, int serverPort)
+    ConnexionServeurFail::ConnexionServeurFail(std::string what, std::string serverAdress, int serverPort)
     {
         std::string msg = what + " (Adress: " + serverAdress + ", Port: " + std::to_string(serverPort) + ")";
-        Exception(msg);
+        throw Exception(msg);
     }
 }

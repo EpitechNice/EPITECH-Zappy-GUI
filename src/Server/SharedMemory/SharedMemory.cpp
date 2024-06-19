@@ -6,48 +6,32 @@
 */
 
 #include "SharedMemory.hpp"
-#include <iostream>
-
 namespace Zappy
 {
     namespace Server
     {
         void SharedMemory::addCommand(const std::string& command)
         {
-            {
-                std::lock_guard<std::mutex> lock(_mutex);
-                _commandList.push_back(command);
-            }
+            _mutex.lock();
+            _commandList.push_back(command);
+            _mutex.unlock();
             _condVar.notify_one();
         }
 
         std::string SharedMemory::getCommand()
         {
-            std::unique_lock<std::mutex> lock(_mutex);
-            _condVar.wait(lock, [this] { return !_commandList.empty(); });
+            if (_commandList.empty()) return "";
 
-            if (!_commandList.empty()) {
-                std::string command = _commandList.front();
-                _commandList.pop_front();
-                return command;
-            }
-            return "";
+            _mutex.lock();
+            std::string command = _commandList.front();
+            _commandList.pop_front();
+            _mutex.unlock();
+            return command;
         }
 
         bool SharedMemory::hasCommands()
         {
-            std::lock_guard<std::mutex> lock(_mutex);
             return !_commandList.empty();
-        }
-
-        void SharedMemory::lockMutex()
-        {
-            std::lock_guard<std::mutex> lock(_mutex);
-        }
-
-        void SharedMemory::unlockMutex()
-        {
-            std::lock_guard<std::mutex> unlock(_mutex);
         }
     }
 }

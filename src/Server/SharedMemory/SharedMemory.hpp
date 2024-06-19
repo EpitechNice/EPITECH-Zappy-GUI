@@ -12,6 +12,9 @@
     #include <string>
     #include <queue>
     #include <condition_variable>
+    #include <iostream>
+
+    #include "Mutex.hpp"
 
 namespace Zappy {
     namespace Server {
@@ -24,12 +27,9 @@ namespace Zappy {
             bool hasCommands();
             std::string getCommand();
 
-            void lockMutex();
-            void unlockMutex();
-
         private:
             std::deque<std::string> _commandList;
-            std::mutex _mutex;
+            Zappy::Mutex _mutex;
             std::condition_variable _condVar;
         };
     }

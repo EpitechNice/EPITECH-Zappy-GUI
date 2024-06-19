@@ -1,44 +1,32 @@
 /*
 ** EPITECH PROJECT, 2024
-** Mutex
+** GUI
 ** File description:
-** Server
+** Mutex
 */
 
 #include "Mutex.hpp"
+#include <iostream>
 
-namespace Zappy
-{
-    namespace Server
+namespace Zappy {
+    void Mutex::lock()
     {
-        Mutex::Mutex()
-        {}
+        _isLocked = true;
+        _mutex.lock();
+    }
 
-        void Mutex::lock()
-        {
-            this->_isLocked = true;
-            this->_mutex.lock();
-        }
+    void Mutex::unlock()
+    {
+        _mutex.unlock();
+        _isLocked = false;
+    }
 
-        void Mutex::unlock()
-        {
-            this->_mutex.unlock();
-            this->_isLocked = false;
-        }
-
-        bool Mutex::tryLock()
-        {
-            std::cout << "trylock: " << (this->_isLocked ? "true" : "false") << std::endl;
-            if (_isLocked)
-                return false;
-            _mutex.lock();
-            _isLocked = true;
-            return true;
-        }
-
-        std::mutex& Mutex::getMutex()
-        {
-            return this->_mutex;
-        }
+    bool Mutex::tryLock()
+    {
+        std::cout << "trylock: " << (_isLocked ? "true" : "false") << std::endl;
+        if (_isLocked) return false;
+        _mutex.lock();
+        _isLocked = true;
+        return true;
     }
 }
