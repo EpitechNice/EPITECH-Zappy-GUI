@@ -63,10 +63,6 @@ namespace Zappy
                     }
                 }
                 translationFile.close();
-//TODO : Debug (to delete)
-                // for (const auto& translation : this->_translations) {
-                //     std::cout << "DEBUG | " << translation.first << " = '" << translation.second << "'" << std::endl;
-                // }
             }
 
             SupportedLocale I18nHelper::getCurrentLocale()
