@@ -113,6 +113,7 @@ namespace Zappy {
                     button.first->setColor(BLUE);
                 }
             }
+            _delaySlider->update();
         }
 
         void Scene::ResolutionOption::draw2D()
