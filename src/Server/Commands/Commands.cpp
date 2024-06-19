@@ -227,7 +227,7 @@ namespace Zappy {
             _sharedMemory->addCommand(command);
             std::ostringstream commandStream2;
             commandStream2 << "pin " << playerId << "\r\n";
-            const std::string command2 = commandStream.str();
+            const std::string command2 = commandStream2.str();
             _sharedMemory->addCommand(command2);
 
             std::string msg = "I drop that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
@@ -255,7 +255,7 @@ namespace Zappy {
             _sharedMemory->addCommand(command);
             std::ostringstream commandStream2;
             commandStream2 << "pin " << playerId << "\r\n";
-            const std::string command2 = commandStream.str();
+            const std::string command2 = commandStream2.str();
             _sharedMemory->addCommand(command2);
 
             std::string msg = "I take that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
