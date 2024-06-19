@@ -43,6 +43,7 @@ namespace Zappy {
                 _posY = _refPosY * _refHeight / 100;
                 _sizeX = _refSizeX * _refWidth / 100;
                 _sizeY = _refSizeY * _refHeight / 100;
+                float tmp = getValue();
 
                 _background->setPosX(_posX);
                 _background->setPosY(_posY);
@@ -52,7 +53,7 @@ namespace Zappy {
                 _value->setPosX(_posX);
                 _value->setPosY(_posY);
                 _value->setSizeY(_sizeY);
-                _value->setSizeX(_background->getSizeX() * value / 100);
+                setValue(tmp);
             }
 
             void SliderVolume::update()
