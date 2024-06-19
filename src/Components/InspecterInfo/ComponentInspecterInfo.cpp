@@ -127,7 +127,7 @@ namespace Zappy {
                 if (_player == nullptr) return;
                 _team->setColor(Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[player->getTeam()]);
                 _team->setText("Team: " + player->getTeam());
-                _name->setText("Player #" + std::to_string(player->getId()));
+                _name->setText("Player #" + std::to_string(player->getId()) + "          Lvl: " + std::to_string(player->getLvl()));
                 _food->setText("Food: " + std::to_string(player->getFood()));
                 _linemate->setText("Linemate: " + std::to_string(player->getLinemate()));
                 _deraumere->setText("Deraumere: " + std::to_string(player->getDeraumere()));

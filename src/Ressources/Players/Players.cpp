@@ -23,6 +23,7 @@ namespace Zappy {
                 _phiras = 0;
                 _thystame = 0;
                 _food = 0;
+                _lvl = 0;
             }
 
             int Players::getId() const
@@ -133,6 +134,17 @@ namespace Zappy {
             std::string Players::getTeam() const
             {
                 return _team;
+            }
+
+
+            int Players::getLvl() const
+            {
+                return _lvl;
+            }
+
+            void Players::setLvl(int lvl)
+            {
+                _lvl = lvl;
             }
         }
     }

@@ -50,6 +50,9 @@ namespace Zappy {
 
                     std::string getTeam() const;
 
+                    int getLvl() const;
+                    void setLvl(int lvl);
+
                 protected:
                 private:
                     int _id;
@@ -63,6 +66,7 @@ namespace Zappy {
                     int _thystame;
                     int _food;
                     std::string _team;
+                    int _lvl;
             };
         }
     }
