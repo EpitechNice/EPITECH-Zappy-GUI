@@ -23,8 +23,8 @@ namespace Zappy {
                 _player = nullptr;
                 _egg = nullptr;
                 _noPlayerSelected = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "No player or egg selected", 20, WHITE);
-                _team = std::make_unique<TextBox>(std::make_pair(_posX + gap * 2, _posY), _sizeX, "Team: ", 20, WHITE);
-                _name = std::make_unique<TextBox>(std::make_pair(_posX + gap * 2, _team->getPosY() + _team->getSizeY() + gap), _sizeX, "Player #", 20, WHITE);
+                _team = std::make_unique<TextBox>(std::make_pair(_posX, _posY), _sizeX, "Team: ", 20, WHITE);
+                _name = std::make_unique<TextBox>(std::make_pair(_posX, _team->getPosY() + _team->getSizeY() + gap), _sizeX, "Player #", 20, WHITE);
                 _food = std::make_unique<TextBox>(std::make_pair(_posX, _name->getPosY() + _name->getSizeY() + gap), _sizeX, "Food: ", 20, WHITE);
                 _linemate = std::make_unique<TextBox>(std::make_pair(_posX, _food->getPosY() + _food->getSizeY() + gap), _sizeX, "Linemate: ", 20, WHITE);
                 _deraumere = std::make_unique<TextBox>(std::make_pair(_posX, _linemate->getPosY() + _linemate->getSizeY() + gap), _sizeX, "Deraumere: ", 20, WHITE);

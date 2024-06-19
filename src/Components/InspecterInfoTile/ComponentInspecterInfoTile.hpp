@@ -20,13 +20,37 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
+            /**
+             * @brief Class representing the inspecter info tile
+             */
             class InspecterInfoTile: public AComponent {
                 public:
+                    /**
+                     * @brief Construct a new Inspecter Info Tile object
+                     *
+                     * @param pos The position of the tile
+                     * @param size The size of the tile
+                     */
                     InspecterInfoTile(std::pair<int, int> pos, std::pair<int, int> size);
 
+                    /**
+                     * @brief Draw the tile
+                     */
                     void draw() override;
+
+                    /**
+                     * @brief Resize the tile
+                     */
+                    void resize() override;
+
+                    /**
+                     * @brief Modify the position of the tile
+                     */
                     void modPosX(float x) override;
 
+                    /**
+                     * @brief Set the position of the tile
+                     */
                     void setInfo(std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile);
 
                 protected:
