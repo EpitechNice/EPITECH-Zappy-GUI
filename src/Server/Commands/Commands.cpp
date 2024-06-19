@@ -75,7 +75,7 @@ namespace Zappy {
             auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
             player->setLvl(level);
             this->_ressources->addPlayer(player);
-            _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just added.", "Server", "Server"));
+            _ressources->logs.push_back(std::make_tuple("Player # " + std::to_string(playerId) + " just added.", "Server", "Server"));
         }
 
         void Commands::handleCommandPpo(const std::string& responseValue)
@@ -87,8 +87,9 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            this->_ressources->getPlayerFromId(playerId)->setX(x);
-            this->_ressources->getPlayerFromId(playerId)->setY(y);
+            auto player = this->_ressources->getPlayerFromId(playerId);
+            player->setX(x);
+            player->setY(y);
         }
 
         void Commands::handleCommandPlv(const std::string& responseValue)
@@ -100,7 +101,8 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            // Ressources::Ressources::get()->getPlayerFromId(playerId)->setLevel(level);
+            auto player = this->_ressources->getPlayerFromId(playerId);
+            player->setLvl(level);
         }
 
         void Commands::handleCommandPin(const std::string& responseValue)
@@ -112,15 +114,16 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            // this->_ressources->getPlayerFromId(playerId)->setX(x);
-            // this->_ressources->getPlayerFromId(playerId)->setY(y);
-            this->_ressources->getPlayerFromId(playerId)->setFood(q0);
-            this->_ressources->getPlayerFromId(playerId)->setLinemate(q1);
-            this->_ressources->getPlayerFromId(playerId)->setDeraumere(q2);
-            this->_ressources->getPlayerFromId(playerId)->setSibur(q3);
-            this->_ressources->getPlayerFromId(playerId)->setMendiane(q4);
-            this->_ressources->getPlayerFromId(playerId)->setPhiras(q5);
-            this->_ressources->getPlayerFromId(playerId)->setThystame(q6);
+            auto player = _ressources->getPlayerFromId(playerId);
+            player->setX(x);
+            player->setY(y);
+            player->setFood(q0);
+            player->setLinemate(q1);
+            player->setDeraumere(q2);
+            player->setSibur(q3);
+            player->setMendiane(q4);
+            player->setPhiras(q5);
+            player->setThystame(q6);
         }
 
         void Commands::handleCommandPex(const std::string& responseValue)
@@ -132,6 +135,9 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            std::string msg = "I don't want anyone here !";
+            std::string name = "Player #" + std::to_string(playerId);
+            _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
         }
 
         void Commands::handleCommandPbc(const std::string& responseValue)
@@ -219,10 +225,10 @@ namespace Zappy {
             commandStream << "bct " << tileX << " " << tileY << "\r\n";
             const std::string command = commandStream.str();
             _sharedMemory->addCommand(command);
-            std::ostringstream commandStream;
-            commandStream << "pin " << playerId << "\r\n";
-            const std::string command = commandStream.str();
-            _sharedMemory->addCommand(command);
+            std::ostringstream commandStream2;
+            commandStream2 << "pin " << playerId << "\r\n";
+            const std::string command2 = commandStream.str();
+            _sharedMemory->addCommand(command2);
 
             std::string msg = "I drop that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
             std::string name = "Player #" + std::to_string(playerId);
@@ -247,10 +253,10 @@ namespace Zappy {
             commandStream << "bct " << tileX << " " << tileY << "\r\n";
             const std::string command = commandStream.str();
             _sharedMemory->addCommand(command);
-            std::ostringstream commandStream;
-            commandStream << "pin " << playerId << "\r\n";
-            const std::string command = commandStream.str();
-            _sharedMemory->addCommand(command);
+            std::ostringstream commandStream2;
+            commandStream2 << "pin " << playerId << "\r\n";
+            const std::string command2 = commandStream.str();
+            _sharedMemory->addCommand(command2);
 
             std::string msg = "I take that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
             std::string name = "Player #" + std::to_string(playerId);
@@ -294,8 +300,6 @@ namespace Zappy {
                 return;
             }
             _ressources->logs.push_back(std::make_tuple("Egg #" + std::to_string(eggNum) + " just hatched.", "Server", "Server"));
-            auto egg = _ressources->getEggFromId(eggNum);
-            _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(egg->getX(), egg->getY(), egg->getTeam()));
             _ressources->removeEgg(eggNum);
         }
 
