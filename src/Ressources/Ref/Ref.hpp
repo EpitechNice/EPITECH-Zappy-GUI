@@ -15,9 +15,23 @@
 namespace Zappy {
     namespace GUI {
         namespace Ressources {
+            /**
+             * @brief Reference to the ressources
+             *
+             * @note this class is a singleton
+             */
             class Ref {
                 public:
+                    /**
+                     * @brief Get the Ref object
+                     */
                     static Ref *get();
+
+                    /**
+                     * @brief Get the ressources
+                     *
+                     * @return `ressources` The ressources
+                     */
                     std::shared_ptr<Ressources> ressources = std::make_shared<Ressources>();
 
                 protected:
