@@ -6,8 +6,6 @@
 */
 
 #include "Server.hpp"
-#include <chrono>
-#include <thread>
 
 namespace Zappy {
     namespace Server {
@@ -16,16 +14,21 @@ namespace Zappy {
             _address = address;
             _port = port;
             _state = TRY_CONNECT;
-        }
-
-        void Server::setInOut()
-        {
-            // Set the in and out namepipes -> shared ptr
+            _fd = -1;
+            _mszCommandReceived = false;
+            _commands = std::make_shared<Zappy::Server::Commands>();
+            _sharedMemory = std::make_shared<SharedMemory>();
         }
 
         void Server::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
         {
             _ressources = ressources;
+            _commands->setRessources(_ressources);
+        }
+
+        std::shared_ptr<SharedMemory> Server::getSharedMemory()
+        {
+            return _sharedMemory;
         }
 
         void Server::run()
@@ -46,15 +49,67 @@ namespace Zappy {
                 _state = DISCONNECT;
         }
 
-
         void Server::_connect()
         {
-            // Connect to the server
+            _fd = socket(AF_INET, SOCK_STREAM, 0);
+            if (_fd == -1)
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+            _socketAddress.sin_family = AF_INET;
+            _socketAddress.sin_port = htons(_port);
+            inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
+            if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) {
+                _disconnect();
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+            }
             _state = CONNECTED;
+            std::string initRequest = "GRAPHIC\r\n";
+            int tmp = write(_fd, initRequest.c_str(), initRequest.size());
+            if (tmp == -1) {
+                _disconnect();
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+            }
+            _sharedMemory->addCommand("msz\r\n");
+            _loop();
+        }
 
-            for (int i = 0; i < 10; i++) {
+        void Server::_disconnect()
+        {
+            if (_fd != -1) {
+                close(_fd);
+                _fd = -1;
+            }
+            _state = DOWN;
+        }
+
+        void Server::_loop()
+        {
+            fd_set readfds;
+            struct timeval tv;
+            int max_fd = _fd;
+
+            while (_state == CONNECTED) {
+                FD_ZERO(&readfds);
+                FD_SET(_fd, &readfds);
+                tv.tv_sec = 1;
+                tv.tv_usec = 0;
+                int activity = select(max_fd + 1, &readfds, NULL, NULL, &tv);
+                if (activity == -1) {
+                    _disconnect();
+                    throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+                }
+                std::cerr << "AAAA" << std::endl;
+                _readServer(readfds);
+                std::cerr << "BBBB" << std::endl;
+                _writeServer();
+                std::cerr << "CCCC" << std::endl;
+            }
+        }
+
+        void Server::_initRessources(int mapHeight, int mapWidth)
+        {
+            for (int i = 0; i < mapWidth; i++) {
                 std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < mapHeight; j++) {
                     std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile = std::make_shared<Zappy::GUI::Ressources::TileRessources>(i, j);
                     tile->setLinemate(rand() % 2);
                     tile->setDeraumere(rand() % 2);
@@ -66,7 +121,6 @@ namespace Zappy {
                 }
                 _ressources->tileRessources.push_back(line);
             }
-
             _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(1, 0, 0, "team1"));
             _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(2, 0, 0, "team2"));
             _ressources->addPlayer(std::make_shared<Zappy::GUI::Ressources::Players>(3, 1, 0, "team3"));
@@ -86,19 +140,59 @@ namespace Zappy {
             _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(7, 1, 1, "team2"));
             _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(8, 4, 3, "team1"));
             _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(9, 1, 0, "team3"));
-
             _ressources->mapSet = true;
         }
 
-        void Server::_loop()
+        void Server::_addResponse(const std::string &request)
         {
-            // Loop to get the data from the server
+            std::unique_lock<std::mutex> lock(_responseQueueMutex);
+            _responseQueue.push(request);
+            _responseQueueNotEmpty.notify_one();
         }
 
-        void Server::_disconnect()
+        void Server::_handleResponse(const std::string& buffer)
         {
-            // Disconnect from the server
-            _state = DOWN;
+            std::string command = buffer.substr(0, 3);
+            std::string responseValue = buffer.substr(3);
+
+            if (command == "msz") {
+                int _heightWorld, _widthWorld;
+                std::istringstream iss(responseValue);
+                iss >> _heightWorld >> _widthWorld;
+                _initRessources(_heightWorld, _widthWorld);
+            } else {
+                auto commandHandler = _commandHandlers.find(command);
+                if (commandHandler != _commandHandlers.end())
+                    commandHandler->second(responseValue);
+            }
+        }
+
+        void Server::_readServer(fd_set readfds)
+        {
+            if (FD_ISSET(_fd, &readfds)) {
+                char buffer[1024] = {0};
+                ssize_t valread = read(_fd, buffer, 1024);
+                std::string response(buffer, valread);
+                if (valread == 0) Exceptions::ConnexionServeurFail("Connection to server was closed unexpectedly", _address, _port);
+                _addResponse(response);
+                _handleResponse(response);
+            }
+        }
+
+        void Server::_writeServer()
+        {
+            if (!_sharedMemory->hasCommands()) return;
+
+            std::string command = _sharedMemory->getCommand();
+            while (!command.empty()) {
+                std::cerr << "1111" << std::endl;
+                int tmp = write(_fd, command.c_str(), command.size());
+                if (tmp == -1) {
+                    _disconnect();
+                    throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+                }
+                command = _sharedMemory->getCommand();
+            }
         }
     }
 }

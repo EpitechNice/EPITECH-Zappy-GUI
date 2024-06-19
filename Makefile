@@ -63,9 +63,12 @@ SRC		=   src/Main.cpp																				\
 			src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp							\
 			src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp										\
 			src/Server/Server/Server.cpp																\
+			src/Server/Mutex/Mutex.cpp																	\
+			src/Server/Thread/Thread.cpp																\
+			src/Server/Commands/Commands.cpp															\
+			src/Server/SharedMemory/SharedMemory.cpp													\
 			src/Sfml/SoundManager/SoundManager.cpp														\
 			src/Utils/Utils/Utils.cpp																	\
-			src/Utils/Mutex/Mutex.cpp																	\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
 
@@ -154,9 +157,12 @@ INCLUDES	=	-I./includes										\
 				-I./src/Scenes/OptionScene/ResolutionOption 		\
 				-I./src/Scenes/OptionScene/SoundOption      		\
 				-I./src/Server/Server								\
+				-I./src/Server/Mutex								\
+				-I./src/Server/Thread								\
+				-I./src/Server/Commands								\
+				-I./src/Server/SharedMemory							\
 				-I./src/Sfml/SoundManager							\
 				-I./src/Utils/Utils									\
-				-I./src/Utils/Mutex									\
 
 LIBS	=	-L./libs	\
 			-lraylib 	\
