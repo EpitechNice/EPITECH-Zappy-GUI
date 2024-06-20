@@ -14,8 +14,7 @@ namespace Zappy {
             _address = address;
             _port = port;
             _state = TRY_CONNECT;
-            _fd = socket(AF_INET, SOCK_STREAM, 0);
-            if (_fd == -1) throw Exceptions::ConnexionServeurFail("Failed to create socket", _address, _port);
+            _fd = -1;
             _mszCommandReceived = false;
             _commands = std::make_shared<Zappy::Server::Commands>();
             _sharedMemory = std::make_shared<SharedMemory>();
@@ -38,6 +37,8 @@ namespace Zappy {
             while (_state != DOWN) {
                 if (_state == TRY_CONNECT)
                     _connect();
+                if (_state == RECONNECT)
+                    _reconnect();
                 if (_state == CONNECTED)
                     _loop();
                 if (_state == DISCONNECT)
@@ -55,6 +56,10 @@ namespace Zappy {
 
         void Server::_connect()
         {
+            if (_fd == -1) {
+                _fd = socket(AF_INET, SOCK_STREAM, 0);
+                if (_fd == -1) throw Exceptions::ConnexionServeurFail("Failed to create socket", _address, _port);
+            }
             _socketAddress.sin_family = AF_INET;
             _socketAddress.sin_port = htons(_port);
             inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
@@ -67,15 +72,24 @@ namespace Zappy {
                 throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             }
             _sharedMemory->addCommand("msz\r\n");
+            if (_reconnection) {
+                _ressources->logs.push_back(std::make_tuple("Server reconnected !", "Server", "Server"));
+                _reconnection = false;
+            }
         }
 
         void Server::_disconnect()
+        {
+            _closeFd();
+            _state = DOWN;
+        }
+
+        void Server::_closeFd()
         {
             if (_fd != -1) {
                 close(_fd);
                 _fd = -1;
             }
-            _state = DOWN;
         }
 
         void Server::_loop()
@@ -90,8 +104,8 @@ namespace Zappy {
             tv.tv_usec = 0;
             int activity = select(max_fd + 1, &readfds, NULL, NULL, &tv);
             if (activity == -1) {
-                _disconnect();
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+                _state = RECONNECT;
+                return;
             }
             _readServer(readfds);
             _writeServer();
@@ -149,7 +163,10 @@ namespace Zappy {
                 char buffer[1024] = {0};
                 ssize_t valread = read(_fd, buffer, 1024);
                 std::string response(buffer, valread);
-                if (valread == 0) Exceptions::ConnexionServeurFail("Connection to server was closed unexpectedly", _address, _port);
+                if (valread == 0) {
+                    _state = RECONNECT;
+                    return;
+                }
                 _addResponse(response);
                 _handleResponse(response);
             }
@@ -163,11 +180,19 @@ namespace Zappy {
             while (!command.empty()) {
                 int tmp = write(_fd, command.c_str(), command.size());
                 if (tmp == -1) {
-                    _disconnect();
-                    throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
+                    _state = RECONNECT;
+                    return;
                 }
                 command = _sharedMemory->getCommand();
             }
+        }
+
+        void Server::_reconnect()
+        {
+            _closeFd();
+            _ressources->logs.push_back(std::make_tuple("Server disconnected", "Server", "Server"));
+            _state = TRY_CONNECT;
+            _reconnection = true;
         }
     }
 }

@@ -47,6 +47,7 @@ namespace Zappy {
                 typedef enum {
                     TRY_CONNECT,
                     CONNECTED,
+                    RECONNECT,
                     DISCONNECT,
                     DOWN
                 } State;
@@ -57,6 +58,7 @@ namespace Zappy {
                 State _state;
                 int _fd;
                 bool _mszCommandReceived;
+                bool _reconnection = false;
                 std::shared_ptr<Zappy::GUI::Ressources::Ressources> _ressources;
                 std::shared_ptr<Zappy::Server::Commands> _commands;
 
@@ -74,6 +76,8 @@ namespace Zappy {
                 void _handleResponse(const std::string& buffer);
                 void _readServer(fd_set readfds);
                 void _writeServer();
+                void _closeFd();
+                void _reconnect();
 
                 std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
                     {"msz", [this](const std::string& responseValue) { _commands->handleCommandMsz(responseValue); }},
