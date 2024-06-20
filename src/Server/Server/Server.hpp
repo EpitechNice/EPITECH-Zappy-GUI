@@ -31,15 +31,44 @@
 
 namespace Zappy {
     namespace Server {
+        /**
+         * @brief Server class
+         */
         class Server {
             public:
+                /**
+                 * @brief Server constructor
+                 *
+                 * @param address IP address of the server
+                 * @param port Port number of the server
+                 */
                 Server(const std::string &address, int port);
                 ~Server() = default;
 
+                /**
+                 * @brief Run the server
+                 *
+                 * @brief Manages connection, reconnection, loop and disconnection depending on the server state
+                 */
                 void run();
+
+                /**
+                 * @brief Shutdown the server
+                 */
                 void shutdown();
 
+                /**
+                 * @brief Set the resources for the server
+                 *
+                 * @param ressources Shared pointer to the resources
+                 */
                 void setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources);
+
+                /**
+                 * @brief Get the shared memory object
+                 *
+                 * @return Shared pointer to the shared memory
+                 */
                 std::shared_ptr<SharedMemory> getSharedMemory();
 
             protected:
@@ -68,17 +97,70 @@ namespace Zappy {
                 std::shared_ptr<SharedMemory> _sharedMemory;
                 std::thread _sendThread;
 
+                /**
+                 * @brief Connect to the server
+                 */
                 void _connect();
+
+                /**
+                 * @brief Disconnect from the server
+                 */
                 void _disconnect();
-                void _loop();
-                void _initRessources(int mapHeight, int mapWidth);
-                void _addResponse(const std::string &request);
-                void _handleResponse(const std::string& buffer);
-                void _readServer(fd_set readfds);
-                void _writeServer();
+
+                /**
+                 * @brief Close the socket file descriptor
+                 */
                 void _closeFd();
+
+                /**
+                 * @brief Server main loop
+                 *
+                 * @brief contains the main loop for reading from and writing to the server.
+                 */
+                void _loop();
+
+                /**
+                 * @brief Initialization of resources from server information
+                 *
+                 * @param mapHeight The height of the map
+                 * @param mapWidth The width of the map
+                 */
+                void _initRessources(int mapHeight, int mapWidth);
+
+                /**
+                 * @brief Add a response to the response queue
+                 *
+                 * @param request The response to add
+                 */
+                void _addResponse(const std::string &request);
+
+                /**
+                 * @brief Handle a response from the server
+                 *
+                 * @param buffer The response buffer
+                 */
+                void _handleResponse(const std::string& buffer);
+
+                /**
+                 * @brief Read from the server
+                 *
+                 * @param readfds The set of file descriptors to read from
+                 */
+                void _readServer(fd_set readfds);
+
+                /**
+                 * @brief Write to the server
+                 */
+                void _writeServer();
+
+                /**
+                 * @brief Reconnect to the server
+                 */
                 void _reconnect();
 
+                /**
+                 * @brief Map of command handlers
+                 */
                 std::unordered_map<std::string, std::function<void(const std::string&)>> _commandHandlers = {
                     {"msz", [this](const std::string& responseValue) { _commands->handleCommandMsz(responseValue); }},
                     {"bct", [this](const std::string& responseValue) { _commands->handleCommandBct(responseValue); }},
