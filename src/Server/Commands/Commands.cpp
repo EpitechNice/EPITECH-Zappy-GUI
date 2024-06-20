@@ -40,13 +40,16 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-            this->_ressources->getTileFromPos(x, y)->setFood(q0);
-            this->_ressources->getTileFromPos(x, y)->setLinemate(q1);
-            this->_ressources->getTileFromPos(x, y)->setDeraumere(q2);
-            this->_ressources->getTileFromPos(x, y)->setSibur(q3);
-            this->_ressources->getTileFromPos(x, y)->setMendiane(q4);
-            this->_ressources->getTileFromPos(x, y)->setPhiras(q5);
-            this->_ressources->getTileFromPos(x, y)->setThystame(q6);
+            auto tile = this->_ressources->getTileFromPos(x, y);
+            if (tile == 0)
+                return;
+            tile->setFood(q0);
+            tile->setLinemate(q1);
+            tile->setDeraumere(q2);
+            tile->setSibur(q3);
+            tile->setMendiane(q4);
+            tile->setPhiras(q5);
+            tile->setThystame(q6);
         }
 
         void Commands::handleCommandTna(const std::string& responseValue)
