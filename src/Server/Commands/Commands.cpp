@@ -72,6 +72,10 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
+            if (orientation > 4){
+                handleCommandSbp(responseValue);
+                return;
+            }
             auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
             player->setLvl(level);
             this->_ressources->addPlayer(player);
@@ -80,14 +84,20 @@ namespace Zappy {
 
         void Commands::handleCommandPpo(const std::string& responseValue)
         {
-            int playerId, x, y;
+            int playerId, x, y, orientation;
             std::istringstream iss(responseValue);
-            iss >> playerId >> x >> y >> std::ws;
+            iss >> playerId >> x >> y >> orientation >> std::ws;
             if (iss.fail() || !iss.eof()) {
                 handleCommandSbp(responseValue);
                 return;
             }
+            if (orientation > 4){
+                handleCommandSbp(responseValue);
+                return;
+            }
             auto player = this->_ressources->getPlayerFromId(playerId);
+            if (player == 0)
+                return;
             player->setX(x);
             player->setY(y);
         }
@@ -102,6 +112,8 @@ namespace Zappy {
                 return;
             }
             auto player = this->_ressources->getPlayerFromId(playerId);
+            if (player == 0)
+                return;
             player->setLvl(level);
         }
 
@@ -115,6 +127,8 @@ namespace Zappy {
                 return;
             }
             auto player = _ressources->getPlayerFromId(playerId);
+            if (player == 0)
+                return;
             player->setX(x);
             player->setY(y);
             player->setFood(q0);
@@ -216,11 +230,16 @@ namespace Zappy {
                 handleCommandSbp(responseValue);
                 return;
             }
-
-            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
-            int playerY = this->_ressources->getPlayerFromId(playerId)->getX();
-            int tileX = this->_ressources->getTileFromPos(playerX, playerY)->getX();
-            int tileY = this->_ressources->getTileFromPos(playerX, playerY)->getX();
+            auto player = this->_ressources->getPlayerFromId(playerId);
+            if (player == 0)
+                return;
+            int playerX = player->getX();
+            int playerY = player->getY();
+            auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+            if (tile == 0)
+                return;
+            int tileX = tile->getX();
+            int tileY = tile->getY();
             std::ostringstream commandStream;
             commandStream << "bct " << tileX << " " << tileY << "\r\n";
             const std::string command = commandStream.str();
@@ -245,10 +264,16 @@ namespace Zappy {
                 return;
             }
 
-            int playerX = this->_ressources->getPlayerFromId(playerId)->getX();
-            int playerY = this->_ressources->getPlayerFromId(playerId)->getX();
-            int tileX = this->_ressources->getTileFromPos(playerX, playerY)->getX();
-            int tileY = this->_ressources->getTileFromPos(playerX, playerY)->getX();
+            auto player = this->_ressources->getPlayerFromId(playerId);
+            if (player == 0)
+                return;
+            int playerX = player->getX();
+            int playerY = player->getY();
+            auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+            if (tile == 0)
+                return;
+            int tileX = tile->getX();
+            int tileY = tile->getY();
             std::ostringstream commandStream;
             commandStream << "bct " << tileX << " " << tileY << "\r\n";
             const std::string command = commandStream.str();
