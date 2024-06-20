@@ -15,6 +15,9 @@ namespace Zappy
 {
     namespace Server
     {
+        /**
+         * @brief Thread class
+         */
         class Thread
         {
             private:
@@ -22,11 +25,25 @@ namespace Zappy
                 bool _running;
 
             public:
-                Thread();
-                ~Thread();
+            /**
+             * @brief Construct a new Thread
+             */
+            Thread();
+            ~Thread();
 
-                void start(std::function<void()> function);
-                void join(void);
+            /**
+             * @brief Start the thread with a given function
+             *
+             * @param function The function to run in the thread
+             */
+            void start(std::function<void()> function);
+
+            /**
+             * @brief Join the thread
+             *
+             * @brief This function blocks until the thread finishes its execution.
+             */
+            void join();
 
         };
     }

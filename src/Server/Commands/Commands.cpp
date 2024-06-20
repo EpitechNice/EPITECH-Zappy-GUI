@@ -19,9 +19,9 @@ namespace Zappy {
             this->_ressources = ressources;
         }
 
-        void Commands::setSharedMemory(std::shared_ptr<Zappy::Server::SharedMemory> ressources)
+        void Commands::setSharedMemory(std::shared_ptr<Zappy::Server::SharedMemory> sharedMemory)
         {
-            this->_sharedMemory = ressources;
+            this->_sharedMemory = sharedMemory;
         }
 
         void Commands::handleCommandMsz(const std::string& responseValue)
@@ -162,7 +162,7 @@ namespace Zappy {
             int playerId;
             std::string message;
             std::istringstream iss(responseValue);
-            iss >> playerId >> std::ws;
+            iss >> playerId >> message >> std::ws;
             if (iss.fail() || !iss.eof()) {
                 handleCommandSbp(responseValue);
                 return;
@@ -222,6 +222,7 @@ namespace Zappy {
             std::string msg = "I have laid an egg !";
             std::string name = "Player #" + std::to_string(playerId);
             _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            // todo virifier si on doit déposer un oeuf sur la tile du player
         }
 
         void Commands::handleCommandPdr(const std::string& responseValue)
@@ -301,6 +302,7 @@ namespace Zappy {
                 return;
             }
             _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just died.", "Server", "Server"));
+            _ressources->removePlayer(playerId);
         }
 
         void Commands::handleCommandEnw(const std::string& responseValue)
