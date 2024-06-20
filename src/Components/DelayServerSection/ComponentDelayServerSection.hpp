@@ -16,6 +16,7 @@
     #include "ComponentText.hpp"
     #include "SoundManager.hpp"
     #include "ComponentButton.hpp"
+    #include "Ref.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -30,9 +31,8 @@ namespace Zappy {
                      *
                      * @param pos Position of the section
                      * @param size Size of the section
-                     * @param callback Callback function
                      */
-                    DelayServerSection(std::pair<float, float> pos, std::pair<float, float> size, void (Zappy::GUI::Sfml::SoundManager::*callback)(float));
+                    DelayServerSection(std::pair<float, float> pos, std::pair<float, float> size);
 
                     /**
                      * @brief Draw the section
@@ -50,7 +50,6 @@ namespace Zappy {
                     void update();
 
                 private:
-                    void (Zappy::GUI::Sfml::SoundManager::*_callback)(float);
                     std::unique_ptr<SliderVolume> _slider;
             };
         }

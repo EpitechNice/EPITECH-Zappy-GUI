@@ -28,6 +28,7 @@ int main(int argc, char **argv)
 
         std::shared_ptr<Zappy::Server::Server> server = std::make_shared<Zappy::Server::Server>(parsing.getMachine(), parsing.getPort());
         server->setRessources(Zappy::GUI::Ressources::Ref::get()->ressources);
+        Zappy::GUI::Ressources::Ref::get()->shared_memory = server->getSharedMemory();
         Zappy::Server::Thread serverThread;
         serverThread.start([server]() { threadFunction(server); });
 

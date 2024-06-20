@@ -11,6 +11,7 @@
     #include <memory>
 
     #include "Ressources.hpp"
+    #include "SharedMemory.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -33,6 +34,13 @@ namespace Zappy {
                      * @return `ressources` The ressources
                      */
                     std::shared_ptr<Ressources> ressources = std::make_shared<Ressources>();
+
+                    /**
+                     * @brief Get the shared memory
+                     *
+                     * @return `shared_memory` The shared memory
+                     */
+                    std::shared_ptr<Zappy::Server::SharedMemory> shared_memory = nullptr;
 
                 protected:
                 private:

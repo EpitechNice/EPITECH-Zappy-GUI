@@ -10,13 +10,12 @@
 namespace Zappy {
     namespace GUI {
         namespace Component {
-            DelayServerSection::DelayServerSection(std::pair<float, float> pos, std::pair<float, float> size, void (Zappy::GUI::Sfml::SoundManager::*method)(float))
+            DelayServerSection::DelayServerSection(std::pair<float, float> pos, std::pair<float, float> size)
             {
                 _posX = pos.first;
                 _posY = pos.second;
                 _sizeX = size.first;
                 _sizeY = size.second;
-                _callback = method;
 
                 float partY = _sizeY / 4;
                 _slider = std::make_unique<SliderVolume>(std::make_pair(_posX, _posY + partY * 2 - 10), _sizeX, 20);
@@ -31,7 +30,6 @@ namespace Zappy {
             void DelayServerSection::draw()
             {
                 _slider->draw();
-                (Zappy::GUI::Sfml::SoundManager::getInstance().*_callback)(_slider->getValue());
             }
 
             void DelayServerSection::resize()
@@ -47,7 +45,12 @@ namespace Zappy {
 
             void DelayServerSection::update()
             {
+                float tmp = _slider->getValue();
                 _slider->update();
+                if ((int)tmp != (int)_slider->getValue()) {
+                    Zappy::GUI::Ressources::Ref::get()->ressources->frequency = _slider->getValue() + 1;
+                    Zappy::GUI::Ressources::Ref::get()->shared_memory->addCommand("sst " + std::to_string(Zappy::GUI::Ressources::Ref::get()->ressources->frequency) + "\r\n");
+                }
             }
         }
     }

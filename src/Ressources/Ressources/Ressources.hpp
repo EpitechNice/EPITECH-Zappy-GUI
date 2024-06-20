@@ -137,6 +137,11 @@ namespace Zappy {
 
                     std::vector<std::tuple<std::string, std::string, std::string>> logs;
 
+                    /**
+                     * @brief The frequency of the server
+                     */
+                    float frequency = 100;
+
                 protected:
                 private:
             };

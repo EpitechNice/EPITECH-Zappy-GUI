@@ -60,7 +60,7 @@ namespace Zappy {
                         buttonX += _fpsButtons.back().first->getSizeX() + buttonSpacing;
                     }
                 } else if (text[i].second == "[menu.settings.resolution.delay_title]") {
-                    _delaySlider = std::make_unique<Component::DelayServerSection>(std::make_pair(buttonX, y - buttonHeight / 2), std::make_pair(_render->getWidth() / 4, buttonHeight * 2), &Zappy::GUI::Sfml::SoundManager::setVolumeGeneralMusique);
+                    _delaySlider = std::make_unique<Component::DelayServerSection>(std::make_pair(buttonX, y - buttonHeight / 2), std::make_pair(_render->getWidth() / 4, buttonHeight * 2));
                 }
             }
             _wannaResize = false;
