@@ -14,7 +14,8 @@ namespace Zappy {
             _address = address;
             _port = port;
             _state = TRY_CONNECT;
-            _fd = -1;
+            _fd = socket(AF_INET, SOCK_STREAM, 0);
+            if (_fd == -1) throw Exceptions::ConnexionServeurFail("Failed to create socket", _address, _port);
             _mszCommandReceived = false;
             _commands = std::make_shared<Zappy::Server::Commands>();
             _sharedMemory = std::make_shared<SharedMemory>();
@@ -34,14 +35,16 @@ namespace Zappy {
 
         void Server::run()
         {
-            if (_state == TRY_CONNECT)
-                _connect();
-            if (_state == CONNECTED)
-                _loop();
-            if (_state == DISCONNECT)
-                _disconnect();
-            if (_state == DOWN)
-                return;
+            while (_state != DOWN) {
+                if (_state == TRY_CONNECT)
+                    _connect();
+                if (_state == CONNECTED)
+                    _loop();
+                if (_state == DISCONNECT)
+                    _disconnect();
+                if (_state == DOWN)
+                    return;
+            }
         }
 
         void Server::shutdown()
@@ -52,16 +55,10 @@ namespace Zappy {
 
         void Server::_connect()
         {
-            _fd = socket(AF_INET, SOCK_STREAM, 0);
-            if (_fd == -1)
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             _socketAddress.sin_family = AF_INET;
             _socketAddress.sin_port = htons(_port);
             inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
-            if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) {
-                _disconnect();
-                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
-            }
+            if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) return;
             _state = CONNECTED;
             std::string initRequest = "GRAPHIC\r\n";
             int tmp = write(_fd, initRequest.c_str(), initRequest.size());
