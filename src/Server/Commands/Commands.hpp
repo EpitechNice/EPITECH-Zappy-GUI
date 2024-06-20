@@ -240,7 +240,7 @@ namespace Zappy
                 /**
                  * @brief Handle the command smg
                  *
-                 * @note suc (unknow command)
+                 * @note smg message (Send a message to all players)
                  */
                 void handleCommandSmg(const std::string& responseValue);
 

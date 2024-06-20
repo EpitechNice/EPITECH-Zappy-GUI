@@ -67,7 +67,6 @@ namespace Zappy {
                 throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             }
             _sharedMemory->addCommand("msz\r\n");
-            _loop();
         }
 
         void Server::_disconnect()
@@ -85,19 +84,17 @@ namespace Zappy {
             struct timeval tv;
             int max_fd = _fd;
 
-            while (_state == CONNECTED) {
-                FD_ZERO(&readfds);
-                FD_SET(_fd, &readfds);
-                tv.tv_sec = 1;
-                tv.tv_usec = 0;
-                int activity = select(max_fd + 1, &readfds, NULL, NULL, &tv);
-                if (activity == -1) {
-                    _disconnect();
-                    throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
-                }
-                _readServer(readfds);
-                _writeServer();
+            FD_ZERO(&readfds);
+            FD_SET(_fd, &readfds);
+            tv.tv_sec = 1;
+            tv.tv_usec = 0;
+            int activity = select(max_fd + 1, &readfds, NULL, NULL, &tv);
+            if (activity == -1) {
+                _disconnect();
+                throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             }
+            _readServer(readfds);
+            _writeServer();
         }
 
         void Server::_initRessources(int mapHeight, int mapWidth)
