@@ -126,7 +126,7 @@ namespace Zappy {
                 _updateTabs();
                 if (_tabsIndex == 0)
                     _selecters->update(_infos);
-                if (_openButton->isClicked())
+                if (_openButton->isClicked() && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
                     (_open) ? _setInspecterClose() : _setInspecterOpen();
             }
 
