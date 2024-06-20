@@ -117,18 +117,9 @@ namespace Zappy {
                     void setFps(int fps);
 
                     /**
-                     * @brief Set the volume of the music
-                     *
-                     * @param volumeMusique The new volume
+                     * @brief Display the loading screen
                      */
-                    void setVolumeMusique(float volumeMusique);
-
-                    /**
-                     * @brief Set the volume of the sound effect
-                     *
-                     * @param effetSonore The new volume
-                     */
-                    void setEffetSonore(float effetSonore);
+                    void displayLoadingScreen();
 
                 protected:
                 private:

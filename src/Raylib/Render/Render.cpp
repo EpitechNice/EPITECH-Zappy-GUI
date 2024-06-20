@@ -14,6 +14,7 @@ namespace Zappy {
                 : _height(height), _width(width), _fps(fps), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
                 InitWindow(width, height, "Clash Of Tek");
+                displayLoadingScreen();
                 SetTargetFPS(fps);
                 _icon = LoadImage("assets/img/clash_of_tek_logo.png");
                 SetWindowIcon(_icon);
@@ -81,6 +82,7 @@ namespace Zappy {
                 TextureManager::get()->unload();
                 CloseWindow();
                 InitWindow(_width, _height, "Clash Of Tek");
+                displayLoadingScreen();
                 TextureManager::get()->reload();
                 ModelManager::get()->reload();
                 FontManager::get()->reload();
@@ -90,6 +92,14 @@ namespace Zappy {
             {
                 _fps = fps;
                 SetTargetFPS(_fps);
+            }
+
+            void Render::displayLoadingScreen()
+            {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                DrawText("Loading assets...", _width / 2 - 100, _height / 2 - 10, 20, BLACK);
+                EndDrawing();
             }
         }
     }
