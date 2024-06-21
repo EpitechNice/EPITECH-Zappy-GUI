@@ -66,6 +66,11 @@ namespace Zappy {
             _wannaResize = false;
         }
 
+        void Scene::ResolutionOption::start()
+        {
+            _delaySlider->setDelay(Zappy::GUI::Ressources::Ref::get()->ressources->frequency);
+        }
+
         void Scene::ResolutionOption::destroy()
         {
             _background->destroy();

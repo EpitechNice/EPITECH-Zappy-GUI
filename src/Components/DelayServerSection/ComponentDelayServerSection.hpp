@@ -49,6 +49,11 @@ namespace Zappy {
                      */
                     void update();
 
+                    /**
+                     * @brief Set the delay
+                     */
+                    void setDelay(float delay);
+
                 private:
                     std::unique_ptr<SliderVolume> _slider;
             };
