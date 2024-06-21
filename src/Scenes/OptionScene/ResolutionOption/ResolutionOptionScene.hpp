@@ -34,6 +34,11 @@ namespace Zappy {
                     ~ResolutionOption() = default;
 
                     /**
+                     * @brief Start the ResolutionOption object
+                     */
+                    void start() override;
+
+                    /**
                      * @brief Destroy the ResolutionOption object
                      *
                      * @warning After the destruction of the ResolutionOption object, you won't be able to use it anymore

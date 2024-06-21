@@ -11,6 +11,7 @@
     #include <string>
     #include <sstream>
     #include <iostream>
+    #include <regex>
 
     #include "Ressources.hpp"
     #include "TileRessources.hpp"

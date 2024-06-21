@@ -26,159 +26,264 @@ namespace Zappy {
 
         void Commands::handleCommandMsz(const std::string& responseValue)
         {
-            std::cerr << "Command Msz: [" << responseValue << "] not implemented yet" << std::endl;
+            std::regex regex("msz ([0-9]+) ([0-9]+)");
+            std::smatch match;
 
-            // if (_ressources->mapSet) return;
-            // int _heightWorld, _widthWorld;
-            // std::istringstream iss(responseValue);
-            // iss >> _heightWorld >> _widthWorld;
-            // for (int i = 0; i < _widthWorld; i++) {
-            //     std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
-            //     for (int j = 0; j < _heightWorld; j++) {
-            //         std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile = std::make_shared<Zappy::GUI::Ressources::TileRessources>(i, j);
-            //         line.push_back(tile);
-            //     }
-            //     _ressources->tileRessources.push_back(line);
-            // }
-            // _ressources->mapSet = true;
+            if (std::regex_search(responseValue, match, regex)) {
+                if (_ressources->mapSet) return;
+                int width = std::stoi(match[1]);
+                int height = std::stoi(match[2]);
+
+                for (int i = 0; i < height; i++) {
+                    std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
+                    for (int j = 0; j < width; j++) {
+                        std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile = std::make_shared<Zappy::GUI::Ressources::TileRessources>(i, j);
+                        line.push_back(tile);
+                    }
+                    _ressources->tileRessources.push_back(line);
+                }
+                _ressources->mapSet = true;
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandBct(const std::string& responseValue)
         {
-            std::cerr << "Command Bct: [" << responseValue << "] not implemented yet" << std::endl;
-            // std::istringstream iss(responseValue);
-            // int x, y, q0, q1, q2, q3, q4, q5, q6;
-            // iss >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6 >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // auto tile = this->_ressources->getTileFromPos(x, y);
-            // if (tile == 0)
-            //     return;
-            // tile->setFood(q0);
-            // tile->setLinemate(q1);
-            // tile->setDeraumere(q2);
-            // tile->setSibur(q3);
-            // tile->setMendiane(q4);
-            // tile->setPhiras(q5);
-            // tile->setThystame(q6);
+            std::regex regex("bct ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int x = std::stoi(match[1]);
+                int y = std::stoi(match[2]);
+                int q0 = std::stoi(match[3]);
+                int q1 = std::stoi(match[4]);
+                int q2 = std::stoi(match[5]);
+                int q3 = std::stoi(match[6]);
+                int q4 = std::stoi(match[7]);
+                int q5 = std::stoi(match[8]);
+                int q6 = std::stoi(match[9]);
+
+                auto tile = this->_ressources->getTileFromPos(x, y);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+                tile->setFood(q0);
+                tile->setLinemate(q1);
+                tile->setDeraumere(q2);
+                tile->setSibur(q3);
+                tile->setMendiane(q4);
+                tile->setPhiras(q5);
+                tile->setThystame(q6);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandTna(const std::string& responseValue)
         {
-            std::cerr << "Command Tna: [" << responseValue << "] not implemented yet" << std::endl;
-            // std::istringstream iss(responseValue);
-            // std::string teamName;
-            // iss >> teamName >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // this->_ressources->addTeam(teamName);
-            // _ressources->logs.push_back(std::make_tuple("Team " + teamName + " just added.", "Server", "Server"));
+            std::regex regex("tna ([a-zA-Z0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                std::string teamName = match[1];
+                this->_ressources->addTeam(teamName);
+                _ressources->logs.push_back(std::make_tuple("Team " + teamName + " just added.", "Server", "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPnw(const std::string& responseValue)
         {
-            std::cerr << "Command Pnw: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId, x, y, orientation, level;
-            // std::string teamName;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> x >> y >> orientation >> level >> teamName >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // if (orientation > 4){
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
-            // player->setLvl(level);
-            // this->_ressources->addPlayer(player);
-            // _ressources->logs.push_back(std::make_tuple("Player # " + std::to_string(playerId) + " just added.", "Server", "Server"));
+            std::regex regex("pnw ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([a-zA-Z0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                int x = std::stoi(match[2]);
+                int y = std::stoi(match[3]);
+                int orientation = std::stoi(match[4]);
+                int level = std::stoi(match[5]);
+                std::string teamName = match[6];
+
+                if (orientation > 4 || orientation < 1 || level < 1 || level > 8) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
+                player->setLvl(level);
+                _ressources->addPlayer(player);
+                _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just join the " + teamName + "." , "Server", "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPpo(const std::string& responseValue)
         {
-            std::cerr << "Command Ppo: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId, x, y, orientation;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> x >> y >> orientation >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // if (orientation > 4){
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // auto player = this->_ressources->getPlayerFromId(playerId);
-            // if (player == 0)
-            //     return;
-            // player->setX(x);
-            // player->setY(y);
+            std::regex regex("ppo ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                int x = std::stoi(match[2]);
+                int y = std::stoi(match[3]);
+                int orientation = std::stoi(match[4]);
+
+                if (orientation > 4 || orientation < 1) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                auto player = _ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                player->setX(x);
+                player->setY(y);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPlv(const std::string& responseValue)
         {
-            std::cerr << "Command Plv: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId, level;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> level >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // auto player = this->_ressources->getPlayerFromId(playerId);
-            // if (player == 0)
-            //     return;
-            // player->setLvl(level);
+            std::regex regex("plv ([0-9]+) ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                int level = std::stoi(match[2]);
+
+                if (level < 1 || level > 8) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                player->setLvl(level);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPin(const std::string& responseValue)
         {
-            std::cerr << "Command Pin: [" << responseValue << "] not implemented yet" << std::endl;
-        //     int playerId, x, y, q0, q1, q2, q3, q4, q5, q6;
-        //     std::istringstream iss(responseValue);
-        //     iss >> playerId >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6 >> std::ws;
-        //     if (iss.fail() || !iss.eof()) {
-        //         handleCommandSbp(responseValue);
-        //         return;
-        //     }
-        //     auto player = _ressources->getPlayerFromId(playerId);
-        //     if (player == 0)
-        //         return;
-        //     player->setX(x);
-        //     player->setY(y);
-        //     player->setFood(q0);
-        //     player->setLinemate(q1);
-        //     player->setDeraumere(q2);
-        //     player->setSibur(q3);
-        //     player->setMendiane(q4);
-        //     player->setPhiras(q5);
-        //     player->setThystame(q6);
+            std::regex regex("pin ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                int x = std::stoi(match[2]);
+                int y = std::stoi(match[3]);
+                int q0 = std::stoi(match[4]);
+                int q1 = std::stoi(match[5]);
+                int q2 = std::stoi(match[6]);
+                int q3 = std::stoi(match[7]);
+                int q4 = std::stoi(match[8]);
+                int q5 = std::stoi(match[9]);
+                int q6 = std::stoi(match[10]);
+
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                player->setX(x);
+                player->setY(y);
+                player->setFood(q0);
+                player->setLinemate(q1);
+                player->setDeraumere(q2);
+                player->setSibur(q3);
+                player->setMendiane(q4);
+                player->setPhiras(q5);
+                player->setThystame(q6);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPex(const std::string& responseValue)
         {
-            std::cerr << "Command Pex: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // std::string msg = "I don't want anyone here !";
-            // std::string name = "Player #" + std::to_string(playerId);
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            std::regex regex("pex ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int playerX = player->getX();
+                int playerY = player->getY();
+                auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                std::vector<std::pair<int, int>> directions;
+                for (int i = -1; i < 1; i++) {
+                    int x = tileX + i;
+                    x = (x < 0) ? x + _ressources->tileRessources.size() : x;
+                    x = (x >= (int)_ressources->tileRessources.size()) ? x - _ressources->tileRessources.size() : x;
+
+                    for (int j = -1; j < 1; j++) {
+                        int y = tileY + j;
+                        y = (y < 0) ? y + _ressources->tileRessources[0].size() : y;
+                        y = (y >= (int)_ressources->tileRessources[0].size()) ? y - _ressources->tileRessources[0].size() : y;
+
+                        directions.push_back(std::make_pair(x, y));
+                    }
+                }
+
+                for (auto &direction : directions)
+                    _sharedMemory->addCommand("bct " + std::to_string(direction.first) + " " + std::to_string(direction.second));
+                std::string msg = "I don't want anyone here !";
+                std::string name = "Player #" + std::to_string(playerId);
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPbc(const std::string& responseValue)
         {
-            std::cerr << "Command Pbc: [" << responseValue << "] not implemented yet" << std::endl;
+            std::regex regex("pbc ([0-9]+) (.+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                std::string message = match[2];
+
+                auto player = _ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                std::string name = "Player #" + std::to_string(playerId);
+                _ressources->logs.push_back(std::make_tuple(message, name, "Global"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
+
             // int playerId;
             // std::string message;
             // std::istringstream iss(responseValue);
@@ -194,239 +299,366 @@ namespace Zappy {
 
         void Commands::handleCommandPic(const std::string& responseValue)
         {
-            std::cerr << "Command Pic: [" << responseValue << "] not implemented yet" << std::endl;
-            // int x, y, level;
-            // std::vector<int> playersId;
-            // std::istringstream iss(responseValue);
-            // iss >> x >> y >> level;
-            // while (!iss.eof()) {
-            //     int playerId;
-            //     iss >> playerId;
-            //     playersId.push_back(playerId);
-            // }
-            // if (iss.fail()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
+            std::regex regex("pic ([0-9]+) ([0-9]+) ([0-9]+) (.+)");
+            std::smatch match;
 
-            // std::string msg = "Incantation at " + std::to_string(x) + " " + std::to_string(y) + " has started by ";
-            // for (auto &playerId : playersId)
-            //     msg += "Player #" + std::to_string(playerId) + " ";
-            // std::string name = "Server";
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+            if (std::regex_search(responseValue, match, regex)) {
+                int x = std::stoi(match[1]);
+                int y = std::stoi(match[2]);
+                int level = std::stoi(match[3]);
+
+                std::vector<int> playersId;
+                std::istringstream iss(match[4]);
+                while (!iss.eof()) {
+                    int playerId;
+                    iss >> playerId;
+                    playersId.push_back(playerId);
+                }
+                if (iss.fail()) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                std::string msg = "Incantation of level " + std::to_string(level) + " at Tile[" + std::to_string(x) + "][" + std::to_string(y) + "] just started by:\n";
+                for (auto &playerId : playersId) {
+                    msg += "- Player #" + std::to_string(playerId);
+                    if (playerId != playersId.back())
+                        msg += "\n";
+                }
+                std::string name = "Server";
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPie(const std::string& responseValue)
         {
-            std::cerr << "Command Pie: [" << responseValue << "] not implemented yet" << std::endl;
-            // int x, y;
-            // std::string result;
-            // std::istringstream iss(responseValue);
-            // iss >> x >> y >> result >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // std::string msg = "Incantation at " + std::to_string(x) + " " + std::to_string(y) + " has " + (result == "ko" ? "failed" : "succeed");
-            // std::string name = "Server";
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+            std::regex regex("pie ([0-9]+) ([0-9]+) ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int x = std::stoi(match[1]);
+                int y = std::stoi(match[2]);
+                int result = std::stoi(match[3]);
+
+                std::string msg = "Incantation at Tile[" + std::to_string(x) + "][" + std::to_string(y) + "] has " + (result == 0 ? "failed" : "succeed");
+                msg += ".";
+                if (result != 0) msg += " All players on the tile just up their level to " + std::to_string(result) + ".";
+                std::string name = "Server";
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPfk(const std::string& responseValue)
         {
-            std::cerr << "Command Pfk: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // std::string msg = "I have laid an egg !";
-            // std::string name = "Player #" + std::to_string(playerId);
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
-            // // todo virifier si on doit déposer un oeuf sur la tile du player
+            std::regex regex("pfk ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int playerX = player->getX();
+                int playerY = player->getY();
+                auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                std::ostringstream commandStream;
+                commandStream << "bct " << tileX << " " << tileY;
+                const std::string command = commandStream.str();
+                _sharedMemory->addCommand(command);
+
+                std::string msg = "I let that here...";
+                std::string name = "Player #" + std::to_string(playerId);
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPdr(const std::string& responseValue)
         {
-            std::cerr << "Command Pdr: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId, resourceNum;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> resourceNum >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // auto player = this->_ressources->getPlayerFromId(playerId);
-            // if (player == 0)
-            //     return;
-            // int playerX = player->getX();
-            // int playerY = player->getY();
-            // auto tile = this->_ressources->getTileFromPos(playerX, playerY);
-            // if (tile == 0)
-            //     return;
-            // int tileX = tile->getX();
-            // int tileY = tile->getY();
-            // std::ostringstream commandStream;
-            // commandStream << "bct " << tileX << " " << tileY;
-            // const std::string command = commandStream.str();
-            // _sharedMemory->addCommand(command);
-            // std::ostringstream commandStream2;
-            // commandStream2 << "pin " << playerId;
-            // const std::string command2 = commandStream2.str();
-            // _sharedMemory->addCommand(command2);
+            std::regex regex ("pdr ([0-9]+) ([0-9]+)");
+            std::smatch match;
 
-            // std::string msg = "I drop that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
-            // std::string name = "Player #" + std::to_string(playerId);
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                int resourceNum = std::stoi(match[2]);
+
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int playerX = player->getX();
+                int playerY = player->getY();
+                auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                if (resourceNum < 0 || resourceNum > 6) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                _sharedMemory->addCommand("pin " + std::to_string(playerId));
+                _sharedMemory->addCommand("bct " + std::to_string(tileX) + " " + std::to_string(tileY));
+                std::string msg = "I don't need that ";
+                msg += resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
+                msg += " anymore...";
+                std::string name = "Player #" + std::to_string(playerId);
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPgt(const std::string& responseValue)
         {
-            std::cerr << "Command Pgt: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId, resourceNum;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> resourceNum >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
+            std::regex regex ("pgt ([0-9]+) ([0-9]+)");
+            std::smatch match;
 
-            // auto player = this->_ressources->getPlayerFromId(playerId);
-            // if (player == 0)
-            //     return;
-            // int playerX = player->getX();
-            // int playerY = player->getY();
-            // auto tile = this->_ressources->getTileFromPos(playerX, playerY);
-            // if (tile == 0)
-            //     return;
-            // int tileX = tile->getX();
-            // int tileY = tile->getY();
-            // std::ostringstream commandStream;
-            // commandStream << "bct " << tileX << " " << tileY;
-            // const std::string command = commandStream.str();
-            // _sharedMemory->addCommand(command);
-            // std::ostringstream commandStream2;
-            // commandStream2 << "pin " << playerId;
-            // const std::string command2 = commandStream2.str();
-            // _sharedMemory->addCommand(command2);
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+                int resourceNum = std::stoi(match[2]);
 
-            // std::string msg = "I take that :" + resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
-            // std::string name = "Player #" + std::to_string(playerId);
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int playerX = player->getX();
+                int playerY = player->getY();
+                auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                if (resourceNum < 0 || resourceNum > 6) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                _sharedMemory->addCommand("pin " + std::to_string(playerId));
+                _sharedMemory->addCommand("bct " + std::to_string(tileX) + " " + std::to_string(tileY));
+                std::string msg = "I need that ";
+                msg += resourceNum == 0 ? "food" : resourceNum == 1 ? "linemate" : resourceNum == 2 ? "deraumere" : resourceNum == 3 ? "sibur" : resourceNum == 4 ? "mendiane" : resourceNum == 5 ? "phiras" : "thystame";
+                msg += ".";
+                std::string name = "Player #" + std::to_string(playerId);
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandPdi(const std::string& responseValue)
         {
-            std::cerr << "Command Pdi: [" << responseValue << "] not implemented yet" << std::endl;
-            // int playerId;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just died.", "Server", "Server"));
-            // _ressources->removePlayer(playerId);
+            std::regex regex("pdi ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int playerId = std::stoi(match[1]);
+
+                auto player = this->_ressources->getPlayerFromId(playerId);
+                if (player == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int playerX = player->getX();
+                int playerY = player->getY();
+                auto tile = this->_ressources->getTileFromPos(playerX, playerY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                _sharedMemory->addCommand("bct " + std::to_string(tileX) + " " + std::to_string(tileY));
+                std::string msg = "My time has come...";
+                std::string name = "Player #" + std::to_string(playerId);
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Global"));
+                _ressources->removePlayer(playerId);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandEnw(const std::string& responseValue)
         {
-            std::cerr << "Command Enw: [" << responseValue << "] not implemented yet" << std::endl;
-            // int eggNum, playerId, x, y;
-            // std::istringstream iss(responseValue);
-            // iss >> eggNum >> playerId >> x >> y >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // std::string msg = "Egg #" + std::to_string(eggNum) + " just laid by Player #" + std::to_string(playerId);
-            // std::string name = "Server";
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
-            // _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(eggNum, x, y, _ressources->getPlayerFromId(playerId)->getTeam()));
+            std::regex regex("enw ([0-9]+) (-?[0-9]+) ([0-9]+) ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int eggNum = std::stoi(match[1]);
+                int playerId = std::stoi(match[2]);
+                int x = std::stoi(match[3]);
+                int y = std::stoi(match[4]);
+
+                std::string name = "Server";
+                std::string msg = "Egg #" + std::to_string(eggNum) + " just ";
+                auto player = _ressources->getPlayerFromId(playerId);
+                std::string team = (player == nullptr) ? "?" : player->getTeam();
+
+                msg += (player == nullptr) ? "appear" : "laid by Player #" + std::to_string(playerId);
+                msg += " at Tile[" + std::to_string(x) + "][" + std::to_string(y) + "]";
+                _ressources->addEgg(std::make_shared<Zappy::GUI::Ressources::Eggs>(eggNum, x, y, team));
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandEbo(const std::string& responseValue)
         {
-            std::cerr << "Command Ebo: [" << responseValue << "] not implemented yet" << std::endl;
-            // int eggNum;
-            // std::istringstream iss(responseValue);
-            // iss >> eggNum >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // _ressources->logs.push_back(std::make_tuple("Egg #" + std::to_string(eggNum) + " just hatched.", "Server", "Server"));
-            // _ressources->removeEgg(eggNum);
+            std::regex regex("ebo ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int eggNum = std::stoi(match[1]);
+
+                auto egg = _ressources->getEggFromId(eggNum);
+                if (egg == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int eggX = egg->getX();
+                int eggY = egg->getY();
+                auto tile = this->_ressources->getTileFromPos(eggX, eggY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                _sharedMemory->addCommand("bct " + std::to_string(tileX) + " " + std::to_string(tileY));
+                std::string msg = "Egg #" + std::to_string(eggNum) + " have been replaced by a player.";
+                std::string name = "Server";
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+                _ressources->removeEgg(eggNum);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandEdi(const std::string& responseValue)
         {
             std::cerr << "Command Edi: [" << responseValue << "] not implemented yet" << std::endl;
-            // int eggNum;
-            // std::istringstream iss(responseValue);
-            // iss >> eggNum >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // _ressources->logs.push_back(std::make_tuple("Egg #" + std::to_string(eggNum) + " just died.", "Server", "Server"));
-            // _ressources->removeEgg(eggNum);
+
+            std::regex regex("edi ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int eggNum = std::stoi(match[1]);
+
+                auto egg = _ressources->getEggFromId(eggNum);
+                if (egg == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int eggX = egg->getX();
+                int eggY = egg->getY();
+                auto tile = this->_ressources->getTileFromPos(eggX, eggY);
+                if (tile == nullptr) {
+                    handleCommandSbp(responseValue);
+                    return;
+                }
+
+                int tileX = tile->getX();
+                int tileY = tile->getY();
+                _sharedMemory->addCommand("bct " + std::to_string(tileX) + " " + std::to_string(tileY));
+                std::string msg = "Egg #" + std::to_string(eggNum) + " just died.";
+                std::string name = "Server";
+                _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+                _ressources->removeEgg(eggNum);
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandSgt(const std::string& responseValue)
         {
-            std::cerr << "Command Sgt: [" << responseValue << "] not implemented yet" << std::endl;
-            // int timeUnit;
-            // std::istringstream iss(responseValue);
-            // iss >> timeUnit >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // _ressources->logs.push_back(std::make_tuple("Time unit set to " + std::to_string(timeUnit), "Server", "Server"));
+            std::regex regex("sgt ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                int timeUnit = std::stoi(match[1]);
+                _ressources->logs.push_back(std::make_tuple("Time unit set to " + std::to_string(timeUnit), "Server", "Server"));
+                _ressources->frequency = timeUnit;
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandSst(const std::string& responseValue)
         {
             std::cerr << "Command Sst: [" << responseValue << "] not implemented yet" << std::endl;
-            // int timeUnit;
-            // std::istringstream iss(responseValue);
-            // iss >> timeUnit >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // _ressources->logs.push_back(std::make_tuple("Time unit set to " + std::to_string(timeUnit), "Server", "Server"));
+
+            std::regex regex("sst ([0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                _ressources->frequency = std::stoi(match[1]);
+                _ressources->logs.push_back(std::make_tuple("Time unit set to " + std::to_string(_ressources->frequency), "Server", "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandSeg(const std::string& responseValue)
         {
             std::cerr << "Command Seg: [" << responseValue << "] not implemented yet" << std::endl;
-            // std::string teamName;
-            // std::istringstream iss(responseValue);
-            // iss >> teamName >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // std::string msg = "Team " + teamName + " won the game.";
-            // std::string name = "Team " + teamName;
-            // _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
+
+            std::regex regex("seg ([a-zA-Z0-9]+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                std::string teamName = match[1];
+                _ressources->logs.push_back(std::make_tuple("Team " + teamName + " won the game.", "Server", "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandSmg(const std::string& responseValue)
         {
             std::cerr << "Command Smg: [" << responseValue << "] not implemented yet" << std::endl;
-            // std::string msg;
-            // std::istringstream iss(responseValue);
-            // iss >> msg >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // _ressources->logs.push_back(std::make_tuple(msg, "Server", "Server"));
+
+            std::regex regex("smg (.+)");
+            std::smatch match;
+
+            if (std::regex_search(responseValue, match, regex)) {
+                std::string message = match[1];
+                _ressources->logs.push_back(std::make_tuple(message, "Server", "Server"));
+            } else {
+                handleCommandSbp(responseValue);
+            }
         }
 
         void Commands::handleCommandSuc([[maybe_unused]] const std::string& responseValue)
