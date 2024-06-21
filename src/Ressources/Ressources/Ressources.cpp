@@ -18,6 +18,8 @@ namespace Zappy {
                 teamsColor = std::unordered_map<std::string, Color>();
                 mapSet = false;
                 logs = std::vector<std::tuple<std::string, std::string, std::string>>();
+
+                teamsColor["?"] = (Color){255, 255, 255, 255};
             }
 
             void Ressources::addPlayer(std::shared_ptr<Players> player)

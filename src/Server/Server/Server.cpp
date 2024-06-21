@@ -65,13 +65,13 @@ namespace Zappy {
             inet_pton(AF_INET, _address.c_str(), &_socketAddress.sin_addr);
             if (connect(_fd, (struct sockaddr *)&_socketAddress, sizeof(_socketAddress)) == -1) return;
             _state = CONNECTED;
-            std::string initRequest = "GRAPHIC\r\n";
+            std::string initRequest = "GRAPHIC\n";
             int tmp = write(_fd, initRequest.c_str(), initRequest.size());
             if (tmp == -1) {
                 _disconnect();
                 throw Exceptions::ConnexionServeurFail("Connection to server failed", _address, _port);
             }
-            _sharedMemory->addCommand("msz\r\n");
+            _sharedMemory->addCommand("msz");
             if (_reconnection) {
                 _ressources->logs.push_back(std::make_tuple("Server reconnected !", "Server", "Server"));
                 _reconnection = false;
@@ -111,19 +111,6 @@ namespace Zappy {
             _writeServer();
         }
 
-        void Server::_initRessources(int mapHeight, int mapWidth)
-        {
-            for (int i = 0; i < mapWidth; i++) {
-                std::vector<std::shared_ptr<Zappy::GUI::Ressources::TileRessources>> line;
-                for (int j = 0; j < mapHeight; j++) {
-                    std::shared_ptr<Zappy::GUI::Ressources::TileRessources> tile = std::make_shared<Zappy::GUI::Ressources::TileRessources>(i, j);
-                    line.push_back(tile);
-                }
-                _ressources->tileRessources.push_back(line);
-            }
-            _ressources->mapSet = true;
-        }
-
         void Server::_addResponse(const std::string &request)
         {
             std::unique_lock<std::mutex> lock(_responseQueueMutex);
@@ -134,27 +121,9 @@ namespace Zappy {
         void Server::_handleResponse(const std::string& buffer)
         {
             std::string command = buffer.substr(0, 3);
-            std::string responseValue = buffer.substr(3);
-
-            if (command == "msz") {
-                int _heightWorld, _widthWorld;
-                std::istringstream iss(responseValue);
-                iss >> _heightWorld >> _widthWorld >> std::ws;
-                if (iss.fail() || !iss.eof()) {
-                    auto commandHandler = _commandHandlers.find("suc");
-                    if (commandHandler != _commandHandlers.end())
-                        commandHandler->second(responseValue);
-                    return;
-                }
-                auto commandHandler = _commandHandlers.find("msz");
-                if (commandHandler != _commandHandlers.end())
-                    commandHandler->second(responseValue);
-                _initRessources(_heightWorld, _widthWorld);
-            } else {
-                auto commandHandler = _commandHandlers.find(command);
-                if (commandHandler != _commandHandlers.end())
-                    commandHandler->second(responseValue);
-            }
+            auto commandHandler = _commandHandlers.find(command);
+            if (commandHandler != _commandHandlers.end())
+                commandHandler->second(buffer);
         }
 
         void Server::_readServer(fd_set readfds)
@@ -167,8 +136,19 @@ namespace Zappy {
                     _state = RECONNECT;
                     return;
                 }
-                _addResponse(response);
-                _handleResponse(response);
+                if (response.empty()) return;
+                _responseBuffer += response;
+                std::vector<std::string> responses = Zappy::GUI::split(_responseBuffer, "\n");
+                _responseBuffer.clear();
+                if (response.size() > 0 && response.back() != '\n') {
+                    _responseBuffer = responses.back();
+                    responses.pop_back();
+                }
+                for (const auto &tmp : responses) {
+                    if (tmp.empty()) continue;
+                    _addResponse(tmp);
+                    _handleResponse(tmp);
+                }
             }
         }
 

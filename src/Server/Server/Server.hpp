@@ -28,6 +28,7 @@
     #include "Commands.hpp"
     #include "SharedMemory.hpp"
     #include "Ref.hpp"
+    #include "Utils.hpp"
 
 namespace Zappy {
     namespace Server {
@@ -97,6 +98,8 @@ namespace Zappy {
                 std::shared_ptr<SharedMemory> _sharedMemory;
                 std::thread _sendThread;
 
+                std::string _responseBuffer;
+
                 /**
                  * @brief Connect to the server
                  */
@@ -118,14 +121,6 @@ namespace Zappy {
                  * @brief contains the main loop for reading from and writing to the server.
                  */
                 void _loop();
-
-                /**
-                 * @brief Initialization of resources from server information
-                 *
-                 * @param mapHeight The height of the map
-                 * @param mapWidth The width of the map
-                 */
-                void _initRessources(int mapHeight, int mapWidth);
 
                 /**
                  * @brief Add a response to the response queue

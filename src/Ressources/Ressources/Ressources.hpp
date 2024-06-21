@@ -140,7 +140,7 @@ namespace Zappy {
                     /**
                      * @brief The frequency of the server
                      */
-                    float frequency = 100;
+                    int frequency = 100;
 
                 protected:
                 private:
