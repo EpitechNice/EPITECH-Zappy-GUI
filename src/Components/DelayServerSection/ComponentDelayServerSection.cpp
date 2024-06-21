@@ -49,7 +49,7 @@ namespace Zappy {
                 _slider->update();
                 if ((int)tmp != (int)_slider->getValue()) {
                     Zappy::GUI::Ressources::Ref::get()->ressources->frequency = _slider->getValue() + 1;
-                    Zappy::GUI::Ressources::Ref::get()->shared_memory->addCommand("sst " + std::to_string(Zappy::GUI::Ressources::Ref::get()->ressources->frequency) + "\r\n");
+                    Zappy::GUI::Ressources::Ref::get()->shared_memory->addCommand("sst " + std::to_string(Zappy::GUI::Ressources::Ref::get()->ressources->frequency));
                 }
             }
         }

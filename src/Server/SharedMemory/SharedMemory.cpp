@@ -13,7 +13,7 @@ namespace Zappy
         void SharedMemory::addCommand(const std::string& command)
         {
             _mutex.lock();
-            _commandList.push_back(command);
+            _commandList.push_back(command + "\n");
             _mutex.unlock();
             _condVar.notify_one();
         }

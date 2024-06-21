@@ -28,6 +28,7 @@
     #include "Commands.hpp"
     #include "SharedMemory.hpp"
     #include "Ref.hpp"
+    #include "Utils.hpp"
 
 namespace Zappy {
     namespace Server {
@@ -96,6 +97,8 @@ namespace Zappy {
                 std::condition_variable _responseQueueNotEmpty;
                 std::shared_ptr<SharedMemory> _sharedMemory;
                 std::thread _sendThread;
+
+                std::string _responseBuffer;
 
                 /**
                  * @brief Connect to the server
