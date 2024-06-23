@@ -51,7 +51,7 @@ namespace Zappy {
             Model ModelManager::getModel(std::string &fileName)
             {
                 if (_models.find(fileName) == _models.end()) {
-                    std::string modelPath = "assets/models/" + fileName + ".gltf";
+                    std::string modelPath = Zappy::GUI::Path::get()->path() + "models/" + fileName + ".gltf";
                     Model model = LoadModel(modelPath.c_str());
                     _models[fileName] = model;
                     _refs.push_back(fileName);
@@ -70,7 +70,7 @@ namespace Zappy {
             void ModelManager::reload()
             {
                 for (auto &ref: _refs) {
-                    std::string modelPath = "assets/models/" + ref + ".gltf";
+                    std::string modelPath = Zappy::GUI::Path::get()->path() + "models/" + ref + ".gltf";
                     Model model = LoadModel(modelPath.c_str());
                     _models[ref] = model;
                 }

@@ -14,6 +14,8 @@
     #include <iostream>
     #include <SFML/Audio.hpp>
 
+    #include "Path.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Sfml {

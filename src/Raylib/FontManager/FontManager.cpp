@@ -37,7 +37,7 @@ namespace Zappy {
             Font FontManager::getFont(std::string &fileName)
             {
                 if (_fonts.find(fileName) == _fonts.end()) {
-                    std::string path = "assets/font/" + fileName;
+                    std::string path = Zappy::GUI::Path::get()->path() + "font/" + fileName;
                     Font font = LoadFont(path.c_str());
                     _fonts[fileName] = font;
                     _refs.push_back(fileName);
@@ -56,7 +56,7 @@ namespace Zappy {
             void FontManager::reload()
             {
                 for (auto &ref: _refs) {
-                    std::string path = "assets/font/" + ref;
+                    std::string path = Zappy::GUI::Path::get()->path() + "font/" + ref;
                     Font font = LoadFont(path.c_str());
                     _fonts[ref] = font;
                 }

@@ -13,6 +13,8 @@
     #include <string>
     #include <vector>
 
+    #include "Path.hpp"
+
 namespace Zappy {
     namespace GUI {
         namespace Raylib {

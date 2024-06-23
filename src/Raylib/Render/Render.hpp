@@ -19,6 +19,7 @@
     #include "FontManager.hpp"
     #include "ModelManager.hpp"
     #include "TextureManager.hpp"
+    #include "Path.hpp"
 
 namespace Zappy {
     namespace GUI {

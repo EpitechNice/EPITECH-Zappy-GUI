@@ -14,6 +14,7 @@
     #include <fstream>
 
     #include "Utils.hpp"
+    #include "Path.hpp"
 
 namespace Zappy {
     namespace GUI {

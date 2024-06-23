@@ -12,9 +12,9 @@ namespace Zappy {
         namespace Sfml {
             SoundManager::SoundManager()
             {
-                if (!_clickSoundBuffer.loadFromFile("assets/Sounds/effetSonoreButton1.mp3"))
+                if (!_clickSoundBuffer.loadFromFile(Zappy::GUI::Path::get()->path() + "Sounds/effetSonoreButton1.mp3"))
                     std::cerr << "INFO: Erreur lors du chargement du fichier audio du clic du bouton." << std::endl;
-                if (!_generalSoundBuffer.loadFromFile("assets/Sounds/ClashRoyaleSoundtrack1.wav"))
+                if (!_generalSoundBuffer.loadFromFile(Zappy::GUI::Path::get()->path() + "Sounds/ClashRoyaleSoundtrack1.wav"))
                     std::cerr << "INFO: Erreur lors du chargement du fichier audio de la musique principale." << std::endl;
                 _clickSound.setBuffer(_clickSoundBuffer);
                 _generalSound.setBuffer(_generalSoundBuffer);

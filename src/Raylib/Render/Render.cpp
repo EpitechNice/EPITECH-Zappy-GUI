@@ -11,12 +11,12 @@ namespace Zappy {
     namespace GUI {
         namespace Raylib {
             Render::Render(int height, int width, int fps)
-                : _height(height), _width(width), _fps(fps), _pathMusiquePrincipal("assets/Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
+                : _height(height), _width(width), _fps(fps), _pathMusiquePrincipal(Zappy::GUI::Path::get()->path() + "Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
                 InitWindow(width, height, "Clash Of Tek");
                 displayLoadingScreen();
                 SetTargetFPS(fps);
-                _icon = LoadImage("assets/img/clash_of_tek_logo.png");
+                _icon = LoadImage(std::string(Zappy::GUI::Path::get()->path() + "img/clash_of_tek_logo.png").c_str());
                 SetWindowIcon(_icon);
                 _view = std::make_shared<View>();
                 Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);

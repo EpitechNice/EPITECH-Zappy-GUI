@@ -14,7 +14,9 @@
     #include <iostream>
     #include <fstream>
     #include <regex>
+
     #include "Exceptions.hpp"
+    #include "Path.hpp"
 
 namespace Zappy
 {

@@ -89,7 +89,7 @@ namespace Zappy {
             std::string Game::nextScene()
             {
                 if (IsKeyReleased(KEY_TAB)){
-                    Sfml::SoundManager::getInstance().setMusique("assets/Musique/ClashofTekMainMusic.wav");
+                    Sfml::SoundManager::getInstance().setMusique(Zappy::GUI::Path::get()->path() + "Musique/ClashofTekMainMusic.wav");
                     Sfml::SoundManager::getInstance().playgeneralSound();
                     return "menu";
                 }

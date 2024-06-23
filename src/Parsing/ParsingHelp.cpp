@@ -11,7 +11,7 @@ namespace Zappy {
     namespace GUI {
         const char* Parsing::Help::what() const noexcept
         {
-            std::ifstream file("assets/help.txt");
+            std::ifstream file(Zappy::GUI::Path::get()->path() + "help.txt");
             if (!file.is_open())
                 return "Failed to open help file.";
             std::string content;

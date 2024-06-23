@@ -40,7 +40,7 @@ namespace Zappy
                 std::regex pattern(R"((\[.*?\])\s*=\s*\"(.*?)\")");
 
                 try {
-                    filepath = "lang/" + this->getLocaleValue(_currentLocale) + "/translations.txt";
+                    filepath = Zappy::GUI::Path::get()->path() + "lang/" + this->getLocaleValue(_currentLocale) + "/translations.txt";
                 } catch (const std::exception &e) {
                     throw Exceptions::TranslationFileNotFound("Error when trying to find translation file: " + std::string(e.what()), EXCEPTION_INFOS);
                 }

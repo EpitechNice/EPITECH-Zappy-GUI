@@ -20,6 +20,7 @@
     #include "ComponentText.hpp"
     #include "../Sfml/SoundManager/SoundManager.hpp"
     #include "AComponent.hpp"
+    #include "Path.hpp"
 
 namespace Zappy {
     namespace GUI {

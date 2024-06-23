@@ -68,6 +68,7 @@ SRC		=   src/Main.cpp																				\
 			src/Server/Commands/Commands.cpp															\
 			src/Server/SharedMemory/SharedMemory.cpp													\
 			src/Sfml/SoundManager/SoundManager.cpp														\
+			src/Utils/Path/Path.cpp																		\
 			src/Utils/Utils/Utils.cpp																	\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
@@ -162,6 +163,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Server/Commands								\
 				-I./src/Server/SharedMemory							\
 				-I./src/Sfml/SoundManager							\
+				-I./src/Utils/Path									\
 				-I./src/Utils/Utils									\
 
 LIBS	=	-L./libs	\

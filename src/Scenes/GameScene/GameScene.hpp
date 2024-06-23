@@ -20,6 +20,7 @@
     #include "ComponentTileMap.hpp"
     #include "ComponentRessources.hpp"
     #include "Ref.hpp"
+    #include "Path.hpp"
 
 namespace Zappy {
     namespace GUI {

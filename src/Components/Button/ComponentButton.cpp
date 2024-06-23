@@ -171,13 +171,14 @@ namespace Zappy {
             {
                 if (_state == CLICKED && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                     if (textButton == "[menu.back_button]"){
-                        Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButtonBack.wav");
+                        Zappy::GUI::Path::get()->path();
+                        Sfml::SoundManager::getInstance().setEffetSonore(Zappy::GUI::Path::get()->path() + "Musique/effetSonoreButtonBack.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     } else if (textButton == "[menu.start_title]"){
-                        Sfml::SoundManager::getInstance().setMusique("assets/Musique/ClashofTekCombatMusic.wav");
+                        Sfml::SoundManager::getInstance().setMusique(Zappy::GUI::Path::get()->path() + "Musique/ClashofTekCombatMusic.wav");
                         Sfml::SoundManager::getInstance().playgeneralSound();
                     } else {
-                        Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
+                        Sfml::SoundManager::getInstance().setEffetSonore(Zappy::GUI::Path::get()->path() + "Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     }
                     return true;

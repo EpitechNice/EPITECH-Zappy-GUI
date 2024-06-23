@@ -43,7 +43,7 @@ namespace Zappy {
                     if (_off->isClicked()) {
                         _slider->setActive(false);
                         (Zappy::GUI::Sfml::SoundManager::getInstance().*_callback)(0);
-                        Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
+                        Sfml::SoundManager::getInstance().setEffetSonore(Zappy::GUI::Path::get()->path() + "Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     } else {
                         (Zappy::GUI::Sfml::SoundManager::getInstance().*_callback)(_slider->getValue());
@@ -52,7 +52,7 @@ namespace Zappy {
                     if (_on->isClicked()) {
                         _slider->setActive(true);
                         (Zappy::GUI::Sfml::SoundManager::getInstance().*_callback)(_slider->getValue());
-                        Sfml::SoundManager::getInstance().setEffetSonore("assets/Musique/effetSonoreButton1.wav");
+                        Sfml::SoundManager::getInstance().setEffetSonore(Zappy::GUI::Path::get()->path() + "Musique/effetSonoreButton1.wav");
                         Sfml::SoundManager::getInstance().playButtonClickSound();
                     }
                 }

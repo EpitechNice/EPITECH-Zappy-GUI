@@ -16,6 +16,7 @@
     #include "ComponentText.hpp"
     #include "SoundManager.hpp"
     #include "ComponentButton.hpp"
+    #include "Path.hpp"
 
 namespace Zappy {
     namespace GUI {

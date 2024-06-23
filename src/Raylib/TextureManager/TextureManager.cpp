@@ -42,7 +42,7 @@ namespace Zappy {
             Texture TextureManager::getTexture(std::string &fileName)
             {
                 if (_textures.find(fileName) == _textures.end()) {
-                    std::string texturePath = "assets/img/" + fileName;
+                    std::string texturePath = Zappy::GUI::Path::get()->path() + "img/" + fileName;
                     Texture texture = LoadTexture(texturePath.c_str());
                     _textures[fileName] = texture;
                     _refs.push_back(fileName);
@@ -72,7 +72,7 @@ namespace Zappy {
             void TextureManager::reload()
             {
                 for (auto &ref: _refs) {
-                    std::string texturePath = "assets/img/" + ref;
+                    std::string texturePath = Zappy::GUI::Path::get()->path() + "img/" + ref;
                     Texture texture = LoadTexture(texturePath.c_str());
                     _textures[ref] = texture;
                 }
