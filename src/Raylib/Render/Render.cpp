@@ -14,15 +14,19 @@ namespace Zappy {
                 : _height(height), _width(width), _fps(fps), _pathMusiquePrincipal(Zappy::GUI::Path::get()->path() + "Musique/ClashofTekMainMusic.wav"), _isDestroyed(false)
             {
                 InitWindow(width, height, "Clash Of Tek");
-                displayLoadingScreen();
                 SetTargetFPS(fps);
+                displayLoadingScreen();
                 _icon = LoadImage(std::string(Zappy::GUI::Path::get()->path() + "img/clash_of_tek_logo.png").c_str());
                 SetWindowIcon(_icon);
                 _view = std::make_shared<View>();
+                displayLoadingScreen();
                 Sfml::SoundManager::getInstance().setMusique(_pathMusiquePrincipal);
                 Sfml::SoundManager::getInstance().playgeneralSound();
+                displayLoadingScreen();
                 ModelManager::get();
+                displayLoadingScreen();
                 FontManager::get();
+                displayLoadingScreen();
                 TextureManager::get();
             }
 
@@ -96,6 +100,10 @@ namespace Zappy {
 
             void Render::displayLoadingScreen()
             {
+                if (WindowShouldClose()) {
+                    destroy();
+                    exit(0);
+                }
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
                 DrawText("Loading assets...", _width / 2 - 100, _height / 2 - 10, 20, BLACK);
