@@ -29,7 +29,7 @@ namespace Zappy
             *
             * @note Locale values follow i18n normalization
             * @note `fr_FR` designed french language from France
-            * @note `en_GB` designed englsh language from Great Britain
+            * @note `en_GB` designed english language from Great Britain
             *
             * @warning To add a new application language : you must add locale values in this enumeration
             */
