@@ -60,6 +60,7 @@ namespace Zappy {
                 for (auto it = players.begin(); it != players.end(); it++) {
                     if ((*it)->getId() == id) {
                         players.erase(it);
+                        setPlayerOnMap();
                         break;
                     }
                 }
@@ -113,6 +114,7 @@ namespace Zappy {
                 for (auto it = eggs.begin(); it != eggs.end(); it++) {
                     if ((*it)->getId() == id) {
                         eggs.erase(it);
+                        setEggOnMap();
                         break;
                     }
                 }
