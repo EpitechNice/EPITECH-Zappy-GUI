@@ -283,18 +283,6 @@ namespace Zappy {
             } else {
                 handleCommandSbp(responseValue);
             }
-
-            // int playerId;
-            // std::string message;
-            // std::istringstream iss(responseValue);
-            // iss >> playerId >> message >> std::ws;
-            // if (iss.fail() || !iss.eof()) {
-            //     handleCommandSbp(responseValue);
-            //     return;
-            // }
-            // std::getline(iss, message);
-            // std::string name = "Player #" + std::to_string(playerId);
-            // _ressources->logs.push_back(std::make_tuple(message, name, "Global"));
         }
 
         void Commands::handleCommandPic(const std::string& responseValue)

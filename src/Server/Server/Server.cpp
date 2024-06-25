@@ -109,6 +109,9 @@ namespace Zappy {
             }
             _readServer(readfds);
             _writeServer();
+
+            if (!_ressources->mapSet)
+                _sharedMemory->addCommand("msz");
         }
 
         void Server::_addResponse(const std::string &request)
