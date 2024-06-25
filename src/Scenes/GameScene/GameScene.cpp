@@ -119,12 +119,12 @@ namespace Zappy {
 
             void Game::resize()
             {
-                _skybox->resize();
-                _borderbox->resize();
+                if (_skybox != nullptr) _skybox->resize();
+                if (_borderbox != nullptr) _borderbox->resize();
+                if (_ressources != nullptr) _ressources->resize();
+                if (_tileMap != nullptr) _tileMap->resize();
                 _chatbox->resize();
                 _inspecter->resize();
-                _ressources->resize();
-                _tileMap->resize();
                 _crossPointer.first->resize();
                 _crossPointer.second->resize();
             }

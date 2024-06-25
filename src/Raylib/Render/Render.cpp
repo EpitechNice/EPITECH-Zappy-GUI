@@ -28,6 +28,7 @@ namespace Zappy {
                 FontManager::get();
                 displayLoadingScreen();
                 TextureManager::get();
+                displayLoadingScreen();
             }
 
             Render::~Render()
@@ -88,8 +89,11 @@ namespace Zappy {
                 InitWindow(_width, _height, "Clash Of Tek");
                 displayLoadingScreen();
                 TextureManager::get()->reload();
+                displayLoadingScreen();
                 ModelManager::get()->reload();
+                displayLoadingScreen();
                 FontManager::get()->reload();
+                displayLoadingScreen();
             }
 
             void Render::setFps(int fps)
