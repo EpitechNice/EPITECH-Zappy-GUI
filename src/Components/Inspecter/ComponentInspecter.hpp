@@ -23,6 +23,7 @@
     #include "ComponentInspecterInfo.hpp"
     #include "ComponentInspecterInfoTile.hpp"
     #include "AComponent.hpp"
+    #include "View.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -56,7 +57,7 @@ namespace Zappy {
                      *
                      * @param selectedTile The coordinates of the selected tile
                      */
-                    void update(std::pair<int, int> selectedTile);
+                    void update(std::pair<int, int> selectedTile, std::shared_ptr<Zappy::GUI::Raylib::View> view);
 
                     /**
                      * @brief Check if the mouse is on the Inspecter component

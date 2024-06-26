@@ -63,7 +63,7 @@ namespace Zappy {
                 _skybox->update(_render);
                 _borderbox->update(_render);
                 _chatbox->update();
-                _inspecter->update(_tileMap->getSelected());
+                _inspecter->update(_tileMap->getSelected(), _render->view());
                 if (_chatbox->mouseIsOn() || _inspecter->mouseIsOn())
                     _tileMap->unhighlight();
                 else
@@ -146,6 +146,9 @@ namespace Zappy {
                 _borderbox = std::make_unique<Zappy::GUI::Component::Skybox>(false, tileSize * size.first * 3);
                 _ressources = std::make_shared<Zappy::GUI::Component::Ressources>((Vector3){(float)tileSize, (float)tileSize, (float)tileSize});
                 _tileMap = std::make_unique<Zappy::GUI::Component::TileMap>((Vector3){(float)-((tileSize * size.first) / 2), 0, (float)-((tileSize * size.second) / 2)}, size, tileSize, _ressources);
+
+                Zappy::GUI::RelativePlayerPosition::get()->setTileSize(tileSize);
+                Zappy::GUI::RelativePlayerPosition::get()->setStart((Vector3){_tileMap->getPosX(), _tileMap->getPosY(), _tileMap->getPosZ()});
             }
 
             void Game::resize()

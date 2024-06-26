@@ -101,7 +101,7 @@ namespace Zappy {
                 _infosTile->resize();
             }
 
-            void Inspecter::update(std::pair<int, int> selectedTile)
+            void Inspecter::update(std::pair<int, int> selectedTile, std::shared_ptr<Zappy::GUI::Raylib::View> view)
             {
                 if (_selectedTile != selectedTile) {
                     _selectedTile = selectedTile;
@@ -128,6 +128,7 @@ namespace Zappy {
                     _selecters->update(_infos);
                 if (_openButton->isClicked() && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
                     (_open) ? _setInspecterClose() : _setInspecterOpen();
+                _infos->update(view);
             }
 
             bool Inspecter::mouseIsOn() const

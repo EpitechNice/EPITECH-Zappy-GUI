@@ -18,6 +18,8 @@
     #include "ComponentTextBox.hpp"
     #include "ComponentCircle.hpp"
     #include "AComponent.hpp"
+    #include "View.hpp"
+    #include "RelativePlayerPosition.hpp"
 
 namespace Zappy {
     namespace GUI {
@@ -34,6 +36,13 @@ namespace Zappy {
                      * @param size The size of the info
                      */
                     InspecterInfo(std::pair<int, int> pos, std::pair<int, int> size);
+
+                    /**
+                     * @brief Update the info
+                     *
+                     * @param View The view of the game
+                     */
+                    void update(std::shared_ptr<Zappy::GUI::Raylib::View> view);
 
                     /**
                      * @brief Draw the info

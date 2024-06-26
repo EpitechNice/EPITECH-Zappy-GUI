@@ -69,6 +69,7 @@ SRC		=   src/Main.cpp																				\
 			src/Server/SharedMemory/SharedMemory.cpp													\
 			src/Sfml/SoundManager/SoundManager.cpp														\
 			src/Utils/Path/Path.cpp																		\
+			src/Utils/RelativePlayerPosition/RelativePlayerPosition.cpp									\
 			src/Utils/Utils/Utils.cpp																	\
 
 TEST_SRC	=	src/Components/0000/AComponent/AComponent.cpp												\
@@ -133,6 +134,7 @@ TEST_SRC	=	src/Components/0000/AComponent/AComponent.cpp												\
 				src/Server/SharedMemory/SharedMemory.cpp													\
 				src/Sfml/SoundManager/SoundManager.cpp														\
 				src/Utils/Path/Path.cpp																		\
+				src/Utils/RelativePlayerPosition/RelativePlayerPosition.cpp									\
 				src/Utils/Utils/Utils.cpp																	\
 				tests/testsI18n/basicI18n.cpp																\
 				tests/testsServer/testsCommands.cpp															\
@@ -236,6 +238,7 @@ INCLUDES	=	-I./includes										\
 				-I./src/Server/SharedMemory							\
 				-I./src/Sfml/SoundManager							\
 				-I./src/Utils/Path									\
+				-I./src/Utils/RelativePlayerPosition				\
 				-I./src/Utils/Utils									\
 
 LIBS	=	-L./libs	\

@@ -37,6 +37,23 @@ namespace Zappy {
                 _refPosY = _posY / _refHeight * 100;
             }
 
+            void InspecterInfo::update(std::shared_ptr<Zappy::GUI::Raylib::View> view)
+            {
+                if (_player == nullptr) return;
+
+                Vector3 pos = Zappy::GUI::RelativePlayerPosition::get()->getRelativePlayerPosition(_player->getX(), _player->getY());
+                Vector3 look = pos;
+                look.y -= 0.4;
+
+                if (_player->getOrientation() == Zappy::GUI::Ressources::Players::Orientation::NORTH) look.x -= 1;
+                if (_player->getOrientation() == Zappy::GUI::Ressources::Players::Orientation::EAST) look.z += 1;
+                if (_player->getOrientation() == Zappy::GUI::Ressources::Players::Orientation::SOUTH) look.x += 1;
+                if (_player->getOrientation() == Zappy::GUI::Ressources::Players::Orientation::WEST) look.z -= 1;
+
+                view->setPosition(pos);
+                view->setTarget(look);
+            }
+
             void InspecterInfo::draw()
             {
                 if (_player == nullptr && _egg == nullptr) {

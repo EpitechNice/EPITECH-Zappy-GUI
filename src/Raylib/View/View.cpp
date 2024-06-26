@@ -209,13 +209,13 @@ namespace Zappy {
                 Vector3 front = _getFront();
 
                 if (front.x > 0.5f)
-                    _facingDirection = EAST;
-                else if (front.x < -0.5f)
-                    _facingDirection = WEST;
-                else if (front.z > 0.5f)
                     _facingDirection = SOUTH;
-                else if (front.z < -0.5f)
+                else if (front.x < -0.5f)
                     _facingDirection = NORTH;
+                else if (front.z > 0.5f)
+                    _facingDirection = EAST;
+                else if (front.z < -0.5f)
+                    _facingDirection = WEST;
             }
         }
     }

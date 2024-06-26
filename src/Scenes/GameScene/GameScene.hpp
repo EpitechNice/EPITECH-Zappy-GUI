@@ -21,6 +21,7 @@
     #include "ComponentRessources.hpp"
     #include "Ref.hpp"
     #include "Path.hpp"
+    #include "RelativePlayerPosition.hpp"
 
 namespace Zappy {
     namespace GUI {
