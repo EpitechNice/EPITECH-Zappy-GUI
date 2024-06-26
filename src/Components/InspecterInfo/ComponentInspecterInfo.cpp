@@ -35,11 +35,14 @@ namespace Zappy {
 
                 _refPosX = _posX / _refWidth * 100;
                 _refPosY = _posY / _refHeight * 100;
+
+                _immersiveMode = false;
             }
 
             void InspecterInfo::update(std::shared_ptr<Zappy::GUI::Raylib::View> view)
             {
-                if (_player == nullptr) return;
+                if (!_immersiveMode) view->setImmersiveFlag(false);
+                if (_player == nullptr || !_immersiveMode) return;
 
                 Vector3 pos = Zappy::GUI::RelativePlayerPosition::get()->getRelativePlayerPosition(_player->getX(), _player->getY());
                 Vector3 look = pos;
@@ -52,6 +55,18 @@ namespace Zappy {
 
                 view->setPosition(pos);
                 view->setTarget(look);
+                view->setImmersiveFlag(true);
+            }
+
+            void InspecterInfo::toggleImmersiveMode()
+            {
+                if (_player == nullptr) return;
+                _immersiveMode = !_immersiveMode;
+            }
+
+            void InspecterInfo::setImmersiveMode(bool mode)
+            {
+                _immersiveMode = mode;
             }
 
             void InspecterInfo::draw()
@@ -142,6 +157,7 @@ namespace Zappy {
             void InspecterInfo::setInfoPlayer(std::shared_ptr<Zappy::GUI::Ressources::Players> player)
             {
                 _player = player;
+                _egg = nullptr;
                 if (_player == nullptr) return;
                 _team->setColor(Zappy::GUI::Ressources::Ref::get()->ressources->teamsColor[player->getTeam()]);
                 _team->setText("Team: " + player->getTeam());

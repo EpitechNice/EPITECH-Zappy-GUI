@@ -104,6 +104,7 @@ namespace Zappy {
             void Inspecter::update(std::pair<int, int> selectedTile, std::shared_ptr<Zappy::GUI::Raylib::View> view)
             {
                 if (_selectedTile != selectedTile) {
+                    _infos->setImmersiveMode(false);
                     _selectedTile = selectedTile;
                     _selecters->reset(_infos);
                     _updateTabs(0);
@@ -128,6 +129,9 @@ namespace Zappy {
                     _selecters->update(_infos);
                 if (_openButton->isClicked() && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
                     (_open) ? _setInspecterClose() : _setInspecterOpen();
+
+                if (IsKeyReleased(KEY_I))
+                    _infos->toggleImmersiveMode();
                 _infos->update(view);
             }
 

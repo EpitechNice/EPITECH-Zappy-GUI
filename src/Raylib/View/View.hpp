@@ -170,6 +170,20 @@ namespace Zappy {
                      */
                     [[ nodiscard ]] Direction getFacingDirection() const;
 
+                    /**
+                     * @brief Set the immersive vue flag
+                     *
+                     * @param flag The flag to set
+                     */
+                    void setImmersiveFlag(bool flag);
+
+                    /**
+                     * @brief Get the immersive vue flag
+                     *
+                     * @return `bool` The immersive vue flag
+                     */
+                    [[ nodiscard ]] bool getImmersiveFlag() const;
+
                 private:
                     Camera _camera;
                     Vector3 _position;
@@ -184,6 +198,7 @@ namespace Zappy {
                     float _angle = 0.10f;
                     float _dash = 2.0f;
                     float _sensitivity = 0.003f;
+                    bool _immersiveFlag = false;
 
                     /**
                      * @brief Get the front movement of the camera

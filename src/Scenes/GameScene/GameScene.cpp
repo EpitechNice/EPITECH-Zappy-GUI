@@ -94,7 +94,7 @@ namespace Zappy {
                 _chatbox->draw();
                 _inspecter->draw();
 
-                if (!_cursor) {
+                if (!_cursor && !_render->view()->getImmersiveFlag()) {
                     _crossPointer.first->draw();
                     _crossPointer.second->draw();
                 }

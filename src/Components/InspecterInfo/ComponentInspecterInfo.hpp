@@ -79,6 +79,18 @@ namespace Zappy {
                      */
                     void setInfoEgg(std::shared_ptr<Zappy::GUI::Ressources::Eggs> egg);
 
+                    /**
+                     * @brief Toggle the immersive mode
+                     */
+                    void toggleImmersiveMode();
+
+                    /**
+                     * @brief Set the immersive mode
+                     *
+                     * @param mode The mode to set
+                     */
+                    void setImmersiveMode(bool mode);
+
                 protected:
                 private:
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _noPlayerSelected;
@@ -93,6 +105,7 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _mendiane;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _phiras;
                     std::unique_ptr<Zappy::GUI::Component::TextBox> _thystame;
+                    bool _immersiveMode;
             };
         }
     }

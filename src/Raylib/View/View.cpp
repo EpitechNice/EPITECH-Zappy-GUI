@@ -21,6 +21,7 @@ namespace Zappy {
                     .projection = CAMERA_PERSPECTIVE
                 };
                 _enable = true;
+                _immersiveFlag = false;
             }
 
 
@@ -124,7 +125,7 @@ namespace Zappy {
 
             void View::update()
             {
-                if (!_enable) return;
+                if (!_enable || _immersiveFlag) return;
 
                 int dash = (IsKeyDown(KEY_LEFT_SHIFT)) ? _dash : 1;
                 if (IsKeyDown(KEY_W)) _moveFront(_speed * dash);
@@ -152,6 +153,16 @@ namespace Zappy {
             View::Direction View::getFacingDirection() const
             {
                 return _facingDirection;
+            }
+
+            void View::setImmersiveFlag(bool immersiveFlag)
+            {
+                _immersiveFlag = immersiveFlag;
+            }
+
+            bool View::getImmersiveFlag() const
+            {
+                return _immersiveFlag;
             }
 
 
