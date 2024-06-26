@@ -17,6 +17,10 @@ namespace Zappy {
                 _skybox = nullptr;
                 _borderbox = nullptr;
                 _tileMap = nullptr;
+                _north = nullptr;
+                _east = nullptr;
+                _south = nullptr;
+                _west = nullptr;
                 _chatbox = std::make_unique<Zappy::GUI::Component::Chatbox>();
                 _inspecter = std::make_shared<Zappy::GUI::Component::Inspecter>();
                 _isReady = false;
@@ -25,6 +29,17 @@ namespace Zappy {
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 1, GetScreenHeight() / 2 - 10), std::make_pair(2, 20), (Color){240, 0, 0, 100}),
                     std::make_unique<Zappy::GUI::Component::Rectangle>(std::make_pair(GetScreenWidth() / 2 - 10, GetScreenHeight() / 2 - 1), std::make_pair(20, 2), (Color){240, 0, 0, 100})
                 );
+
+                int width = GetScreenWidth();
+
+                _north  = std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(0, 20), "- N -", 40, WHITE);
+                _east   = std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(0, 20), "- E -", 40, WHITE);
+                _south  = std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(0, 20), "- S -", 40, WHITE);
+                _west   = std::make_unique<Zappy::GUI::Component::Text>(std::make_pair(0, 20), "- W -", 40, WHITE);
+                _north  ->setPosX(width / 2 - _north->getSizeX() / 2);
+                _east   ->setPosX(width / 2 - _east->getSizeX() / 2);
+                _south  ->setPosX(width / 2 - _south->getSizeX() / 2);
+                _west   ->setPosX(width / 2 - _west->getSizeX() / 2);
             }
 
             void Game::destroy()
@@ -84,6 +99,22 @@ namespace Zappy {
                     _crossPointer.second->draw();
                 }
 
+                Zappy::GUI::Raylib::View::Direction facing = _render->view()->getFacingDirection();
+
+                switch (facing) {
+                    case Zappy::GUI::Raylib::View::Direction::NORTH:
+                        _north->draw();
+                        break;
+                    case Zappy::GUI::Raylib::View::Direction::EAST:
+                        _east->draw();
+                        break;
+                    case Zappy::GUI::Raylib::View::Direction::SOUTH:
+                        _south->draw();
+                        break;
+                    case Zappy::GUI::Raylib::View::Direction::WEST:
+                        _west->draw();
+                        break;
+                }
             }
 
             std::string Game::nextScene()
@@ -123,6 +154,14 @@ namespace Zappy {
                 if (_borderbox != nullptr) _borderbox->resize();
                 if (_ressources != nullptr) _ressources->resize();
                 if (_tileMap != nullptr) _tileMap->resize();
+                _north->resize();
+                _east->resize();
+                _south->resize();
+                _west->resize();
+                _north->setPosX(GetScreenWidth() / 2 - _north->getSizeX() / 2);
+                _east->setPosX(GetScreenWidth() / 2 - _east->getSizeX() / 2);
+                _south->setPosX(GetScreenWidth() / 2 - _south->getSizeX() / 2);
+                _west->setPosX(GetScreenWidth() / 2 - _west->getSizeX() / 2);
                 _chatbox->resize();
                 _inspecter->resize();
                 _crossPointer.first->resize();

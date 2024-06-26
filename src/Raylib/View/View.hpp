@@ -156,6 +156,20 @@ namespace Zappy {
                      */
                     void update();
 
+                    typedef enum {
+                        NORTH,
+                        EAST,
+                        SOUTH,
+                        WEST
+                    } Direction;
+
+                    /**
+                     * @brief Get the facing direction of the camera
+                     *
+                     * @return `Direction` The facing direction of the camera
+                     */
+                    [[ nodiscard ]] Direction getFacingDirection() const;
+
                 private:
                     Camera _camera;
                     Vector3 _position;
@@ -164,6 +178,7 @@ namespace Zappy {
                     float _fovy;
                     bool _mouseFollowing;
                     bool _enable;
+                    Direction _facingDirection = NORTH;
 
                     float _speed = 0.60f;
                     float _angle = 0.10f;
@@ -219,6 +234,11 @@ namespace Zappy {
                      * @param speed The speed of the movement
                      */
                     void _lookSide(float speed);
+
+                    /**
+                     * @brief Set the facing direction of the camera
+                     */
+                    void _setFacingDirection();
             };
         }
     }

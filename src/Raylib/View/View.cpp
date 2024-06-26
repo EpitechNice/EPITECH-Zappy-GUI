@@ -145,6 +145,13 @@ namespace Zappy {
                     _lookSide(-mouse.x * _sensitivity);
                     _lookUp(-mouse.y * _sensitivity);
                 }
+
+                _setFacingDirection();
+            }
+
+            View::Direction View::getFacingDirection() const
+            {
+                return _facingDirection;
             }
 
 
@@ -195,6 +202,20 @@ namespace Zappy {
                 Vector3 targetPos = Vector3Subtract(_target, _position);
                 targetPos = Vector3RotateByAxisAngle(targetPos, _getUp(), speed);
                 setTarget(Vector3Add(_position, targetPos));
+            }
+
+            void View::_setFacingDirection()
+            {
+                Vector3 front = _getFront();
+
+                if (front.x > 0.5f)
+                    _facingDirection = EAST;
+                else if (front.x < -0.5f)
+                    _facingDirection = WEST;
+                else if (front.z > 0.5f)
+                    _facingDirection = SOUTH;
+                else if (front.z < -0.5f)
+                    _facingDirection = NORTH;
             }
         }
     }

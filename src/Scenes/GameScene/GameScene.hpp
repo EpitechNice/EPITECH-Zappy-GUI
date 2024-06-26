@@ -103,6 +103,11 @@ namespace Zappy {
                     std::unique_ptr<Zappy::GUI::Component::TileMap> _tileMap;
                     std::pair<std::unique_ptr<Zappy::GUI::Component::Rectangle>, std::unique_ptr<Zappy::GUI::Component::Rectangle>> _crossPointer;
                     bool _cursor;
+
+                    std::unique_ptr<Zappy::GUI::Component::Text> _north;
+                    std::unique_ptr<Zappy::GUI::Component::Text> _east;
+                    std::unique_ptr<Zappy::GUI::Component::Text> _south;
+                    std::unique_ptr<Zappy::GUI::Component::Text> _west;
             };
         }
     }
