@@ -158,7 +158,6 @@ Test(Commands, invalidCommandTnaTest)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//TODO: PlayersId (!=; int)
 
 Test(Commands, validCommandPnwTest)
 {
@@ -504,7 +503,7 @@ Test(Commands, invalidCommandPinTest)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//TODO : x (£), y (£)
+
 Test(Commands, validCommandEnwTest)
 {
     std::shared_ptr<Zappy::Server::Commands> commandsTester = std::make_shared<Zappy::Server::Commands>();
@@ -594,11 +593,11 @@ Test(Commands, invalidCommandSgtTest)
     commandsTester->setRessources(ressources);
     commandsTester->handleCommandMsz("msz 2 2");
     cr_assert_eq(commandsTester->getRessources()->mapSet, true);
+    freq = commandsTester->getRessources()->frequency;
 
     commandsTester->handleCommandEbo("sgt " + freqTester);
     cr_assert_eq(commandsTester->getRessources()->frequency, freq);
 
-    freq = commandsTester->getRessources()->frequency;
     commandsTester->handleCommandEbo("sgt ");
     cr_assert_eq(commandsTester->getRessources()->frequency, freq);
 }

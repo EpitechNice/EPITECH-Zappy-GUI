@@ -4,4 +4,6 @@
 *.o
 compiled_object/
 *.so
+*.gcda
+*.gcno
 zappy_gui
