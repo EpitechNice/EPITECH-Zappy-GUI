@@ -14,6 +14,16 @@ namespace Zappy {
             this->_ressources = nullptr;
         }
 
+        std::shared_ptr<Zappy::GUI::Ressources::Ressources> Commands::getRessources()
+        {
+            return this->_ressources;
+        }
+
+        std::shared_ptr<Zappy::Server::SharedMemory> Commands::getSharedMemory()
+        {
+            return this->_sharedMemory;
+        }
+
         void Commands::setRessources(std::shared_ptr<Zappy::GUI::Ressources::Ressources> ressources)
         {
             this->_ressources = ressources;

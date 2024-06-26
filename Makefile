@@ -71,7 +71,75 @@ SRC		=   src/Main.cpp																				\
 			src/Utils/Path/Path.cpp																		\
 			src/Utils/Utils/Utils.cpp																	\
 
+TEST_SRC	=	src/Components/0000/AComponent/AComponent.cpp												\
+				src/Components/Background2D/ComponentBackground2D.cpp										\
+				src/Components/Button/ComponentButton.cpp													\
+				src/Components/ButtonClassic/ComponentButtonClassic.cpp										\
+				src/Components/Chatbox/ComponentChatbox.cpp													\
+				src/Components/Circle/ComponentCircle.cpp													\
+				src/Components/Cube/ComponentCube.cpp														\
+				src/Components/Image/ComponentImage.cpp														\
+				src/Components/Inspecter/ComponentInspecter.cpp												\
+				src/Components/InspecterInfo/ComponentInspecterInfo.cpp										\
+				src/Components/InspecterInfoTile/ComponentInspecterInfoTile.cpp								\
+				src/Components/InspecterSelecter/ComponentInspecterSelecter.cpp								\
+				src/Components/InspecterSelecterGroup/ComponentInspecterSelecterGroup.cpp					\
+				src/Components/InspecterSelecterGroupDraggable/ComponentInspecterSelecterGroupDraggable.cpp	\
+				src/Components/Model3D/ComponentModel3D.cpp													\
+				src/Components/Rectangle/ComponentRectangle.cpp												\
+				src/Components/Ressources/ComponentRessources.cpp											\
+				src/Components/RoundedRectangle/ComponentRoundedRectangle.cpp								\
+				src/Components/Skybox/ComponentSkybox.cpp													\
+				src/Components/SliderVolume/ComponentSliderVolume.cpp										\
+				src/Components/Text/ComponentText.cpp														\
+				src/Components/TextBox/ComponentTextBox.cpp 			 									\
+				src/Components/TextGroup/ComponentTextGroup.cpp												\
+				src/Components/TextGroupDraggable/ComponentTextGroupDraggable.cpp							\
+				src/Components/TextMessage/ComponentTextMessage.cpp											\
+				src/Components/Tile/ComponentTile.cpp														\
+				src/Components/TileMap/ComponentTileMap.cpp													\
+				src/Components/VolumeSection/ComponentVolumeSection.cpp										\
+				src/Components/DelayServerSection/ComponentDelayServerSection.cpp							\
+				src/Exceptions/Exceptions.cpp																\
+				src/I18n/I18nHelper.cpp																		\
+				src/Parsing/Parsing.cpp																		\
+				src/Parsing/ParsingError.cpp																\
+				src/Parsing/ParsingHelp.cpp																	\
+				src/Raylib/ColorManager/ColorManager.cpp													\
+				src/Raylib/FontManager/FontManager.cpp														\
+				src/Raylib/ModelManager/ModelManager.cpp													\
+				src/Raylib/Render/Render.cpp																\
+				src/Raylib/TextureManager/TextureManager.cpp												\
+				src/Raylib/View/View.cpp																	\
+				src/Ressources/Eggs/Eggs.cpp																\
+				src/Ressources/Players/Players.cpp															\
+				src/Ressources/Ref/Ref.cpp																	\
+				src/Ressources/Ressources/Ressources.cpp													\
+				src/Ressources/TileRessources/TileRessources.cpp											\
+				src/SceneManager/SceneManager.cpp															\
+				src/Scenes/AScene/AScene.cpp																\
+				src/Scenes/CreditScene/CreditScene.cpp														\
+				src/Scenes/CreditScene/DisplayCreditScene/DisplayCreditScene.cpp							\
+				src/Scenes/GameScene/GameScene.cpp															\
+				src/Scenes/HelperScene/HelperScene.cpp														\
+				src/Scenes/MenuScene/MenuScene.cpp															\
+				src/Scenes/OptionScene/OptionScene.cpp														\
+				src/Scenes/OptionScene/ResolutionOption/ResolutionOptionScene.cpp							\
+				src/Scenes/OptionScene/SoundOption/SoundOptionScene.cpp										\
+				src/Server/Server/Server.cpp																\
+				src/Server/Mutex/Mutex.cpp																	\
+				src/Server/Thread/Thread.cpp																\
+				src/Server/Commands/Commands.cpp															\
+				src/Server/SharedMemory/SharedMemory.cpp													\
+				src/Sfml/SoundManager/SoundManager.cpp														\
+				src/Utils/Path/Path.cpp																		\
+				src/Utils/Utils/Utils.cpp																	\
+				tests/testsI18n/basicI18n.cpp																\
+				tests/testsServer/testsCommands.cpp															\
+
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
+
+TEST_OBJ	=	$(patsubst src/%.cpp,compiled_object/%.o,$(TEST_SRC))
 
 RESET		= "\033[0m"
 BLUE		= "\033[34m"
@@ -87,6 +155,8 @@ YELLOW		= "\033[33m"
 
 BIN	=	"zappy_gui"
 
+TEST_BIN	=	"unit_tests"
+
 FLAGS	=	-Wall 				\
 			-Wextra				\
 			-Wfloat-equal 		\
@@ -97,6 +167,8 @@ FLAGS	=	-Wall 				\
 			-Wredundant-decls	\
 			-std=c++20			\
 			-O2
+
+TEST_FLAGS	=	--coverage -lcriterion
 
 INCLUDES	=	-I./includes										\
 				-I./libs/includes									\
@@ -186,6 +258,12 @@ $(BIN):	makeLibs $(OBJ)
 	@$(COMP) -o $(BIN) $(OBJ) $(FLAGS) $(INCLUDES) $(LIBS)
 	@make ascii
 
+$(TEST_BIN):	makeLibs $(TEST_OBJ)
+	@echo $(BOLD)$(GREEN)"Objects Done\n\n"$(RESET)
+	@echo $(BOLD)$(PURPLE)"Compiling $(TEST_BIN)..."$(RESET)
+	@$(COMP) -o $(TEST_BIN) $(TEST_SRC) $(TEST_FLAGS) $(INCLUDES) $(LIBS)
+	@make ascii
+
 makeLibs:
 	@if [ -n "$$(ls -A libs | grep -vE '(^includes$$|^Makefile$$)')" ]; then \
 		echo $(BOLD)$(PURPLE)"Making Libs..."$(RESET); \
@@ -201,11 +279,12 @@ clean:
 	@rm -rf compiled_object
 	@rm -rf vgcore*
 
-fclean: clean
+fclean: clean tests_fclean
 	@if [ -n "$$(ls -A libs | grep -vE '(^includes$$|^Makefile$$)')" ]; then \
 		make -C libs fclean; \
 	fi
 	@rm -rf $(BIN)
+	@rm -rf $(TEST_BIN)
 
 re: fclean all
 
@@ -214,6 +293,16 @@ compiled_object/%.o: src/%.cpp
 	@$(COMP) $(FLAGS) $(INCLUDES) $(LIBS) -g3 -c -o $@ $<
 	@echo $(GREEN)">> compiling $<"$(RESET)
 
+tests_run:	$(TEST_BIN)
+	@./$(TEST_BIN)
+	@make tests_fclean
+
+tests_clean:
+	@rm -rf *.gcda
+	@rm -rf *.gcno
+
+tests_fclean: tests_clean
+	@rm -rf $(TEST_BIN)
 
 ascii:
 	@echo $(BOLD)$(PURPLE)
