@@ -43,6 +43,7 @@ namespace Zappy {
                     _noTileSelected->draw();
                     return;
                 }
+                setInfo(_tile);
                 _name->draw();
                 _food->draw();
                 _linemate->draw();

@@ -43,6 +43,7 @@ namespace Zappy {
                     _noPlayerSelected->draw();
                     return;
                 }
+                (_egg == nullptr) ? setInfoPlayer(_player) : setInfoEgg(_egg);
                 _team->draw();
                 _name->draw();
                 if (_player == nullptr) return;
