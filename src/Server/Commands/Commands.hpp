@@ -37,6 +37,20 @@ namespace Zappy
                 ~Commands() = default;
 
                 /**
+                 * @brief Get game's ressources
+                 *
+                 * @return `_ressources` game's ressources
+                 */
+                std::shared_ptr<Zappy::GUI::Ressources::Ressources> getRessources();
+
+                /**
+                 * @brief Get sharedMemory
+                 *
+                 * @return `_sharedMemory` commands queue from server
+                 */
+                std::shared_ptr<Zappy::Server::SharedMemory> getSharedMemory();
+
+                /**
                  * @brief set the command list to use it directly in command
                  *
                  * @note _sharedMemory set

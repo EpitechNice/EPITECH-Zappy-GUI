@@ -134,7 +134,8 @@ TEST_SRC	=	src/Components/0000/AComponent/AComponent.cpp												\
 				src/Sfml/SoundManager/SoundManager.cpp														\
 				src/Utils/Path/Path.cpp																		\
 				src/Utils/Utils/Utils.cpp																	\
-				Tests/I18n/basicI18n.cpp	\
+				tests/testsI18n/basicI18n.cpp																\
+				tests/testsServer/testsCommands.cpp															\
 
 OBJ 	= 	$(patsubst src/%.cpp,compiled_object/%.o,$(SRC))
 
@@ -278,11 +279,12 @@ clean:
 	@rm -rf compiled_object
 	@rm -rf vgcore*
 
-fclean: clean
+fclean: clean tests_fclean
 	@if [ -n "$$(ls -A libs | grep -vE '(^includes$$|^Makefile$$)')" ]; then \
 		make -C libs fclean; \
 	fi
 	@rm -rf $(BIN)
+	@rm -rf $(TEST_BIN)
 
 re: fclean all
 
@@ -293,8 +295,13 @@ compiled_object/%.o: src/%.cpp
 
 tests_run:	$(TEST_BIN)
 	@./$(TEST_BIN)
+	@make tests_fclean
+
+tests_clean:
 	@rm -rf *.gcda
 	@rm -rf *.gcno
+
+tests_fclean: tests_clean
 	@rm -rf $(TEST_BIN)
 
 ascii:
