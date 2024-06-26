@@ -566,8 +566,6 @@ namespace Zappy {
 
         void Commands::handleCommandEdi(const std::string& responseValue)
         {
-            std::cerr << "Command Edi: [" << responseValue << "] not implemented yet" << std::endl;
-
             std::regex regex("edi ([0-9]+)");
             std::smatch match;
 
@@ -616,8 +614,6 @@ namespace Zappy {
 
         void Commands::handleCommandSst(const std::string& responseValue)
         {
-            std::cerr << "Command Sst: [" << responseValue << "] not implemented yet" << std::endl;
-
             std::regex regex("sst ([0-9]+)");
             std::smatch match;
 
@@ -631,8 +627,6 @@ namespace Zappy {
 
         void Commands::handleCommandSeg(const std::string& responseValue)
         {
-            std::cerr << "Command Seg: [" << responseValue << "] not implemented yet" << std::endl;
-
             std::regex regex("seg ([a-zA-Z0-9]+)");
             std::smatch match;
 
@@ -646,8 +640,6 @@ namespace Zappy {
 
         void Commands::handleCommandSmg(const std::string& responseValue)
         {
-            std::cerr << "Command Smg: [" << responseValue << "] not implemented yet" << std::endl;
-
             std::regex regex("smg (.+)");
             std::smatch match;
 
