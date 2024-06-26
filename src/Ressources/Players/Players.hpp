@@ -184,6 +184,28 @@ namespace Zappy {
                      */
                     void setLvl(int lvl);
 
+
+                    typedef enum {
+                        NORTH = 1,
+                        EAST = 2,
+                        SOUTH = 3,
+                        WEST = 4
+                    } Orientation;
+
+                    /**
+                     * @brief Get the orientation of the player
+                     *
+                     * @return `Orientation` The orientation of the player as an enum
+                     */
+                    Orientation getOrientation() const;
+
+                    /**
+                     * @brief Set the orientation of the player
+                     *
+                     * @param orientation The orientation of the player as an enum
+                     */
+                    void setOrientation(Orientation orientation);
+
                 protected:
                 private:
                     int _id;
@@ -198,6 +220,7 @@ namespace Zappy {
                     int _food;
                     std::string _team;
                     int _lvl;
+                    Orientation _orientation;
             };
         }
     }

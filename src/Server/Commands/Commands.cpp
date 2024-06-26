@@ -125,6 +125,7 @@ namespace Zappy {
 
                 auto player = std::make_shared<Zappy::GUI::Ressources::Players>(playerId, x, y, teamName);
                 player->setLvl(level);
+                player->setOrientation(static_cast<Zappy::GUI::Ressources::Players::Orientation>(orientation));
                 _ressources->addPlayer(player);
                 _ressources->logs.push_back(std::make_tuple("Player #" + std::to_string(playerId) + " just join the " + teamName + "." , "Server", "Server"));
             } else {
@@ -156,6 +157,7 @@ namespace Zappy {
 
                 player->setX(x);
                 player->setY(y);
+                player->setOrientation(static_cast<Zappy::GUI::Ressources::Players::Orientation>(orientation));
             } else {
                 handleCommandSbp(responseValue);
             }

@@ -146,6 +146,17 @@ namespace Zappy {
             {
                 _lvl = lvl;
             }
+
+
+            Players::Orientation Players::getOrientation() const
+            {
+                return _orientation;
+            }
+
+            void Players::setOrientation(Players::Orientation orientation)
+            {
+                _orientation = orientation;
+            }
         }
     }
 }
