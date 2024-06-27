@@ -342,9 +342,8 @@ namespace Zappy {
                 int y = std::stoi(match[2]);
                 int result = std::stoi(match[3]);
 
-                std::string msg = "Incantation at Tile[" + std::to_string(x) + "][" + std::to_string(y) + "] has " + (result == 0 ? "failed" : "succeed");
-                msg += ".";
-                if (result != 0) msg += " All players on the tile just up their level to " + std::to_string(result) + ".";
+                std::string msg = "Incantation at Tile[" + std::to_string(x) + "][" + std::to_string(y) + "] has " + (result == 0 ? "failed" : "succeed") + ". All players on the tile ";
+                msg += (result != 0) ? "just up their level !" : "keep their level.";
                 std::string name = "Server";
                 _ressources->logs.push_back(std::make_tuple(msg, name, "Server"));
             } else {
