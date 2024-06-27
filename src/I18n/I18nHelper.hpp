@@ -39,6 +39,9 @@ namespace Zappy
                 en_GB
             };
 
+            /**
+             * @brief I18nHelper class
+             */
             class I18nHelper
             {
                 private:
